@@ -24,6 +24,7 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
             DaggerFeaturedCollectionsComponent.builder().build().getViewModel()
         }
         FeaturedCollectionsScreen(
+            viewModel = viewModel,
             onCollectionClicked = { id ->
                 navController.navigate(AppScreens.CollectionList.createRoute(id))
             }
