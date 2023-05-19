@@ -7,11 +7,11 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun CollectionListScreen(
-    onImageClicked: () -> Unit,
+    onImageClicked: (String) -> Unit,
 ) {
     Column {
         Text(text = "Page CollectionListScreen")
-        Button(onClick = onImageClicked) {
+        Button(onClick = { onImageClicked("1") }) {
             Text(text = "Open Image")
         }
     }

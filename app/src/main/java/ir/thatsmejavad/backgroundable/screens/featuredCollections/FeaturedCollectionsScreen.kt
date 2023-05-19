@@ -8,11 +8,11 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun FeaturedCollectionsScreen(
-    onCollectionClicked: () -> Unit,
+    onCollectionClicked: (String) -> Unit,
 ) {
     Column {
         Text(text = "Page FeaturedCollectionsScreen")
-        Button(onClick = onCollectionClicked) {
+        Button(onClick = { onCollectionClicked("1") }) {
             Text(text = "Open Collection")
         }
     }
