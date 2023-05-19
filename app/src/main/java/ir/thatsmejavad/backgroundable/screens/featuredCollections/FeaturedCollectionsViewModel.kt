@@ -2,6 +2,7 @@ package ir.thatsmejavad.backgroundable.screens.featuredCollections
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ir.thatsmejavad.backgroundable.core.AsyncJob
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
 import ir.thatsmejavad.backgroundable.core.SnackbarMessage
 import ir.thatsmejavad.backgroundable.data.repository.CollectionRepository
@@ -16,18 +17,22 @@ class FeaturedCollectionsViewModel @Inject constructor(
     val snackbarManager: SnackbarManager,
 ) : ViewModel() {
 
-    private val _collections = MutableStateFlow<List<Collection>>(listOf())
-    val collection: StateFlow<List<Collection>> = _collections
+    private val _collections = MutableStateFlow<AsyncJob<List<Collection>>>(
+        AsyncJob.Uninitialized
+    )
+    val collection: StateFlow<AsyncJob<List<Collection>>> = _collections
 
     init {
         getCollections()
     }
 
-    private fun getCollections() {
+    fun getCollections() {
         viewModelScope.launch {
             try {
-                _collections.emit(collectionRepository.getCollections().data)
+                _collections.emit(AsyncJob.Loading)
+                _collections.emit(AsyncJob.Success(collectionRepository.getCollections().data))
             } catch (e: Exception) {
+                _collections.emit(AsyncJob.Fail(e))
                 snackbarManager.sendError(SnackbarMessage(e.message ?: ""))
             }
         }

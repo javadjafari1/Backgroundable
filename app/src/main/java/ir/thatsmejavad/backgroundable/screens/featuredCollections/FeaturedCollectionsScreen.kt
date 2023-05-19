@@ -3,6 +3,8 @@ package ir.thatsmejavad.backgroundable.screens.featuredCollections
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +13,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -22,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import ir.thatsmejavad.backgroundable.core.AsyncJob
 import ir.thatsmejavad.backgroundable.core.BackgroundableScaffold
 
 
@@ -43,37 +48,62 @@ fun FeaturedCollectionsScreen(
             )
         }
     ) {
-        LazyColumn(
-            Modifier
-                .padding(it)
-                .padding(horizontal = 16.dp)
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            items(collections) { collection ->
-                ElevatedCard(
-                    modifier = Modifier
-                        .fillMaxWidth()
+        when (collections) {
+            is AsyncJob.Loading, AsyncJob.Uninitialized -> {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                }
+            }
+
+            is AsyncJob.Success -> {
+                LazyColumn(
+                    Modifier
+                        .padding(it)
+                        .padding(horizontal = 16.dp)
+                        .fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { onCollectionClicked(collection.id) }
-                            .padding(vertical = 24.dp, horizontal = 16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(text = collection.title)
-                        Text(
+                    items((collections as AsyncJob.Success).value) { collection ->
+                        ElevatedCard(
                             modifier = Modifier
-                                .clip(CircleShape)
-                                .background(
-                                    color = MaterialTheme.colorScheme.primaryContainer,
-                                    shape = CircleShape
+                                .fillMaxWidth()
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable { onCollectionClicked(collection.id) }
+                                    .padding(vertical = 24.dp, horizontal = 16.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(text = collection.title)
+                                Text(
+                                    modifier = Modifier
+                                        .clip(CircleShape)
+                                        .background(
+                                            color = MaterialTheme.colorScheme.primaryContainer,
+                                            shape = CircleShape
+                                        )
+                                        .padding(8.dp),
+                                    text = collection.photosCount.toString()
                                 )
-                                .padding(8.dp),
-                            text = collection.photosCount.toString()
-                        )
+                            }
+                        }
+                    }
+                }
+            }
+
+            is AsyncJob.Fail -> {
+                Box(Modifier.fillMaxSize()) {
+                    Column(
+                        modifier = Modifier.align(Alignment.Center),
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(text = "Unexpected error")
+                        ElevatedButton(onClick = { viewModel.getCollections() }) {
+                            Text(text = "Try again")
+                        }
                     }
                 }
             }
