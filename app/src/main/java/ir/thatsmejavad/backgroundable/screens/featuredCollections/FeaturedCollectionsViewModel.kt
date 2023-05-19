@@ -1,8 +1,9 @@
 package ir.thatsmejavad.backgroundable.screens.featuredCollections
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ir.thatsmejavad.backgroundable.core.SnackbarManager
+import ir.thatsmejavad.backgroundable.core.SnackbarMessage
 import ir.thatsmejavad.backgroundable.data.repository.CollectionRepository
 import ir.thatsmejavad.backgroundable.model.Collection
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,6 +13,7 @@ import javax.inject.Inject
 
 class FeaturedCollectionsViewModel @Inject constructor(
     private val collectionRepository: CollectionRepository,
+    val snackbarManager: SnackbarManager,
 ) : ViewModel() {
 
     private val _collections = MutableStateFlow<List<Collection>>(listOf())
@@ -25,9 +27,8 @@ class FeaturedCollectionsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _collections.emit(collectionRepository.getCollections().data)
-
             } catch (e: Exception) {
-                Log.d("Jai", "getCollections: $e")
+                snackbarManager.sendError(SnackbarMessage(e.message ?: ""))
             }
         }
     }
