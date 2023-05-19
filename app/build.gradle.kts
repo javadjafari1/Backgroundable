@@ -1,11 +1,21 @@
+import org.jetbrains.kotlin.konan.properties.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
     namespace = "ir.thatsmejavad.backgroundable"
     compileSdk = 33
+    val properties = Properties()
+    if (rootProject.file("authorization.properties").exists()) {
+        properties.load(project.rootProject.file("authorization.properties").inputStream())
+    } else {
+        throw IllegalArgumentException("no authorization.properties found")
+    }
 
     defaultConfig {
         applicationId = "ir.thatsmejavad.backgroundable"
@@ -18,6 +28,12 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField(
+            type = "String",
+            value = "\"${properties.getProperty("authorization")}\"",
+            name = "AUTHORIZATION",
+        )
     }
 
     buildTypes {
@@ -30,11 +46,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -66,6 +82,13 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
+
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.10.0"))
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+
+    implementation("com.google.dagger:dagger:2.46.1")
+    kapt("com.google.dagger:dagger-compiler:2.46.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
