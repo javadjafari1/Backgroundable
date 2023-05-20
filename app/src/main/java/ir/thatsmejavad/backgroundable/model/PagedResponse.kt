@@ -12,5 +12,5 @@ data class PagedResponse<T>(
     @SerialName("per_page")
     val perPage: Int,
     @SerialName("total_results")
-    val total: Int
+    val total: Int,
 )

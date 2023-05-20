@@ -11,5 +11,5 @@ data class Resources(
     val original: String,
     val portrait: String,
     val small: String,
-    val tiny: String
+    val tiny: String,
 )

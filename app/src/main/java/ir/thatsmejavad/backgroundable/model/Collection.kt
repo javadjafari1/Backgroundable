@@ -19,5 +19,5 @@ data class Collection(
     val isPrivate: Boolean,
 
     @SerialName("videos_count")
-    val videosCount: Int
+    val videosCount: Int,
 )

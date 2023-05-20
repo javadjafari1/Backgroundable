@@ -1,5 +1,6 @@
 package ir.thatsmejavad.backgroundable.core
 
+import android.content.Context
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -16,6 +17,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import ir.thatsmejavad.backgroundable.R
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -36,13 +39,14 @@ fun BackgroundableScaffold(
 ) {
 
     val snackbarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
 
     LaunchedEffect(snackbarManager.messageSharedFlow) {
         snackbarManager
             .messageSharedFlow
             .onEach { snackbar ->
                 snackbarHostState.showSnackbar(
-                    message = snackbar.message,
+                    message = snackbar.getErrorMessage(context),
                     duration = SnackbarDuration.Long
                 )
             }
@@ -60,4 +64,14 @@ fun BackgroundableScaffold(
         contentWindowInsets = contentWindowInsets,
         content = content
     )
+}
+
+private fun SnackbarMessage.getErrorMessage(
+    context: Context
+): String {
+    return when (message) {
+        is String -> message
+        is Int -> context.getString(message)
+        else -> context.getString(R.string.unexpected_error_message)
+    }
 }

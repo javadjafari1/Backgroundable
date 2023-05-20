@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.thatsmejavad.backgroundable.core.AsyncJob
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
-import ir.thatsmejavad.backgroundable.core.SnackbarMessage
+import ir.thatsmejavad.backgroundable.core.getSnackbarMessage
 import ir.thatsmejavad.backgroundable.data.repository.CollectionRepository
 import ir.thatsmejavad.backgroundable.model.Collection
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,7 +33,7 @@ class FeaturedCollectionsViewModel @Inject constructor(
                 _collections.emit(AsyncJob.Success(collectionRepository.getCollections().data))
             } catch (e: Exception) {
                 _collections.emit(AsyncJob.Fail(e))
-                snackbarManager.sendError(SnackbarMessage(e.message ?: ""))
+                snackbarManager.sendError(e.getSnackbarMessage())
             }
         }
     }

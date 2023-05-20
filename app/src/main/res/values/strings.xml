@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Backgroundable</string>
+    <string name="unexpected_error_message">Oops! Unexpected Error</string>
+    <string name="timeout_error_message">Oh snap! Request Timeout</string>
+    <string name="rate_limit_error_message">Request Rate Limit Exceeded \n
+        Apologies, but you\'ve exceeded the request rate limit. Thank you for your patience.
+    </string>
+    <string name="Label_try_again">Try again</string>
 </resources>

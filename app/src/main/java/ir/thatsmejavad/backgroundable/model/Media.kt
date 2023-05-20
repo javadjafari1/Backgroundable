@@ -22,5 +22,5 @@ data class Media(
     val photographerId: Int,
 
     @SerialName("photographer_url")
-    val photographerUrl: String
+    val photographerUrl: String,
 )
