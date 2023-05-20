@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class Collection(
     val id: String,
     val title: String,
-    val description: String,
+    val description: String? = null,
 
     @SerialName("media_count")
     val mediaCount: Int,

@@ -1,5 +1,6 @@
 package ir.thatsmejavad.backgroundable.data
 
+import ir.thatsmejavad.backgroundable.core.Constants.COLLECTIONS_PAGE
 import ir.thatsmejavad.backgroundable.core.MediaType.Photo
 import ir.thatsmejavad.backgroundable.model.Collection
 import ir.thatsmejavad.backgroundable.model.Media
@@ -11,7 +12,10 @@ import retrofit2.http.Query
 
 interface PexelsApi {
     @GET("v1/collections/featured")
-    suspend fun getCollections(): Response<PagedResponse<Collection>>
+    suspend fun getCollections(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int = COLLECTIONS_PAGE,
+    ): Response<PagedResponse<Collection>>
 
     @GET("v1/collections/{collectionId}")
     suspend fun getMediasByCollectionId(
