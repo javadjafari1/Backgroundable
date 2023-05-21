@@ -37,7 +37,6 @@ import ir.thatsmejavad.backgroundable.core.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.core.getStringMessage
 import ir.thatsmejavad.backgroundable.model.Collection
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FeaturedCollectionsScreen(
