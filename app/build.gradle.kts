@@ -90,6 +90,7 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor")
 
     implementation("com.google.dagger:dagger:2.46.1")
+    implementation("androidx.paging:paging-common-ktx:3.1.1")
     kapt("com.google.dagger:dagger-compiler:2.46.1")
 
     testImplementation("junit:junit:4.13.2")
@@ -99,4 +100,8 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    implementation("androidx.paging:paging-runtime-ktx:3.1.1")
+    implementation("androidx.paging:paging-common-ktx:3.1.1")
+    implementation("androidx.paging:paging-compose:1.0.0-alpha19")
 }

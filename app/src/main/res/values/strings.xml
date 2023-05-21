@@ -5,5 +5,6 @@
     <string name="rate_limit_error_message">Request Rate Limit Exceeded \n
         Apologies, but you\'ve exceeded the request rate limit. Thank you for your patience.
     </string>
-    <string name="Label_try_again">Try again</string>
+    <string name="label_try_again">Try again</string>
+    <string name="serialization_error_message"> Oops!: Serialization Error</string>
 </resources>
