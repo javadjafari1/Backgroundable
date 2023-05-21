@@ -3,7 +3,7 @@ package ir.thatsmejavad.backgroundable.data.datasource
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import ir.thatsmejavad.backgroundable.core.Constants.COLLECTIONS_PAGE
+import ir.thatsmejavad.backgroundable.core.Constants.COLLECTIONS_PER_PAGE_ITEM
 import ir.thatsmejavad.backgroundable.core.bodyOrException
 import ir.thatsmejavad.backgroundable.data.PexelsApi
 import ir.thatsmejavad.backgroundable.data.repository.CollectionsPagingSource
@@ -19,7 +19,7 @@ class CollectionRemoteDataSourceImpl @Inject constructor(
     override fun getCollections(): Flow<PagingData<Collection>> {
         return Pager(
             config = PagingConfig(
-                pageSize = COLLECTIONS_PAGE,
+                pageSize = COLLECTIONS_PER_PAGE_ITEM,
             ),
             pagingSourceFactory = {
                 CollectionsPagingSource(api)
