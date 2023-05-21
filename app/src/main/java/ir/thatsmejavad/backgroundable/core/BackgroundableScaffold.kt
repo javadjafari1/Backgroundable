@@ -22,7 +22,6 @@ import ir.thatsmejavad.backgroundable.R
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BackgroundableScaffold(
@@ -37,7 +36,6 @@ fun BackgroundableScaffold(
     contentWindowInsets: WindowInsets = ScaffoldDefaults.contentWindowInsets,
     content: @Composable (PaddingValues) -> Unit
 ) {
-
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
 

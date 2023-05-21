@@ -12,20 +12,20 @@ import ir.thatsmejavad.backgroundable.data.repository.MediaRepository
 import ir.thatsmejavad.backgroundable.data.repository.MediaRepositoryImpl
 
 @Module
-abstract class BindModule {
+interface BindModule {
     @Binds
-    abstract fun bindCollectionRepository(impl: CollectionRepositoryImpl): CollectionRepository
+    fun bindCollectionRepository(impl: CollectionRepositoryImpl): CollectionRepository
 
     @Binds
-    abstract fun bindMediaRepository(impl: MediaRepositoryImpl): MediaRepository
+    fun bindMediaRepository(impl: MediaRepositoryImpl): MediaRepository
 
     @Binds
-    abstract fun bindCollectionRemoteDataSource(
+    fun bindCollectionRemoteDataSource(
         impl: CollectionRemoteDataSourceImpl
     ): CollectionRemoteDataSource
 
     @Binds
-    abstract fun bindMediaRemoteDataSource(
+    fun bindMediaRemoteDataSource(
         impl: MediaRemoteDataSourceImpl
     ): MediaRemoteDataSource
 }

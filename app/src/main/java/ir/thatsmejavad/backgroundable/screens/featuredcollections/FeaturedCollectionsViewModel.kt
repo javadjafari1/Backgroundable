@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.screens.featuredCollections
+package ir.thatsmejavad.backgroundable.screens.featuredcollections
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -32,5 +32,4 @@ class FeaturedCollectionsViewModel @Inject constructor(
             _collections.emit(it)
         }
         .launchIn(viewModelScope)
-
 }
