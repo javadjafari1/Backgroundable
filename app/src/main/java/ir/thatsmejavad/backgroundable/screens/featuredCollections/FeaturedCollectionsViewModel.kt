@@ -25,7 +25,7 @@ class FeaturedCollectionsViewModel @Inject constructor(
         getCollections()
     }
 
-    private fun getCollections() = collectionRepository
+    fun getCollections() = collectionRepository
         .getCollections()
         .cachedIn(viewModelScope)
         .onEach {
