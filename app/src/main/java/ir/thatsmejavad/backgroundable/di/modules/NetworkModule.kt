@@ -3,6 +3,7 @@ package ir.thatsmejavad.backgroundable.di.modules
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
+import ir.thatsmejavad.backgroundable.core.Constants.REQUEST_TIMEOUT_IN_SECONDS
 import ir.thatsmejavad.backgroundable.data.AuthorizationInterceptor
 import ir.thatsmejavad.backgroundable.data.PexelsApi
 import kotlinx.serialization.json.Json
@@ -50,10 +51,10 @@ class NetworkModule {
         return OkHttpClient.Builder()
             .addInterceptor(authorizationInterceptor)
             .addInterceptor(loggingInterceptor)
-            .callTimeout(40, TimeUnit.SECONDS)
-            .connectTimeout(40, TimeUnit.SECONDS)
-            .readTimeout(40, TimeUnit.SECONDS)
-            .writeTimeout(40, TimeUnit.SECONDS)
+            .callTimeout(REQUEST_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
+            .connectTimeout(REQUEST_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
+            .readTimeout(REQUEST_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
+            .writeTimeout(REQUEST_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
             .build()
     }
 

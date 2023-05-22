@@ -5,6 +5,13 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("org.jetbrains.kotlin.plugin.serialization")
+    id("io.gitlab.arturbosch.detekt")
+}
+
+detekt {
+    autoCorrect = true
+    buildUponDefaultConfig = true
+    config = files("$rootDir/detekt.yml")
 }
 
 android {
@@ -66,6 +73,8 @@ android {
 }
 
 dependencies {
+
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.0-RC3")
 
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")

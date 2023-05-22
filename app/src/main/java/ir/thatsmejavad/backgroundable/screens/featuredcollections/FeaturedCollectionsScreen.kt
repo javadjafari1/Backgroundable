@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.screens.featuredCollections
+package ir.thatsmejavad.backgroundable.screens.featuredcollections
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

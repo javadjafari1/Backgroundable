@@ -13,7 +13,6 @@ class CollectionListViewModel @Inject constructor(
         Log.d("Jai", " CollectionListVIewModel: init")
     }
 
-
     override fun onCleared() {
         super.onCleared()
         Log.d("Jai", " CollectionListViewModel: cleared")

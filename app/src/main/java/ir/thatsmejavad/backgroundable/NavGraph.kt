@@ -11,8 +11,8 @@ import ir.thatsmejavad.backgroundable.di.components.DaggerFeaturedCollectionsCom
 import ir.thatsmejavad.backgroundable.di.components.DaggerImageDetailComponent
 import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListScreen
 import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListViewModel
-import ir.thatsmejavad.backgroundable.screens.featuredCollections.FeaturedCollectionsScreen
-import ir.thatsmejavad.backgroundable.screens.featuredCollections.FeaturedCollectionsViewModel
+import ir.thatsmejavad.backgroundable.screens.featuredcollections.FeaturedCollectionsScreen
+import ir.thatsmejavad.backgroundable.screens.featuredcollections.FeaturedCollectionsViewModel
 import ir.thatsmejavad.backgroundable.screens.imagedetail.ImageDetailScreen
 import ir.thatsmejavad.backgroundable.screens.imagedetail.ImageDetailViewModel
 

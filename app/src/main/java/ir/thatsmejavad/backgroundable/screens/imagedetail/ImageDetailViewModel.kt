@@ -13,7 +13,6 @@ class ImageDetailViewModel @Inject constructor(
         Log.d("Jai", " ImageDetailViewModel: init")
     }
 
-
     override fun onCleared() {
         super.onCleared()
         Log.d("Jai", " ImageDetailViewModel: cleared")
