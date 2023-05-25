@@ -8,16 +8,10 @@ data class Collection(
     val id: String,
     val title: String,
     val description: String? = null,
-
-    @SerialName("media_count")
     val mediaCount: Int,
-
-    @SerialName("photos_count")
     val photosCount: Int,
 
     @SerialName("private")
     val isPrivate: Boolean,
-
-    @SerialName("videos_count")
     val videosCount: Int,
 )

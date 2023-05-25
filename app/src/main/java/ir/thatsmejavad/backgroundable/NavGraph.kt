@@ -25,8 +25,13 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         }
         FeaturedCollectionsScreen(
             viewModel = viewModel,
-            onCollectionClicked = { id ->
-                navController.navigate(AppScreens.CollectionList.createRoute(id))
+            onCollectionClicked = { id, title ->
+                navController.navigate(
+                    AppScreens.CollectionList.createRoute(
+                        id = id,
+                        title = title,
+                    )
+                )
             }
         )
     }
@@ -36,14 +41,24 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
             navArgument("id") {
                 type = NavType.StringType
                 nullable = false
-            }
+            },
+            navArgument("title") {
+                type = NavType.StringType
+                nullable = false
+            },
         ),
     ) {
         val viewModel: CollectionListViewModel = daggerViewModel {
             DaggerCollectionListComponent.builder().build().getViewModel()
         }
+        val id = it.arguments?.getString("id")!!
+        viewModel.getMedias(id)
+
         CollectionListScreen(
-            onImageClicked = { id ->
+            title = it.arguments?.getString("title")!!,
+            viewModel = viewModel,
+            id = id,
+            onMediaClicked = { id ->
                 navController.navigate(AppScreens.ImageDetail.createRoute(id))
             }
         )
@@ -67,9 +82,9 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
 internal sealed class AppScreens(val route: String) {
     object FeaturedCollections : AppScreens("featured-collections")
 
-    object CollectionList : AppScreens("collection-list?id={id}") {
-        fun createRoute(id: String): String {
-            return "collection-list?id=$id"
+    object CollectionList : AppScreens("collection-list?id={id}&title={title}") {
+        fun createRoute(id: String, title: String): String {
+            return "collection-list?id=$id&title=$title"
         }
     }
 

@@ -11,7 +11,6 @@ data class PagedResponse<T>(
     @JsonNames("collections", "media")
     val data: List<T>,
     val page: Int,
-    @SerialName("per_page")
     val perPage: Int,
     @SerialName("total_results")
     val total: Int,
