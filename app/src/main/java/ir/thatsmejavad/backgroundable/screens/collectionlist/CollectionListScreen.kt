@@ -38,9 +38,9 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import ir.thatsmejavad.backgroundable.R
+import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.CircularLoading
 import ir.thatsmejavad.backgroundable.common.ui.CoilImage
-import ir.thatsmejavad.backgroundable.core.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.core.getStringMessage
 import ir.thatsmejavad.backgroundable.core.toColor
 import ir.thatsmejavad.backgroundable.model.media.Media

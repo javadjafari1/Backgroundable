@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.core
+package ir.thatsmejavad.backgroundable.common.ui
 
 import android.content.Context
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,6 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import ir.thatsmejavad.backgroundable.R
+import ir.thatsmejavad.backgroundable.core.SnackbarManager
+import ir.thatsmejavad.backgroundable.core.SnackbarMessage
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 

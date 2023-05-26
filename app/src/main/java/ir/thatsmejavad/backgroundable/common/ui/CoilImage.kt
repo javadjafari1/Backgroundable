@@ -14,6 +14,7 @@ fun CoilImage(
     modifier: Modifier = Modifier,
     placeHolder: Painter? = null,
     contentDescription: String? = null,
+    contentScale: ContentScale = ContentScale.Crop,
 ) {
     AsyncImage(
         modifier = modifier,
@@ -23,6 +24,6 @@ fun CoilImage(
             .build(),
         placeholder = placeHolder,
         contentDescription = contentDescription ?: "a server image without content description",
-        contentScale = ContentScale.Crop,
+        contentScale = contentScale,
     )
 }
