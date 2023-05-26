@@ -1,6 +1,7 @@
 package ir.thatsmejavad.backgroundable.core
 
 import android.content.Context
+import androidx.compose.ui.graphics.Color
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.core.Constants.RATE_LIMIT_CODE
 import kotlinx.serialization.SerializationException
@@ -33,5 +34,23 @@ fun Throwable.getStringMessage(context: Context): String {
 fun Throwable.getSnackbarMessage(): SnackbarMessage {
     return SnackbarMessage(
         message = getErrorMessage()
+    )
+}
+
+fun String.toColor(): Color {
+    val hexWithoutSymbol = removePrefix("#")
+
+    val redHex = hexWithoutSymbol.substring(0, 2)
+    val greenHex = hexWithoutSymbol.substring(2, 4)
+    val blueHex = hexWithoutSymbol.substring(4, 6)
+
+    val red = redHex.toInt(16)
+    val green = greenHex.toInt(16)
+    val blue = blueHex.toInt(16)
+
+    return Color(
+        red = red / 255f,
+        green = green / 255f,
+        blue = blue / 255f,
     )
 }

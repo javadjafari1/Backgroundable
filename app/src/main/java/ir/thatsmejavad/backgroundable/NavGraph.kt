@@ -67,7 +67,7 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         route = AppScreens.ImageDetail.route,
         arguments = listOf(
             navArgument("id") {
-                type = NavType.StringType
+                type = NavType.IntType
                 nullable = false
             }
         ),
@@ -89,7 +89,7 @@ internal sealed class AppScreens(val route: String) {
     }
 
     object ImageDetail : AppScreens("image-detail?id={id}") {
-        fun createRoute(id: String): String {
+        fun createRoute(id: Int): String {
             return "image-detail?id=$id"
         }
     }
