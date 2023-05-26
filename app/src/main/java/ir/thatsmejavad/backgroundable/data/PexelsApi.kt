@@ -26,6 +26,6 @@ interface PexelsApi {
 
     @GET("v1/photos/{photoId}")
     suspend fun getPhoto(
-        @Path("photoId") photoId: String
+        @Path("photoId") photoId: Int
     ): Response<Media>
 }

@@ -7,7 +7,7 @@ import javax.inject.Inject
 class MediaRepositoryImpl @Inject constructor(
     private val mediaRemoteDataSource: MediaRemoteDataSource,
 ) : MediaRepository {
-    override suspend fun getPhoto(photoId: String): Media {
-        return mediaRemoteDataSource.getPhoto(photoId)
+    override suspend fun getMedia(mediaId: Int): Media {
+        return mediaRemoteDataSource.getMedia(mediaId)
     }
 }

@@ -13,8 +13,8 @@ import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListScree
 import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListViewModel
 import ir.thatsmejavad.backgroundable.screens.featuredcollections.FeaturedCollectionsScreen
 import ir.thatsmejavad.backgroundable.screens.featuredcollections.FeaturedCollectionsViewModel
-import ir.thatsmejavad.backgroundable.screens.imagedetail.ImageDetailScreen
-import ir.thatsmejavad.backgroundable.screens.imagedetail.ImageDetailViewModel
+import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailScreen
+import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailViewModel
 
 internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
     composable(
@@ -51,13 +51,18 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         val viewModel: CollectionListViewModel = daggerViewModel {
             DaggerCollectionListComponent.builder().build().getViewModel()
         }
-        val id = entry.arguments?.getString("id")!!
-        viewModel.getMedias(id)
+        val collectionId = entry.arguments?.getString("id")
+            ?: throw IllegalArgumentException("collectionId should not be null!")
+
+        val title = entry.arguments?.getString("title")
+            ?: throw IllegalArgumentException("title should not be null!")
+
+        viewModel.getMedias(collectionId)
 
         CollectionListScreen(
-            title = entry.arguments?.getString("title")!!,
+            title = title,
             viewModel = viewModel,
-            id = id,
+            id = collectionId,
             onMediaClicked = {
                 navController.navigate(AppScreens.ImageDetail.createRoute(it))
             },
@@ -72,11 +77,19 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
                 nullable = false
             }
         ),
-    ) {
-        val viewModel: ImageDetailViewModel = daggerViewModel {
+    ) { entry ->
+        val viewModel: MediaDetailViewModel = daggerViewModel {
             DaggerImageDetailComponent.builder().build().getViewModel()
         }
-        ImageDetailScreen()
+        val mediaId = entry.arguments?.getInt("id")
+            ?: throw IllegalArgumentException("mediaId should not be null")
+
+        viewModel.getMedia(mediaId)
+
+        MediaDetailScreen(
+            mediaId = mediaId,
+            viewModel = viewModel
+        )
     }
 }
 
