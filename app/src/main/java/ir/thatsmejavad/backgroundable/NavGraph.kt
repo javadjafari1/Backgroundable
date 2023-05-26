@@ -47,20 +47,21 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
                 nullable = false
             },
         ),
-    ) {
+    ) { entry ->
         val viewModel: CollectionListViewModel = daggerViewModel {
             DaggerCollectionListComponent.builder().build().getViewModel()
         }
-        val id = it.arguments?.getString("id")!!
+        val id = entry.arguments?.getString("id")!!
         viewModel.getMedias(id)
 
         CollectionListScreen(
-            title = it.arguments?.getString("title")!!,
+            title = entry.arguments?.getString("title")!!,
             viewModel = viewModel,
             id = id,
-            onMediaClicked = { id ->
-                navController.navigate(AppScreens.ImageDetail.createRoute(id))
-            }
+            onMediaClicked = {
+                navController.navigate(AppScreens.ImageDetail.createRoute(it))
+            },
+            onBackClicked = { navController.navigateUp() }
         )
     }
     composable(
