@@ -4,9 +4,9 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import ir.thatsmejavad.backgroundable.core.Constants.COLLECTIONS_PER_PAGE_ITEM
+import ir.thatsmejavad.backgroundable.core.RemotePagingSource
+import ir.thatsmejavad.backgroundable.core.bodyOrException
 import ir.thatsmejavad.backgroundable.data.PexelsApi
-import ir.thatsmejavad.backgroundable.data.repository.CollectionsPagingSource
-import ir.thatsmejavad.backgroundable.data.repository.MediaPagingSource
 import ir.thatsmejavad.backgroundable.model.Collection
 import ir.thatsmejavad.backgroundable.model.media.Media
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +21,12 @@ class CollectionRemoteDataSourceImpl @Inject constructor(
                 pageSize = COLLECTIONS_PER_PAGE_ITEM,
             ),
             pagingSourceFactory = {
-                CollectionsPagingSource(api)
+                RemotePagingSource(
+                    pageSize = COLLECTIONS_PER_PAGE_ITEM,
+                    apiCall = { page ->
+                        api.getCollections(page = page).bodyOrException()
+                    },
+                )
             },
         ).flow
     }
@@ -32,7 +37,15 @@ class CollectionRemoteDataSourceImpl @Inject constructor(
                 pageSize = COLLECTIONS_PER_PAGE_ITEM,
             ),
             pagingSourceFactory = {
-                MediaPagingSource(api = api, id = collectionId)
+                RemotePagingSource(
+                    pageSize = COLLECTIONS_PER_PAGE_ITEM,
+                    apiCall = { page ->
+                        api.getMediasByCollectionId(
+                            page = page,
+                            collectionId = collectionId
+                        ).bodyOrException()
+                    },
+                )
             },
         ).flow
     }
