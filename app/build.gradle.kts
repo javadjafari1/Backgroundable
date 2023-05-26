@@ -87,7 +87,6 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
 
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.30.1")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
