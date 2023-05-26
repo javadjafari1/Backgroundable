@@ -113,4 +113,5 @@ dependencies {
     implementation("androidx.paging:paging-runtime-ktx:3.1.1")
     implementation("androidx.paging:paging-common-ktx:3.1.1")
     implementation("androidx.paging:paging-compose:1.0.0-alpha19")
+    implementation("io.coil-kt:coil-compose:2.4.0")
 }

@@ -41,7 +41,7 @@ import ir.thatsmejavad.backgroundable.model.Collection
 @Composable
 fun FeaturedCollectionsScreen(
     viewModel: FeaturedCollectionsViewModel,
-    onCollectionClicked: (String) -> Unit,
+    onCollectionClicked: (String, String) -> Unit,
 ) {
     BackgroundableScaffold(
         snackbarManager = viewModel.snackbarManager,
@@ -51,7 +51,7 @@ fun FeaturedCollectionsScreen(
                     Text(text = stringResource(R.string.app_name))
                 },
             )
-        }
+        },
     ) {
         val collections = viewModel.collection.collectAsLazyPagingItems()
         val context = LocalContext.current
@@ -137,7 +137,7 @@ fun FeaturedCollectionsScreen(
 private fun CollectionCard(
     index: Int,
     collection: Collection,
-    onCollectionClicked: (String) -> Unit
+    onCollectionClicked: (String, String) -> Unit
 ) {
     ElevatedCard(
         modifier = Modifier
@@ -146,7 +146,7 @@ private fun CollectionCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { onCollectionClicked(collection.id) }
+                .clickable { onCollectionClicked(collection.id, collection.title) }
                 .padding(vertical = 24.dp, horizontal = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically

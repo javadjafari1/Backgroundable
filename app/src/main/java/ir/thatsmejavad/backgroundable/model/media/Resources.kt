@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.model
+package ir.thatsmejavad.backgroundable.model.media
 
 import kotlinx.serialization.Serializable
 

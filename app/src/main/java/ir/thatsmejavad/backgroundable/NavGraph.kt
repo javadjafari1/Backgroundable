@@ -25,8 +25,13 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         }
         FeaturedCollectionsScreen(
             viewModel = viewModel,
-            onCollectionClicked = { id ->
-                navController.navigate(AppScreens.CollectionList.createRoute(id))
+            onCollectionClicked = { id, title ->
+                navController.navigate(
+                    AppScreens.CollectionList.createRoute(
+                        id = id,
+                        title = title,
+                    )
+                )
             }
         )
     }
@@ -36,23 +41,34 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
             navArgument("id") {
                 type = NavType.StringType
                 nullable = false
-            }
+            },
+            navArgument("title") {
+                type = NavType.StringType
+                nullable = false
+            },
         ),
-    ) {
+    ) { entry ->
         val viewModel: CollectionListViewModel = daggerViewModel {
             DaggerCollectionListComponent.builder().build().getViewModel()
         }
+        val id = entry.arguments?.getString("id")!!
+        viewModel.getMedias(id)
+
         CollectionListScreen(
-            onImageClicked = { id ->
-                navController.navigate(AppScreens.ImageDetail.createRoute(id))
-            }
+            title = entry.arguments?.getString("title")!!,
+            viewModel = viewModel,
+            id = id,
+            onMediaClicked = {
+                navController.navigate(AppScreens.ImageDetail.createRoute(it))
+            },
+            onBackClicked = { navController.navigateUp() }
         )
     }
     composable(
         route = AppScreens.ImageDetail.route,
         arguments = listOf(
             navArgument("id") {
-                type = NavType.StringType
+                type = NavType.IntType
                 nullable = false
             }
         ),
@@ -67,14 +83,14 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
 internal sealed class AppScreens(val route: String) {
     object FeaturedCollections : AppScreens("featured-collections")
 
-    object CollectionList : AppScreens("collection-list?id={id}") {
-        fun createRoute(id: String): String {
-            return "collection-list?id=$id"
+    object CollectionList : AppScreens("collection-list?id={id}&title={title}") {
+        fun createRoute(id: String, title: String): String {
+            return "collection-list?id=$id&title=$title"
         }
     }
 
     object ImageDetail : AppScreens("image-detail?id={id}") {
-        fun createRoute(id: String): String {
+        fun createRoute(id: Int): String {
             return "image-detail?id=$id"
         }
     }

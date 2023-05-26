@@ -3,8 +3,7 @@ package ir.thatsmejavad.backgroundable.data.repository
 import androidx.paging.PagingData
 import ir.thatsmejavad.backgroundable.data.datasource.CollectionRemoteDataSource
 import ir.thatsmejavad.backgroundable.model.Collection
-import ir.thatsmejavad.backgroundable.model.Media
-import ir.thatsmejavad.backgroundable.model.PagedResponse
+import ir.thatsmejavad.backgroundable.model.media.Media
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -15,7 +14,7 @@ class CollectionRepositoryImpl @Inject constructor(
         return collectionRemoteDataSource.getCollections()
     }
 
-    override suspend fun getCollectionMedias(collectionId: String): PagedResponse<Media> {
+    override fun getCollectionMedias(collectionId: String): Flow<PagingData<Media>> {
         return collectionRemoteDataSource.getCollectionMedias(collectionId)
     }
 }

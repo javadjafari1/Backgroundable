@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.model
+package ir.thatsmejavad.backgroundable.model.media
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -6,21 +6,15 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Media(
     val id: Int,
-    val height: Int,
     val width: Int,
     val url: String,
-    val photographer: String,
+    val height: Int,
     val alt: String,
-    val liked: Boolean,
+    val liked: Boolean?,
+    val photographer: String,
+    @SerialName("src")
     val resources: Resources,
-    val type: String = "Photo",
-
-    @SerialName("avg_color")
     val avgColor: String,
-
-    @SerialName("photographer_id")
     val photographerId: Int,
-
-    @SerialName("photographer_url")
     val photographerUrl: String,
 )

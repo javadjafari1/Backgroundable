@@ -6,7 +6,9 @@ import dagger.Provides
 import ir.thatsmejavad.backgroundable.core.Constants.REQUEST_TIMEOUT_IN_SECONDS
 import ir.thatsmejavad.backgroundable.data.AuthorizationInterceptor
 import ir.thatsmejavad.backgroundable.data.PexelsApi
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonNamingStrategy
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,13 +20,15 @@ import javax.inject.Singleton
 @Module
 class NetworkModule {
 
+    @OptIn(ExperimentalSerializationApi::class)
     @Singleton
     @Provides
     fun provideJson(): Json {
         return Json {
             ignoreUnknownKeys = true
             coerceInputValues = true
-            // add naming strategy
+            explicitNulls = false
+            namingStrategy = JsonNamingStrategy.SnakeCase
         }
     }
 
