@@ -1,7 +1,6 @@
 package ir.thatsmejavad.backgroundable.screens.mediadetail
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -11,6 +10,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.platform.LocalContext
@@ -56,20 +58,23 @@ fun MediaDetailScreen(
             }
 
             is AsyncJob.Success<Media> -> {
-                Column(
-                    modifier = Modifier
-                        .padding(it)
-                        .fillMaxSize()
-                ) {
-                    val media = (mediaResult as AsyncJob.Success).value
+                val media = (mediaResult as AsyncJob.Success).value
+                var isLoading by remember { mutableStateOf(true) }
 
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        CoilImage(
-                            modifier = Modifier.fillMaxSize(),
-                            url = media.resources.original,
-                            contentDescription = media.alt,
-                            placeHolder = ColorPainter(media.avgColor.toColor()),
-                        )
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(it)
+                ) {
+                    CoilImage(
+                        modifier = Modifier.fillMaxSize(),
+                        url = media.resources.original,
+                        contentDescription = media.alt,
+                        placeHolder = ColorPainter(media.avgColor.toColor()),
+                        isLoading = { isLoading = it },
+                    )
+                    if (isLoading) {
+                        CircularLoading()
                     }
                 }
             }
