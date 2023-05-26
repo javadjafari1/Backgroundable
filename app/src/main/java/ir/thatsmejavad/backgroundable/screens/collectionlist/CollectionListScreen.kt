@@ -54,7 +54,6 @@ internal fun CollectionListScreen(
     onMediaClicked: (Int) -> Unit,
     onBackClicked: () -> Unit,
 ) {
-
     val medias = viewModel.medias.collectAsLazyPagingItems()
 
     BackgroundableScaffold(
@@ -75,7 +74,6 @@ internal fun CollectionListScreen(
             )
         },
     ) {
-
         val context = LocalContext.current
 
         when (val firstLoadState = medias.loadState.refresh) {
@@ -151,7 +149,6 @@ internal fun CollectionListScreen(
                 }
             }
         }
-
     }
 }
 
