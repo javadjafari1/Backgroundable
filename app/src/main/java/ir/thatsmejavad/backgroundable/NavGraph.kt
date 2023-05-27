@@ -63,8 +63,8 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
             title = title,
             viewModel = viewModel,
             id = collectionId,
-            onMediaClicked = {
-                navController.navigate(AppScreens.ImageDetail.createRoute(it))
+            onMediaClicked = { id, alt ->
+                navController.navigate(AppScreens.ImageDetail.createRoute(id, alt))
             },
             onBackClicked = { navController.navigateUp() }
         )
@@ -75,6 +75,10 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
             navArgument("id") {
                 type = NavType.IntType
                 nullable = false
+            },
+            navArgument("title") {
+                type = NavType.StringType
+                nullable = false
             }
         ),
     ) { entry ->
@@ -84,11 +88,16 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         val mediaId = entry.arguments?.getInt("id")
             ?: throw IllegalArgumentException("mediaId should not be null")
 
+        val title = entry.arguments?.getString("title")
+            ?: throw IllegalArgumentException("title should not be null")
+
         viewModel.getMedia(mediaId)
 
         MediaDetailScreen(
             mediaId = mediaId,
-            viewModel = viewModel
+            title = title,
+            viewModel = viewModel,
+            onBackClicked = { navController.navigateUp() }
         )
     }
 }
@@ -102,9 +111,9 @@ internal sealed class AppScreens(val route: String) {
         }
     }
 
-    object ImageDetail : AppScreens("image-detail?id={id}") {
-        fun createRoute(id: Int): String {
-            return "image-detail?id=$id"
+    object ImageDetail : AppScreens("image-detail?id={id}&title={title}") {
+        fun createRoute(id: Int, title: String): String {
+            return "image-detail?id=$id&title=$title"
         }
     }
 }

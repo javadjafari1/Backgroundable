@@ -1,19 +1,35 @@
 package ir.thatsmejavad.backgroundable.screens.mediadetail
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LargeTopAppBar
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -32,15 +48,42 @@ import ir.thatsmejavad.backgroundable.model.media.Media
 @Composable
 fun MediaDetailScreen(
     mediaId: Int,
-    viewModel: MediaDetailViewModel
+    title: String,
+    viewModel: MediaDetailViewModel,
+    onBackClicked: () -> Unit,
 ) {
 
     val mediaResult by viewModel.media.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
+    var isToolsVisible by remember { mutableStateOf(true) }
+
     BackgroundableScaffold(
+        modifier = Modifier.clickable(
+            onClick = {
+                isToolsVisible = !isToolsVisible
+            },
+            interactionSource = remember { MutableInteractionSource() },
+            indication = null
+        ),
         snackbarManager = viewModel.snackbarManager,
-        topBar = {}
+        topBar = {
+            AnimatedVisibility(visible = isToolsVisible) {
+                LargeTopAppBar(
+                    title = {
+                        Text(text = title)
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = onBackClicked) {
+                            Icon(
+                                imageVector = Icons.Filled.ArrowBack,
+                                contentDescription = "Navigate back"
+                            )
+                        }
+                    },
+                )
+            }
+        },
     ) {
         when (mediaResult) {
             is AsyncJob.Fail -> {
@@ -61,20 +104,35 @@ fun MediaDetailScreen(
                 val media = (mediaResult as AsyncJob.Success).value
                 var isLoading by remember { mutableStateOf(true) }
 
-                Box(
+                Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(it)
+                        .padding(it),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    CoilImage(
-                        modifier = Modifier.fillMaxSize(),
-                        url = media.resources.original,
-                        contentDescription = media.alt,
-                        placeHolder = ColorPainter(media.avgColor.toColor()),
-                        isLoading = { isLoading = it },
-                    )
-                    if (isLoading) {
-                        CircularLoading()
+                    Box(Modifier.weight(1f)) {
+                        CoilImage(
+                            url = media.resources.original,
+                            contentDescription = media.alt,
+                            placeHolder = ColorPainter(media.avgColor.toColor()),
+                            isLoading = { isLoading = it },
+                        )
+                        if (isLoading) {
+                            CircularLoading()
+                        }
+                    }
+                    AnimatedVisibility(visible = isToolsVisible) {
+                        Row(
+                            modifier = Modifier
+                                .padding(20.dp)
+                                .fillMaxWidth()
+                                .clip(MaterialTheme.shapes.extraLarge)
+                                .background(MaterialTheme.colorScheme.primaryContainer)
+                                .padding(vertical = 24.dp),
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            Text(text = "Set as Wallpaper")
+                        }
                     }
                 }
             }

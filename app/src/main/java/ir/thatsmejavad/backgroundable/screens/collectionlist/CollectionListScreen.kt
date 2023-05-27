@@ -51,7 +51,7 @@ internal fun CollectionListScreen(
     title: String,
     id: String,
     viewModel: CollectionListViewModel,
-    onMediaClicked: (Int) -> Unit,
+    onMediaClicked: (Int, String) -> Unit,
     onBackClicked: () -> Unit,
 ) {
     val medias = viewModel.medias.collectAsLazyPagingItems()
@@ -155,12 +155,12 @@ internal fun CollectionListScreen(
 @Composable
 private fun MediaCard(
     media: Media,
-    onCollectionClicked: (Int) -> Unit,
+    onCollectionClicked: (Int, String) -> Unit,
 ) {
     Column(
         modifier = Modifier
             .clip(MaterialTheme.shapes.medium)
-            .clickable { onCollectionClicked(media.id) }
+            .clickable { onCollectionClicked(media.id, media.alt) }
             .padding(4.dp)
 
     ) {
