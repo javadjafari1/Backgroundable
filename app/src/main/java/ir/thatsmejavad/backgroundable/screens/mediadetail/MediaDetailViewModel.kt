@@ -31,4 +31,8 @@ class MediaDetailViewModel @Inject constructor(
             }
         }
     }
+
+    fun savePicture() {
+
+    }
 }

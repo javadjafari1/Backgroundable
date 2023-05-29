@@ -1,5 +1,6 @@
 package ir.thatsmejavad.backgroundable.common.ui
 
+import android.graphics.drawable.Drawable
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -38,6 +39,7 @@ fun CoilImage(
     contentDescription: String? = null,
     contentScale: ContentScale = ContentScale.Crop,
     isLoading: (Boolean) -> Unit = {},
+    onDrawableLoaded: (Drawable) -> Unit = {},
 ) {
     val painter = rememberAsyncImagePainter(
         model = url,
@@ -50,6 +52,7 @@ fun CoilImage(
             isLoading(true)
         },
         onSuccess = {
+            onDrawableLoaded(it.result.drawable)
             isLoading(false)
         }
     )
@@ -59,4 +62,3 @@ fun CoilImage(
         contentDescription = contentDescription ?: "a server image without content description",
     )
 }
-

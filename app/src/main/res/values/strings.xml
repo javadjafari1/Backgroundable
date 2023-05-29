@@ -7,4 +7,5 @@
     </string>
     <string name="label_try_again">Try again</string>
     <string name="serialization_error_message"> Oops!: Serialization Error</string>
+    <string name="label_set_as_wallpaper">Set as Wallpaper</string>
 </resources>
