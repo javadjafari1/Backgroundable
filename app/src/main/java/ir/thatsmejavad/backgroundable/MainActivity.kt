@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import ir.thatsmejavad.backgroundable.core.viewmodel.Inject
 import ir.thatsmejavad.backgroundable.ui.theme.BackgroundableTheme
 
 class MainActivity : ComponentActivity() {
@@ -18,15 +19,17 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
 
             BackgroundableTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    NavHost(
-                        navController = navController,
-                        startDestination = AppScreens.FeaturedCollections.route
+                Inject(App.app.getViewModelFactory()) {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background
                     ) {
-                        mainNavGraph(navController)
+                        NavHost(
+                            navController = navController,
+                            startDestination = AppScreens.FeaturedCollections.route
+                        ) {
+                            mainNavGraph(navController)
+                        }
                     }
                 }
             }

@@ -5,26 +5,17 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import ir.thatsmejavad.backgroundable.core.daggerViewModel
-import ir.thatsmejavad.backgroundable.di.components.DaggerCollectionListComponent
-import ir.thatsmejavad.backgroundable.di.components.DaggerFeaturedCollectionsComponent
-import ir.thatsmejavad.backgroundable.di.components.DaggerImageDetailComponent
+import ir.thatsmejavad.backgroundable.core.viewmodel.daggerViewModel
 import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListScreen
-import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListViewModel
 import ir.thatsmejavad.backgroundable.screens.featuredcollections.FeaturedCollectionsScreen
-import ir.thatsmejavad.backgroundable.screens.featuredcollections.FeaturedCollectionsViewModel
 import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailScreen
-import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailViewModel
 
 internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
     composable(
         route = AppScreens.FeaturedCollections.route
     ) {
-        val viewModel: FeaturedCollectionsViewModel = daggerViewModel {
-            DaggerFeaturedCollectionsComponent.builder().build().getViewModel()
-        }
         FeaturedCollectionsScreen(
-            viewModel = viewModel,
+            viewModel = daggerViewModel(),
             onCollectionClicked = { id, title ->
                 navController.navigate(
                     AppScreens.CollectionList.createRoute(
@@ -48,20 +39,16 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
             },
         ),
     ) { entry ->
-        val viewModel: CollectionListViewModel = daggerViewModel {
-            DaggerCollectionListComponent.builder().build().getViewModel()
-        }
+
         val collectionId = entry.arguments?.getString("id")
             ?: throw IllegalArgumentException("collectionId should not be null!")
 
         val title = entry.arguments?.getString("title")
             ?: throw IllegalArgumentException("title should not be null!")
 
-        viewModel.getMedias(collectionId)
-
         CollectionListScreen(
             title = title,
-            viewModel = viewModel,
+            viewModel = daggerViewModel(),
             id = collectionId,
             onMediaClicked = { id, alt ->
                 navController.navigate(AppScreens.ImageDetail.createRoute(id, alt))
@@ -82,21 +69,17 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
             }
         ),
     ) { entry ->
-        val viewModel: MediaDetailViewModel = daggerViewModel {
-            DaggerImageDetailComponent.builder().build().getViewModel()
-        }
+
         val mediaId = entry.arguments?.getInt("id")
             ?: throw IllegalArgumentException("mediaId should not be null")
 
         val title = entry.arguments?.getString("title")
             ?: throw IllegalArgumentException("title should not be null")
 
-        viewModel.getMedia(mediaId)
-
         MediaDetailScreen(
             mediaId = mediaId,
             title = title,
-            viewModel = viewModel,
+            viewModel = daggerViewModel(),
             onBackClicked = { navController.navigateUp() }
         )
     }
