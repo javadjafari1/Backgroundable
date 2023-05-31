@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
 
             BackgroundableTheme {
-                Inject(App.app.getViewModelFactory()) {
+                Inject(App.appComponent.getViewModelFactory()) {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background

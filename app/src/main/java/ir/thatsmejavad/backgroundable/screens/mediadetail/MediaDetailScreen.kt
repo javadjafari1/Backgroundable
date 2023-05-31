@@ -62,7 +62,6 @@ fun MediaDetailScreen(
     viewModel: MediaDetailViewModel,
     onBackClicked: () -> Unit,
 ) {
-
     val mediaResult by viewModel.media.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
@@ -158,7 +157,6 @@ fun MediaDetailScreen(
                                                 }
                                         }
                                     }
-
                                 }
                                 .padding(vertical = 24.dp),
                             horizontalArrangement = Arrangement.Center

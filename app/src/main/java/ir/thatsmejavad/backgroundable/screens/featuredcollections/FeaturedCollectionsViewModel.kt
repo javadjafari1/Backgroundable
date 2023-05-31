@@ -23,7 +23,6 @@ class FeaturedCollectionsViewModel @AssistedInject constructor(
     @AssistedFactory
     interface Factory : ViewModelAssistedFactory<FeaturedCollectionsViewModel>
 
-
     private val _collections = MutableStateFlow<PagingData<Collection>>(value = PagingData.empty())
     val collection: StateFlow<PagingData<Collection>> = _collections
 

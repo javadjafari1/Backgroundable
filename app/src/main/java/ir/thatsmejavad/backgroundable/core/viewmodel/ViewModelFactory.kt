@@ -10,7 +10,8 @@ interface ViewModelFactory {
 }
 
 class DaggerViewModelAssistedFactory @Inject constructor(
-    private val assistedFactoryMap: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModelAssistedFactory<*>>>
+    private val assistedFactoryMap:
+    Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModelAssistedFactory<*>>>
 ) : ViewModelFactory {
 
     @Suppress("UNCHECKED_CAST")
@@ -19,10 +20,7 @@ class DaggerViewModelAssistedFactory @Inject constructor(
             assistedFactoryMap[modelClass] ?: assistedFactoryMap.asIterable().firstOrNull {
                 modelClass.isAssignableFrom(it.key)
             }?.value ?: throw IllegalArgumentException("unknown model class $modelClass")
-        return try {
-            creator.get().create(handle) as VM
-        } catch (e: Exception) {
-            throw RuntimeException(e)
-        }
+
+        return creator.get().create(handle) as VM
     }
 }

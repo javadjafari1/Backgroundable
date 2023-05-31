@@ -25,5 +25,4 @@ interface AppViewModelModule {
     @Binds
     @[IntoMap ViewModelAssistedFactoryKey(MediaDetailViewModel::class)]
     fun bindsMediaDetailViewModelFactory(factory: MediaDetailViewModel.Factory): ViewModelAssistedFactory<*>
-
 }
