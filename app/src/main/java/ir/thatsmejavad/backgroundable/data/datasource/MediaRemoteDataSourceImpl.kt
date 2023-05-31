@@ -8,7 +8,7 @@ import javax.inject.Inject
 class MediaRemoteDataSourceImpl @Inject constructor(
     private val api: PexelsApi,
 ) : MediaRemoteDataSource {
-    override suspend fun getPhoto(photoId: String): Media {
+    override suspend fun getMedia(photoId: Int): Media {
         return api.getPhoto(photoId).bodyOrException()
     }
 }

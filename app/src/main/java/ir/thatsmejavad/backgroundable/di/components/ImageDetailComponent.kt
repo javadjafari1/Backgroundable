@@ -3,7 +3,7 @@ package ir.thatsmejavad.backgroundable.di.components
 import dagger.Component
 import ir.thatsmejavad.backgroundable.di.modules.BindModule
 import ir.thatsmejavad.backgroundable.di.modules.NetworkModule
-import ir.thatsmejavad.backgroundable.screens.imagedetail.ImageDetailViewModel
+import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailViewModel
 import javax.inject.Singleton
 
 @Component(
@@ -20,5 +20,5 @@ interface ImageDetailComponent {
         fun build(): ImageDetailComponent
     }
 
-    fun getViewModel(): ImageDetailViewModel
+    fun getViewModel(): MediaDetailViewModel
 }

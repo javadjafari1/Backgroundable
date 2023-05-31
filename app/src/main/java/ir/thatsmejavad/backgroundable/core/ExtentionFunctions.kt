@@ -1,10 +1,17 @@
 package ir.thatsmejavad.backgroundable.core
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.compose.ui.graphics.Color
+import androidx.core.content.FileProvider
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.core.Constants.RATE_LIMIT_CODE
 import kotlinx.serialization.SerializationException
+import java.io.File
+import java.io.FileOutputStream
 import java.net.SocketTimeoutException
 
 fun Throwable.getErrorMessage(): Any {
@@ -54,3 +61,38 @@ fun String.toColor(): Color {
         blue = blue / 255f,
     )
 }
+
+fun Activity.setWallpaperWithImage(uri: Uri, onError: (Throwable) -> Unit) {
+    runCatching {
+        val intent = Intent(Intent.ACTION_ATTACH_DATA)
+        intent.setDataAndType(uri, "image/*")
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        intent.putExtra("mimeType", "image/*")
+        intent.putExtra(Intent.EXTRA_STREAM, uri)
+
+        startActivity(intent)
+    }.getOrElse {
+        onError(it)
+    }
+}
+
+fun File.getUri(context: Context): Uri {
+    return FileProvider.getUriForFile(
+        context,
+        "${context.packageName}.fileprovider",
+        this
+    )
+}
+
+fun Bitmap.saveIn(
+    directory: File,
+    name: String = "image"
+): File {
+    val tempFile = File.createTempFile(name, ".jpg", directory)
+    FileOutputStream(tempFile).use {
+        compress(Bitmap.CompressFormat.JPEG, 100, it)
+
+    }
+    return tempFile
+}
+
