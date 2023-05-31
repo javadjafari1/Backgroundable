@@ -1,9 +1,11 @@
 package ir.thatsmejavad.backgroundable.screens.featuredcollections
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
@@ -18,6 +20,7 @@ import kotlinx.coroutines.flow.onEach
 class FeaturedCollectionsViewModel @AssistedInject constructor(
     private val collectionRepository: CollectionRepository,
     val snackbarManager: SnackbarManager,
+    @Assisted private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     @AssistedFactory
