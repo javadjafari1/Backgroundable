@@ -12,7 +12,6 @@ import ir.thatsmejavad.backgroundable.core.Constants.RATE_LIMIT_CODE
 import kotlinx.serialization.SerializationException
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
 import java.net.SocketTimeoutException
 
 fun Throwable.getErrorMessage(): Any {
@@ -63,8 +62,8 @@ fun String.toColor(): Color {
     )
 }
 
-fun Activity.setWallpaperWithImage(uri: Uri, onError: () -> Unit) {
-    try {
+fun Activity.setWallpaperWithImage(uri: Uri, onError: (Throwable) -> Unit) {
+    runCatching {
         val intent = Intent(Intent.ACTION_ATTACH_DATA)
         intent.setDataAndType(uri, "image/*")
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -72,8 +71,8 @@ fun Activity.setWallpaperWithImage(uri: Uri, onError: () -> Unit) {
         intent.putExtra(Intent.EXTRA_STREAM, uri)
 
         startActivity(intent)
-    } catch (e: IOException) {
-        onError()
+    }.getOrElse {
+        onError(it)
     }
 }
 

@@ -2,7 +2,6 @@ package ir.thatsmejavad.backgroundable.screens.mediadetail
 
 import android.app.Activity
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -144,18 +143,20 @@ fun MediaDetailScreen(
                                 .background(MaterialTheme.colorScheme.primaryContainer)
                                 .clickable {
                                     scope.launch {
-                                        val uri: Uri
                                         withContext(Dispatchers.IO) {
-                                            uri = drawable
-                                                .takeIf { it != null }!!
-                                                .toBitmap()
-                                                .saveIn(context.cacheDir)
-                                                .getUri(context)
+                                            drawable
+                                                .takeIf { it != null }
+                                                ?.let {
+                                                    val uri = it
+                                                        .toBitmap()
+                                                        .saveIn(context.cacheDir)
+                                                        .getUri(context)
+                                                    (context as Activity).setWallpaperWithImage(
+                                                        uri = uri,
+                                                        onError = {}
+                                                    )
+                                                }
                                         }
-                                        (context as Activity).setWallpaperWithImage(
-                                            uri = uri,
-                                            onError = {}
-                                        )
                                     }
 
                                 }
