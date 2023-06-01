@@ -10,7 +10,12 @@ import ir.thatsmejavad.backgroundable.screens.featuredcollections.FeaturedCollec
 import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailViewModel
 
 @Module(
-    includes = [ViewModelFactoryModule::class]
+    includes = [
+        ViewModelFactoryModule::class,
+        NetworkModule::class,
+        CollectionModule::class,
+        MediaModule::class,
+    ]
 )
 interface AppViewModelModule {
 

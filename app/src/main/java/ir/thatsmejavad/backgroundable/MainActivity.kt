@@ -6,10 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import ir.thatsmejavad.backgroundable.core.viewmodel.Inject
+import ir.thatsmejavad.backgroundable.core.viewmodel.LocalViewModelFactory
 import ir.thatsmejavad.backgroundable.ui.theme.BackgroundableTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,7 +20,9 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
 
             BackgroundableTheme {
-                Inject(App.appComponent.getViewModelFactory()) {
+                CompositionLocalProvider(
+                    LocalViewModelFactory provides App.appComponent.getViewModelFactory()
+                ) {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background

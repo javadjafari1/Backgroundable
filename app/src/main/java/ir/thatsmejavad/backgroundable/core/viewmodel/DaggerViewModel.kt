@@ -7,17 +7,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 inline fun <reified VM : ViewModel> daggerViewModel(): VM {
-    val factory = getViewModelFactory()
+    val factory = checkNotNull(LocalViewModelFactory.current) {
+        "ViewModelFactory is not provided"
+    }
     return viewModel {
         val savedStateHandle = createSavedStateHandle()
         factory.create(VM::class.java, savedStateHandle)
-    }
-}
-
-@Composable
-@PublishedApi
-internal fun getViewModelFactory(): ViewModelFactory {
-    return checkNotNull(LocalViewModelFactory.current) {
-        "No ViewModelFactory was provided via LocalViewModelFactory"
     }
 }
