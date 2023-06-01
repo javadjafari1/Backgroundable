@@ -3,11 +3,20 @@ package ir.thatsmejavad.backgroundable.screens.mediadetail
 import android.app.Activity
 import android.graphics.drawable.Drawable
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.gestures.rememberTransformableState
+import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,10 +38,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -68,16 +80,13 @@ fun MediaDetailScreen(
     var isToolsVisible by remember { mutableStateOf(true) }
 
     BackgroundableScaffold(
-        modifier = Modifier.clickable(
-            onClick = {
-                isToolsVisible = !isToolsVisible
-            },
-            interactionSource = remember { MutableInteractionSource() },
-            indication = null
-        ),
         snackbarManager = viewModel.snackbarManager,
         topBar = {
-            AnimatedVisibility(visible = isToolsVisible) {
+            AnimatedVisibility(
+                visible = isToolsVisible && title.isNotEmpty(),
+                enter = fadeIn() + expandVertically(),
+                exit = fadeOut() + shrinkVertically(),
+            ) {
                 LargeTopAppBar(
                     title = {
                         Text(text = title)
@@ -111,7 +120,7 @@ fun MediaDetailScreen(
 
             is AsyncJob.Success<Media> -> {
                 val media = (mediaResult as AsyncJob.Success).value
-                var isLoading by remember { mutableStateOf(true) }
+                var isLoading by rememberSaveable { mutableStateOf(true) }
                 var drawable by remember { mutableStateOf<Drawable?>(null) }
                 val scope = rememberCoroutineScope()
 
@@ -121,7 +130,10 @@ fun MediaDetailScreen(
                         .padding(paddingValues),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                    ZoomableBox(
+                        Modifier.weight(1f),
+                        onClick = { isToolsVisible = !isToolsVisible },
+                    ) {
                         CoilImage(
                             url = media.resources.original,
                             contentDescription = media.alt,
@@ -170,4 +182,43 @@ fun MediaDetailScreen(
             }
         }
     }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun ZoomableBox(
+    modifier: Modifier = Modifier,
+    contentAlignment: Alignment = Alignment.Center,
+    onClick: () -> Unit,
+    content: @Composable BoxScope.() -> Unit
+) {
+    var scale by remember { mutableStateOf(1f) }
+    var offset by remember { mutableStateOf(Offset.Zero) }
+    val state = rememberTransformableState { zoomChange, offsetChange, _ ->
+        scale *= zoomChange
+        offset += offsetChange
+    }
+
+    Box(
+        modifier
+            .graphicsLayer(
+                scaleX = scale,
+                scaleY = scale,
+                translationX = offset.x,
+                translationY = offset.y
+            )
+            .transformable(state = state)
+            .combinedClickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                onDoubleClick = {
+                    scale = 1f
+                    offset = Offset.Zero
+
+                },
+                onClick = onClick
+            ),
+        contentAlignment = contentAlignment,
+        content = content
+    )
 }
