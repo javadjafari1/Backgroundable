@@ -30,7 +30,10 @@ class CollectionListViewModel @AssistedInject constructor(
     val medias: StateFlow<PagingData<Media>> = _medias
 
     init {
-        getMedias(savedStateHandle["id"]!!)
+        val id = checkNotNull(savedStateHandle.get<String>("id")) {
+            "id should not be null in $this"
+        }
+        getMedias(id)
     }
 
     fun getMedias(id: String) {

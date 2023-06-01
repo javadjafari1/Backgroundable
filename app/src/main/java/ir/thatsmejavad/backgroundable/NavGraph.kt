@@ -26,6 +26,7 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
             }
         )
     }
+
     composable(
         route = AppScreens.CollectionList.route,
         arguments = listOf(
@@ -40,11 +41,13 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         ),
     ) { entry ->
 
-        val collectionId = entry.arguments?.getString("id")
-            ?: throw IllegalArgumentException("collectionId should not be null!")
+        val collectionId = checkNotNull(entry.arguments?.getString("id")) {
+            "collectionId should not be null!"
+        }
 
-        val title = entry.arguments?.getString("title")
-            ?: throw IllegalArgumentException("title should not be null!")
+        val title = checkNotNull(entry.arguments?.getString("title")) {
+            "title should not be null!"
+        }
 
         CollectionListScreen(
             title = title,
@@ -56,6 +59,7 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
             onBackClicked = { navController.navigateUp() }
         )
     }
+
     composable(
         route = AppScreens.ImageDetail.route,
         arguments = listOf(
@@ -70,11 +74,13 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         ),
     ) { entry ->
 
-        val mediaId = entry.arguments?.getInt("id")
-            ?: throw IllegalArgumentException("mediaId should not be null")
+        val mediaId = checkNotNull(entry.arguments?.getInt("id")) {
+            "mediaId should not be null"
+        }
 
-        val title = entry.arguments?.getString("title")
-            ?: throw IllegalArgumentException("title should not be null")
+        val title = checkNotNull(entry.arguments?.getString("title")) {
+            "title should not be null"
+        }
 
         MediaDetailScreen(
             mediaId = mediaId,

@@ -17,10 +17,11 @@ import ir.thatsmejavad.backgroundable.ui.theme.BackgroundableTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val appComponent = DaggerAppComponent.create()
+
         setContent {
             val navController = rememberNavController()
-            val appComponent = DaggerAppComponent.create()
-
             BackgroundableTheme {
                 CompositionLocalProvider(
                     LocalViewModelFactory provides appComponent.getViewModelFactory()

@@ -28,7 +28,10 @@ class MediaDetailViewModel @AssistedInject constructor(
     val media: StateFlow<AsyncJob<Media>> = _media
 
     init {
-        getMedia(savedStateHandle["id"]!!)
+        val id = checkNotNull(savedStateHandle.get<Int>("id")) {
+            "id should not be null in $this"
+        }
+        getMedia(id)
     }
 
     fun getMedia(mediaId: Int) {
