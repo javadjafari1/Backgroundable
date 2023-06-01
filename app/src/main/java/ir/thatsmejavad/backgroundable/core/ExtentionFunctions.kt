@@ -91,8 +91,6 @@ fun Bitmap.saveIn(
     val tempFile = File.createTempFile(name, ".jpg", directory)
     FileOutputStream(tempFile).use {
         compress(Bitmap.CompressFormat.JPEG, 100, it)
-
     }
     return tempFile
 }
-
