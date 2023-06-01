@@ -29,6 +29,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -77,7 +78,7 @@ fun MediaDetailScreen(
         ),
         snackbarManager = viewModel.snackbarManager,
         topBar = {
-            AnimatedVisibility(visible = isToolsVisible) {
+            AnimatedVisibility(visible = isToolsVisible && title.isNotEmpty()) {
                 LargeTopAppBar(
                     title = {
                         Text(text = title)
@@ -111,7 +112,7 @@ fun MediaDetailScreen(
 
             is AsyncJob.Success<Media> -> {
                 val media = (mediaResult as AsyncJob.Success).value
-                var isLoading by remember { mutableStateOf(true) }
+                var isLoading by rememberSaveable { mutableStateOf(true) }
                 var drawable by remember { mutableStateOf<Drawable?>(null) }
                 val scope = rememberCoroutineScope()
 
@@ -133,6 +134,7 @@ fun MediaDetailScreen(
                             CircularLoading()
                         }
                     }
+
                     AnimatedVisibility(visible = isToolsVisible && !isLoading) {
                         Row(
                             modifier = Modifier
