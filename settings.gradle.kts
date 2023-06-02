@@ -1,11 +1,22 @@
 pluginManagement {
+    val localProperties = java.util.Properties().apply {
+        load(java.io.FileInputStream("nexus.properties"))
+    }
+
     repositories {
-        google()
-        mavenCentral()
-        gradlePluginPortal()
+        maven {
+            url = uri(localProperties.getProperty("url"))
+            credentials {
+                username = localProperties.getProperty("username")
+                password = localProperties.getProperty("password")
+            }
+        }
     }
 }
 dependencyResolutionManagement {
+    val localProperties = java.util.Properties().apply {
+        load(java.io.FileInputStream("nexus.properties"))
+    }
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
