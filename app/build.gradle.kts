@@ -18,10 +18,9 @@ android {
     namespace = "ir.thatsmejavad.backgroundable"
     compileSdk = 33
     val properties = Properties()
-    if (rootProject.file("authorization.properties").exists()) {
+    val propertiesExist = rootProject.file("authorization.properties").exists()
+    if (propertiesExist) {
         properties.load(project.rootProject.file("authorization.properties").inputStream())
-    } else {
-        throw IllegalArgumentException("no authorization.properties found")
     }
 
     defaultConfig {
@@ -35,10 +34,15 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        val authorization = if (propertiesExist) {
+            properties.getProperty("authorization")
+        } else {
+            "AUTHORIZATION"
+        }
 
         buildConfigField(
             type = "String",
-            value = "\"${properties.getProperty("authorization")}\"",
+            value = "\"$authorization\"",
             name = "AUTHORIZATION",
         )
     }
