@@ -11,20 +11,19 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import ir.thatsmejavad.backgroundable.core.viewmodel.LocalViewModelFactory
-import ir.thatsmejavad.backgroundable.di.components.DaggerAppComponent
 import ir.thatsmejavad.backgroundable.ui.theme.BackgroundableTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val appComponent = DaggerAppComponent.create()
+       val backgroundableApp = (application as BackgroundableApp)
 
         setContent {
             val navController = rememberNavController()
             BackgroundableTheme {
                 CompositionLocalProvider(
-                    LocalViewModelFactory provides appComponent.getViewModelFactory()
+                    LocalViewModelFactory provides backgroundableApp.appComponent.getViewModelFactory()
                 ) {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
