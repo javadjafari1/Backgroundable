@@ -6,6 +6,8 @@ import dagger.Module
 import dagger.Provides
 import ir.thatsmejavad.backgroundable.data.db.BackgroundableDatabase
 import ir.thatsmejavad.backgroundable.data.db.dao.CollectionDao
+import ir.thatsmejavad.backgroundable.data.db.dao.MediaDao
+import ir.thatsmejavad.backgroundable.data.db.dao.ResourceDao
 import javax.inject.Singleton
 
 @Module
@@ -26,4 +28,16 @@ class DatabaseModule {
     fun providesCollectionDao(
         backgroundableDatabase: BackgroundableDatabase
     ): CollectionDao = backgroundableDatabase.collectionDao()
+
+    @Provides
+    @Singleton
+    fun provideMediaDao(
+        backgroundableDatabase: BackgroundableDatabase
+    ): MediaDao = backgroundableDatabase.mediaDao()
+
+    @Provides
+    @Singleton
+    fun provideResourceDao(
+        backgroundableDatabase: BackgroundableDatabase
+    ): ResourceDao = backgroundableDatabase.resourceDao()
 }

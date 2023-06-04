@@ -35,7 +35,7 @@ import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.CircularLoading
 import ir.thatsmejavad.backgroundable.core.getStringMessage
-import ir.thatsmejavad.backgroundable.model.Collection
+import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -67,7 +67,7 @@ fun FeaturedCollectionsScreen(
                         text = firstLoadState.error.getStringMessage(context)
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    ElevatedButton(onClick = { viewModel.getCollections() }) {
+                    ElevatedButton(onClick = { viewModel.getCollections(false) }) {
                         Text(text = stringResource(R.string.label_try_again))
                     }
                 }
@@ -136,7 +136,7 @@ fun FeaturedCollectionsScreen(
 @Composable
 private fun CollectionCard(
     index: Int,
-    collection: Collection,
+    collection: CollectionEntity,
     onCollectionClicked: (String, String) -> Unit
 ) {
     ElevatedCard(

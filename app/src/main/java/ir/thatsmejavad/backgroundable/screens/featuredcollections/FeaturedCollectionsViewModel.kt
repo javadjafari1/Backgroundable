@@ -10,8 +10,8 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
 import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelAssistedFactory
+import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
 import ir.thatsmejavad.backgroundable.data.repository.CollectionRepository
-import ir.thatsmejavad.backgroundable.model.Collection
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -26,15 +26,15 @@ class FeaturedCollectionsViewModel @AssistedInject constructor(
     @AssistedFactory
     interface Factory : ViewModelAssistedFactory<FeaturedCollectionsViewModel>
 
-    private val _collections = MutableStateFlow<PagingData<Collection>>(value = PagingData.empty())
-    val collection: StateFlow<PagingData<Collection>> = _collections
+    private val _collections = MutableStateFlow<PagingData<CollectionEntity>>(PagingData.empty())
+    val collection: StateFlow<PagingData<CollectionEntity>> = _collections
 
     init {
-        getCollections()
+        getCollections(false)
     }
 
-    fun getCollections() = collectionRepository
-        .getCollections()
+    fun getCollections(shouldFetch: Boolean) = collectionRepository
+        .getCollections(shouldFetch)
         .cachedIn(viewModelScope)
         .onEach {
             _collections.emit(it)
