@@ -12,7 +12,6 @@ import ir.thatsmejavad.backgroundable.db.entity.CollectionEntity
 import ir.thatsmejavad.backgroundable.db.entity.MediaEntity
 import ir.thatsmejavad.backgroundable.db.entity.ResourceEntity
 
-
 @Database(
     entities = [
         CollectionEntity::class,

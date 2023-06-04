@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import ir.thatsmejavad.backgroundable.core.ResourceSize
 
-
 @Entity(tableName = "resources", primaryKeys = ["size", "media-id"])
 data class ResourceEntity(
 

@@ -10,5 +10,4 @@ interface MediaDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMedias(medias: List<MediaEntity>)
-
 }
