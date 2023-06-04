@@ -5,5 +5,4 @@ import javax.inject.Inject
 
 class CollectionLocalDataSourceImpl @Inject constructor(
     private val collectionDao: CollectionDao
-) : CollectionLocalDataSource {
-}
+) : CollectionLocalDataSource
