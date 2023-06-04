@@ -6,6 +6,7 @@ plugins {
     id("kotlin-kapt")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("io.gitlab.arturbosch.detekt")
+    id("com.google.devtools.ksp")
 }
 
 detekt {
@@ -117,4 +118,8 @@ dependencies {
     implementation("androidx.paging:paging-common-ktx:3.1.1")
     implementation("androidx.paging:paging-compose:1.0.0-alpha19")
     implementation("io.coil-kt:coil-compose:2.4.0")
+
+    implementation("androidx.room:room-runtime:2.5.1")
+    implementation("androidx.room:room-ktx:2.5.1")
+    ksp("androidx.room:room-compiler:2.5.1")
 }

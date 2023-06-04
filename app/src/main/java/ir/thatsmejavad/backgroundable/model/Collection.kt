@@ -1,5 +1,6 @@
 package ir.thatsmejavad.backgroundable.model
 
+import ir.thatsmejavad.backgroundable.db.entity.CollectionEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -14,4 +15,14 @@ data class Collection(
     @SerialName("private")
     val isPrivate: Boolean,
     val videosCount: Int,
-)
+) {
+    fun toEntity() = CollectionEntity(
+        id = id,
+        title = title,
+        description = description,
+        mediaCount = mediaCount,
+        photosCount = photosCount,
+        videosCount = videosCount,
+        isPrivate = isPrivate
+    )
+}
