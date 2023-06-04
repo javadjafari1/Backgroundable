@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-       val backgroundableApp = (application as BackgroundableApp)
+        val backgroundableApp = (application as BackgroundableApp)
 
         setContent {
             val navController = rememberNavController()

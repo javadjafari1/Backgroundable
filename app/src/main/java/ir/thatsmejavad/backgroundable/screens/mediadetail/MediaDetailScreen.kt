@@ -214,7 +214,6 @@ fun ZoomableBox(
                 onDoubleClick = {
                     scale = 1f
                     offset = Offset.Zero
-
                 },
                 onClick = onClick
             ),
