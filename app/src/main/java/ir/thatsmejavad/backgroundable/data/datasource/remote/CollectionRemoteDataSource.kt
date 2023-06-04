@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.data.datasource
+package ir.thatsmejavad.backgroundable.data.datasource.remote
 
 import androidx.paging.PagingData
 import ir.thatsmejavad.backgroundable.model.Collection

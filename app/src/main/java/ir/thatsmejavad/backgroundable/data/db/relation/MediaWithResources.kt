@@ -1,9 +1,9 @@
-package ir.thatsmejavad.backgroundable.db.relation
+package ir.thatsmejavad.backgroundable.data.db.relation
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import ir.thatsmejavad.backgroundable.db.entity.MediaEntity
-import ir.thatsmejavad.backgroundable.db.entity.ResourceEntity
+import ir.thatsmejavad.backgroundable.data.db.entity.MediaEntity
+import ir.thatsmejavad.backgroundable.data.db.entity.ResourceEntity
 
 data class MediaWithResources(
     @Embedded val media: MediaEntity,

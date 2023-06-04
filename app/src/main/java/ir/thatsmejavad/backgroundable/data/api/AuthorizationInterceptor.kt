@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.data
+package ir.thatsmejavad.backgroundable.data.api
 
 import ir.thatsmejavad.backgroundable.BuildConfig
 import okhttp3.Interceptor

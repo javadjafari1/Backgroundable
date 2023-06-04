@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.db.entity
+package ir.thatsmejavad.backgroundable.data.db.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

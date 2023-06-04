@@ -1,9 +1,9 @@
-package ir.thatsmejavad.backgroundable.db.dao
+package ir.thatsmejavad.backgroundable.data.db.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
-import ir.thatsmejavad.backgroundable.db.entity.ResourceEntity
+import ir.thatsmejavad.backgroundable.data.db.entity.ResourceEntity
 
 @Dao
 interface ResourceDao {

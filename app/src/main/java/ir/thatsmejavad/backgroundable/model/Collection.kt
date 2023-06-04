@@ -1,6 +1,6 @@
 package ir.thatsmejavad.backgroundable.model
 
-import ir.thatsmejavad.backgroundable.db.entity.CollectionEntity
+import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

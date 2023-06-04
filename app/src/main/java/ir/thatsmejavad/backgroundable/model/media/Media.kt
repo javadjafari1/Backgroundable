@@ -1,7 +1,7 @@
 package ir.thatsmejavad.backgroundable.model.media
 
 import ir.thatsmejavad.backgroundable.core.MediaType
-import ir.thatsmejavad.backgroundable.db.entity.MediaEntity
+import ir.thatsmejavad.backgroundable.data.db.entity.MediaEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

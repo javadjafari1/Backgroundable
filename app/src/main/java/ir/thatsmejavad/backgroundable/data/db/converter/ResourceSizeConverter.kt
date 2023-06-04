@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.db.converter
+package ir.thatsmejavad.backgroundable.data.db.converter
 
 import androidx.room.TypeConverter
 import ir.thatsmejavad.backgroundable.core.ResourceSize

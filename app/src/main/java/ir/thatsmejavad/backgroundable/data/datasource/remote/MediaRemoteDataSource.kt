@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.data.datasource
+package ir.thatsmejavad.backgroundable.data.datasource.remote
 
 import ir.thatsmejavad.backgroundable.model.media.Media
 

@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.data
+package ir.thatsmejavad.backgroundable.data.api
 
 import ir.thatsmejavad.backgroundable.core.Constants.COLLECTIONS_PER_PAGE_ITEM
 import ir.thatsmejavad.backgroundable.model.Collection

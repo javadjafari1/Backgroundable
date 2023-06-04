@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.data.datasource
+package ir.thatsmejavad.backgroundable.data.datasource.remote
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -6,7 +6,7 @@ import androidx.paging.PagingData
 import ir.thatsmejavad.backgroundable.core.Constants.COLLECTIONS_PER_PAGE_ITEM
 import ir.thatsmejavad.backgroundable.core.RemotePagingSource
 import ir.thatsmejavad.backgroundable.core.bodyOrException
-import ir.thatsmejavad.backgroundable.data.PexelsApi
+import ir.thatsmejavad.backgroundable.data.api.PexelsApi
 import ir.thatsmejavad.backgroundable.model.Collection
 import ir.thatsmejavad.backgroundable.model.media.Media
 import kotlinx.coroutines.flow.Flow

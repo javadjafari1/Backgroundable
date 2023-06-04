@@ -1,6 +1,6 @@
 package ir.thatsmejavad.backgroundable.data.repository
 
-import ir.thatsmejavad.backgroundable.data.datasource.MediaRemoteDataSource
+import ir.thatsmejavad.backgroundable.data.datasource.remote.MediaRemoteDataSource
 import ir.thatsmejavad.backgroundable.model.media.Media
 import javax.inject.Inject
 
