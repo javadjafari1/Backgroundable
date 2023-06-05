@@ -127,6 +127,10 @@ dependencies {
     implementation("androidx.room:room-paging:2.5.1")
     implementation("androidx.room:room-ktx:2.5.1")
     ksp("androidx.room:room-compiler:2.5.1")
+
+    debugImplementation("com.github.chuckerteam.chucker:library:3.5.2")
+    releaseImplementation("com.github.chuckerteam.chucker:library-no-op:3.5.2")
+
 }
 
 
