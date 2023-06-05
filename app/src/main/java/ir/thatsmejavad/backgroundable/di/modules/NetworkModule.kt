@@ -1,5 +1,8 @@
 package ir.thatsmejavad.backgroundable.di.modules
 
+import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerCollector
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -33,6 +36,24 @@ class NetworkModule {
         }
     }
 
+    @Provides
+    @Singleton
+    fun provideChuckerInterceptor(
+        context: Context
+    ): ChuckerInterceptor {
+        val chuckerCollector = ChuckerCollector(
+            context = context,
+            showNotification = true,
+        )
+
+        return ChuckerInterceptor.Builder(context)
+            .collector(chuckerCollector)
+            .maxContentLength(250_000L)
+            .redactHeaders("Authorization")
+            .alwaysReadResponseBody(true)
+            .build()
+    }
+
     @Singleton
     @Provides
     fun provideKotlinSerializationFactory(json: Json): Converter.Factory {
@@ -52,10 +73,12 @@ class NetworkModule {
     fun provideOkHttpClient(
         authorizationInterceptor: AuthorizationInterceptor,
         loggingInterceptor: HttpLoggingInterceptor,
+        chuckerInterceptor: ChuckerInterceptor,
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(authorizationInterceptor)
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(chuckerInterceptor)
             .callTimeout(REQUEST_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
             .connectTimeout(REQUEST_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
             .readTimeout(REQUEST_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
