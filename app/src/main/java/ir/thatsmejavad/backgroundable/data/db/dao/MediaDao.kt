@@ -14,7 +14,10 @@ interface MediaDao {
     suspend fun insertMedias(medias: List<MediaEntity>)
 
     @Query("SELECT * FROM medias WHERE `collection-id` = :collectionId")
-    fun getPagedCollection(collectionId: String): PagingSource<Int, MediaWithResources>
+    fun getPagedMedia(collectionId: String): PagingSource<Int, MediaWithResources>
+
+    @Query("SELECT * FROM medias WHERE id = :id")
+    suspend fun getMediaWithResources(id: Int): MediaWithResources
 
     @Query("DELETE FROM medias")
     suspend fun deleteAll()

@@ -7,7 +7,9 @@ import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
 interface MediaLocalDataSource {
     suspend fun insertMedias(medias: List<MediaEntity>)
 
-    fun getPagedCollection(collectionId: String): PagingSource<Int, MediaWithResources>
+    fun getPagedMedia(collectionId: String): PagingSource<Int, MediaWithResources>
+
+    suspend fun getMediaWithResources(id: Int): MediaWithResources
 
     suspend fun deleteAll()
 }

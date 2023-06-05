@@ -13,8 +13,12 @@ class MediaLocalDataSourceImpl @Inject constructor(
         mediaDao.insertMedias(medias)
     }
 
-    override fun getPagedCollection(collectionId: String): PagingSource<Int, MediaWithResources> {
-        return mediaDao.getPagedCollection(collectionId)
+    override fun getPagedMedia(collectionId: String): PagingSource<Int, MediaWithResources> {
+        return mediaDao.getPagedMedia(collectionId)
+    }
+
+    override suspend fun getMediaWithResources(id: Int): MediaWithResources {
+        return mediaDao.getMediaWithResources(id)
     }
 
     override suspend fun deleteAll() {

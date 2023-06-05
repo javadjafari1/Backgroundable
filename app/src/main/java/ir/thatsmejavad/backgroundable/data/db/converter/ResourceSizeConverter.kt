@@ -1,7 +1,7 @@
 package ir.thatsmejavad.backgroundable.data.db.converter
 
 import androidx.room.TypeConverter
-import ir.thatsmejavad.backgroundable.core.ResourceSize
+import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
 
 class ResourceSizeConverter {
 

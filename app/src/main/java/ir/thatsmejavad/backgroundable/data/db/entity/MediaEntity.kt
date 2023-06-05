@@ -3,7 +3,7 @@ package ir.thatsmejavad.backgroundable.data.db.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ir.thatsmejavad.backgroundable.core.MediaType
+import ir.thatsmejavad.backgroundable.core.sealeds.MediaType
 
 @Entity("medias")
 data class MediaEntity(

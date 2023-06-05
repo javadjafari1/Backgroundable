@@ -41,8 +41,8 @@ import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.CircularLoading
 import ir.thatsmejavad.backgroundable.common.ui.CoilImage
-import ir.thatsmejavad.backgroundable.core.ResourceSize
 import ir.thatsmejavad.backgroundable.core.getStringMessage
+import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
 import ir.thatsmejavad.backgroundable.core.toColor
 import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
 

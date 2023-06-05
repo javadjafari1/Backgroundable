@@ -1,13 +1,14 @@
-package ir.thatsmejavad.backgroundable.core
+package ir.thatsmejavad.backgroundable.data.datasource.remote
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
+import ir.thatsmejavad.backgroundable.core.sealeds.MediaType
+import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
 import ir.thatsmejavad.backgroundable.data.datasource.local.MediaLocalDataSource
 import ir.thatsmejavad.backgroundable.data.datasource.local.ResourceLocalDataSource
-import ir.thatsmejavad.backgroundable.data.datasource.remote.MediaRemoteDataSource
 import ir.thatsmejavad.backgroundable.data.db.BackgroundableDatabase
 import ir.thatsmejavad.backgroundable.data.db.entity.ResourceEntity
 import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources

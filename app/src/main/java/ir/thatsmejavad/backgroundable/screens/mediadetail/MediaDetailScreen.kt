@@ -55,13 +55,13 @@ import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.CircularLoading
 import ir.thatsmejavad.backgroundable.common.ui.CoilImage
-import ir.thatsmejavad.backgroundable.core.AsyncJob
 import ir.thatsmejavad.backgroundable.core.getStringMessage
 import ir.thatsmejavad.backgroundable.core.getUri
 import ir.thatsmejavad.backgroundable.core.saveIn
+import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob
+import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
 import ir.thatsmejavad.backgroundable.core.setWallpaperWithImage
 import ir.thatsmejavad.backgroundable.core.toColor
-import ir.thatsmejavad.backgroundable.model.media.Media
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -118,7 +118,7 @@ fun MediaDetailScreen(
                 }
             }
 
-            is AsyncJob.Success<Media> -> {
+            is AsyncJob.Success -> {
                 val media = (mediaResult as AsyncJob.Success).value
                 var isLoading by rememberSaveable { mutableStateOf(true) }
                 var drawable by remember { mutableStateOf<Drawable?>(null) }
@@ -135,9 +135,9 @@ fun MediaDetailScreen(
                         onClick = { isToolsVisible = !isToolsVisible },
                     ) {
                         CoilImage(
-                            url = media.resources.original,
-                            contentDescription = media.alt,
-                            placeHolder = ColorPainter(media.avgColor.toColor()),
+                            url = media.resources.first { it.size == ResourceSize.Original }.url,
+                            contentDescription = media.media.alt,
+                            placeHolder = ColorPainter(media.media.avgColor.toColor()),
                             isLoading = { isLoading = it },
                             onDrawableLoaded = { drawable = it }
                         )

@@ -12,4 +12,6 @@ interface MediaRepository {
         collectionId: String,
         shouldFetch: Boolean,
     ): Flow<PagingData<MediaWithResources>>
+
+    suspend fun getMediaWithResources(id: Int): MediaWithResources
 }

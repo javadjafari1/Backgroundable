@@ -4,10 +4,10 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import ir.thatsmejavad.backgroundable.core.CollectionRemoteMediator
 import ir.thatsmejavad.backgroundable.core.Constants.COLLECTIONS_PER_PAGE_ITEM
 import ir.thatsmejavad.backgroundable.data.datasource.local.CollectionLocalDataSource
 import ir.thatsmejavad.backgroundable.data.datasource.remote.CollectionRemoteDataSource
+import ir.thatsmejavad.backgroundable.data.datasource.remote.CollectionRemoteMediator
 import ir.thatsmejavad.backgroundable.data.db.BackgroundableDatabase
 import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
 import kotlinx.coroutines.flow.Flow

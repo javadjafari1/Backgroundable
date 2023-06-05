@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.core
+package ir.thatsmejavad.backgroundable.core.sealeds
 
 sealed class AsyncJob<out T>(private val value: T?) {
     data class Success<T>(val value: T) : AsyncJob<T>(value)

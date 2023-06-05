@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.core
+package ir.thatsmejavad.backgroundable.data.datasource.remote
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -6,7 +6,6 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import ir.thatsmejavad.backgroundable.data.datasource.local.CollectionLocalDataSource
-import ir.thatsmejavad.backgroundable.data.datasource.remote.CollectionRemoteDataSource
 import ir.thatsmejavad.backgroundable.data.db.BackgroundableDatabase
 import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
 import ir.thatsmejavad.backgroundable.model.Collection

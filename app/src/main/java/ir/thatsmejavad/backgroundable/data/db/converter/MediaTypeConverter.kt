@@ -1,7 +1,7 @@
 package ir.thatsmejavad.backgroundable.data.db.converter
 
 import androidx.room.TypeConverter
-import ir.thatsmejavad.backgroundable.core.MediaType
+import ir.thatsmejavad.backgroundable.core.sealeds.MediaType
 
 class MediaTypeConverter {
     @TypeConverter

@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.core
+package ir.thatsmejavad.backgroundable.core.sealeds
 
 sealed class ResourceSize(val size: String) {
     object Original : ResourceSize("original")
