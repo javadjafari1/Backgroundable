@@ -61,8 +61,6 @@ formatting:
     active: true
   NoWildcardImports:
     active: true
-  ParameterListWrapping:
-    active: true
   SpacingAroundColon:
     active: true
   SpacingAroundComma:
