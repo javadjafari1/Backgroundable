@@ -1,6 +1,7 @@
 package ir.thatsmejavad.backgroundable.data.api
 
 import ir.thatsmejavad.backgroundable.core.Constants.COLLECTIONS_PER_PAGE_ITEM
+import ir.thatsmejavad.backgroundable.core.Constants.MEDIA_PER_PAGE_ITEM
 import ir.thatsmejavad.backgroundable.model.Collection
 import ir.thatsmejavad.backgroundable.model.PagedResponse
 import ir.thatsmejavad.backgroundable.model.media.Media
@@ -21,7 +22,7 @@ interface PexelsApi {
         @Path("collectionId") collectionId: String,
         @Query("page") page: Int,
         @Query("type") type: String = "photos",
-        @Query("per_page") perPage: Int = COLLECTIONS_PER_PAGE_ITEM,
+        @Query("per_page") perPage: Int = MEDIA_PER_PAGE_ITEM,
     ): Response<PagedResponse<Media>>
 
     @GET("v1/photos/{photoId}")

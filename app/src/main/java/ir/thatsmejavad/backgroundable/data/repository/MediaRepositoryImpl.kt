@@ -4,7 +4,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import ir.thatsmejavad.backgroundable.core.Constants.COLLECTIONS_PER_PAGE_ITEM
+import ir.thatsmejavad.backgroundable.core.Constants.MEDIA_PER_PAGE_ITEM
 import ir.thatsmejavad.backgroundable.data.datasource.local.MediaLocalDataSource
 import ir.thatsmejavad.backgroundable.data.datasource.local.ResourceLocalDataSource
 import ir.thatsmejavad.backgroundable.data.datasource.remote.MediaRemoteDataSource
@@ -32,7 +32,7 @@ class MediaRepositoryImpl @Inject constructor(
     ): Flow<PagingData<MediaWithResources>> {
         return Pager(
             config = PagingConfig(
-                pageSize = COLLECTIONS_PER_PAGE_ITEM,
+                pageSize = MEDIA_PER_PAGE_ITEM,
             ),
             remoteMediator = MediaRemoteMediator(
                 database = database,
