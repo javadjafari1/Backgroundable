@@ -10,39 +10,34 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
 import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelAssistedFactory
+import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
 import ir.thatsmejavad.backgroundable.data.repository.CollectionRepository
-import ir.thatsmejavad.backgroundable.model.media.Media
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class CollectionListViewModel @AssistedInject constructor(
-    val snackbarManager: SnackbarManager,
     private val collectionRepository: CollectionRepository,
+    val snackbarManager: SnackbarManager,
     @Assisted private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     @AssistedFactory
     interface Factory : ViewModelAssistedFactory<CollectionListViewModel>
 
-    private val _medias = MutableStateFlow<PagingData<Media>>(value = PagingData.empty())
-    val medias: StateFlow<PagingData<Media>> = _medias
+    private val _collections = MutableStateFlow<PagingData<CollectionEntity>>(PagingData.empty())
+    val collection: StateFlow<PagingData<CollectionEntity>> = _collections
 
     init {
-        val id = checkNotNull(savedStateHandle.get<String>("id")) {
-            "id should not be null in $this"
-        }
-        getMedias(id)
+        getCollections(false)
     }
 
-    fun getMedias(id: String) {
-        collectionRepository
-            .getCollectionMedias(id)
-            .cachedIn(viewModelScope)
-            .onEach {
-                _medias.emit(it)
-            }
-            .launchIn(viewModelScope)
-    }
+    fun getCollections(shouldFetch: Boolean) = collectionRepository
+        .getCollections(shouldFetch)
+        .cachedIn(viewModelScope)
+        .onEach {
+            _collections.emit(it)
+        }
+        .launchIn(viewModelScope)
 }

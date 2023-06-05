@@ -1,37 +1,31 @@
 package ir.thatsmejavad.backgroundable.screens.collectionlist
 
-import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -40,43 +34,29 @@ import androidx.paging.compose.itemKey
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.CircularLoading
-import ir.thatsmejavad.backgroundable.common.ui.CoilImage
 import ir.thatsmejavad.backgroundable.core.getStringMessage
-import ir.thatsmejavad.backgroundable.core.toColor
-import ir.thatsmejavad.backgroundable.model.media.Media
+import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun CollectionListScreen(
-    title: String,
-    id: String,
+fun CollectionListScreen(
     viewModel: CollectionListViewModel,
-    onMediaClicked: (Int, String) -> Unit,
-    onBackClicked: () -> Unit,
+    onCollectionClicked: (String, String) -> Unit,
 ) {
-    val medias = viewModel.medias.collectAsLazyPagingItems()
-
     BackgroundableScaffold(
         snackbarManager = viewModel.snackbarManager,
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(text = title)
+                    Text(text = stringResource(R.string.app_name))
                 },
-                navigationIcon = {
-                    IconButton(onClick = onBackClicked) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Navigate back"
-                        )
-                    }
-                }
             )
         },
     ) {
+        val collections = viewModel.collection.collectAsLazyPagingItems()
         val context = LocalContext.current
 
-        when (val firstLoadState = medias.loadState.refresh) {
+        when (val firstLoadState = collections.loadState.refresh) {
             is LoadState.Error -> {
                 Column(
                     Modifier.fillMaxSize(),
@@ -87,7 +67,7 @@ internal fun CollectionListScreen(
                         text = firstLoadState.error.getStringMessage(context)
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    ElevatedButton(onClick = { viewModel.getMedias(id) }) {
+                    ElevatedButton(onClick = { viewModel.getCollections(false) }) {
                         Text(text = stringResource(R.string.label_try_again))
                     }
                 }
@@ -100,27 +80,28 @@ internal fun CollectionListScreen(
             }
 
             is LoadState.NotLoading -> {
-                LazyVerticalStaggeredGrid(
-                    columns = StaggeredGridCells.Fixed(2),
-                    modifier = Modifier
+                LazyColumn(
+                    Modifier
                         .padding(it)
                         .padding(horizontal = 16.dp)
                         .fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(
-                        count = medias.itemCount,
-                        key = medias.itemKey(),
-                        contentType = medias.itemContentType()
+                        count = collections.itemCount,
+                        key = collections.itemKey(),
+                        contentType = collections.itemContentType()
                     ) { index ->
-                        medias[index]?.let { media ->
-                            MediaCard(
-                                media = media,
-                                onCollectionClicked = onMediaClicked
+                        collections[index]?.let { collection ->
+                            CollectionCard(
+                                index = index,
+                                collection = collection,
+                                onCollectionClicked = onCollectionClicked
                             )
                         }
                     }
 
-                    when (val paginationLoadState = medias.loadState.append) {
+                    when (val paginationLoadState = collections.loadState.append) {
                         is LoadState.Error -> {
                             item {
                                 if (!paginationLoadState.endOfPaginationReached) {
@@ -153,33 +134,37 @@ internal fun CollectionListScreen(
 }
 
 @Composable
-private fun MediaCard(
-    media: Media,
-    onCollectionClicked: (Int, String) -> Unit,
+private fun CollectionCard(
+    index: Int,
+    collection: CollectionEntity,
+    onCollectionClicked: (String, String) -> Unit
 ) {
-    Column(
+    ElevatedCard(
         modifier = Modifier
-            .clip(MaterialTheme.shapes.medium)
-            .clickable { onCollectionClicked(media.id, media.alt) }
-            .padding(4.dp)
-
+            .fillMaxWidth()
     ) {
-        CoilImage(
+        Row(
             modifier = Modifier
-                .clip(MaterialTheme.shapes.large)
                 .fillMaxWidth()
-                .heightIn(max = (media.height / 20).dp),
-            url = media.resources.medium,
-            contentDescription = media.alt,
-            placeHolder = ColorPainter(media.avgColor.toColor())
-        )
-        Spacer(modifier = Modifier.padding(4.dp))
-        val text = buildAnnotatedString {
-            append(media.alt)
-            addStyle(SpanStyle(fontWeight = FontWeight.Bold), 0, media.alt.length)
-            append(" by ")
-            append(media.photographer)
+                .clickable { onCollectionClicked(collection.id, collection.title) }
+                .padding(vertical = 24.dp, horizontal = 16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "${index + 1}. ${collection.title}",
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .background(
+                        color = MaterialTheme.colorScheme.primaryContainer,
+                        shape = CircleShape
+                    )
+                    .padding(8.dp),
+                text = collection.photosCount.toString()
+            )
         }
-        Text(text = text)
     }
 }

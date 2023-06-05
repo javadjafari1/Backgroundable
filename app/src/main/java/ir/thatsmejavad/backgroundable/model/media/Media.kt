@@ -1,5 +1,7 @@
 package ir.thatsmejavad.backgroundable.model.media
 
+import ir.thatsmejavad.backgroundable.core.sealeds.MediaType
+import ir.thatsmejavad.backgroundable.data.db.entity.MediaEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -17,4 +19,21 @@ data class Media(
     val avgColor: String,
     val photographerId: Int,
     val photographerUrl: String,
-)
+) {
+    fun toEntity(
+        type: MediaType,
+        collectionId: String
+    ) = MediaEntity(
+        id = id,
+        width = width,
+        height = height,
+        url = url,
+        alt = alt,
+        type = type,
+        photographer = photographer,
+        photographerId = photographerId,
+        photographerUrl = photographerUrl,
+        avgColor = avgColor,
+        collectionId = collectionId
+    )
+}

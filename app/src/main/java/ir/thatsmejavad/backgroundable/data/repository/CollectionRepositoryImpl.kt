@@ -1,20 +1,38 @@
 package ir.thatsmejavad.backgroundable.data.repository
 
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import ir.thatsmejavad.backgroundable.data.datasource.CollectionRemoteDataSource
-import ir.thatsmejavad.backgroundable.model.Collection
-import ir.thatsmejavad.backgroundable.model.media.Media
+import ir.thatsmejavad.backgroundable.core.Constants.COLLECTIONS_PER_PAGE_ITEM
+import ir.thatsmejavad.backgroundable.data.datasource.local.CollectionLocalDataSource
+import ir.thatsmejavad.backgroundable.data.datasource.remote.CollectionRemoteDataSource
+import ir.thatsmejavad.backgroundable.data.datasource.remote.CollectionRemoteMediator
+import ir.thatsmejavad.backgroundable.data.db.BackgroundableDatabase
+import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class CollectionRepositoryImpl @Inject constructor(
-    private val collectionRemoteDataSource: CollectionRemoteDataSource
+    private val collectionRemoteDataSource: CollectionRemoteDataSource,
+    private val collectionLocalDataSource: CollectionLocalDataSource,
+    private val database: BackgroundableDatabase,
 ) : CollectionRepository {
-    override fun getCollections(): Flow<PagingData<Collection>> {
-        return collectionRemoteDataSource.getCollections()
-    }
-
-    override fun getCollectionMedias(collectionId: String): Flow<PagingData<Media>> {
-        return collectionRemoteDataSource.getCollectionMedias(collectionId)
+    @OptIn(ExperimentalPagingApi::class)
+    override fun getCollections(shouldFetch: Boolean): Flow<PagingData<CollectionEntity>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = COLLECTIONS_PER_PAGE_ITEM,
+            ),
+            remoteMediator = CollectionRemoteMediator(
+                collectionRemoteDataSource = collectionRemoteDataSource,
+                collectionLocalDataSource = collectionLocalDataSource,
+                database = database,
+                shouldFetch = shouldFetch
+            ),
+            pagingSourceFactory = {
+                collectionLocalDataSource.getPagedCollection()
+            }
+        ).flow
     }
 }

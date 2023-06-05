@@ -1,49 +1,49 @@
-package ir.thatsmejavad.backgroundable.screens.mediadetail
+package ir.thatsmejavad.backgroundable.screens.medialist
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
-import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob
 import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelAssistedFactory
 import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
 import ir.thatsmejavad.backgroundable.data.repository.MediaRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
-class MediaDetailViewModel @AssistedInject constructor(
+class MediaListViewModel @AssistedInject constructor(
     val snackbarManager: SnackbarManager,
     private val mediaRepository: MediaRepository,
     @Assisted private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     @AssistedFactory
-    interface Factory : ViewModelAssistedFactory<MediaDetailViewModel>
+    interface Factory : ViewModelAssistedFactory<MediaListViewModel>
 
-    private val _media =
-        MutableStateFlow<AsyncJob<MediaWithResources>>(AsyncJob.Uninitialized)
-    val media: StateFlow<AsyncJob<MediaWithResources>> = _media
+    private val _medias =
+        MutableStateFlow<PagingData<MediaWithResources>>(value = PagingData.empty())
+    val medias: StateFlow<PagingData<MediaWithResources>> = _medias
 
     init {
-        val id = checkNotNull(savedStateHandle.get<Int>("id")) {
+        val id = checkNotNull(savedStateHandle.get<String>("id")) {
             "id should not be null in $this"
         }
-        getMedia(id)
+        getMedias(id, false)
     }
 
-    fun getMedia(mediaId: Int) {
-        viewModelScope.launch {
-            _media.value = AsyncJob.Loading
-            try {
-                val result = mediaRepository.getMediaWithResources(mediaId)
-                _media.value = AsyncJob.Success(result)
-            } catch (e: Exception) {
-                _media.value = AsyncJob.Fail(e)
+    fun getMedias(id: String, shouldFetch: Boolean) {
+        mediaRepository
+            .getMediasByCollectionId(id, shouldFetch)
+            .cachedIn(viewModelScope)
+            .onEach {
+                _medias.emit(it)
             }
-        }
+            .launchIn(viewModelScope)
     }
 }
