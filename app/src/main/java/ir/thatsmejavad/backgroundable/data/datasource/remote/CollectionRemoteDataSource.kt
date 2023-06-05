@@ -6,5 +6,4 @@ import ir.thatsmejavad.backgroundable.model.PagedResponse
 interface CollectionRemoteDataSource {
 
     suspend fun getCollections(page: Int): PagedResponse<Collection>
-
 }

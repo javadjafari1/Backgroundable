@@ -35,5 +35,4 @@ class CollectionRepositoryImpl @Inject constructor(
             }
         ).flow
     }
-
 }

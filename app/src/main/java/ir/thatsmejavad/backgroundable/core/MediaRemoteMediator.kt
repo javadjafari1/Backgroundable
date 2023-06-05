@@ -65,7 +65,6 @@ class MediaRemoteMediator(
                                 url = value.second
                             )
                         )
-
                     }
                     media.toEntity(MediaType.Photo, collectionId)
                 }
