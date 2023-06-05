@@ -18,9 +18,13 @@ import ir.thatsmejavad.backgroundable.data.db.entity.ResourceEntity
         MediaEntity::class,
         ResourceEntity::class
     ],
-    version = 1
+    version = 1,
+    exportSchema = true
 )
-@TypeConverters(MediaTypeConverter::class, ResourceSizeConverter::class)
+@TypeConverters(
+    MediaTypeConverter::class,
+    ResourceSizeConverter::class,
+)
 abstract class BackgroundableDatabase : RoomDatabase() {
     abstract fun resourceDao(): ResourceDao
     abstract fun collectionDao(): CollectionDao

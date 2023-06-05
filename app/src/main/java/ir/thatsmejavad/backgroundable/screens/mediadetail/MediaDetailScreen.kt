@@ -119,7 +119,7 @@ fun MediaDetailScreen(
             }
 
             is AsyncJob.Success -> {
-                val media = (mediaResult as AsyncJob.Success).value
+                val mediaWithResources = (mediaResult as AsyncJob.Success).value
                 var isLoading by rememberSaveable { mutableStateOf(true) }
                 var drawable by remember { mutableStateOf<Drawable?>(null) }
                 val scope = rememberCoroutineScope()
@@ -135,9 +135,9 @@ fun MediaDetailScreen(
                         onClick = { isToolsVisible = !isToolsVisible },
                     ) {
                         CoilImage(
-                            url = media.resources.first { it.size == ResourceSize.Original }.url,
-                            contentDescription = media.media.alt,
-                            placeHolder = ColorPainter(media.media.avgColor.toColor()),
+                            url = mediaWithResources.resources.first { it.size == ResourceSize.Original }.url,
+                            contentDescription = mediaWithResources.media.alt,
+                            placeHolder = ColorPainter(mediaWithResources.media.avgColor.toColor()),
                             isLoading = { isLoading = it },
                             onDrawableLoaded = { drawable = it }
                         )
