@@ -2,12 +2,12 @@ package ir.thatsmejavad.backgroundable.data.db.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import ir.thatsmejavad.backgroundable.core.sealeds.MediaType
 
-@Entity("medias")
+@Entity("medias", indices = [Index("id", unique = true)])
 data class MediaEntity(
-    @PrimaryKey
     val id: Int,
     val width: Int,
     val height: Int,
@@ -29,4 +29,9 @@ data class MediaEntity(
 
     @ColumnInfo("photographer-url")
     val photographerUrl: String,
+
+    // we should save orderId because server data is shuffled,and we should sort the data to fix jump in screen.
+    @ColumnInfo("order-id")
+    @PrimaryKey(autoGenerate = true)
+    val orderId: Int = 0
 )

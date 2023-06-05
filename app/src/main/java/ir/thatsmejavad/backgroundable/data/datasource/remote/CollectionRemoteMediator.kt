@@ -50,7 +50,7 @@ class CollectionRemoteMediator(
             }
 
             MediatorResult.Success(
-                endOfPaginationReached = (response.page * response.perPage > response.total)
+                endOfPaginationReached = (response.page * response.perPage >= response.total)
             )
         } catch (e: Exception) {
             MediatorResult.Error(e)

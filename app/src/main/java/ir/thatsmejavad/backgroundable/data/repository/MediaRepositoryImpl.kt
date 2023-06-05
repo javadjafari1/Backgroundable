@@ -33,7 +33,6 @@ class MediaRepositoryImpl @Inject constructor(
         return Pager(
             config = PagingConfig(
                 pageSize = COLLECTIONS_PER_PAGE_ITEM,
-                initialLoadSize = 1
             ),
             remoteMediator = MediaRemoteMediator(
                 database = database,

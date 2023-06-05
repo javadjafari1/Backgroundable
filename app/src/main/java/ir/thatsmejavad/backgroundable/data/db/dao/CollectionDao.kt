@@ -13,7 +13,7 @@ interface CollectionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCollections(collections: List<CollectionEntity>)
 
-    @Query("SELECT * FROM collections")
+    @Query("SELECT * FROM collections ORDER BY `order-id`")
     fun getPagedCollection(): PagingSource<Int, CollectionEntity>
 
     @Query("DELETE FROM collections")
