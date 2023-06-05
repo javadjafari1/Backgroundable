@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.screens.collectionlist
+package ir.thatsmejavad.backgroundable.screens.medialist
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
@@ -41,16 +41,17 @@ import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.CircularLoading
 import ir.thatsmejavad.backgroundable.common.ui.CoilImage
+import ir.thatsmejavad.backgroundable.core.ResourceSize
 import ir.thatsmejavad.backgroundable.core.getStringMessage
 import ir.thatsmejavad.backgroundable.core.toColor
-import ir.thatsmejavad.backgroundable.model.media.Media
+import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-internal fun CollectionListScreen(
+internal fun MediaListScreen(
     title: String,
     id: String,
-    viewModel: CollectionListViewModel,
+    viewModel: MediaListViewModel,
     onMediaClicked: (Int, String) -> Unit,
     onBackClicked: () -> Unit,
 ) {
@@ -87,7 +88,7 @@ internal fun CollectionListScreen(
                         text = firstLoadState.error.getStringMessage(context)
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    ElevatedButton(onClick = { viewModel.getMedias(id) }) {
+                    ElevatedButton(onClick = { viewModel.getMedias(id, false) }) {
                         Text(text = stringResource(R.string.label_try_again))
                     }
                 }
@@ -114,7 +115,7 @@ internal fun CollectionListScreen(
                     ) { index ->
                         medias[index]?.let { media ->
                             MediaCard(
-                                media = media,
+                                mediaWithResources = media,
                                 onCollectionClicked = onMediaClicked
                             )
                         }
@@ -154,13 +155,18 @@ internal fun CollectionListScreen(
 
 @Composable
 private fun MediaCard(
-    media: Media,
+    mediaWithResources: MediaWithResources,
     onCollectionClicked: (Int, String) -> Unit,
 ) {
     Column(
         modifier = Modifier
             .clip(MaterialTheme.shapes.medium)
-            .clickable { onCollectionClicked(media.id, media.alt) }
+            .clickable {
+                onCollectionClicked(
+                    mediaWithResources.media.id,
+                    mediaWithResources.media.alt
+                )
+            }
             .padding(4.dp)
 
     ) {
@@ -168,17 +174,21 @@ private fun MediaCard(
             modifier = Modifier
                 .clip(MaterialTheme.shapes.large)
                 .fillMaxWidth()
-                .heightIn(max = (media.height / 20).dp),
-            url = media.resources.medium,
-            contentDescription = media.alt,
-            placeHolder = ColorPainter(media.avgColor.toColor())
+                .heightIn(max = (mediaWithResources.media.height / 20).dp),
+            url = mediaWithResources.resources.first { it.size == ResourceSize.Medium }.url,
+            contentDescription = mediaWithResources.media.alt,
+            placeHolder = ColorPainter(mediaWithResources.media.avgColor.toColor())
         )
         Spacer(modifier = Modifier.padding(4.dp))
         val text = buildAnnotatedString {
-            append(media.alt)
-            addStyle(SpanStyle(fontWeight = FontWeight.Bold), 0, media.alt.length)
+            append(mediaWithResources.media.alt)
+            addStyle(
+                SpanStyle(fontWeight = FontWeight.Bold),
+                0,
+                mediaWithResources.media.alt.length
+            )
             append(" by ")
-            append(media.photographer)
+            append(mediaWithResources.media.photographer)
         }
         Text(text = text)
     }

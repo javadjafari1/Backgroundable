@@ -10,7 +10,6 @@ import ir.thatsmejavad.backgroundable.data.datasource.local.CollectionLocalDataS
 import ir.thatsmejavad.backgroundable.data.datasource.remote.CollectionRemoteDataSource
 import ir.thatsmejavad.backgroundable.data.db.BackgroundableDatabase
 import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
-import ir.thatsmejavad.backgroundable.model.media.Media
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -37,7 +36,4 @@ class CollectionRepositoryImpl @Inject constructor(
         ).flow
     }
 
-    override fun getCollectionMedias(collectionId: String): Flow<PagingData<Media>> {
-        return collectionRemoteDataSource.getCollectionMedias(collectionId)
-    }
 }

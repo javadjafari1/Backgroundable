@@ -28,6 +28,7 @@ class NetworkModule {
             ignoreUnknownKeys = true
             coerceInputValues = true
             explicitNulls = false
+            prettyPrint = true
             namingStrategy = JsonNamingStrategy.SnakeCase
         }
     }

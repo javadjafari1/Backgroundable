@@ -15,6 +15,9 @@ data class MediaEntity(
     val alt: String,
     val type: MediaType,
 
+    @ColumnInfo(name = "collection-id")
+    val collectionId: String,
+
     @ColumnInfo(index = true)
     val photographer: String,
 

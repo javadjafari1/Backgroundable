@@ -20,7 +20,10 @@ data class Media(
     val photographerId: Int,
     val photographerUrl: String,
 ) {
-    fun toEntity(type: MediaType) = MediaEntity(
+    fun toEntity(
+        type: MediaType,
+        collectionId: String
+    ) = MediaEntity(
         id = id,
         width = width,
         height = height,
@@ -31,5 +34,6 @@ data class Media(
         photographerId = photographerId,
         photographerUrl = photographerUrl,
         avgColor = avgColor,
+        collectionId = collectionId
     )
 }

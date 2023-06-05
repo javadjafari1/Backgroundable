@@ -6,9 +6,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import ir.thatsmejavad.backgroundable.core.viewmodel.daggerViewModel
-import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListScreen
 import ir.thatsmejavad.backgroundable.screens.featuredcollections.FeaturedCollectionsScreen
 import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailScreen
+import ir.thatsmejavad.backgroundable.screens.medialist.MediaListScreen
 
 internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
     composable(
@@ -18,7 +18,7 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
             viewModel = daggerViewModel(),
             onCollectionClicked = { id, title ->
                 navController.navigate(
-                    AppScreens.CollectionList.createRoute(
+                    AppScreens.MediaList.createRoute(
                         id = id,
                         title = title,
                     )
@@ -28,7 +28,7 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
     }
 
     composable(
-        route = AppScreens.CollectionList.route,
+        route = AppScreens.MediaList.route,
         arguments = listOf(
             navArgument("id") {
                 type = NavType.StringType
@@ -49,7 +49,7 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
             "title should not be null!"
         }
 
-        CollectionListScreen(
+        MediaListScreen(
             title = title,
             viewModel = daggerViewModel(),
             id = collectionId,
@@ -94,9 +94,9 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
 internal sealed class AppScreens(val route: String) {
     object FeaturedCollections : AppScreens("featured-collections")
 
-    object CollectionList : AppScreens("collection-list?id={id}&title={title}") {
+    object MediaList : AppScreens("media-list?id={id}&title={title}") {
         fun createRoute(id: String, title: String): String {
-            return "collection-list?id=$id&title=$title"
+            return "media-list?id=$id&title=$title"
         }
     }
 

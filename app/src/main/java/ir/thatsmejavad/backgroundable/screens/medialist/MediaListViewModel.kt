@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.screens.collectionlist
+package ir.thatsmejavad.backgroundable.screens.medialist
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -10,35 +10,36 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
 import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelAssistedFactory
-import ir.thatsmejavad.backgroundable.data.repository.CollectionRepository
-import ir.thatsmejavad.backgroundable.model.media.Media
+import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
+import ir.thatsmejavad.backgroundable.data.repository.MediaRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-class CollectionListViewModel @AssistedInject constructor(
+class MediaListViewModel @AssistedInject constructor(
     val snackbarManager: SnackbarManager,
-    private val collectionRepository: CollectionRepository,
+    private val mediaRepository: MediaRepository,
     @Assisted private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     @AssistedFactory
-    interface Factory : ViewModelAssistedFactory<CollectionListViewModel>
+    interface Factory : ViewModelAssistedFactory<MediaListViewModel>
 
-    private val _medias = MutableStateFlow<PagingData<Media>>(value = PagingData.empty())
-    val medias: StateFlow<PagingData<Media>> = _medias
+    private val _medias =
+        MutableStateFlow<PagingData<MediaWithResources>>(value = PagingData.empty())
+    val medias: StateFlow<PagingData<MediaWithResources>> = _medias
 
     init {
         val id = checkNotNull(savedStateHandle.get<String>("id")) {
             "id should not be null in $this"
         }
-        getMedias(id)
+        getMedias(id, false)
     }
 
-    fun getMedias(id: String) {
-        collectionRepository
-            .getCollectionMedias(id)
+    fun getMedias(id: String, shouldFetch: Boolean) {
+        mediaRepository
+            .getMediasByCollectionId(id, shouldFetch)
             .cachedIn(viewModelScope)
             .onEach {
                 _medias.emit(it)

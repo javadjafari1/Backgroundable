@@ -2,6 +2,10 @@ package ir.thatsmejavad.backgroundable.di.modules
 
 import dagger.Binds
 import dagger.Module
+import ir.thatsmejavad.backgroundable.data.datasource.local.MediaLocalDataSource
+import ir.thatsmejavad.backgroundable.data.datasource.local.MediaLocalDataSourceImpl
+import ir.thatsmejavad.backgroundable.data.datasource.local.ResourceLocalDataSource
+import ir.thatsmejavad.backgroundable.data.datasource.local.ResourceLocalDataSourceImpl
 import ir.thatsmejavad.backgroundable.data.datasource.remote.MediaRemoteDataSource
 import ir.thatsmejavad.backgroundable.data.datasource.remote.MediaRemoteDataSourceImpl
 import ir.thatsmejavad.backgroundable.data.repository.MediaRepository
@@ -16,4 +20,14 @@ interface MediaModule {
     fun bindMediaRemoteDataSource(
         impl: MediaRemoteDataSourceImpl
     ): MediaRemoteDataSource
+
+    @Binds
+    fun bindMediaLocalDataSource(
+        impl: MediaLocalDataSourceImpl
+    ): MediaLocalDataSource
+
+    @Binds
+    fun bindResourceLocalDataSource(
+        impl: ResourceLocalDataSourceImpl
+    ): ResourceLocalDataSource
 }
