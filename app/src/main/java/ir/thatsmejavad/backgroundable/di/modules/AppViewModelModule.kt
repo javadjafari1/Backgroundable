@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelAssistedFactory
 import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelAssistedFactoryKey
-import ir.thatsmejavad.backgroundable.screens.featuredcollections.FeaturedCollectionsViewModel
+import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListViewModel
 import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailViewModel
 import ir.thatsmejavad.backgroundable.screens.medialist.MediaListViewModel
 
@@ -20,8 +20,8 @@ import ir.thatsmejavad.backgroundable.screens.medialist.MediaListViewModel
 interface AppViewModelModule {
 
     @Binds
-    @[IntoMap ViewModelAssistedFactoryKey(FeaturedCollectionsViewModel::class)]
-    fun bindsEmailListViewModelFactory(factory: FeaturedCollectionsViewModel.Factory): ViewModelAssistedFactory<*>
+    @[IntoMap ViewModelAssistedFactoryKey(CollectionListViewModel::class)]
+    fun bindsCollectionListViewModelFactory(factory: CollectionListViewModel.Factory): ViewModelAssistedFactory<*>
 
     @Binds
     @[IntoMap ViewModelAssistedFactoryKey(MediaListViewModel::class)]

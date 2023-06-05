@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                     ) {
                         NavHost(
                             navController = navController,
-                            startDestination = AppScreens.FeaturedCollections.route
+                            startDestination = AppScreens.CollectionList.route
                         ) {
                             mainNavGraph(navController)
                         }

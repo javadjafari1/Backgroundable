@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.screens.featuredcollections
+package ir.thatsmejavad.backgroundable.screens.collectionlist
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -17,14 +17,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-class FeaturedCollectionsViewModel @AssistedInject constructor(
+class CollectionListViewModel @AssistedInject constructor(
     private val collectionRepository: CollectionRepository,
     val snackbarManager: SnackbarManager,
     @Assisted private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     @AssistedFactory
-    interface Factory : ViewModelAssistedFactory<FeaturedCollectionsViewModel>
+    interface Factory : ViewModelAssistedFactory<CollectionListViewModel>
 
     private val _collections = MutableStateFlow<PagingData<CollectionEntity>>(PagingData.empty())
     val collection: StateFlow<PagingData<CollectionEntity>> = _collections

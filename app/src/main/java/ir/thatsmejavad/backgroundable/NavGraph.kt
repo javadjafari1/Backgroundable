@@ -6,15 +6,15 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import ir.thatsmejavad.backgroundable.core.viewmodel.daggerViewModel
-import ir.thatsmejavad.backgroundable.screens.featuredcollections.FeaturedCollectionsScreen
+import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListScreen
 import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailScreen
 import ir.thatsmejavad.backgroundable.screens.medialist.MediaListScreen
 
 internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
     composable(
-        route = AppScreens.FeaturedCollections.route
+        route = AppScreens.CollectionList.route
     ) {
-        FeaturedCollectionsScreen(
+        CollectionListScreen(
             viewModel = daggerViewModel(),
             onCollectionClicked = { id, title ->
                 navController.navigate(
@@ -54,14 +54,14 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
             viewModel = daggerViewModel(),
             id = collectionId,
             onMediaClicked = { id, alt ->
-                navController.navigate(AppScreens.ImageDetail.createRoute(id, alt))
+                navController.navigate(AppScreens.MediaDetail.createRoute(id, alt))
             },
             onBackClicked = { navController.navigateUp() }
         )
     }
 
     composable(
-        route = AppScreens.ImageDetail.route,
+        route = AppScreens.MediaDetail.route,
         arguments = listOf(
             navArgument("id") {
                 type = NavType.IntType
@@ -92,7 +92,7 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
 }
 
 internal sealed class AppScreens(val route: String) {
-    object FeaturedCollections : AppScreens("featured-collections")
+    object CollectionList : AppScreens("collection-list")
 
     object MediaList : AppScreens("media-list?id={id}&title={title}") {
         fun createRoute(id: String, title: String): String {
@@ -100,9 +100,9 @@ internal sealed class AppScreens(val route: String) {
         }
     }
 
-    object ImageDetail : AppScreens("image-detail?id={id}&title={title}") {
+    object MediaDetail : AppScreens("media-detail?id={id}&title={title}") {
         fun createRoute(id: Int, title: String): String {
-            return "image-detail?id=$id&title=$title"
+            return "media-detail?id=$id&title=$title"
         }
     }
 }

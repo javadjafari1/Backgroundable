@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.screens.featuredcollections
+package ir.thatsmejavad.backgroundable.screens.collectionlist
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -39,8 +39,8 @@ import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FeaturedCollectionsScreen(
-    viewModel: FeaturedCollectionsViewModel,
+fun CollectionListScreen(
+    viewModel: CollectionListViewModel,
     onCollectionClicked: (String, String) -> Unit,
 ) {
     BackgroundableScaffold(
