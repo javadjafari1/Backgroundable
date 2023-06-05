@@ -19,9 +19,11 @@ android {
     namespace = "ir.thatsmejavad.backgroundable"
     compileSdk = 33
     val properties = Properties()
-    val propertiesExist = rootProject.file("authorization.properties").exists()
+    val propertiesExist = rootProject.file("properties/authorization.properties").exists()
     if (propertiesExist) {
-        properties.load(project.rootProject.file("authorization.properties").inputStream())
+        properties.load(
+            project.rootProject.file("properties/authorization.properties").inputStream()
+        )
     }
 
     defaultConfig {
@@ -48,13 +50,43 @@ android {
         )
     }
 
+    val securityProperties = Properties()
+    val securityPropertiesExist = rootProject.file("properties/security.properties").exists()
+    val keyStoreFileExist = rootProject.file("Backgroundable.jks").exists()
+    if (securityPropertiesExist && keyStoreFileExist) {
+        securityProperties.load(
+            project.rootProject.file("properties/security.properties").inputStream()
+        )
+
+        signingConfigs {
+            create("release") {
+                storeFile = rootProject.file("Backgroundable.jks")
+                storePassword = securityProperties.getProperty("storePassword")
+                keyAlias = securityProperties.getProperty("alias")
+                keyPassword = securityProperties.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            isDebuggable = false
+            signingConfig = signingConfigs.getByName("release")
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        debug {
+            isMinifyEnabled = false
+            isShrinkResources = false
+            isDebuggable = true
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = ".debug"
+
         }
     }
     compileOptions {
