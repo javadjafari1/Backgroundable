@@ -55,8 +55,6 @@ internal fun MediaListScreen(
     onMediaClicked: (Int, String) -> Unit,
     onBackClicked: () -> Unit,
 ) {
-    val medias = viewModel.medias.collectAsLazyPagingItems()
-
     BackgroundableScaffold(
         snackbarManager = viewModel.snackbarManager,
         topBar = {
@@ -74,7 +72,8 @@ internal fun MediaListScreen(
                 }
             )
         },
-    ) {
+    ) { paddingValues ->
+        val medias = viewModel.medias.collectAsLazyPagingItems()
         val context = LocalContext.current
 
         when (val firstLoadState = medias.loadState.refresh) {
@@ -104,13 +103,13 @@ internal fun MediaListScreen(
                 LazyVerticalStaggeredGrid(
                     columns = StaggeredGridCells.Fixed(2),
                     modifier = Modifier
-                        .padding(it)
+                        .padding(paddingValues)
                         .padding(horizontal = 16.dp)
                         .fillMaxSize(),
                 ) {
                     items(
                         count = medias.itemCount,
-                        key = medias.itemKey(),
+                        key = medias.itemKey { it.media.id },
                         contentType = medias.itemContentType()
                     ) { index ->
                         medias[index]?.let { media ->
