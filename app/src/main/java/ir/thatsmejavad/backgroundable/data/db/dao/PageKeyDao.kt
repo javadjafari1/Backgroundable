@@ -14,6 +14,6 @@ interface PageKeyDao {
     @Query("SELECT * FROM `page-key` WHERE `collection-id` = :id")
     suspend fun getPageKeyById(id: String): PageKeyEntity?
 
-    @Query("DELETE FROM `page-key`WHERE `collection-id` = :id")
+    @Query("DELETE FROM `page-key` WHERE `collection-id` = :id")
     suspend fun deletePageKeyById(id: String)
 }

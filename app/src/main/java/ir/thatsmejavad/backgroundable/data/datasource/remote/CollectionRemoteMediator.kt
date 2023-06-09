@@ -58,7 +58,6 @@ class CollectionRemoteMediator(
                         }
                     }
                     (pageKeyEntity?.lastLoadedPage ?: 0) + 1
-
                 }
             }
             val response = collectionRemoteDataSource.getCollections(nextPage)
@@ -66,6 +65,7 @@ class CollectionRemoteMediator(
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     collectionLocalDataSource.deleteAll()
+                    pageKeyLocalDataSource.deletePageKeyById(COLLECTION_ID)
                 }
 
                 collectionLocalDataSource.insertCollections(response.data.map(Collection::toEntity))
@@ -91,4 +91,3 @@ class CollectionRemoteMediator(
         private const val COLLECTION_ID = "collection"
     }
 }
-
