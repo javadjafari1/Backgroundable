@@ -28,11 +28,11 @@ class MediaRepositoryImpl @Inject constructor(
     @OptIn(ExperimentalPagingApi::class)
     override fun getMediasByCollectionId(
         collectionId: String,
-        shouldFetch: Boolean,
     ): Flow<PagingData<MediaWithResources>> {
         return Pager(
             config = PagingConfig(
                 pageSize = MEDIA_PER_PAGE_ITEM,
+                initialLoadSize = MEDIA_PER_PAGE_ITEM,
             ),
             remoteMediator = MediaRemoteMediator(
                 database = database,
@@ -40,7 +40,6 @@ class MediaRepositoryImpl @Inject constructor(
                 mediaRemoteDataSource = mediaRemoteDataSource,
                 resourceLocalDataSource = resourceLocalDataSource,
                 collectionId = collectionId,
-                shouldFetch = shouldFetch,
             ),
             pagingSourceFactory = {
                 mediaLocalDataSource.getPagedMedia(collectionId)
