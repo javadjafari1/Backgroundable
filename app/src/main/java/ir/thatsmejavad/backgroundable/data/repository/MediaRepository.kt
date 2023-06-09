@@ -8,10 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface MediaRepository {
     suspend fun getMedia(mediaId: Int): Media
 
-    fun getMediasByCollectionId(
-        collectionId: String,
-        shouldFetch: Boolean,
-    ): Flow<PagingData<MediaWithResources>>
+    fun getMediasByCollectionId(collectionId: String): Flow<PagingData<MediaWithResources>>
 
     suspend fun getMediaWithResources(id: Int): MediaWithResources
 }

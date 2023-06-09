@@ -7,6 +7,7 @@ import dagger.Provides
 import ir.thatsmejavad.backgroundable.data.db.BackgroundableDatabase
 import ir.thatsmejavad.backgroundable.data.db.dao.CollectionDao
 import ir.thatsmejavad.backgroundable.data.db.dao.MediaDao
+import ir.thatsmejavad.backgroundable.data.db.dao.PageKeyDao
 import ir.thatsmejavad.backgroundable.data.db.dao.ResourceDao
 import javax.inject.Singleton
 
@@ -40,4 +41,10 @@ class DatabaseModule {
     fun provideResourceDao(
         backgroundableDatabase: BackgroundableDatabase
     ): ResourceDao = backgroundableDatabase.resourceDao()
+
+    @Provides
+    @Singleton
+    fun providePageKeyDao(
+        backgroundableDatabase: BackgroundableDatabase
+    ): PageKeyDao = backgroundableDatabase.pageKeyDao()
 }

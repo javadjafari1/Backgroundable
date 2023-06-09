@@ -24,4 +24,8 @@ class MediaLocalDataSourceImpl @Inject constructor(
     override suspend fun deleteAll() {
         mediaDao.deleteAll()
     }
+
+    override suspend fun deleteById(id: String) {
+        mediaDao.deleteById(id)
+    }
 }

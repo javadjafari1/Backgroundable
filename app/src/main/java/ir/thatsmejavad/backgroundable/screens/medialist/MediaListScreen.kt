@@ -87,7 +87,7 @@ internal fun MediaListScreen(
                         text = firstLoadState.error.getStringMessage(context)
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    ElevatedButton(onClick = { viewModel.getMedias(id, false) }) {
+                    ElevatedButton(onClick = { viewModel.getMedias(id) }) {
                         Text(text = stringResource(R.string.label_try_again))
                     }
                 }

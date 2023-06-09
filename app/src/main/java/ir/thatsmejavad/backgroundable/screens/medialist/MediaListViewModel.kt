@@ -34,12 +34,12 @@ class MediaListViewModel @AssistedInject constructor(
         val id = checkNotNull(savedStateHandle.get<String>("id")) {
             "id should not be null in $this"
         }
-        getMedias(id, false)
+        getMedias(id)
     }
 
-    fun getMedias(id: String, shouldFetch: Boolean) {
+    fun getMedias(id: String) {
         mediaRepository
-            .getMediasByCollectionId(id, shouldFetch)
+            .getMediasByCollectionId(id)
             .cachedIn(viewModelScope)
             .onEach {
                 _medias.emit(it)
