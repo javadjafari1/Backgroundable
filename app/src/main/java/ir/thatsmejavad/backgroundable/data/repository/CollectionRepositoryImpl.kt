@@ -6,6 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import ir.thatsmejavad.backgroundable.core.Constants.COLLECTIONS_PER_PAGE_ITEM
 import ir.thatsmejavad.backgroundable.data.datasource.local.CollectionLocalDataSource
+import ir.thatsmejavad.backgroundable.data.datasource.local.PageKeyLocalDataSource
 import ir.thatsmejavad.backgroundable.data.datasource.remote.CollectionRemoteDataSource
 import ir.thatsmejavad.backgroundable.data.datasource.remote.CollectionRemoteMediator
 import ir.thatsmejavad.backgroundable.data.db.BackgroundableDatabase
@@ -17,9 +18,10 @@ class CollectionRepositoryImpl @Inject constructor(
     private val collectionRemoteDataSource: CollectionRemoteDataSource,
     private val collectionLocalDataSource: CollectionLocalDataSource,
     private val database: BackgroundableDatabase,
+    private val pageKeyLocalDataSource: PageKeyLocalDataSource,
 ) : CollectionRepository {
     @OptIn(ExperimentalPagingApi::class)
-    override fun getCollections(shouldFetch: Boolean): Flow<PagingData<CollectionEntity>> {
+    override fun getCollections(): Flow<PagingData<CollectionEntity>> {
         return Pager(
             config = PagingConfig(
                 pageSize = COLLECTIONS_PER_PAGE_ITEM,
@@ -28,7 +30,7 @@ class CollectionRepositoryImpl @Inject constructor(
                 collectionRemoteDataSource = collectionRemoteDataSource,
                 collectionLocalDataSource = collectionLocalDataSource,
                 database = database,
-                shouldFetch = shouldFetch
+                pageKeyLocalDataSource = pageKeyLocalDataSource,
             ),
             pagingSourceFactory = {
                 collectionLocalDataSource.getPagedCollection()

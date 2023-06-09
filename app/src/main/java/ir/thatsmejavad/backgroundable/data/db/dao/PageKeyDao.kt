@@ -12,7 +12,7 @@ interface PageKeyDao {
     suspend fun insertPageKey(pageKey: PageKeyEntity)
 
     @Query("SELECT * FROM `page-key` WHERE `collection-id` = :id")
-    suspend fun getPageKeyById(id: String): PageKeyEntity
+    suspend fun getPageKeyById(id: String): PageKeyEntity?
 
     @Query("DELETE FROM `page-key`WHERE `collection-id` = :id")
     suspend fun deletePageKeyById(id: String)

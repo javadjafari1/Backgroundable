@@ -9,6 +9,7 @@ import ir.thatsmejavad.backgroundable.core.Constants.MEDIA_REFRESH_TIME_IN_HOUR
 import ir.thatsmejavad.backgroundable.core.sealeds.MediaType
 import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
 import ir.thatsmejavad.backgroundable.data.datasource.local.MediaLocalDataSource
+import ir.thatsmejavad.backgroundable.data.datasource.local.PageKeyLocalDataSource
 import ir.thatsmejavad.backgroundable.data.datasource.local.ResourceLocalDataSource
 import ir.thatsmejavad.backgroundable.data.db.BackgroundableDatabase
 import ir.thatsmejavad.backgroundable.data.db.entity.PageKeyEntity
@@ -22,6 +23,7 @@ class MediaRemoteMediator(
     private val mediaRemoteDataSource: MediaRemoteDataSource,
     private val mediaLocalDataSource: MediaLocalDataSource,
     private val resourceLocalDataSource: ResourceLocalDataSource,
+    private val pageKeyLocalDataSource: PageKeyLocalDataSource,
     private val collectionId: String,
     private val database: BackgroundableDatabase,
 ) : RemoteMediator<Int, MediaWithResources>() {
@@ -29,7 +31,7 @@ class MediaRemoteMediator(
     private var pageKeyEntity: PageKeyEntity? = null
 
     override suspend fun initialize(): InitializeAction {
-        pageKeyEntity = mediaLocalDataSource.getPageKeyById(collectionId)
+        pageKeyEntity = pageKeyLocalDataSource.getPageKeyById(collectionId)
 
         val lastUpdateTime = pageKeyEntity?.timestamp ?: -1
         val elapsedHours =
@@ -54,7 +56,7 @@ class MediaRemoteMediator(
 
                 LoadType.REFRESH -> 1
                 LoadType.APPEND -> {
-                    pageKeyEntity = mediaLocalDataSource.getPageKeyById(collectionId)
+                    pageKeyEntity = pageKeyLocalDataSource.getPageKeyById(collectionId)
                     pageKeyEntity?.let {
                         if (it.lastLoadedPage == it.maxPage) {
                             return MediatorResult.Success(endOfPaginationReached = true)
@@ -71,7 +73,7 @@ class MediaRemoteMediator(
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     mediaLocalDataSource.deleteById(collectionId)
-                    mediaLocalDataSource.deletePageKeyById(collectionId)
+                    pageKeyLocalDataSource.deletePageKeyById(collectionId)
                 }
 
                 val resourceEntities = mutableListOf<ResourceEntity>()
@@ -91,7 +93,7 @@ class MediaRemoteMediator(
                 mediaLocalDataSource.insertMedias(mediaEntities)
                 resourceLocalDataSource.insertResources(resourceEntities)
                 val maxPage = ceil((response.total / response.perPage.toDouble()))
-                mediaLocalDataSource.insertPageKey(
+                pageKeyLocalDataSource.insertPageKey(
                     PageKeyEntity(
                         collectionId = collectionId,
                         lastLoadedPage = nextPage,

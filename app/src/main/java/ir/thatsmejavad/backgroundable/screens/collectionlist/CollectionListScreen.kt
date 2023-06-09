@@ -67,7 +67,7 @@ fun CollectionListScreen(
                         text = firstLoadState.error.getStringMessage(context)
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    ElevatedButton(onClick = { viewModel.getCollections(false) }) {
+                    ElevatedButton(onClick = { viewModel.getCollections() }) {
                         Text(text = stringResource(R.string.label_try_again))
                     }
                 }

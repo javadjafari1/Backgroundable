@@ -6,6 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import ir.thatsmejavad.backgroundable.core.Constants.MEDIA_PER_PAGE_ITEM
 import ir.thatsmejavad.backgroundable.data.datasource.local.MediaLocalDataSource
+import ir.thatsmejavad.backgroundable.data.datasource.local.PageKeyLocalDataSource
 import ir.thatsmejavad.backgroundable.data.datasource.local.ResourceLocalDataSource
 import ir.thatsmejavad.backgroundable.data.datasource.remote.MediaRemoteDataSource
 import ir.thatsmejavad.backgroundable.data.datasource.remote.MediaRemoteMediator
@@ -19,6 +20,7 @@ class MediaRepositoryImpl @Inject constructor(
     private val mediaRemoteDataSource: MediaRemoteDataSource,
     private val mediaLocalDataSource: MediaLocalDataSource,
     private val resourceLocalDataSource: ResourceLocalDataSource,
+    private val pageKeyLocalDataSource: PageKeyLocalDataSource,
     private val database: BackgroundableDatabase,
 ) : MediaRepository {
     override suspend fun getMedia(mediaId: Int): Media {
@@ -39,6 +41,7 @@ class MediaRepositoryImpl @Inject constructor(
                 mediaLocalDataSource = mediaLocalDataSource,
                 mediaRemoteDataSource = mediaRemoteDataSource,
                 resourceLocalDataSource = resourceLocalDataSource,
+                pageKeyLocalDataSource = pageKeyLocalDataSource,
                 collectionId = collectionId,
             ),
             pagingSourceFactory = {

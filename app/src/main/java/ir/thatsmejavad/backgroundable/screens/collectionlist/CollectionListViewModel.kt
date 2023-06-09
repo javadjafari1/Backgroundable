@@ -30,11 +30,11 @@ class CollectionListViewModel @AssistedInject constructor(
     val collection: StateFlow<PagingData<CollectionEntity>> = _collections
 
     init {
-        getCollections(false)
+        getCollections()
     }
 
-    fun getCollections(shouldFetch: Boolean) = collectionRepository
-        .getCollections(shouldFetch)
+    fun getCollections() = collectionRepository
+        .getCollections()
         .cachedIn(viewModelScope)
         .onEach {
             _collections.emit(it)
