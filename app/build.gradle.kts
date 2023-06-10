@@ -164,8 +164,9 @@ dependencies {
     debugImplementation("com.github.chuckerteam.chucker:library:3.5.2")
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:3.5.2")
 
-}
+    implementation("me.saket.telephoto:zoomable-image-coil:0.4.0")
 
+}
 
 class RoomSchemaArgProvider(
     @get:InputDirectory
