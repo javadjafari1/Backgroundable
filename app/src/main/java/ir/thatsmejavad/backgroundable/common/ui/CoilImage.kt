@@ -55,8 +55,8 @@ fun ZoomableCoilImage(
                 onStart = {
                     isLoading(true)
                 },
-                onSuccess = { _, it ->
-                    onDrawableLoaded(it.drawable)
+                onSuccess = { _, result ->
+                    onDrawableLoaded(result.drawable)
                     isLoading(false)
                 }
             )
