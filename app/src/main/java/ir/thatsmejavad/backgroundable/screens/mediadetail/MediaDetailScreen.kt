@@ -7,16 +7,10 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.gestures.rememberTransformableState
-import androidx.compose.foundation.gestures.transformable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -31,6 +25,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeTopAppBar
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,9 +38,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -54,14 +46,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.CircularLoading
-import ir.thatsmejavad.backgroundable.common.ui.CoilImage
+import ir.thatsmejavad.backgroundable.common.ui.ZoomableCoilImage
 import ir.thatsmejavad.backgroundable.core.getStringMessage
 import ir.thatsmejavad.backgroundable.core.getUri
 import ir.thatsmejavad.backgroundable.core.saveIn
 import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob
 import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
 import ir.thatsmejavad.backgroundable.core.setWallpaperWithImage
-import ir.thatsmejavad.backgroundable.core.toColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -77,7 +68,8 @@ fun MediaDetailScreen(
     val mediaResult by viewModel.media.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
-    var isToolsVisible by remember { mutableStateOf(true) }
+    var isToolsVisible by rememberSaveable { mutableStateOf(true) }
+    var isImageLoading by rememberSaveable { mutableStateOf(false) }
 
     BackgroundableScaffold(
         snackbarManager = viewModel.snackbarManager,
@@ -120,7 +112,6 @@ fun MediaDetailScreen(
 
             is AsyncJob.Success -> {
                 val mediaWithResources = (mediaResult as AsyncJob.Success).value
-                var isLoading by rememberSaveable { mutableStateOf(true) }
                 var drawable by remember { mutableStateOf<Drawable?>(null) }
                 val scope = rememberCoroutineScope()
 
@@ -130,22 +121,19 @@ fun MediaDetailScreen(
                         .padding(paddingValues),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    ZoomableBox(
-                        Modifier.weight(1f),
-                        onClick = { isToolsVisible = !isToolsVisible },
-                    ) {
-                        CoilImage(
-                            url = mediaWithResources.resources.first { it.size == ResourceSize.Original }.url,
-                            contentDescription = mediaWithResources.media.alt,
-                            placeHolder = ColorPainter(mediaWithResources.media.avgColor.toColor()),
-                            isLoading = { isLoading = it },
-                            onDrawableLoaded = { drawable = it }
-                        )
-                        if (isLoading) {
-                            CircularLoading()
-                        }
+                    AnimatedVisibility(isImageLoading) {
+                        LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
                     }
-                    AnimatedVisibility(visible = isToolsVisible && !isLoading) {
+                    ZoomableCoilImage(
+                        modifier = Modifier.weight(1f),
+                        onClick = { isToolsVisible = !isToolsVisible },
+                        url = mediaWithResources.resources.first { it.size == ResourceSize.Original }.url,
+                        placeHolder = mediaWithResources.resources.first { it.size == ResourceSize.Medium }.url,
+                        contentDescription = mediaWithResources.media.alt,
+                        isLoading = { isImageLoading = it },
+                        onDrawableLoaded = { drawable = it }
+                    )
+                    AnimatedVisibility(visible = isToolsVisible && !isImageLoading) {
                         Row(
                             modifier = Modifier
                                 .padding(20.dp)
@@ -182,42 +170,4 @@ fun MediaDetailScreen(
             }
         }
     }
-}
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun ZoomableBox(
-    modifier: Modifier = Modifier,
-    contentAlignment: Alignment = Alignment.Center,
-    onClick: () -> Unit,
-    content: @Composable BoxScope.() -> Unit
-) {
-    var scale by remember { mutableStateOf(1f) }
-    var offset by remember { mutableStateOf(Offset.Zero) }
-    val state = rememberTransformableState { zoomChange, offsetChange, _ ->
-        scale *= zoomChange
-        offset += offsetChange
-    }
-
-    Box(
-        modifier
-            .graphicsLayer(
-                scaleX = scale,
-                scaleY = scale,
-                translationX = offset.x,
-                translationY = offset.y
-            )
-            .transformable(state = state)
-            .combinedClickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = null,
-                onDoubleClick = {
-                    scale = 1f
-                    offset = Offset.Zero
-                },
-                onClick = onClick
-            ),
-        contentAlignment = contentAlignment,
-        content = content
-    )
 }
