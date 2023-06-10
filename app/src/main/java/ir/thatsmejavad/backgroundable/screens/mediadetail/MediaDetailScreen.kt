@@ -31,6 +31,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -111,7 +112,7 @@ fun MediaDetailScreen(
 
             is AsyncJob.Success -> {
                 val mediaWithResources = (mediaResult as AsyncJob.Success).value
-                var drawable by rememberSaveable { mutableStateOf<Drawable?>(null) }
+                var drawable by remember { mutableStateOf<Drawable?>(null) }
                 val scope = rememberCoroutineScope()
 
                 Column(
