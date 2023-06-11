@@ -63,7 +63,7 @@ internal fun MediaListScreen(
                 }
             )
         },
-    ) { paddingValues ->
+    ) {
         val medias = viewModel.medias.collectAsLazyPagingItems()
 
         LaunchedEffect(medias.loadState.refresh) {
@@ -72,12 +72,10 @@ internal fun MediaListScreen(
                 viewModel.snackbarManager.sendError(refresh.error.getSnackbarMessage())
             }
         }
-
         LazyVerticalStaggeredGridWithSwipeRefresh(
             pagingItems = medias,
             columns = StaggeredGridCells.Fixed(2),
             modifier = Modifier
-                .padding(paddingValues)
                 .padding(horizontal = 16.dp)
                 .fillMaxSize(),
         ) {
