@@ -56,9 +56,11 @@ fun CollectionListScreen(
                 },
             )
         },
-    ) {
+    ) { paddingValues ->
         LazyColumnWithSwipeRefresh(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize(),
             pagingItems = collections,
             verticalArrangement = Arrangement.spacedBy(8.dp),
             contentPadding = PaddingValues(horizontal = 16.dp),
