@@ -33,7 +33,7 @@ class CollectionListViewModel @AssistedInject constructor(
         getCollections()
     }
 
-    fun getCollections() = collectionRepository
+    private fun getCollections() = collectionRepository
         .getCollections()
         .cachedIn(viewModelScope)
         .onEach {

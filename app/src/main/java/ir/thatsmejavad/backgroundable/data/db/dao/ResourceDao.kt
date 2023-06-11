@@ -9,7 +9,7 @@ import ir.thatsmejavad.backgroundable.data.db.entity.ResourceEntity
 @Dao
 interface ResourceDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertResources(list: List<ResourceEntity>)
 
     @Query("DELETE FROM resources")

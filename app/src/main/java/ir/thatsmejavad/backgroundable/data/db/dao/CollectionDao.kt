@@ -10,7 +10,7 @@ import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
 @Dao
 interface CollectionDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCollections(collections: List<CollectionEntity>)
 
     @Query("SELECT * FROM collections ORDER BY `order-id`")

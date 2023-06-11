@@ -37,7 +37,7 @@ class MediaListViewModel @AssistedInject constructor(
         getMedias(id)
     }
 
-    fun getMedias(id: String) {
+    private fun getMedias(id: String) {
         mediaRepository
             .getMediasByCollectionId(id)
             .cachedIn(viewModelScope)
