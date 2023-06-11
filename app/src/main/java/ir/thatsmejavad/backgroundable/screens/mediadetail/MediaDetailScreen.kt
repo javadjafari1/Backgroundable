@@ -94,7 +94,7 @@ fun MediaDetailScreen(
                 )
             }
         },
-    ) {
+    ) { paddingValues ->
         when (mediaResult) {
             is AsyncJob.Fail -> {
                 Text(text = (mediaResult as AsyncJob.Fail).exception.getStringMessage(context))
@@ -117,6 +117,7 @@ fun MediaDetailScreen(
 
                 Column(
                     modifier = Modifier
+                        .padding(paddingValues)
                         .fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
