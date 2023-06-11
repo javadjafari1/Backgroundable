@@ -37,7 +37,6 @@ fun <T : Any> LazyColumnWithSwipeRefresh(
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     content: LazyListScope.() -> Unit,
 ) {
-
     val context = LocalContext.current
     val refreshLoadState = pagingItems.loadState.refresh
 
@@ -105,7 +104,5 @@ fun <T : Any> LazyColumnWithSwipeRefresh(
                 }
             }
         }
-
     }
-
 }

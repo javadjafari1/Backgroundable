@@ -69,7 +69,6 @@ fun BackgroundableScaffold(
                 modifier = Modifier.padding(it),
                 content = content
             )
-
         }
     )
 }

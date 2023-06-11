@@ -57,7 +57,6 @@ fun CollectionListScreen(
             )
         },
     ) {
-
         LazyColumnWithSwipeRefresh(
             modifier = Modifier.fillMaxSize(),
             pagingItems = collections,

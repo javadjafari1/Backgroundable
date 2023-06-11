@@ -39,7 +39,6 @@ fun <T : Any> LazyVerticalStaggeredGridWithSwipeRefresh(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     content: LazyStaggeredGridScope.() -> Unit,
 ) {
-
     val context = LocalContext.current
     val refreshLoadState = pagingItems.loadState.refresh
 
@@ -105,7 +104,5 @@ fun <T : Any> LazyVerticalStaggeredGridWithSwipeRefresh(
                 }
             }
         }
-
     }
-
 }
