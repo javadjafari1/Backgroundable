@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridScope
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
@@ -43,45 +44,49 @@ fun <T : Any> LazyVerticalStaggeredGridWithSwipeRefresh(
     val refreshLoadState = pagingItems.loadState.refresh
 
     Box(modifier = Modifier.fillMaxSize()) {
-        LazyVerticalStaggeredGrid(
-            columns = columns,
-            state = state,
-            modifier = modifier.fillMaxSize(),
-            contentPadding = contentPadding,
-        ) {
-            item {
-                AnimatedVisibility(
-                    visible = pagingItems.itemCount != 0 && refreshLoadState is LoadState.Loading
-                ) {
-                    LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-                }
+        Column {
+            AnimatedVisibility(
+                visible = pagingItems.itemCount != 0 && refreshLoadState is LoadState.Loading
+            ) {
+                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
             }
-            content()
 
-            when (val paginationLoadState = pagingItems.loadState.append) {
-                is LoadState.Error -> {
-                    if (!paginationLoadState.endOfPaginationReached) {
-                        item {
-                            Box(Modifier.fillMaxSize()) {
-                                Text(
-                                    modifier = Modifier.align(Alignment.Center),
-                                    text = paginationLoadState.error.getStringMessage(context)
-                                )
+            Spacer(modifier = Modifier.padding(4.dp))
+
+            LazyVerticalStaggeredGrid(
+                columns = columns,
+                state = state,
+                modifier = modifier.fillMaxSize(),
+                contentPadding = contentPadding,
+            ) {
+                content()
+
+                when (val paginationLoadState = pagingItems.loadState.append) {
+                    is LoadState.Error -> {
+                        if (!paginationLoadState.endOfPaginationReached) {
+                            item {
+                                Box(Modifier.fillMaxSize()) {
+                                    Text(
+                                        modifier = Modifier.align(Alignment.Center),
+                                        text = paginationLoadState.error.getStringMessage(context)
+                                    )
+                                }
                             }
                         }
                     }
-                }
 
-                is LoadState.Loading -> {
-                    item {
-                        Box(Modifier.fillMaxSize()) {
-                            CircularLoading()
+                    is LoadState.Loading -> {
+                        item {
+                            Box(Modifier.fillMaxSize()) {
+                                CircularLoading()
+                            }
                         }
                     }
-                }
 
-                else -> {}
+                    else -> {}
+                }
             }
+
         }
 
         if (pagingItems.itemCount == 0 && refreshLoadState is LoadState.Loading) {

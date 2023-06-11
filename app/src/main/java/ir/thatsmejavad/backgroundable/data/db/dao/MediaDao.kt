@@ -11,7 +11,7 @@ import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
 
 @Dao
 interface MediaDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertMedias(medias: List<MediaEntity>)
 
     @Transaction

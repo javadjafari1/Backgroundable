@@ -72,7 +72,6 @@ class MediaRemoteMediator(
             )
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
-                    mediaLocalDataSource.deleteById(collectionId)
                     pageKeyLocalDataSource.deletePageKeyById(collectionId)
                 }
 

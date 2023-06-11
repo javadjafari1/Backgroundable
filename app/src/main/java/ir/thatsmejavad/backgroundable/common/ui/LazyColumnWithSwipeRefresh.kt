@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
@@ -41,46 +42,49 @@ fun <T : Any> LazyColumnWithSwipeRefresh(
     val refreshLoadState = pagingItems.loadState.refresh
 
     Box(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(
-            state = state,
-            modifier = modifier.fillMaxSize(),
-            contentPadding = contentPadding,
-            verticalArrangement = verticalArrangement,
-            horizontalAlignment = horizontalAlignment,
-        ) {
-            item {
-                AnimatedVisibility(
-                    visible = pagingItems.itemCount != 0 && refreshLoadState is LoadState.Loading
-                ) {
-                    LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-                }
+
+        Column {
+            AnimatedVisibility(
+                visible = pagingItems.itemCount != 0 && refreshLoadState is LoadState.Loading
+            ) {
+                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
             }
 
-            content()
+            Spacer(modifier = Modifier.padding(4.dp))
 
-            when (val paginationLoadState = pagingItems.loadState.append) {
-                is LoadState.Error -> {
-                    if (!paginationLoadState.endOfPaginationReached) {
-                        item {
-                            Box(Modifier.fillMaxSize()) {
-                                Text(
-                                    modifier = Modifier.align(Alignment.Center),
-                                    text = paginationLoadState.error.getStringMessage(context)
-                                )
+            LazyColumn(
+                state = state,
+                modifier = modifier.fillMaxSize(),
+                contentPadding = contentPadding,
+                verticalArrangement = verticalArrangement,
+                horizontalAlignment = horizontalAlignment,
+            ) {
+                content()
+
+                when (val paginationLoadState = pagingItems.loadState.append) {
+                    is LoadState.Error -> {
+                        if (!paginationLoadState.endOfPaginationReached) {
+                            item {
+                                Box(Modifier.fillMaxSize()) {
+                                    Text(
+                                        modifier = Modifier.align(Alignment.Center),
+                                        text = paginationLoadState.error.getStringMessage(context)
+                                    )
+                                }
                             }
                         }
                     }
-                }
 
-                is LoadState.Loading -> {
-                    item {
-                        Box(Modifier.fillMaxSize()) {
-                            CircularLoading()
+                    is LoadState.Loading -> {
+                        item {
+                            Box(Modifier.fillMaxSize()) {
+                                CircularLoading()
+                            }
                         }
                     }
-                }
 
-                else -> {}
+                    else -> {}
+                }
             }
         }
 

@@ -64,7 +64,6 @@ class CollectionRemoteMediator(
 
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
-                    collectionLocalDataSource.deleteAll()
                     pageKeyLocalDataSource.deletePageKeyById(COLLECTION_ID)
                 }
 
