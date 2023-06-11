@@ -76,7 +76,6 @@ fun <T : Any> LazyVerticalStaggeredGridWithSwipeRefresh(
 
                 else -> {}
             }
-
         }
 
         if (pagingItems.itemCount == 0 && refreshLoadState is LoadState.Loading) {
