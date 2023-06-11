@@ -42,10 +42,6 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         ),
     ) { entry ->
 
-        val collectionId = checkNotNull(entry.arguments?.getString("id")) {
-            "collectionId should not be null!"
-        }
-
         val title = checkNotNull(entry.arguments?.getString("title")) {
             "title should not be null!"
         }
@@ -53,7 +49,6 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         MediaListScreen(
             title = title,
             viewModel = daggerViewModel(),
-            id = collectionId,
             onMediaClicked = { id, alt ->
                 navController.navigate(AppScreens.MediaDetail.createRoute(id, alt))
             },

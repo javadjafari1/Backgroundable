@@ -1,8 +1,10 @@
 package ir.thatsmejavad.backgroundable.common.ui
 
 import android.content.Context
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
@@ -36,7 +38,7 @@ fun BackgroundableScaffold(
     containerColor: Color = MaterialTheme.colorScheme.background,
     contentColor: Color = contentColorFor(containerColor),
     contentWindowInsets: WindowInsets = ScaffoldDefaults.contentWindowInsets,
-    content: @Composable (PaddingValues) -> Unit
+    content: @Composable ColumnScope.() -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
@@ -62,7 +64,13 @@ fun BackgroundableScaffold(
         floatingActionButtonPosition = floatingActionButtonPosition,
         contentColor = contentColor,
         contentWindowInsets = contentWindowInsets,
-        content = content
+        content = {
+            Column(
+                modifier = Modifier.padding(it),
+                content = content
+            )
+
+        }
     )
 }
 
