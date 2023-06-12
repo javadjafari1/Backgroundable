@@ -77,10 +77,6 @@ fun <T : Any> LazyColumnWithSwipeRefresh(
             }
         }
 
-        if (pagingItems.itemCount == 0 && refreshLoadState is LoadState.Loading) {
-            CircularLoading()
-        }
-
         if (pagingItems.itemCount == 0 && refreshLoadState is LoadState.Error) {
             Column(
                 Modifier.fillMaxSize(),
