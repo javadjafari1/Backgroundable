@@ -6,7 +6,6 @@ import coil.ImageLoader
 import ir.thatsmejavad.backgroundable.core.Constants.REQUEST_TIMEOUT_IN_SECONDS
 import ir.thatsmejavad.backgroundable.di.components.AppComponent
 import ir.thatsmejavad.backgroundable.di.components.DaggerAppComponent
-import ir.thatsmejavad.backgroundable.di.modules.ApplicationModule
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
@@ -17,6 +16,7 @@ class BackgroundableApp : Application() {
         private set
 
     override fun onCreate() {
+        setupCoil()
         super.onCreate()
         appComponent = DaggerAppComponent.factory().create(this)
     }
