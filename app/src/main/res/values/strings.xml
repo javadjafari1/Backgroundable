@@ -8,4 +8,5 @@
     <string name="label_try_again">Try again</string>
     <string name="serialization_error_message"> Oops!: Serialization Error</string>
     <string name="label_set_as_wallpaper">Set as Wallpaper</string>
+    <string name="label_cant_connect_to_server">Unable to connect to the server. Please check your internet connection and try again.</string>
 </resources>

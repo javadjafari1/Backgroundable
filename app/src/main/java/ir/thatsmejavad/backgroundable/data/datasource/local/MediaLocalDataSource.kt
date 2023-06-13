@@ -12,4 +12,6 @@ interface MediaLocalDataSource {
     suspend fun getMediaWithResources(id: Int): MediaWithResources
 
     suspend fun deleteAll()
+
+    suspend fun deleteById(id: String)
 }

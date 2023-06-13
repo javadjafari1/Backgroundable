@@ -5,5 +5,5 @@ import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
 import kotlinx.coroutines.flow.Flow
 
 interface CollectionRepository {
-    fun getCollections(shouldFetch: Boolean): Flow<PagingData<CollectionEntity>>
+    fun getCollections(): Flow<PagingData<CollectionEntity>>
 }

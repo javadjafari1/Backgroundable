@@ -13,6 +13,7 @@ import kotlinx.serialization.SerializationException
 import java.io.File
 import java.io.FileOutputStream
 import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 fun Throwable.getErrorMessage(): Any {
     return when (this) {
@@ -26,6 +27,7 @@ fun Throwable.getErrorMessage(): Any {
 
         is SerializationException -> R.string.serialization_error_message
         is SocketTimeoutException -> R.string.timeout_error_message
+        is UnknownHostException -> R.string.label_cant_connect_to_server
         else -> R.string.unexpected_error_message
     }
 }

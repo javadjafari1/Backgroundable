@@ -11,7 +11,7 @@ import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
 
 @Dao
 interface MediaDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertMedias(medias: List<MediaEntity>)
 
     @Transaction
@@ -24,4 +24,7 @@ interface MediaDao {
 
     @Query("DELETE FROM medias")
     suspend fun deleteAll()
+
+    @Query("DELETE FROM medias WHERE id = :id")
+    suspend fun deleteById(id: String)
 }
