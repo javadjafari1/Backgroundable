@@ -13,6 +13,7 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -37,6 +38,7 @@ import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations
 import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations.HOME
 import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations.SEARCH
 import ir.thatsmejavad.backgroundable.core.AppScreens
+import ir.thatsmejavad.backgroundable.core.Constants.NAVIGATION_BAR_HEIGHT
 import ir.thatsmejavad.backgroundable.core.viewmodel.LocalViewModelFactory
 import ir.thatsmejavad.backgroundable.ui.theme.BackgroundableTheme
 
@@ -83,8 +85,7 @@ private fun BackgroundableApp() {
             mainNavGraph(navController)
         }
 
-        Box(modifier = Modifier.align(Alignment.BottomCenter))
-        {
+        Box(modifier = Modifier.align(Alignment.BottomCenter)) {
             AnimatedVisibility(
                 visible = isMainScreen(navController.currentBackStackEntryAsState().value?.destination?.route),
                 enter = slideInVertically { it },
@@ -120,7 +121,9 @@ private fun BackgroundableNavigationBar(
     navigationBarDestinations: List<NavigationBarDestinations>,
     onItemSelected: (NavigationBarDestinations) -> Unit,
 ) {
-    NavigationBar {
+    NavigationBar(
+        modifier = Modifier.height(NAVIGATION_BAR_HEIGHT)
+    ) {
         navigationBarDestinations.forEach { destination ->
             NavigationBarItem(
                 selected = destination == selectedNavigationBarItem,
@@ -128,7 +131,7 @@ private fun BackgroundableNavigationBar(
                 icon = {
                     Crossfade(
                         targetState = selectedNavigationBarItem == destination,
-                        label = ""
+                        label = "navigation items animation"
                     ) { isSelected ->
                         Icon(
                             painter = painterResource(

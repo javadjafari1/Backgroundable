@@ -90,6 +90,8 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
     composable(
         route = AppScreens.Search.route,
     ) {
-        SearchScreen()
+        SearchScreen(
+            viewModel = daggerViewModel(),
+        )
     }
 }

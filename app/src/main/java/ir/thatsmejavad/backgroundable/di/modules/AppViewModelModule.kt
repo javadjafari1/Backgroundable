@@ -8,6 +8,7 @@ import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelAssistedFactoryKey
 import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListViewModel
 import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailViewModel
 import ir.thatsmejavad.backgroundable.screens.medialist.MediaListViewModel
+import ir.thatsmejavad.backgroundable.screens.search.SearchViewModel
 
 @Module(
     includes = [
@@ -30,4 +31,8 @@ interface AppViewModelModule {
     @Binds
     @[IntoMap ViewModelAssistedFactoryKey(MediaDetailViewModel::class)]
     fun bindsMediaDetailViewModelFactory(factory: MediaDetailViewModel.Factory): ViewModelAssistedFactory<*>
+
+    @Binds
+    @[IntoMap ViewModelAssistedFactoryKey(SearchViewModel::class)]
+    fun bindsSearchViewModelFactory(factory: SearchViewModel.Factory): ViewModelAssistedFactory<*>
 }
