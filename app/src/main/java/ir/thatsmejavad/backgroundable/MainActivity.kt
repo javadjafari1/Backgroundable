@@ -28,7 +28,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -134,13 +133,11 @@ private fun BackgroundableNavigationBar(
                         label = "navigation items animation"
                     ) { isSelected ->
                         Icon(
-                            painter = painterResource(
-                                if (isSelected) {
-                                    destination.selectedIcon
-                                } else {
-                                    destination.unselectedIcon
-                                }
-                            ),
+                            imageVector = if (isSelected) {
+                                destination.selectedIcon
+                            } else {
+                                destination.unselectedIcon
+                            },
                             contentDescription = "${stringResource(destination.text)}-navigation-item",
                         )
                     }

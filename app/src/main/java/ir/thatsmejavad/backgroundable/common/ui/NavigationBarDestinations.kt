@@ -1,22 +1,26 @@
 package ir.thatsmejavad.backgroundable.common.ui
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.ui.graphics.vector.ImageVector
 import ir.thatsmejavad.backgroundable.R
 
 enum class NavigationBarDestinations(
-    @DrawableRes val selectedIcon: Int,
-    @DrawableRes val unselectedIcon: Int,
+    val selectedIcon: ImageVector,
+    val unselectedIcon: ImageVector,
     @StringRes val text: Int,
 ) {
     HOME(
-        selectedIcon = R.drawable.ic_home_filled,
-        unselectedIcon = R.drawable.ic_home_outline,
+        selectedIcon = Icons.Filled.Home,
+        unselectedIcon = Icons.Outlined.Home,
         text = R.string.label_home,
     ),
     SEARCH(
-        selectedIcon = R.drawable.ic_search,
-        unselectedIcon = R.drawable.ic_search,
+        selectedIcon = Icons.Filled.Search,
+        unselectedIcon = Icons.Filled.Search,
         text = R.string.label_search,
     )
 }
