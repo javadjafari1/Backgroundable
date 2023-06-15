@@ -29,11 +29,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations
 import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations.HOME
+import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations.SEARCH
 import ir.thatsmejavad.backgroundable.core.AppScreens
 import ir.thatsmejavad.backgroundable.core.viewmodel.LocalViewModelFactory
 import ir.thatsmejavad.backgroundable.ui.theme.BackgroundableTheme
@@ -95,12 +97,15 @@ private fun BackgroundableApp() {
                         selectedNavigationBarItem = destinations
                         val route = when (selectedNavigationBarItem) {
                             HOME -> AppScreens.CollectionList
-                            NavigationBarDestinations.SEARCH -> AppScreens.Search
+                            SEARCH -> AppScreens.Search
                         }.route
 
                         navController.navigate(route) {
                             launchSingleTop = true
                             restoreState = true
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
                         }
                     }
                 )
