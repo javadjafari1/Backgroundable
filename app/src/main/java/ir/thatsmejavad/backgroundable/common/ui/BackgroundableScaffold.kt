@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.onEach
 fun BackgroundableScaffold(
     snackbarManager: SnackbarManager,
     modifier: Modifier = Modifier,
+    contentModifier: Modifier = Modifier,
     topBar: @Composable () -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
@@ -66,7 +67,7 @@ fun BackgroundableScaffold(
         contentWindowInsets = contentWindowInsets,
         content = {
             Column(
-                modifier = Modifier.padding(it),
+                modifier = contentModifier.padding(it),
                 content = content
             )
         }

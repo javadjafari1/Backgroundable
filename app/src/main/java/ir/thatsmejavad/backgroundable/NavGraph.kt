@@ -10,6 +10,7 @@ import ir.thatsmejavad.backgroundable.core.viewmodel.daggerViewModel
 import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListScreen
 import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailScreen
 import ir.thatsmejavad.backgroundable.screens.medialist.MediaListScreen
+import ir.thatsmejavad.backgroundable.screens.search.SearchScreen
 
 internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
     composable(
@@ -83,6 +84,17 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
             title = title,
             viewModel = daggerViewModel(),
             onBackClicked = { navController.navigateUp() }
+        )
+    }
+
+    composable(
+        route = AppScreens.Search.route,
+    ) {
+        SearchScreen(
+            viewModel = daggerViewModel(),
+            onMediaClicked = { id, alt ->
+                navController.navigate(AppScreens.MediaDetail.createRoute(id, alt))
+            },
         )
     }
 }

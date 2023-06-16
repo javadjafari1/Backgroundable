@@ -11,7 +11,7 @@ import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 
-class BackgroundableApp : Application() {
+class BackgroundableApplication : Application() {
 
     lateinit var appComponent: AppComponent
         private set

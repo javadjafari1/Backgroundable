@@ -9,7 +9,7 @@ interface MediaLocalDataSource {
 
     fun getPagedMedia(collectionId: String): PagingSource<Int, MediaWithResources>
 
-    suspend fun getMediaWithResources(id: Int): MediaWithResources
+    suspend fun getMediaWithResources(id: Int): MediaWithResources?
 
     suspend fun deleteAll()
 
