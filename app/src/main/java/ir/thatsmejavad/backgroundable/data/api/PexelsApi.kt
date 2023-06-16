@@ -29,4 +29,11 @@ interface PexelsApi {
     suspend fun getPhoto(
         @Path("photoId") photoId: Int
     ): Response<Media>
+
+    @GET("v1/search")
+    suspend fun searchPhoto(
+        @Query("query") query: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int = MEDIA_PER_PAGE_ITEM,
+    ): Response<PagedResponse<Media>>
 }

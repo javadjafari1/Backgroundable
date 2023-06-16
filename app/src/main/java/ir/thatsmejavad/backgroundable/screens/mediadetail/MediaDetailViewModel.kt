@@ -39,8 +39,9 @@ class MediaDetailViewModel @AssistedInject constructor(
         viewModelScope.launch {
             _media.value = AsyncJob.Loading
             try {
-                val result = mediaRepository.getMediaWithResources(mediaId)
-                _media.value = AsyncJob.Success(result)
+                mediaRepository.getMediaWithResources(mediaId)?.let { result ->
+                    _media.value = AsyncJob.Success(result)
+                }
             } catch (e: Exception) {
                 _media.value = AsyncJob.Fail(e)
             }
