@@ -100,7 +100,7 @@ fun SearchScreen(
                 }
             },
             placeholder = {
-                Text(text = "Search...")
+                Text(text = stringResource(R.string.search_text_field_place_holder))
             },
             leadingIcon = {
                 Icon(
@@ -198,14 +198,14 @@ fun SearchScreen(
             if (medias.itemCount == 0 && !pagingIsLoading && !medias.loadState.append.endOfPaginationReached) {
                 Text(
                     modifier = Modifier.align(Alignment.Center),
-                    text = "Search Anything"
+                    text = stringResource(R.string.label_looking_for_wallpapers_start_here)
                 )
             }
 
             if (medias.itemCount == 0 && !pagingIsLoading && medias.loadState.append.endOfPaginationReached) {
                 Text(
                     modifier = Modifier.align(Alignment.Center),
-                    text = "nothing found with keyword $queryString"
+                    text = stringResource(R.string.label_nothing_found_with_keyword, queryString)
                 )
             }
 

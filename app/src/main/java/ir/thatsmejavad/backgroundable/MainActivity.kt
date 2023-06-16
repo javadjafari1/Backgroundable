@@ -79,6 +79,10 @@ private fun BackgroundableApp() {
             mainNavGraph(navController)
         }
 
+        /*
+        * we have to add bottom bar like this, and not in Scaffold because
+        * in scaffold we can't add animation for showing and hiding the bottomBar
+        * */
         Box(modifier = Modifier.align(Alignment.BottomCenter)) {
             AnimatedVisibility(
                 visible = isMainScreen(navController.currentBackStackEntryAsState().value?.destination?.route),
