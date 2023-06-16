@@ -92,6 +92,9 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
     ) {
         SearchScreen(
             viewModel = daggerViewModel(),
+            onMediaClicked = { id, alt ->
+                navController.navigate(AppScreens.MediaDetail.createRoute(id, alt))
+            },
         )
     }
 }

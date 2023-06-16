@@ -22,7 +22,7 @@ data class Media(
 ) {
     fun toEntity(
         type: MediaType,
-        collectionId: String
+        collectionId: String?
     ) = MediaEntity(
         id = id,
         width = width,

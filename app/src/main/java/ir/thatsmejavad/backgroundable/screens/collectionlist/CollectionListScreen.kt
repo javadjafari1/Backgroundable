@@ -54,7 +54,7 @@ fun CollectionListScreen(
             The padding of the bottomBar,
             can't use Scaffold to add bottomBar with animation.
             the bottom of the ui will jump
-            */
+             */
             .padding(bottom = NAVIGATION_BAR_HEIGHT),
         snackbarManager = viewModel.snackbarManager,
         topBar = {
@@ -74,9 +74,8 @@ fun CollectionListScreen(
             items(
                 count = collections.itemCount,
                 key = collections.itemKey(),
-                contentType = collections.itemContentType(),
-
-                ) { index ->
+                contentType = collections.itemContentType()
+            ) { index ->
                 collections[index]?.let { collection ->
                     CollectionCard(
                         index = index,

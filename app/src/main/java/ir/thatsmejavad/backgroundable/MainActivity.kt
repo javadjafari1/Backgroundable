@@ -22,10 +22,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -70,7 +66,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 private fun BackgroundableApp() {
     val navController = rememberNavController()
-    var selectedNavigationBarItem by remember { mutableStateOf(HOME) }
 
     Box(
         modifier = Modifier
@@ -91,11 +86,14 @@ private fun BackgroundableApp() {
                 exit = slideOutVertically { it },
             ) {
                 BackgroundableNavigationBar(
-                    selectedNavigationBarItem = selectedNavigationBarItem,
+                    selectedNavigationBarItem = if (navController.currentDestination?.route == AppScreens.Search.route) {
+                        SEARCH
+                    } else {
+                        HOME
+                    },
                     navigationBarDestinations = NavigationBarDestinations.values().toList(),
                     onItemSelected = { destinations ->
-                        selectedNavigationBarItem = destinations
-                        val route = when (selectedNavigationBarItem) {
+                        val route = when (destinations) {
                             HOME -> AppScreens.CollectionList
                             SEARCH -> AppScreens.Search
                         }.route
@@ -152,4 +150,4 @@ private fun BackgroundableNavigationBar(
 }
 
 private fun isMainScreen(route: String?): Boolean = route == AppScreens.CollectionList.route ||
-        route == AppScreens.Search.route
+    route == AppScreens.Search.route

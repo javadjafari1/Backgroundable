@@ -20,7 +20,7 @@ interface MediaDao {
 
     @Transaction
     @Query("SELECT * FROM medias WHERE id = :id")
-    suspend fun getMediaWithResources(id: Int): MediaWithResources
+    suspend fun getMediaWithResources(id: Int): MediaWithResources?
 
     @Query("DELETE FROM medias")
     suspend fun deleteAll()
