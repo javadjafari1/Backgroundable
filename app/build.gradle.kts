@@ -167,7 +167,7 @@ dependencies {
     implementation("me.saket.telephoto:zoomable-image-coil:0.4.0")
     // just for the swipe refresh
     implementation("androidx.compose.material:material:1.4.3")
-
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.31.3-beta")
 }
 
 class RoomSchemaArgProvider(

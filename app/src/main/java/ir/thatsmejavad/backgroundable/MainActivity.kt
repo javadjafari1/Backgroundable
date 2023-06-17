@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
@@ -26,9 +27,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations
 import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations.HOME
 import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations.SEARCH
@@ -63,16 +64,17 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun BackgroundableApp() {
-    val navController = rememberNavController()
+    val navController = rememberAnimatedNavController()
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
     ) {
-        NavHost(
+        AnimatedNavHost(
             navController = navController,
             startDestination = AppScreens.CollectionList.route
         ) {
@@ -80,9 +82,9 @@ private fun BackgroundableApp() {
         }
 
         /*
-        * we have to add bottom bar like this, and not in Scaffold because
-        * in scaffold we can't add animation for showing and hiding the bottomBar
-        * */
+         * we have to add bottom bar like this, and not in Scaffold because
+         * in scaffold we can't add animation for showing and hiding the bottomBar
+         * */
         Box(modifier = Modifier.align(Alignment.BottomCenter)) {
             AnimatedVisibility(
                 visible = isMainScreen(navController.currentBackStackEntryAsState().value?.destination?.route),
