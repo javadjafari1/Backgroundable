@@ -29,6 +29,7 @@ import androidx.paging.compose.itemKey
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.LazyColumnWithSwipeRefresh
+import ir.thatsmejavad.backgroundable.core.Constants.NAVIGATION_BAR_HEIGHT
 import ir.thatsmejavad.backgroundable.core.getSnackbarMessage
 import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
 
@@ -48,6 +49,13 @@ fun CollectionListScreen(
     }
 
     BackgroundableScaffold(
+        modifier = Modifier
+            /*
+            The padding of the bottomBar,
+            can't use Scaffold to add bottomBar with animation.
+            the bottom of the ui will jump
+             */
+            .padding(bottom = NAVIGATION_BAR_HEIGHT),
         snackbarManager = viewModel.snackbarManager,
         topBar = {
             CenterAlignedTopAppBar(
@@ -66,9 +74,8 @@ fun CollectionListScreen(
             items(
                 count = collections.itemCount,
                 key = collections.itemKey(),
-                contentType = collections.itemContentType(),
-
-                ) { index ->
+                contentType = collections.itemContentType()
+            ) { index ->
                 collections[index]?.let { collection ->
                     CollectionCard(
                         index = index,

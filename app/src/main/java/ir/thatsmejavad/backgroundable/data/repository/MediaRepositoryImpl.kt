@@ -5,12 +5,15 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import ir.thatsmejavad.backgroundable.core.Constants.MEDIA_PER_PAGE_ITEM
+import ir.thatsmejavad.backgroundable.core.sealeds.MediaType
+import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
 import ir.thatsmejavad.backgroundable.data.datasource.local.MediaLocalDataSource
 import ir.thatsmejavad.backgroundable.data.datasource.local.PageKeyLocalDataSource
 import ir.thatsmejavad.backgroundable.data.datasource.local.ResourceLocalDataSource
 import ir.thatsmejavad.backgroundable.data.datasource.remote.MediaRemoteDataSource
 import ir.thatsmejavad.backgroundable.data.datasource.remote.MediaRemoteMediator
 import ir.thatsmejavad.backgroundable.data.db.BackgroundableDatabase
+import ir.thatsmejavad.backgroundable.data.db.entity.ResourceEntity
 import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
 import ir.thatsmejavad.backgroundable.model.media.Media
 import kotlinx.coroutines.flow.Flow
@@ -23,9 +26,6 @@ class MediaRepositoryImpl @Inject constructor(
     private val pageKeyLocalDataSource: PageKeyLocalDataSource,
     private val database: BackgroundableDatabase,
 ) : MediaRepository {
-    override suspend fun getMedia(mediaId: Int): Media {
-        return mediaRemoteDataSource.getMedia(mediaId)
-    }
 
     @OptIn(ExperimentalPagingApi::class)
     override fun getMediasByCollectionId(
@@ -50,7 +50,34 @@ class MediaRepositoryImpl @Inject constructor(
         ).flow
     }
 
-    override suspend fun getMediaWithResources(id: Int): MediaWithResources {
+    override suspend fun getMediaWithResources(id: Int): MediaWithResources? {
+        val mediaWithResources = mediaLocalDataSource.getMediaWithResources(id)
+        if (mediaWithResources != null) return mediaWithResources
+
+        updateMedia(id)
         return mediaLocalDataSource.getMediaWithResources(id)
+    }
+
+    override fun searchPhoto(query: String): Flow<PagingData<Media>> {
+        return mediaRemoteDataSource.searchPhoto(query)
+    }
+
+    private suspend fun updateMedia(mediaId: Int) {
+        val media = mediaRemoteDataSource.getMedia(mediaId)
+        val resourceEntities = mutableListOf<ResourceEntity>()
+        val mediaEntities = media.toEntity(MediaType.Photo, null)
+
+        for (value in media.resources) {
+            resourceEntities.add(
+                ResourceEntity(
+                    mediaId = media.id,
+                    size = ResourceSize.fromString(value.first),
+                    url = value.second
+                )
+            )
+        }
+
+        mediaLocalDataSource.insertMedias(listOf(mediaEntities))
+        resourceLocalDataSource.insertResources(resourceEntities)
     }
 }

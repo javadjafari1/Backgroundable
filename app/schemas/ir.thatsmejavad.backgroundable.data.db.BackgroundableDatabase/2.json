@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "b049a94751d206659273ae56a12c135f",
+    "identityHash": "274cf87ca185c44841ad291c8eac0dbf",
     "entities": [
       {
         "tableName": "collections",
@@ -87,7 +87,7 @@
       },
       {
         "tableName": "medias",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `width` INTEGER NOT NULL, `height` INTEGER NOT NULL, `url` TEXT NOT NULL, `alt` TEXT NOT NULL, `type` TEXT NOT NULL, `collection-id` TEXT NOT NULL, `photographer` TEXT NOT NULL, `avg-color` TEXT NOT NULL, `photographer-id` INTEGER NOT NULL, `photographer-url` TEXT NOT NULL, `order-id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `width` INTEGER NOT NULL, `height` INTEGER NOT NULL, `url` TEXT NOT NULL, `alt` TEXT NOT NULL, `type` TEXT NOT NULL, `collection-id` TEXT, `photographer` TEXT NOT NULL, `avg-color` TEXT NOT NULL, `photographer-id` INTEGER NOT NULL, `photographer-url` TEXT NOT NULL, `order-id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -129,7 +129,7 @@
             "fieldPath": "collectionId",
             "columnName": "collection-id",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "photographer",
@@ -296,7 +296,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b049a94751d206659273ae56a12c135f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '274cf87ca185c44841ad291c8eac0dbf')"
     ]
   }
 }

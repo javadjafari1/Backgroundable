@@ -11,6 +11,7 @@ import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelFactory
 import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListViewModel
 import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailViewModel
 import ir.thatsmejavad.backgroundable.screens.medialist.MediaListViewModel
+import ir.thatsmejavad.backgroundable.screens.search.SearchViewModel
 
 @Module
 interface AppViewModelModule {
@@ -29,4 +30,8 @@ interface AppViewModelModule {
 
     @Binds
     fun bindsDaggerViewModelAssistedFactory(factory: DaggerViewModelAssistedFactory): ViewModelFactory
+
+    @Binds
+    @[IntoMap ViewModelAssistedFactoryKey(SearchViewModel::class)]
+    fun bindsSearchViewModelFactory(factory: SearchViewModel.Factory): ViewModelAssistedFactory<*>
 }

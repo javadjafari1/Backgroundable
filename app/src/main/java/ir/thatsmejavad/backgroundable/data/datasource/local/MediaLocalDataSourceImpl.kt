@@ -17,7 +17,7 @@ class MediaLocalDataSourceImpl @Inject constructor(
         return mediaDao.getPagedMedia(collectionId)
     }
 
-    override suspend fun getMediaWithResources(id: Int): MediaWithResources {
+    override suspend fun getMediaWithResources(id: Int): MediaWithResources? {
         return mediaDao.getMediaWithResources(id)
     }
 

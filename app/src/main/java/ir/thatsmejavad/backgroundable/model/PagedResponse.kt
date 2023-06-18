@@ -8,7 +8,7 @@ import kotlinx.serialization.json.JsonNames
 @OptIn(ExperimentalSerializationApi::class)
 @Serializable
 data class PagedResponse<T>(
-    @JsonNames("collections", "media")
+    @JsonNames("collections", "media", "photos")
     val data: List<T>,
     val page: Int,
     val perPage: Int,
