@@ -18,7 +18,7 @@ interface AppViewModelModule {
 
     @Binds
     @[IntoMap ViewModelAssistedFactoryKey(CollectionListViewModel::class)]
-    fun bindsCollectionListViewModelFactory(viewModel: CollectionListViewModel): ViewModel
+    fun bindsCollectionListViewModel(viewModel: CollectionListViewModel): ViewModel
 
     @Binds
     @[IntoMap ViewModelAssistedFactoryKey(MediaListViewModel::class)]
@@ -33,5 +33,5 @@ interface AppViewModelModule {
 
     @Binds
     @[IntoMap ViewModelAssistedFactoryKey(SearchViewModel::class)]
-    fun bindsSearchViewModelFactory(factory: SearchViewModel.Factory): ViewModelAssistedFactory<*>
+    fun bindsSearchViewModel(viewModel: SearchViewModel): ViewModel
 }

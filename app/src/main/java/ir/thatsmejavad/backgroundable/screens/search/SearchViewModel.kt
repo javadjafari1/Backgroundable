@@ -1,17 +1,12 @@
 package ir.thatsmejavad.backgroundable.screens.search
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.LoadState
 import androidx.paging.LoadStates
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
-import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelAssistedFactory
 import ir.thatsmejavad.backgroundable.data.repository.MediaRepository
 import ir.thatsmejavad.backgroundable.model.media.Media
 import kotlinx.coroutines.Job
@@ -22,12 +17,12 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 
-class SearchViewModel @AssistedInject constructor(
+class SearchViewModel @Inject constructor(
     val snackbarManager: SnackbarManager,
     private val mediaRepository: MediaRepository,
-    @Assisted private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val _searchQuery = MutableStateFlow("")
@@ -45,9 +40,6 @@ class SearchViewModel @AssistedInject constructor(
         )
     )
     val medias: StateFlow<PagingData<Media>> = _medias
-
-    @AssistedFactory
-    interface Factory : ViewModelAssistedFactory<SearchViewModel>
 
     init {
         viewModelScope.launch {

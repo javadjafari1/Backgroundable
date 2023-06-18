@@ -42,7 +42,7 @@ fun NavGraphBuilder.animatedComposable(
         ) + fadeOut(animationSpec = tween(durationMillis = 300))
     },
     popEnterTransition: (
-    AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?
+        AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?
     )? = enterTransition,
     popExitTransition: (
     AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?
