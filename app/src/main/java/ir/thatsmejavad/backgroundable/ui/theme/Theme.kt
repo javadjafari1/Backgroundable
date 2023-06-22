@@ -77,6 +77,7 @@ private val lightColorScheme = lightColorScheme(
     outline = neutralVariant50,
     scrim = black,
 )
+
 @Composable
 fun BackgroundableTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

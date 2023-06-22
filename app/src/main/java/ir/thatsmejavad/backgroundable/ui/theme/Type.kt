@@ -8,7 +8,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import ir.thatsmejavad.backgroundable.R
 
-
 val Poppins = FontFamily(
     Font(
         resId = R.font.poppins_medium,

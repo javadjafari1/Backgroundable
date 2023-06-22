@@ -66,8 +66,8 @@ fun SearchScreen(
     val lazyStaggeredGridState = rememberLazyStaggeredGridState()
 
     val pagingIsLoading = medias.loadState.prepend is LoadState.Loading ||
-            medias.loadState.append is LoadState.Loading ||
-            medias.loadState.refresh is LoadState.Loading
+        medias.loadState.append is LoadState.Loading ||
+        medias.loadState.refresh is LoadState.Loading
 
     LaunchedEffect(medias.loadState.refresh) {
         val refresh = medias.loadState.refresh
