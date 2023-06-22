@@ -11,5 +11,5 @@ object Constants {
 
     const val MEDIA_REFRESH_TIME_IN_HOUR = 4
     const val COLLECTION_REFRESH_TIME_IN_HOUR = 2
-    val NAVIGATION_BAR_HEIGHT = 75.dp
+    val NAVIGATION_BAR_HEIGHT = 80.dp
 }
