@@ -15,26 +15,67 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+private val darkColorScheme = darkColorScheme(
+    primary = primary80,
+    onPrimary = primary20,
+    primaryContainer = primary30,
+    onPrimaryContainer = primary90,
+    secondary = secondary80,
+    onSecondary = secondary20,
+    secondaryContainer = secondary30,
+    onSecondaryContainer = secondary98,
+    tertiary = tertiary80,
+    onTertiary = tertiary20,
+    tertiaryContainer = tertiary30,
+    onTertiaryContainer = tertiary90,
+    error = error80,
+    onError = error20,
+    errorContainer = error30,
+    onErrorContainer = error90,
+    background = neutral10,
+    onBackground = neutral90,
+    inverseOnSurface = neutral10,
+    inverseSurface = neutral90,
+    inversePrimary = primary40,
+    outlineVariant = neutralVariant30,
+    surface = neutral6,
+    onSurface = neutral80,
+    surfaceVariant = neutralVariant30,
+    onSurfaceVariant = neutralVariant30,
+    surfaceTint = neutralVariant80,
+    outline = neutralVariant60,
+    scrim = black,
 )
-
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-     */
+private val lightColorScheme = lightColorScheme(
+    primary = primary40,
+    onPrimary = white,
+    primaryContainer = primary90,
+    onPrimaryContainer = primary10,
+    secondary = secondary40,
+    onSecondary = white,
+    secondaryContainer = secondary98,
+    onSecondaryContainer = secondary10,
+    tertiary = tertiary40,
+    onTertiary = white,
+    tertiaryContainer = tertiary90,
+    onTertiaryContainer = tertiary10,
+    error = error40,
+    onError = white,
+    errorContainer = error95,
+    onErrorContainer = error10,
+    background = neutral99,
+    onBackground = neutral10,
+    inverseOnSurface = neutral95,
+    inverseSurface = neutral20,
+    inversePrimary = primary80,
+    outlineVariant = neutralVariant80,
+    surface = neutral98,
+    onSurface = neutral10,
+    surfaceVariant = neutralVariant90,
+    onSurfaceVariant = neutralVariant30,
+    surfaceTint = primary40,
+    outline = neutralVariant50,
+    scrim = black,
 )
 
 @Composable
@@ -49,8 +90,8 @@ fun BackgroundableTheme(
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        darkTheme -> darkColorScheme
+        else -> lightColorScheme
     }
     val view = LocalView.current
     if (!view.isInEditMode) {

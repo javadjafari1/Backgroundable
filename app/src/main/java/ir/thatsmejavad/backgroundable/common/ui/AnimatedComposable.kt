@@ -41,12 +41,8 @@ fun NavGraphBuilder.animatedComposable(
             )
         ) + fadeOut(animationSpec = tween(durationMillis = 300))
     },
-    popEnterTransition: (
-    AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?
-    )? = enterTransition,
-    popExitTransition: (
-    AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?
-    )? = exitTransition,
+    popEnterTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? = enterTransition,
+    popExitTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? = exitTransition,
     content: @Composable AnimatedVisibilityScope.(NavBackStackEntry) -> Unit
 ) {
     composable(
