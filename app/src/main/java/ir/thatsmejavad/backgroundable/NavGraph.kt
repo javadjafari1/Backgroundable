@@ -1,14 +1,13 @@
 package ir.thatsmejavad.backgroundable
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.runtime.getValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.bottomSheet
+import ir.thatsmejavad.backgroundable.common.ui.ObserveArgument
 import ir.thatsmejavad.backgroundable.common.ui.animatedComposable
 import ir.thatsmejavad.backgroundable.core.AppScreens
 import ir.thatsmejavad.backgroundable.core.viewmodel.daggerViewModel
@@ -29,12 +28,8 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
     ) {
         val viewModel = daggerViewModel<CollectionListViewModel>()
 
-        val backStackEntry by navController.currentBackStackEntryAsState()
-
-        backStackEntry?.let {
-            it.savedStateHandle.get<Int>("selected-item")?.let { item ->
-                viewModel.setColumnCount(item)
-            }
+        navController.ObserveArgument<Int>(key = "selected-item") {
+            viewModel.setColumnCount(it)
         }
 
         CollectionListScreen(
@@ -48,6 +43,7 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
                 )
             },
             openColumnCountPicker = { selectedItem ->
+                // Todo fix this. this action will take place every time.
                 val items = listOf(1, 2, 3)
                 val stringItem = Json.encodeToString(items)
                 navController.navigate(
@@ -148,7 +144,6 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         val selectedItem = checkNotNull(entry.arguments?.getInt("selectedItem")) {
             "selectedItem should not be null"
         }
-
 
         val items = Json.decodeFromString<List<Int>>(itemString)
         ColumnCountPicker(
