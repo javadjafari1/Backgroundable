@@ -24,7 +24,7 @@ class ColumnCountsPreferences @Inject constructor(
 
     val mediaColumnCountFlow: Flow<Int>
         get() = dataStore.data.map { preferences ->
-            preferences[MEDIA_COLUMN_COUNT] ?: 2
+            preferences[MEDIA_COLUMN_COUNT] ?: 1
         }
 
     suspend fun setMediaColumnCount(count: Int) {
