@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridItemScope
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -123,9 +124,10 @@ private fun LazyGridItemScope.CollectionCard(
 ) {
     ElevatedCard(
         modifier = Modifier
-            .clickable { onCollectionClicked(collection.id, collection.title) }
+            .clip(CardDefaults.elevatedShape)
             .fillMaxWidth()
             .animateItemPlacement()
+            .clickable { onCollectionClicked(collection.id, collection.title) }
     ) {
         ConstraintLayout {
             val (count, title) = createRefs()
