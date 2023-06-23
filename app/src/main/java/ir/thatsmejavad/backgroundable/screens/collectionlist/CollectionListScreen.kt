@@ -94,6 +94,7 @@ fun CollectionListScreen(
             )
         },
     ) {
+
         LazyVerticalGridWithSwipeRefresh(
             modifier = Modifier
                 .fillMaxSize(),
