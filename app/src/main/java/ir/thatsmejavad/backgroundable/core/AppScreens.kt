@@ -21,7 +21,7 @@ internal sealed class AppScreens(val route: String) {
         "column-count-picker?items={items}?selectedItem={selectedItem}"
     ) {
         fun createRoute(items: String, selectedItem: Int): String {
-            return "column-count-picker?items=${items}?selectedItem=$selectedItem"
+            return "column-count-picker?items=$items?selectedItem=$selectedItem"
         }
     }
 }

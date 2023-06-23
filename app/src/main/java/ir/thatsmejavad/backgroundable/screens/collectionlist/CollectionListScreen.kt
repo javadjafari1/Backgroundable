@@ -48,7 +48,7 @@ fun CollectionListScreen(
     openColumnCountPicker: (Int) -> Unit,
 ) {
     val collections = viewModel.collection.collectAsLazyPagingItems()
-    val columnCounts by viewModel.gridState.collectAsStateWithLifecycle(initialValue = 1)
+    val columnCounts by viewModel.columnCount.collectAsStateWithLifecycle()
 
     LaunchedEffect(collections.loadState.refresh) {
         val refresh = collections.loadState.refresh

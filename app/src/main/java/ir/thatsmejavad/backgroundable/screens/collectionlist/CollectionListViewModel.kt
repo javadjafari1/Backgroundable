@@ -15,6 +15,7 @@ import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
 import ir.thatsmejavad.backgroundable.data.repository.CollectionRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -32,10 +33,17 @@ class CollectionListViewModel @AssistedInject constructor(
     private val _collections = MutableStateFlow<PagingData<CollectionEntity>>(PagingData.empty())
     val collection: StateFlow<PagingData<CollectionEntity>> = _collections
 
-    val gridState = columnCountsPreferences.collectionColumnCountFlow
+    private val _columnCount = MutableStateFlow(1)
+    val columnCount: StateFlow<Int> = _columnCount
 
     init {
         getCollections()
+
+        viewModelScope.launch {
+            columnCountsPreferences.collectionColumnCountFlow.collectLatest {
+                _columnCount.emit(it)
+            }
+        }
     }
 
     fun setColumnCount(count: Int) {
