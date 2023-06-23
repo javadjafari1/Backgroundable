@@ -165,9 +165,16 @@ dependencies {
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:3.5.2")
 
     implementation("me.saket.telephoto:zoomable-image-coil:0.4.0")
-    // just for the swipe refresh
-    implementation("androidx.compose.material:material:1.4.3")
+    implementation("androidx.compose.material:material:1.4.3") {
+        because("just for the swipe refresh")
+    }
+
     implementation("com.google.accompanist:accompanist-navigation-animation:0.31.3-beta")
+    implementation("com.google.accompanist:accompanist-navigation-material:0.31.3-beta")
+
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 }
 
 class RoomSchemaArgProvider(

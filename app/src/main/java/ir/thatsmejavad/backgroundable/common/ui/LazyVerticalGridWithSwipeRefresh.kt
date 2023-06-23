@@ -8,10 +8,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridScope
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,14 +27,15 @@ import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.core.getStringMessage
 
 @Composable
-fun <T : Any> LazyColumnWithSwipeRefresh(
+fun <T : Any> LazyVerticalGridWithSwipeRefresh(
+    columns: GridCells,
     pagingItems: LazyPagingItems<T>,
     modifier: Modifier = Modifier,
-    state: LazyListState = rememberLazyListState(),
-    contentPadding: PaddingValues = PaddingValues(0.dp),
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
-    horizontalAlignment: Alignment.Horizontal = Alignment.Start,
-    content: LazyListScope.() -> Unit,
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
+    state: LazyGridState = rememberLazyGridState(),
+    contentPadding: PaddingValues = PaddingValues(0.dp),
+    content: LazyGridScope.() -> Unit,
 ) {
     val context = LocalContext.current
     val refreshLoadState = pagingItems.loadState.refresh
@@ -43,12 +45,13 @@ fun <T : Any> LazyColumnWithSwipeRefresh(
         onSwipe = { pagingItems.refresh() },
         isRefreshing = pagingItems.loadState.refresh is LoadState.Loading
     ) {
-        LazyColumn(
+        LazyVerticalGrid(
+            columns = columns,
             state = state,
+            verticalArrangement = verticalArrangement,
+            horizontalArrangement = horizontalArrangement,
             modifier = modifier.fillMaxSize(),
             contentPadding = contentPadding,
-            verticalArrangement = verticalArrangement,
-            horizontalAlignment = horizontalAlignment,
         ) {
             content()
 

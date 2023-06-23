@@ -13,7 +13,8 @@ import ir.thatsmejavad.backgroundable.data.repository.CollectionRepositoryImpl
 
 @Module(
     includes = [
-        DatabaseModule::class
+        DatabaseModule::class,
+        DataStoreModule::class
     ]
 )
 interface CollectionModule {

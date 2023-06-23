@@ -1,6 +1,5 @@
 package ir.thatsmejavad.backgroundable.screens.medialist
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
@@ -13,19 +12,23 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
+import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.LazyVerticalStaggeredGridWithSwipeRefresh
 import ir.thatsmejavad.backgroundable.common.ui.MediaCard
 import ir.thatsmejavad.backgroundable.core.getSnackbarMessage
 import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun MediaListScreen(
     title: String,
@@ -33,6 +36,9 @@ internal fun MediaListScreen(
     onMediaClicked: (Int, String) -> Unit,
     onBackClicked: () -> Unit,
 ) {
+    val medias = viewModel.medias.collectAsLazyPagingItems()
+    val columnCounts by viewModel.columnCount.collectAsStateWithLifecycle()
+
     BackgroundableScaffold(
         snackbarManager = viewModel.snackbarManager,
         topBar = {
@@ -47,21 +53,34 @@ internal fun MediaListScreen(
                             contentDescription = "Navigate back"
                         )
                     }
+                },
+                actions = {
+                    IconButton(onClick = { viewModel.changeColumnCount() }) {
+                        Icon(
+                            painter = painterResource(
+                                if (columnCounts == 1) {
+                                    R.drawable.ic_staggered_grid
+                                } else {
+                                    R.drawable.ic_list
+                                }
+                            ),
+                            contentDescription = "Change column count"
+                        )
+                    }
                 }
             )
         },
     ) {
-        val medias = viewModel.medias.collectAsLazyPagingItems()
-
         LaunchedEffect(medias.loadState.refresh) {
             val refresh = medias.loadState.refresh
             if (refresh is LoadState.Error && medias.itemCount != 0) {
                 viewModel.snackbarManager.sendError(refresh.error.getSnackbarMessage())
             }
         }
+
         LazyVerticalStaggeredGridWithSwipeRefresh(
             pagingItems = medias,
-            columns = StaggeredGridCells.Fixed(2),
+            columns = StaggeredGridCells.Fixed(columnCounts),
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .fillMaxSize(),
