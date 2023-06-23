@@ -13,16 +13,28 @@ class ColumnCountsPreferences @Inject constructor(
 ) {
     val collectionColumnCountFlow: Flow<Int>
         get() = dataStore.data.map { preferences ->
-            preferences[LAST_LOADED_PAGE] ?: 1
+            preferences[COLLECTION_COLUMN_COUNT] ?: 1
         }
 
     suspend fun setCollectionColumnCount(count: Int) {
         dataStore.edit { preferences ->
-            preferences[LAST_LOADED_PAGE] = count
+            preferences[COLLECTION_COLUMN_COUNT] = count
+        }
+    }
+
+    val mediaColumnCountFlow: Flow<Int>
+        get() = dataStore.data.map { preferences ->
+            preferences[MEDIA_COLUMN_COUNT] ?: 2
+        }
+
+    suspend fun setMediaColumnCount(count: Int) {
+        dataStore.edit { preferences ->
+            preferences[MEDIA_COLUMN_COUNT] = count
         }
     }
 
     companion object PreferencesKeys {
-        val LAST_LOADED_PAGE = intPreferencesKey("collection-column-count")
+        private val COLLECTION_COLUMN_COUNT = intPreferencesKey("collection-column-count")
+        private val MEDIA_COLUMN_COUNT = intPreferencesKey("media-column-count")
     }
 }

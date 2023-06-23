@@ -1,5 +1,6 @@
 package ir.thatsmejavad.backgroundable.common.ui
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -30,6 +31,7 @@ fun MediaCard(
 ) {
     Column(
         modifier = Modifier
+            .animateContentSize()
             .clip(MaterialTheme.shapes.medium)
             .clickable { onMediaClicked(id, alt) }
             .padding(4.dp)
