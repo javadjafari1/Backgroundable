@@ -30,6 +30,9 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import com.google.accompanist.navigation.material.ModalBottomSheetLayout
+import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations
 import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations.HOME
 import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations.SEARCH
@@ -64,21 +67,28 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialNavigationApi::class)
 @Composable
 private fun BackgroundableApp() {
-    val navController = rememberAnimatedNavController()
+    val bottomSheetNavigator = rememberBottomSheetNavigator()
+    val navController = rememberAnimatedNavController(bottomSheetNavigator)
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
     ) {
-        AnimatedNavHost(
-            navController = navController,
-            startDestination = AppScreens.CollectionList.route
+        ModalBottomSheetLayout(
+            bottomSheetNavigator = bottomSheetNavigator,
+            sheetShape = MaterialTheme.shapes.large,
+            sheetBackgroundColor = MaterialTheme.colorScheme.surface,
         ) {
-            mainNavGraph(navController)
+            AnimatedNavHost(
+                navController = navController,
+                startDestination = AppScreens.CollectionList.route
+            ) {
+                mainNavGraph(navController)
+            }
         }
 
         /*

@@ -16,4 +16,12 @@ internal sealed class AppScreens(val route: String) {
             return "media-detail?id=$id&title=$title"
         }
     }
+
+    object ColumnCountPicker : AppScreens(
+        "column-count-picker?items={items}?selectedItem={selectedItem}"
+    ) {
+        fun createRoute(items: String, selectedItem: Int): String {
+            return "column-count-picker?items=${items}?selectedItem=$selectedItem"
+        }
+    }
 }

@@ -48,6 +48,7 @@ import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
 fun CollectionListScreen(
     viewModel: CollectionListViewModel,
     onCollectionClicked: (String, String) -> Unit,
+    openColumnCountPicker: (Int) -> Unit,
 ) {
     val collections = viewModel.collection.collectAsLazyPagingItems()
     val columnCounts by viewModel.gridState.collectAsStateWithLifecycle(initialValue = 1)
@@ -76,12 +77,13 @@ fun CollectionListScreen(
                 actions = {
                     IconButton(
                         onClick = {
-                            val s = when (columnCounts) {
-                                1 -> 2
-                                3 -> 2
-                                else -> 3
-                            }
-                            viewModel.setColumnCount(s)
+                            openColumnCountPicker(columnCounts)
+//                            val s = when (columnCounts) {
+//                                1 -> 2
+//                                3 -> 2
+//                                else -> 3
+//                            }
+//                            viewModel.setColumnCount(s)
                         }
                     ) {
                         Icon(
