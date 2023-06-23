@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridItemScope
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -75,19 +74,15 @@ fun CollectionListScreen(
                     Text(text = stringResource(R.string.app_name))
                 },
                 actions = {
-                    IconButton(
-                        onClick = {
-                            openColumnCountPicker(columnCounts)
-//                            val s = when (columnCounts) {
-//                                1 -> 2
-//                                3 -> 2
-//                                else -> 3
-//                            }
-//                            viewModel.setColumnCount(s)
-                        }
-                    ) {
+                    IconButton(onClick = { openColumnCountPicker(columnCounts) }) {
                         Icon(
-                            imageVector = Icons.Filled.List,
+                            painter = painterResource(
+                                if (columnCounts == 1) {
+                                    R.drawable.ic_grid
+                                } else {
+                                    R.drawable.ic_list
+                                }
+                            ),
                             contentDescription = "Change column count"
                         )
                     }

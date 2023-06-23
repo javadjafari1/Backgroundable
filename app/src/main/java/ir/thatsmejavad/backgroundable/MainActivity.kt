@@ -15,6 +15,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -26,6 +27,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -80,7 +82,10 @@ private fun BackgroundableApp() {
     ) {
         ModalBottomSheetLayout(
             bottomSheetNavigator = bottomSheetNavigator,
-            sheetShape = MaterialTheme.shapes.large,
+            sheetShape = MaterialTheme.shapes.large.copy(
+                bottomEnd = CornerSize(0.dp),
+                bottomStart = CornerSize(0.dp)
+            ),
             sheetBackgroundColor = MaterialTheme.colorScheme.surface,
         ) {
             AnimatedNavHost(
