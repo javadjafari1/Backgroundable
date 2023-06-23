@@ -5,8 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -23,13 +21,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -106,7 +104,7 @@ fun CollectionListScreen(
             ) { index ->
                 collections[index]?.let { collection ->
                     CollectionCard(
-                        columnCounts = columnCounts,
+                        isGrid = columnCounts != 1,
                         collection = collection,
                         onCollectionClicked = onCollectionClicked
                     )
@@ -119,65 +117,61 @@ fun CollectionListScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun LazyGridItemScope.CollectionCard(
+    isGrid: Boolean,
     collection: CollectionEntity,
-    onCollectionClicked: (String, String) -> Unit,
-    columnCounts: Int
+    onCollectionClicked: (String, String) -> Unit
 ) {
     ElevatedCard(
         modifier = Modifier
+            .clickable { onCollectionClicked(collection.id, collection.title) }
             .fillMaxWidth()
             .animateItemPlacement()
     ) {
-        if (columnCounts == 1) {
-            Row(
+        ConstraintLayout {
+            val (count, title) = createRefs()
+
+            Text(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onCollectionClicked(collection.id, collection.title) }
-                    .padding(vertical = 24.dp, horizontal = 16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = collection.title,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Text(
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .background(
-                            color = MaterialTheme.colorScheme.primaryContainer,
-                            shape = CircleShape
-                        )
-                        .padding(8.dp),
-                    text = collection.photosCount.toString()
-                )
-            }
-        } else {
-            Column(
+                    .padding(16.dp)
+                    .clip(CircleShape)
+                    .background(
+                        color = MaterialTheme.colorScheme.primaryContainer,
+                        shape = CircleShape
+                    )
+                    .padding(8.dp)
+                    .constrainAs(count) {
+                        if (isGrid) {
+                            top.linkTo(parent.top)
+                            bottom.linkTo(title.top)
+                        } else {
+                            top.linkTo(parent.top)
+                            bottom.linkTo(parent.bottom)
+                            start.linkTo(parent.start)
+                            end.linkTo(title.start)
+                        }
+                    },
+                text = collection.photosCount.toString()
+            )
+
+            Text(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onCollectionClicked(collection.id, collection.title) }
-                    .padding(vertical = 24.dp, horizontal = 16.dp),
-            ) {
-                Text(
-                    modifier = Modifier.basicMarquee(),
-                    text = collection.title,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1,
-                )
-                Text(
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .background(
-                            color = MaterialTheme.colorScheme.primaryContainer,
-                            shape = CircleShape
-                        )
-                        .padding(8.dp),
-                    text = collection.photosCount.toString(),
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1,
-                )
-            }
+                    .basicMarquee()
+                    .padding(16.dp)
+                    .constrainAs(title) {
+                        if (isGrid) {
+                            top.linkTo(count.bottom)
+                            bottom.linkTo(parent.bottom)
+                        } else {
+                            top.linkTo(parent.top)
+                            bottom.linkTo(parent.bottom)
+                            start.linkTo(count.end)
+                            end.linkTo(parent.end)
+                        }
+                    },
+                text = collection.title,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+            )
         }
     }
 }

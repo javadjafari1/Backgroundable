@@ -173,6 +173,8 @@ dependencies {
     implementation("com.google.accompanist:accompanist-navigation-material:0.31.3-beta")
 
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 }
 
 class RoomSchemaArgProvider(
