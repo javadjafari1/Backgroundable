@@ -10,10 +10,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -38,8 +41,10 @@ internal fun MediaListScreen(
 ) {
     val medias = viewModel.medias.collectAsLazyPagingItems()
     val columnCounts by viewModel.columnCount.collectAsStateWithLifecycle()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
     BackgroundableScaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         snackbarManager = viewModel.snackbarManager,
         topBar = {
             CenterAlignedTopAppBar(
@@ -67,7 +72,8 @@ internal fun MediaListScreen(
                             contentDescription = "Change column count"
                         )
                     }
-                }
+                },
+                scrollBehavior = scrollBehavior
             )
         },
     ) {

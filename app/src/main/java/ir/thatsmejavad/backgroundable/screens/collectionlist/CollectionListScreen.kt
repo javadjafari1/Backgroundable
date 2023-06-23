@@ -19,11 +19,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -51,6 +54,7 @@ fun CollectionListScreen(
     val collections = viewModel.collection.collectAsLazyPagingItems()
     val columnCounts by viewModel.columnCount.collectAsStateWithLifecycle()
 
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     LaunchedEffect(collections.loadState.refresh) {
         val refresh = collections.loadState.refresh
         if (refresh is LoadState.Error && collections.itemCount != 0) {
@@ -65,7 +69,8 @@ fun CollectionListScreen(
             can't use Scaffold to add bottomBar with animation.
             the bottom of the ui will jump
              */
-            .padding(bottom = NAVIGATION_BAR_HEIGHT),
+            .padding(bottom = NAVIGATION_BAR_HEIGHT)
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
         snackbarManager = viewModel.snackbarManager,
         topBar = {
             CenterAlignedTopAppBar(
@@ -85,7 +90,8 @@ fun CollectionListScreen(
                             contentDescription = "Change column count"
                         )
                     }
-                }
+                },
+                scrollBehavior = scrollBehavior
             )
         },
     ) {
