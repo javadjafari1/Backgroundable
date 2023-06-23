@@ -26,15 +26,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
@@ -53,7 +51,7 @@ fun CollectionListScreen(
     onCollectionClicked: (String, String) -> Unit,
 ) {
     val collections = viewModel.collection.collectAsLazyPagingItems()
-    var columnCounts by remember { mutableIntStateOf(1) }
+    val columnCounts by viewModel.gridState.collectAsStateWithLifecycle(initialValue = 1)
 
     LaunchedEffect(collections.loadState.refresh) {
         val refresh = collections.loadState.refresh
@@ -79,10 +77,12 @@ fun CollectionListScreen(
                 actions = {
                     IconButton(
                         onClick = {
-                            when (columnCounts) {
-                                1, 2 -> columnCounts++
-                                3 -> columnCounts = 1
+                            val s = when (columnCounts) {
+                                1 -> 2
+                                3 -> 2
+                                else -> 3
                             }
+                            viewModel.setColumnCount(s)
                         }
                     ) {
                         Icon(

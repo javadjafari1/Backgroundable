@@ -168,6 +168,8 @@ dependencies {
     // just for the swipe refresh
     implementation("androidx.compose.material:material:1.4.3")
     implementation("com.google.accompanist:accompanist-navigation-animation:0.31.3-beta")
+
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 }
 
 class RoomSchemaArgProvider(
