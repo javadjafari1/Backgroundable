@@ -161,6 +161,7 @@ fun SearchScreen(
                             alt = media.alt,
                             height = media.height,
                             avgColor = media.avgColor,
+                            isSingleColumn = false,
                             photographer = media.photographer,
                             resourceUrl = media.resources.medium,
                             onMediaClicked = onMediaClicked

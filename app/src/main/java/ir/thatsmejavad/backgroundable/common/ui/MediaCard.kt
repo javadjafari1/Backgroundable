@@ -27,6 +27,7 @@ fun MediaCard(
     avgColor: String,
     photographer: String,
     resourceUrl: String,
+    isSingleColumn: Boolean,
     onMediaClicked: (Int, String) -> Unit,
 ) {
     Column(
@@ -41,7 +42,7 @@ fun MediaCard(
             modifier = Modifier
                 .clip(MaterialTheme.shapes.large)
                 .fillMaxWidth()
-                .heightIn(max = (height / 20).dp),
+                .heightIn(max = if (isSingleColumn) 420.dp else (height / 20).dp),
             url = resourceUrl,
             contentDescription = alt,
             placeHolder = ColorPainter(avgColor.toColor())

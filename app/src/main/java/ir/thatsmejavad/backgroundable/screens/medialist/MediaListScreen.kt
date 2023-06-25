@@ -102,6 +102,7 @@ internal fun MediaListScreen(
                         alt = media.media.alt,
                         height = media.media.height,
                         avgColor = media.media.avgColor,
+                        isSingleColumn = columnCounts == 1,
                         photographer = media.media.photographer,
                         resourceUrl = media.resources.first { it.size == ResourceSize.Medium }.url,
                         onMediaClicked = onMediaClicked
