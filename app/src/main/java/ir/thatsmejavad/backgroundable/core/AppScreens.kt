@@ -24,4 +24,8 @@ internal sealed class AppScreens(val route: String) {
             return "column-count-picker?items=$items?selectedItem=$selectedItem"
         }
     }
+
+    object Settings : AppScreens(
+        "settings"
+    )
 }

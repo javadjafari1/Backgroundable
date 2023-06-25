@@ -38,6 +38,7 @@ import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations
 import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations.HOME
 import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations.SEARCH
+import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations.SETTING
 import ir.thatsmejavad.backgroundable.core.AppScreens
 import ir.thatsmejavad.backgroundable.core.Constants.NAVIGATION_BAR_HEIGHT
 import ir.thatsmejavad.backgroundable.core.viewmodel.LocalViewModelFactory
@@ -107,16 +108,17 @@ private fun BackgroundableApp() {
                 exit = slideOutVertically { it },
             ) {
                 BackgroundableNavigationBar(
-                    selectedNavigationBarItem = if (navController.currentDestination?.route == AppScreens.Search.route) {
-                        SEARCH
-                    } else {
-                        HOME
+                    selectedNavigationBarItem = when (navController.currentDestination?.route) {
+                        AppScreens.Search.route -> SEARCH
+                        AppScreens.Settings.route -> SETTING
+                        else -> HOME
                     },
                     navigationBarDestinations = NavigationBarDestinations.values().toList(),
                     onItemSelected = { destinations ->
                         val route = when (destinations) {
                             HOME -> AppScreens.CollectionList
                             SEARCH -> AppScreens.Search
+                            SETTING -> AppScreens.Settings
                         }.route
 
                         navController.navigate(route) {
@@ -170,5 +172,7 @@ private fun BackgroundableNavigationBar(
     }
 }
 
-private fun isMainScreen(route: String?): Boolean = route == AppScreens.CollectionList.route ||
-    route == AppScreens.Search.route
+private fun isMainScreen(route: String?): Boolean =
+    route == AppScreens.CollectionList.route ||
+        route == AppScreens.Search.route ||
+        route == AppScreens.Settings.route
