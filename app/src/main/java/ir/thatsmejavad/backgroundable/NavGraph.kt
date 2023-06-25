@@ -17,6 +17,7 @@ import ir.thatsmejavad.backgroundable.screens.columncountpicker.ColumnCountPicke
 import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailScreen
 import ir.thatsmejavad.backgroundable.screens.medialist.MediaListScreen
 import ir.thatsmejavad.backgroundable.screens.search.SearchScreen
+import ir.thatsmejavad.backgroundable.screens.settings.SettingsScreen
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -157,5 +158,11 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
                 navController.navigateUp()
             }
         )
+    }
+
+    animatedComposable(
+        route = AppScreens.Settings.route,
+    ) {
+        SettingsScreen()
     }
 }
