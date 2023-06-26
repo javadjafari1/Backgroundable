@@ -166,7 +166,6 @@ private fun BackgroundableNavigationBar(
                 label = {
                     Text(text = stringResource(destination.text))
                 },
-                alwaysShowLabel = false,
             )
         }
     }
