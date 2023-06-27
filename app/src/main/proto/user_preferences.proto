@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option java_package = "ir.thatsmejavad.backgroundable";
+option java_multiple_files = true;
+
+message UserPreferences {
+  bool isMaterialYou = 1;
+  Theme theme = 2;
+}
+
+enum Theme {
+  THEME_DARK = 0;
+  THEME_LIGHT = 1;
+  THEME_FOLLOW_SYSTEM = 2;
+}
