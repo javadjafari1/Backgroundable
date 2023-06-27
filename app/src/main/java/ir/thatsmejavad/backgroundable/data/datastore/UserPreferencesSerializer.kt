@@ -3,22 +3,22 @@ package ir.thatsmejavad.backgroundable.data.datastore
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
 import androidx.datastore.preferences.protobuf.InvalidProtocolBufferException
-import ir.thatsmejavad.backgroundable.UserPreferences
+import ir.thatsmejavad.backgroundable.UserPref
 import java.io.InputStream
 import java.io.OutputStream
 
-object UserPreferencesSerializer : Serializer<UserPreferences> {
-    override val defaultValue: UserPreferences = UserPreferences.getDefaultInstance()
+object UserPreferencesSerializer : Serializer<UserPref> {
+    override val defaultValue: UserPref = UserPref.getDefaultInstance()
 
-    override suspend fun readFrom(input: InputStream): UserPreferences {
+    override suspend fun readFrom(input: InputStream): UserPref {
         try {
-            return UserPreferences.parseFrom(input)
+            return UserPref.parseFrom(input)
         } catch (exception: InvalidProtocolBufferException) {
             throw CorruptionException("Cannot read proto.", exception)
         }
     }
 
-    override suspend fun writeTo(t: UserPreferences, output: OutputStream) {
+    override suspend fun writeTo(t: UserPref, output: OutputStream) {
         t.writeTo(output)
     }
 }

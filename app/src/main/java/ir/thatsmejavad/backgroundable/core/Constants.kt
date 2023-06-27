@@ -13,4 +13,5 @@ object Constants {
     const val COLLECTION_REFRESH_TIME_IN_HOUR = 2
     val NAVIGATION_BAR_HEIGHT = 80.dp
     const val USER_PREFERENCES = "user-pref"
+    const val USER_PREF_DATA_STORE_FILE_NAME = "userPref.pb"
 }

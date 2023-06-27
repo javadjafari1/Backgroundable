@@ -16,6 +16,7 @@ import ir.thatsmejavad.backgroundable.screens.search.SearchViewModel
         NetworkModule::class,
         CollectionModule::class,
         MediaModule::class,
+        SettingsModule::class,
     ]
 )
 interface AppViewModelModule {

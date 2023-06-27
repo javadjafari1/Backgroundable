@@ -18,6 +18,7 @@ import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailScreen
 import ir.thatsmejavad.backgroundable.screens.medialist.MediaListScreen
 import ir.thatsmejavad.backgroundable.screens.search.SearchScreen
 import ir.thatsmejavad.backgroundable.screens.settings.SettingsScreen
+import ir.thatsmejavad.backgroundable.screens.settings.SettingsViewModel
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
