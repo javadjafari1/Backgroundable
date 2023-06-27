@@ -28,4 +28,8 @@ internal sealed class AppScreens(val route: String) {
     object Settings : AppScreens(
         "settings"
     )
+
+    object ThemeSetting : AppScreens(
+        "theme-settings"
+    )
 }

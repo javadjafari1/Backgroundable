@@ -21,16 +21,17 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ir.thatsmejavad.backgroundable.BuildConfig
 import ir.thatsmejavad.backgroundable.R
+import ir.thatsmejavad.backgroundable.core.AppScreens
 import ir.thatsmejavad.backgroundable.core.Constants
 
-@Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(
+    navigateTo: (String) -> Unit,
+) {
     Scaffold(
         modifier = Modifier
             /*
@@ -63,7 +64,9 @@ fun SettingsScreen() {
             SettingItem(
                 textId = R.string.label_theme,
                 imageId = R.drawable.ic_theme,
-                onClick = {}
+                onClick = {
+                    navigateTo(AppScreens.ThemeSetting.route)
+                }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
