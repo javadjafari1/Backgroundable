@@ -21,4 +21,7 @@
     <string name="label_about_us">About us</string>
     <string name="label_version">Version: %s</string>
     <string name="label_material_you">Material You</string>
+    <string name="label_dark">Dark</string>
+    <string name="label_follow_system">System</string>
+    <string name="label_light">Light</string>
 </resources>
