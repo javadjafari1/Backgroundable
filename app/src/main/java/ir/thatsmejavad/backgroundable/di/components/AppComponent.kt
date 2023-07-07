@@ -15,4 +15,5 @@ import javax.inject.Singleton
 @Singleton
 interface AppComponent {
     fun getViewModelFactory(): ViewModelFactory
+    fun activityViewModelComponentBuilder(): ActivityViewModelComponent.Builder
 }
