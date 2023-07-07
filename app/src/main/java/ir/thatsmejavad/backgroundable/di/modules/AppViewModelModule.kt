@@ -5,7 +5,6 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelAssistedFactory
 import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelAssistedFactoryKey
-import ir.thatsmejavad.backgroundable.main.MainViewModel
 import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListViewModel
 import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailViewModel
 import ir.thatsmejavad.backgroundable.screens.medialist.MediaListViewModel
@@ -43,7 +42,4 @@ interface AppViewModelModule {
     @[IntoMap ViewModelAssistedFactoryKey(ThemeSettingViewModel::class)]
     fun bindsThemeSettingViewModelFactory(factory: ThemeSettingViewModel.Factory): ViewModelAssistedFactory<*>
 
-    @Binds
-    @[IntoMap ViewModelAssistedFactoryKey(MainViewModel::class)]
-    fun bindsMainViewModelFactory(factory: MainViewModel.Factory): ViewModelAssistedFactory<*>
 }

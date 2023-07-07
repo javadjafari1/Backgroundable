@@ -15,6 +15,7 @@ class ThemeSettingViewModel @AssistedInject constructor(
     private val settingRepository: SettingRepository,
     @Assisted private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
+
     @AssistedFactory
     interface Factory : ViewModelAssistedFactory<ThemeSettingViewModel>
 

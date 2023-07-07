@@ -42,21 +42,32 @@ import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import ir.thatsmejavad.backgroundable.BackgroundableApplication
 import ir.thatsmejavad.backgroundable.BuildConfig
 import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations
+import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations.HOME
+import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations.SEARCH
+import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations.SETTING
 import ir.thatsmejavad.backgroundable.core.AppScreens
-import ir.thatsmejavad.backgroundable.core.Constants
+import ir.thatsmejavad.backgroundable.core.Constants.NAVIGATION_BAR_HEIGHT
 import ir.thatsmejavad.backgroundable.core.sealeds.Theme
 import ir.thatsmejavad.backgroundable.core.viewmodel.LocalViewModelFactory
-import ir.thatsmejavad.backgroundable.core.viewmodel.daggerViewModel
 import ir.thatsmejavad.backgroundable.mainNavGraph
 import ir.thatsmejavad.backgroundable.model.UserPreferences
 import ir.thatsmejavad.backgroundable.ui.theme.BackgroundableTheme
+import javax.inject.Inject
 
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val backgroundableApplication = (application as BackgroundableApplication)
+
+        backgroundableApplication.appComponent.activityViewModelComponentBuilder()
+            .componentActivity(this)
+            .build()
+            .inject(this)
 
         setContent {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && BuildConfig.DEBUG) {
@@ -70,7 +81,6 @@ class MainActivity : ComponentActivity() {
             CompositionLocalProvider(
                 LocalViewModelFactory provides backgroundableApplication.appComponent.getViewModelFactory()
             ) {
-                val viewModel: MainViewModel = daggerViewModel()
                 val userPreferences by viewModel.userPreferences.collectAsStateWithLifecycle(
                     initialValue = UserPreferences()
                 )
@@ -129,16 +139,16 @@ private fun BackgroundableApp() {
             ) {
                 BackgroundableNavigationBar(
                     selectedNavigationBarItem = when (navController.currentDestination?.route) {
-                        AppScreens.Search.route -> NavigationBarDestinations.SEARCH
-                        AppScreens.Settings.route -> NavigationBarDestinations.SETTING
-                        else -> NavigationBarDestinations.HOME
+                        AppScreens.Search.route -> SEARCH
+                        AppScreens.Settings.route -> SETTING
+                        else -> HOME
                     },
                     navigationBarDestinations = NavigationBarDestinations.values().toList(),
                     onItemSelected = { destinations ->
                         val route = when (destinations) {
-                            NavigationBarDestinations.HOME -> AppScreens.CollectionList
-                            NavigationBarDestinations.SEARCH -> AppScreens.Search
-                            NavigationBarDestinations.SETTING -> AppScreens.Settings
+                            HOME -> AppScreens.CollectionList
+                            SEARCH -> AppScreens.Search
+                            SETTING -> AppScreens.Settings
                         }.route
 
                         navController.navigate(route) {
@@ -162,7 +172,7 @@ private fun BackgroundableNavigationBar(
     onItemSelected: (NavigationBarDestinations) -> Unit,
 ) {
     NavigationBar(
-        modifier = Modifier.height(Constants.NAVIGATION_BAR_HEIGHT)
+        modifier = Modifier.height(NAVIGATION_BAR_HEIGHT)
     ) {
         navigationBarDestinations.forEach { destination ->
             NavigationBarItem(

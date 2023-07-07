@@ -29,8 +29,8 @@ class SettingRepositoryImpl @Inject constructor(
         }
 
     override suspend fun setMaterialYouIsEnabled(enable: Boolean) {
-        userPreferencesStore.updateData { pref ->
-            pref
+        userPreferencesStore.updateData { currentPref ->
+            currentPref
                 .toBuilder()
                 .setIsMaterialYou(enable)
                 .build()
