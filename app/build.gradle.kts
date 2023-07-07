@@ -7,6 +7,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization")
     id("io.gitlab.arturbosch.detekt")
     id("com.google.devtools.ksp")
+    id("com.google.protobuf")
 }
 
 detekt {
@@ -114,6 +115,21 @@ ksp {
     arg(RoomSchemaArgProvider(File(projectDir, "schemas")))
 }
 
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:21.0-rc-1"
+    }
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                create("java") {
+                    option("lite")
+                }
+            }
+        }
+    }
+}
+
 dependencies {
 
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.0-RC3")
@@ -176,6 +192,9 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+
+    implementation("androidx.datastore:datastore:1.0.0")
+    implementation("com.google.protobuf:protobuf-javalite:3.23.0")
 }
 
 class RoomSchemaArgProvider(
