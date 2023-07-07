@@ -32,4 +32,12 @@ internal sealed class AppScreens(val route: String) {
     object ThemeSetting : AppScreens(
         "theme-settings"
     )
+
+    object DownloadPicker : AppScreens(
+        "download-picker?id:{id}"
+    ) {
+        fun createRoute(id: Int): String {
+            return "download-picker?id:$id"
+        }
+    }
 }

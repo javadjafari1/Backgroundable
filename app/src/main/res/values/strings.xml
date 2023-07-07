@@ -24,4 +24,5 @@
     <string name="label_dark">Dark</string>
     <string name="label_follow_system">System</string>
     <string name="label_light">Light</string>
+    <string name="label_download_wallpaper">Download Wallpaper</string>
 </resources>

@@ -1,10 +1,7 @@
 package ir.thatsmejavad.backgroundable.screens.mediadetail
 
 import android.app.Activity
-import android.app.DownloadManager
 import android.graphics.drawable.Drawable
-import android.net.Uri
-import android.os.Environment
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -45,13 +42,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.CircularLoading
 import ir.thatsmejavad.backgroundable.common.ui.ZoomableCoilImage
+import ir.thatsmejavad.backgroundable.core.AppScreens
 import ir.thatsmejavad.backgroundable.core.getStringMessage
 import ir.thatsmejavad.backgroundable.core.getUri
 import ir.thatsmejavad.backgroundable.core.saveIn
@@ -70,6 +67,7 @@ fun MediaDetailScreen(
     title: String,
     viewModel: MediaDetailViewModel,
     onBackClicked: () -> Unit,
+    navigateTo: (String) -> Unit,
 ) {
     val mediaResult by viewModel.media.collectAsStateWithLifecycle()
     val context = LocalContext.current
@@ -178,28 +176,7 @@ fun MediaDetailScreen(
                                 modifier = Modifier.size(56.dp),
                                 shape = MaterialTheme.shapes.large,
                                 onClick = {
-                                    try {
-                                        val resource =
-                                            mediaWithResources.resources.first { it.size == ResourceSize.Original }
-                                        val request =
-                                            DownloadManager.Request(Uri.parse(resource.url))
-                                                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
-                                                .setDestinationInExternalPublicDir(
-                                                    Environment.DIRECTORY_DOWNLOADS,
-                                                    "${mediaWithResources.media.alt} by ${mediaWithResources.media.photographer} - ${ResourceSize.Original.size}.jpeg"
-                                                )
-                                                .setTitle(mediaWithResources.media.alt)
-                                                .setMimeType("image/jpeg")
-                                                .setDescription("by ${mediaWithResources.media.photographer}")
-                                                .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE)
-
-                                        val downloadManager =
-                                            getSystemService(context, DownloadManager::class.java)
-                                        downloadManager!!.enqueue(request)
-                                    } catch (e: Exception) {
-                                        e.printStackTrace()
-                                    }
-
+                                    navigateTo(AppScreens.DownloadPicker.createRoute(mediaId))
                                 },
                             ) {
                                 Icon(
