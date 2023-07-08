@@ -115,7 +115,13 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
             title = title,
             viewModel = daggerViewModel(),
             onBackClicked = { navController.navigateUp() },
-            navigateTo = { navController.navigate(it) }
+            navigateToDownloadPicker = {
+                navController.navigate(
+                    AppScreens.DownloadPicker.createRoute(mediaId)
+                ) {
+                    launchSingleTop = true
+                }
+            }
         )
     }
 

@@ -48,7 +48,6 @@ import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.CircularLoading
 import ir.thatsmejavad.backgroundable.common.ui.ZoomableCoilImage
-import ir.thatsmejavad.backgroundable.core.AppScreens
 import ir.thatsmejavad.backgroundable.core.getStringMessage
 import ir.thatsmejavad.backgroundable.core.getUri
 import ir.thatsmejavad.backgroundable.core.saveIn
@@ -67,7 +66,7 @@ fun MediaDetailScreen(
     title: String,
     viewModel: MediaDetailViewModel,
     onBackClicked: () -> Unit,
-    navigateTo: (String) -> Unit,
+    navigateToDownloadPicker: () -> Unit,
 ) {
     val mediaResult by viewModel.media.collectAsStateWithLifecycle()
     val context = LocalContext.current
@@ -176,7 +175,7 @@ fun MediaDetailScreen(
                                 modifier = Modifier.size(56.dp),
                                 shape = MaterialTheme.shapes.large,
                                 onClick = {
-                                    navigateTo(AppScreens.DownloadPicker.createRoute(mediaId))
+                                    navigateToDownloadPicker()
                                 },
                             ) {
                                 Icon(
