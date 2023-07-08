@@ -6,8 +6,10 @@ import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import ir.thatsmejavad.backgroundable.core.Downloader
 import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob
 import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelAssistedFactory
+import ir.thatsmejavad.backgroundable.data.db.entity.ResourceEntity
 import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
 import ir.thatsmejavad.backgroundable.data.repository.MediaRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +19,7 @@ import kotlinx.coroutines.launch
 class DownloadPickerViewModel @AssistedInject constructor(
     private val mediaRepository: MediaRepository,
     @Assisted private val savedStateHandle: SavedStateHandle,
+    private val downloader: Downloader,
 ) : ViewModel() {
 
     @AssistedFactory
@@ -46,27 +49,13 @@ class DownloadPickerViewModel @AssistedInject constructor(
         }
     }
 
-    fun download() {
-//        try {
-//            val resource =
-//                mediaWithResources.resources.first { it.size == ResourceSize.Original }
-//            val request =
-//                DownloadManager.Request(Uri.parse(resource.url))
-//                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
-//                    .setDestinationInExternalPublicDir(
-//                        Environment.DIRECTORY_DOWNLOADS,
-//                        "${mediaWithResources.media.alt} by ${mediaWithResources.media.photographer} - ${ResourceSize.Original.size}.jpeg"
-//                    )
-//                    .setTitle(mediaWithResources.media.alt)
-//                    .setMimeType("image/jpeg")
-//                    .setDescription("by ${mediaWithResources.media.photographer}")
-//                    .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE)
-//
-//            val downloadManager =
-//                ContextCompat.getSystemService(context, DownloadManager::class.java)
-//            downloadManager!!.enqueue(request)
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//        }
+    fun download(resourceEntity: ResourceEntity) {
+        val media = (_media.value as AsyncJob.Success).value
+        downloader.download(
+            url = resourceEntity.url,
+            alt = media.media.alt,
+            photographer = media.media.photographer,
+            size = resourceEntity.size
+        )
     }
 }

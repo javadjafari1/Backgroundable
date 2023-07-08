@@ -2,6 +2,8 @@ package ir.thatsmejavad.backgroundable.di.modules
 
 import dagger.Binds
 import dagger.Module
+import ir.thatsmejavad.backgroundable.core.AndroidDownloader
+import ir.thatsmejavad.backgroundable.core.Downloader
 import ir.thatsmejavad.backgroundable.data.datasource.local.MediaLocalDataSource
 import ir.thatsmejavad.backgroundable.data.datasource.local.MediaLocalDataSourceImpl
 import ir.thatsmejavad.backgroundable.data.datasource.local.ResourceLocalDataSource
@@ -30,4 +32,9 @@ interface MediaModule {
     fun bindResourceLocalDataSource(
         impl: ResourceLocalDataSourceImpl
     ): ResourceLocalDataSource
+
+    @Binds
+    fun bindAndroidDownloader(
+        impl: AndroidDownloader
+    ): Downloader
 }

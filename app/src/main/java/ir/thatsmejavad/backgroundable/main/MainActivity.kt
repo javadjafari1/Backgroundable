@@ -18,6 +18,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -27,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -36,9 +40,9 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.google.accompanist.navigation.material.BottomSheetNavigator
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
-import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import ir.thatsmejavad.backgroundable.BackgroundableApplication
 import ir.thatsmejavad.backgroundable.BuildConfig
 import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations
@@ -92,7 +96,6 @@ class MainActivity : ComponentActivity() {
                         Theme.LightTheme -> false
                     }
                 ) {
-
                     BackgroundableApp()
                 }
             }
@@ -100,10 +103,18 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialNavigationApi::class)
+@OptIn(
+    ExperimentalAnimationApi::class,
+    ExperimentalMaterialNavigationApi::class,
+    ExperimentalMaterialApi::class
+)
 @Composable
 private fun BackgroundableApp() {
-    val bottomSheetNavigator = rememberBottomSheetNavigator()
+    val sheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true
+    )
+    val bottomSheetNavigator = remember { BottomSheetNavigator(sheetState) }
     val navController = rememberAnimatedNavController(bottomSheetNavigator)
 
     Box(

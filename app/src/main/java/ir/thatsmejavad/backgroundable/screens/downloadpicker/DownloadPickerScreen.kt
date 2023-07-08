@@ -11,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob
+import ir.thatsmejavad.backgroundable.core.sealeds.RotationMode
 
 
 @Composable
@@ -28,7 +30,9 @@ fun DownloadPickerScreen(
     val mediaResult by viewModel.media.collectAsStateWithLifecycle()
 
     if (mediaResult is AsyncJob.Success) {
-        val media = (mediaResult as AsyncJob.Success).value
+        val mediaMap = remember {
+            (mediaResult as AsyncJob.Success).value.resources.groupBy { it.size is RotationMode }
+        }
         LazyColumn {
             item {
                 Text(
@@ -40,20 +44,43 @@ fun DownloadPickerScreen(
             item {
                 Divider()
             }
-            items(media.resources) { resourceEntity ->
-                Text(
-                    modifier = Modifier
-                        .padding(vertical = 8.dp, horizontal = 16.dp)
-                        .clip(MaterialTheme.shapes.extraLarge)
-                        .background(MaterialTheme.colorScheme.surface)
-                        .clickable {/* onSelect(resourceEntity)*/ }
-                        .fillMaxWidth()
-                        .padding(horizontal = 24.dp, vertical = 16.dp),
-                    text = resourceEntity.size.size.replaceFirstChar { it.uppercaseChar() },
-                    color = MaterialTheme.colorScheme.onSurface
-                )
+            mediaMap[false]?.let { resources ->
+                items(resources) { resourceEntity ->
+                    DownloadItem(
+                        name = resourceEntity.size.size.replaceFirstChar { it.uppercaseChar() },
+                        onClick = { viewModel.download(resourceEntity) }
+                    )
+                }
+            }
+            item {
+                Divider()
+            }
+            mediaMap[true]?.let { resources ->
+                items(resources) { resourceEntity ->
+                    DownloadItem(
+                        name = resourceEntity.size.size.replaceFirstChar { it.uppercaseChar() },
+                        onClick = { viewModel.download(resourceEntity) }
+                    )
+                }
             }
         }
     }
+}
 
+@Composable
+fun DownloadItem(
+    name: String,
+    onClick: () -> Unit
+) {
+    Text(
+        modifier = Modifier
+            .padding(vertical = 8.dp, horizontal = 16.dp)
+            .clip(MaterialTheme.shapes.extraLarge)
+            .background(MaterialTheme.colorScheme.surface)
+            .clickable { onClick() }
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp, vertical = 16.dp),
+        text = name,
+        color = MaterialTheme.colorScheme.onSurface
+    )
 }
