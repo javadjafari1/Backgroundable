@@ -143,7 +143,7 @@ private fun LazyGridItemScope.CollectionCard(
                     .padding(16.dp)
                     .clip(CircleShape)
                     .background(
-                        color = MaterialTheme.colorScheme.primaryContainer,
+                        color = MaterialTheme.colorScheme.primary,
                         shape = CircleShape
                     )
                     .padding(8.dp)
@@ -158,7 +158,8 @@ private fun LazyGridItemScope.CollectionCard(
                             end.linkTo(title.start)
                         }
                     },
-                text = collection.photosCount.toString()
+                text = collection.photosCount.toString(),
+                color = MaterialTheme.colorScheme.onPrimary
             )
 
             Text(

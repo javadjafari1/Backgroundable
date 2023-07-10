@@ -92,7 +92,6 @@ class MainActivity : ComponentActivity() {
                         Theme.LightTheme -> false
                     }
                 ) {
-
                     BackgroundableApp()
                 }
             }
@@ -178,6 +177,7 @@ private fun BackgroundableNavigationBar(
             NavigationBarItem(
                 selected = destination == selectedNavigationBarItem,
                 onClick = { onItemSelected(destination) },
+                alwaysShowLabel = false,
                 icon = {
                     Crossfade(
                         targetState = selectedNavigationBarItem == destination,
