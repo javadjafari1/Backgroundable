@@ -14,6 +14,7 @@ import ir.thatsmejavad.backgroundable.core.viewmodel.daggerViewModel
 import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListScreen
 import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListViewModel
 import ir.thatsmejavad.backgroundable.screens.columncountpicker.ColumnCountPicker
+import ir.thatsmejavad.backgroundable.screens.downloadpicker.DownloadPickerScreen
 import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailScreen
 import ir.thatsmejavad.backgroundable.screens.medialist.MediaListScreen
 import ir.thatsmejavad.backgroundable.screens.search.SearchScreen
@@ -113,7 +114,14 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
             mediaId = mediaId,
             title = title,
             viewModel = daggerViewModel(),
-            onBackClicked = { navController.navigateUp() }
+            onBackClicked = { navController.navigateUp() },
+            navigateToDownloadPicker = {
+                navController.navigate(
+                    AppScreens.DownloadPicker.createRoute(mediaId)
+                ) {
+                    launchSingleTop = true
+                }
+            }
         )
     }
 
@@ -180,6 +188,23 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         ThemeSettingScreen(
             viewModel = viewModel,
             onBackClicked = { navController.navigateUp() }
+        )
+    }
+
+    bottomSheet(
+        route = AppScreens.DownloadPicker.route,
+        arguments = listOf(
+            navArgument("id") {
+                type = NavType.IntType
+                nullable = false
+            }
+        )
+    ) {
+        DownloadPickerScreen(
+            viewModel = daggerViewModel(),
+            navigateBack = {
+                navController.navigateUp()
+            }
         )
     }
 }

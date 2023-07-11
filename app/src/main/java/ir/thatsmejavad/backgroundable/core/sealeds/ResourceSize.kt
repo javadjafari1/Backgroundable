@@ -6,8 +6,8 @@ sealed class ResourceSize(val size: String) {
     object Large : ResourceSize("large")
     object Medium : ResourceSize("medium")
     object Small : ResourceSize("small")
-    object Portrait : ResourceSize("portrait")
-    object Landscape : ResourceSize("landscape")
+    object Portrait : ResourceSize("portrait"), RotationMode
+    object Landscape : ResourceSize("landscape"), RotationMode
     object Tiny : ResourceSize("tiny")
 
     companion object {
