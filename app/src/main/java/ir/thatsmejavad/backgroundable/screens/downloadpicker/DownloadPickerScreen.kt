@@ -1,5 +1,6 @@
 package ir.thatsmejavad.backgroundable.screens.downloadpicker
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -27,6 +29,7 @@ fun DownloadPickerScreen(
     navigateBack: () -> Unit
 ) {
     val mediaResult by viewModel.media.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     if (mediaResult is AsyncJob.Success) {
         val mediaMap = remember {
@@ -50,6 +53,11 @@ fun DownloadPickerScreen(
                         onClick = {
                             viewModel.download(resourceEntity)
                             navigateBack()
+                            Toast.makeText(
+                                context,
+                                R.string.label_download_is_about_to_begin,
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                     )
                 }
@@ -64,6 +72,11 @@ fun DownloadPickerScreen(
                         onClick = {
                             viewModel.download(resourceEntity)
                             navigateBack()
+                            Toast.makeText(
+                                context,
+                                R.string.label_download_is_about_to_begin,
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                     )
                 }
