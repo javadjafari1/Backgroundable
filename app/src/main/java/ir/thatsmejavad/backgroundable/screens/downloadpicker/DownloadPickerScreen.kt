@@ -21,7 +21,6 @@ import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob
 import ir.thatsmejavad.backgroundable.core.sealeds.RotationMode
 
-
 @Composable
 fun DownloadPickerScreen(
     viewModel: DownloadPickerViewModel,
@@ -48,7 +47,10 @@ fun DownloadPickerScreen(
                 items(resources) { resourceEntity ->
                     DownloadItem(
                         name = resourceEntity.size.size.replaceFirstChar { it.uppercaseChar() },
-                        onClick = { viewModel.download(resourceEntity) }
+                        onClick = {
+                            viewModel.download(resourceEntity)
+                            navigateBack()
+                        }
                     )
                 }
             }
@@ -59,7 +61,10 @@ fun DownloadPickerScreen(
                 items(resources) { resourceEntity ->
                     DownloadItem(
                         name = resourceEntity.size.size.replaceFirstChar { it.uppercaseChar() },
-                        onClick = { viewModel.download(resourceEntity) }
+                        onClick = {
+                            viewModel.download(resourceEntity)
+                            navigateBack()
+                        }
                     )
                 }
             }
