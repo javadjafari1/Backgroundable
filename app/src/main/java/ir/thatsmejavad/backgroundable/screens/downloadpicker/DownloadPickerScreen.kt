@@ -73,7 +73,7 @@ fun DownloadPickerScreen(
 }
 
 @Composable
-fun DownloadItem(
+private fun DownloadItem(
     name: String,
     onClick: () -> Unit
 ) {
