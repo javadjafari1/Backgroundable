@@ -51,5 +51,4 @@ object DataStoreModule {
             scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
         )
     }
-
 }

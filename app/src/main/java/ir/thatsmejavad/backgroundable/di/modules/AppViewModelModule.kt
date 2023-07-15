@@ -46,5 +46,4 @@ interface AppViewModelModule {
     @Binds
     @[IntoMap ViewModelAssistedFactoryKey(DownloadPickerViewModel::class)]
     fun bindsDownloadPickerViewModelFactory(factory: DownloadPickerViewModel.Factory): ViewModelAssistedFactory<*>
-
 }

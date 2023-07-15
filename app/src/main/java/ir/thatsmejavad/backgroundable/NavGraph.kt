@@ -173,7 +173,6 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
     animatedComposable(
         route = AppScreens.Settings.route,
     ) {
-
         SettingsScreen(
             navigateTo = {
                 navController.navigate(it)
