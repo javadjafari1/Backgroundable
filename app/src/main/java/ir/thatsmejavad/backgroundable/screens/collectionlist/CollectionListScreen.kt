@@ -193,7 +193,8 @@ private fun LazyGridItemScope.CollectionCard(
                             top.linkTo(parent.top)
                             bottom.linkTo(parent.bottom)
                             start.linkTo(count.end, margin = 10.dp)
-                            end.linkTo(parent.end)
+                            /*TODO fix not showing the end of the text*/
+                            // end.linkTo(parent.end)
                         }
                     },
                 text = collection.title,
