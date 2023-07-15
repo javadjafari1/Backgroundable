@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridItemScope
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ElevatedCard
@@ -26,6 +25,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -39,7 +41,9 @@ import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
+import ir.thatsmejavad.backgroundable.common.ui.HexagonShape
 import ir.thatsmejavad.backgroundable.common.ui.LazyVerticalGridWithSwipeRefresh
+import ir.thatsmejavad.backgroundable.common.ui.drawCustomHexagonPath
 import ir.thatsmejavad.backgroundable.core.Constants.NAVIGATION_BAR_HEIGHT
 import ir.thatsmejavad.backgroundable.core.getSnackbarMessage
 import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
@@ -111,7 +115,7 @@ fun CollectionListScreen(
             ) { index ->
                 collections[index]?.let { collection ->
                     CollectionCard(
-                        isGrid = columnCounts != 1,
+                        isGrid = columnCounts > 2,
                         collection = collection,
                         onCollectionClicked = onCollectionClicked
                     )
@@ -138,15 +142,27 @@ private fun LazyGridItemScope.CollectionCard(
         ConstraintLayout {
             val (count, title) = createRefs()
 
+            val primaryColor = MaterialTheme.colorScheme.primary
             Text(
                 modifier = Modifier
-                    .padding(16.dp)
-                    .clip(CircleShape)
+                    .padding(vertical = 8.dp)
+                    .padding(start = 8.dp)
+                    .drawWithContent {
+                        drawContent()
+                        drawPath(
+                            path = drawCustomHexagonPath(size),
+                            color = primaryColor,
+                            style = Stroke(
+                                width = 10.dp.toPx(),
+                                pathEffect = PathEffect.cornerPathEffect(8f)
+                            )
+                        )
+                    }
                     .background(
-                        color = MaterialTheme.colorScheme.primary,
-                        shape = CircleShape
+                        color = primaryColor,
+                        shape = HexagonShape
                     )
-                    .padding(8.dp)
+                    .padding(12.dp)
                     .constrainAs(count) {
                         if (isGrid) {
                             top.linkTo(parent.top)
@@ -159,13 +175,16 @@ private fun LazyGridItemScope.CollectionCard(
                         }
                     },
                 text = collection.photosCount.toString(),
+                style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onPrimary
             )
 
             Text(
                 modifier = Modifier
                     .basicMarquee()
-                    .padding(16.dp)
+                    .padding(vertical = 8.dp)
+                    .padding(end = 8.dp)
+                    .padding(horizontal = if (isGrid) 8.dp else 0.dp)
                     .constrainAs(title) {
                         if (isGrid) {
                             top.linkTo(count.bottom)
@@ -173,13 +192,15 @@ private fun LazyGridItemScope.CollectionCard(
                         } else {
                             top.linkTo(parent.top)
                             bottom.linkTo(parent.bottom)
-                            start.linkTo(count.end)
-                            end.linkTo(parent.end)
+                            start.linkTo(count.end, margin = 10.dp)
+                            /*TODO fix not showing the end of the text*/
+                            // end.linkTo(parent.end)
                         }
                     },
                 text = collection.title,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
+                style = MaterialTheme.typography.titleLarge
             )
         }
     }
