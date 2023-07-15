@@ -75,7 +75,6 @@ fun ThemeSettingScreen(
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState()),
         ) {
-
             val tabs = listOf(
                 Theme.LightTheme,
                 Theme.DarkTheme,
@@ -141,7 +140,6 @@ fun ThemeSettingScreen(
                     viewModel.updateIsMaterialYouEnabled(it)
                 }
             )
-
         }
     }
 }
@@ -163,6 +161,5 @@ private fun MaterialYouRow(
         Spacer(modifier = Modifier.weight(1f))
 
         Switch(checked = isChecked, onCheckedChange = onCheckChanged)
-
     }
 }

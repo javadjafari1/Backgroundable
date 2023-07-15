@@ -108,4 +108,3 @@ private fun SettingItem(
         Text(text = stringResource(textId))
     }
 }
-
