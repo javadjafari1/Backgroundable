@@ -2,6 +2,7 @@ package ir.thatsmejavad.backgroundable.data.repository
 
 import androidx.datastore.core.DataStore
 import ir.thatsmejavad.backgroundable.UserPref
+import ir.thatsmejavad.backgroundable.core.sealeds.List
 import ir.thatsmejavad.backgroundable.core.sealeds.Theme
 import ir.thatsmejavad.backgroundable.model.UserPreferences
 import kotlinx.coroutines.flow.Flow
@@ -24,7 +25,8 @@ class SettingRepositoryImpl @Inject constructor(
         }.map {
             UserPreferences(
                 isMaterialYouEnabled = it.isMaterialYou,
-                theme = Theme.toTheme(it.theme)
+                theme = Theme.toTheme(it.theme),
+                listType = List.toList(it.mediaColumnType)
             )
         }
 

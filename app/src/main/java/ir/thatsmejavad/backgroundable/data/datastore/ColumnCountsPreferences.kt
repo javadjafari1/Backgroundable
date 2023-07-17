@@ -22,19 +22,7 @@ class ColumnCountsPreferences @Inject constructor(
         }
     }
 
-    val mediaColumnCountFlow: Flow<Int>
-        get() = dataStore.data.map { preferences ->
-            preferences[MEDIA_COLUMN_COUNT] ?: 1
-        }
-
-    suspend fun setMediaColumnCount(count: Int) {
-        dataStore.edit { preferences ->
-            preferences[MEDIA_COLUMN_COUNT] = count
-        }
-    }
-
     companion object PreferencesKeys {
         private val COLLECTION_COLUMN_COUNT = intPreferencesKey("collection-column-count")
-        private val MEDIA_COLUMN_COUNT = intPreferencesKey("media-column-count")
     }
 }

@@ -6,10 +6,16 @@ option java_multiple_files = true;
 message UserPref {
   bool isMaterialYou = 1;
   ThemeType theme = 2;
+  ListType mediaColumnType = 3;
 }
 
 enum ThemeType {
   THEME_DARK = 0;
   THEME_LIGHT = 1;
   THEME_FOLLOW_SYSTEM = 2;
+}
+enum ListType {
+  LIST_TYPE_LIST = 0;
+  LIST_TYPE_GRID = 1;
+  LIST_TYPE_STAGGERED = 2;
 }

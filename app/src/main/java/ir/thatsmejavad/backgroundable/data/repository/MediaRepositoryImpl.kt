@@ -1,10 +1,13 @@
 package ir.thatsmejavad.backgroundable.data.repository
 
+import androidx.datastore.core.DataStore
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import ir.thatsmejavad.backgroundable.UserPref
 import ir.thatsmejavad.backgroundable.core.Constants.MEDIA_PER_PAGE_ITEM
+import ir.thatsmejavad.backgroundable.core.sealeds.List
 import ir.thatsmejavad.backgroundable.core.sealeds.MediaType
 import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
 import ir.thatsmejavad.backgroundable.data.datasource.local.MediaLocalDataSource
@@ -17,6 +20,9 @@ import ir.thatsmejavad.backgroundable.data.db.entity.ResourceEntity
 import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
 import ir.thatsmejavad.backgroundable.model.media.Media
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
+import java.io.IOException
 import javax.inject.Inject
 
 class MediaRepositoryImpl @Inject constructor(
@@ -25,6 +31,7 @@ class MediaRepositoryImpl @Inject constructor(
     private val resourceLocalDataSource: ResourceLocalDataSource,
     private val pageKeyLocalDataSource: PageKeyLocalDataSource,
     private val database: BackgroundableDatabase,
+    private val userPreferencesStore: DataStore<UserPref>,
 ) : MediaRepository {
 
     @OptIn(ExperimentalPagingApi::class)
@@ -61,6 +68,26 @@ class MediaRepositoryImpl @Inject constructor(
     override fun searchPhoto(query: String): Flow<PagingData<Media>> {
         return mediaRemoteDataSource.searchPhoto(query)
     }
+
+    override suspend fun setMediaColumnType(type: List) {
+        userPreferencesStore.updateData { currentPref ->
+            currentPref
+                .toBuilder()
+                .setMediaColumnType(List.fromList(type))
+                .build()
+        }
+    }
+
+    override val mediaColumnTypeFlow: Flow<List> = userPreferencesStore.data
+        .catch { exception ->
+            if (exception is IOException) {
+                emit(UserPref.getDefaultInstance())
+            } else {
+                throw exception
+            }
+        }.map {
+            List.toList(it.mediaColumnType)
+        }
 
     private suspend fun updateMedia(mediaId: Int) {
         val media = mediaRemoteDataSource.getMedia(mediaId)
