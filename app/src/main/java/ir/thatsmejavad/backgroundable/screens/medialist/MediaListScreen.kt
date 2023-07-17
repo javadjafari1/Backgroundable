@@ -29,6 +29,7 @@ import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.LazyVerticalStaggeredGridWithSwipeRefresh
 import ir.thatsmejavad.backgroundable.common.ui.MediaCard
 import ir.thatsmejavad.backgroundable.core.getSnackbarMessage
+import ir.thatsmejavad.backgroundable.core.sealeds.List
 import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,7 +41,8 @@ internal fun MediaListScreen(
     onBackClicked: () -> Unit,
 ) {
     val medias = viewModel.medias.collectAsLazyPagingItems()
-    val columnCounts by viewModel.columnCount.collectAsStateWithLifecycle()
+    val columnType by viewModel.mediaColumnTypeFlow.collectAsStateWithLifecycle(List.StaggeredType)
+
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
     BackgroundableScaffold(
@@ -63,10 +65,10 @@ internal fun MediaListScreen(
                     IconButton(onClick = { viewModel.changeColumnCount() }) {
                         Icon(
                             painter = painterResource(
-                                if (columnCounts == 1) {
-                                    R.drawable.ic_staggered_grid
-                                } else {
-                                    R.drawable.ic_list
+                                when (columnType) {
+                                    List.GridType -> R.drawable.ic_list
+                                    List.ListType -> R.drawable.ic_staggered_grid
+                                    List.StaggeredType -> R.drawable.ic_grid
                                 }
                             ),
                             contentDescription = "Change column count"
@@ -86,7 +88,12 @@ internal fun MediaListScreen(
 
         LazyVerticalStaggeredGridWithSwipeRefresh(
             pagingItems = medias,
-            columns = StaggeredGridCells.Fixed(columnCounts),
+            columns = StaggeredGridCells.Fixed(
+                when (columnType) {
+                    List.GridType, List.StaggeredType -> 2
+                    List.ListType -> 1
+                }
+            ),
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .fillMaxSize(),
@@ -102,7 +109,8 @@ internal fun MediaListScreen(
                         alt = media.media.alt,
                         height = media.media.height,
                         avgColor = media.media.avgColor,
-                        isSingleColumn = columnCounts == 1,
+                        isSingleColumn = columnType == List.ListType,
+                        isStaggered = columnType == List.StaggeredType,
                         photographer = media.media.photographer,
                         resourceUrl = media.resources.first { it.size == ResourceSize.Medium }.url,
                         onMediaClicked = onMediaClicked

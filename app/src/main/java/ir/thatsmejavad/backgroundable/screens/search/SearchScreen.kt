@@ -162,6 +162,8 @@ fun SearchScreen(
                             height = media.height,
                             avgColor = media.avgColor,
                             isSingleColumn = false,
+                            /*TODO we should get the staggered type from data store*/
+                            isStaggered = true,
                             photographer = media.photographer,
                             resourceUrl = media.resources.medium,
                             onMediaClicked = onMediaClicked
