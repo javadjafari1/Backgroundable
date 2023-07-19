@@ -69,7 +69,7 @@ fun MediaCard(
         }
         Text(
             text = text,
-            maxLines = if (isStaggered) Int.MAX_VALUE else 2,
+            maxLines = if (!isStaggered && !isSingleColumn) 2 else Int.MAX_VALUE,
             overflow = TextOverflow.Ellipsis
         )
     }
