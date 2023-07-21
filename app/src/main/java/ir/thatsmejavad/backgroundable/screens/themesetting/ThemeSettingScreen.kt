@@ -17,8 +17,8 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Tab
@@ -55,7 +55,7 @@ fun ThemeSettingScreen(
 
     Scaffold(
         topBar = {
-            LargeTopAppBar(
+            MediumTopAppBar(
                 title = {
                     Text(text = stringResource(R.string.label_theme))
                 },
@@ -111,7 +111,9 @@ fun ThemeSettingScreen(
                 tabs = {
                     tabs.forEachIndexed { index, theme ->
                         Tab(
-                            modifier = Modifier.padding(vertical = 8.dp),
+                            modifier = Modifier
+                                .padding(vertical = 8.dp)
+                                .clip(MaterialTheme.shapes.extraLarge),
                             selected = selectedTabIndex == index,
                             selectedContentColor = MaterialTheme.colorScheme.onPrimary,
                             unselectedContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
@@ -124,7 +126,8 @@ fun ThemeSettingScreen(
                                             Theme.FollowSystem -> R.string.label_follow_system
                                             Theme.LightTheme -> R.string.label_light
                                         }
-                                    )
+                                    ),
+                                    style = MaterialTheme.typography.titleMedium
                                 )
                             }
                         )
@@ -132,7 +135,7 @@ fun ThemeSettingScreen(
                 }
             )
 
-            Spacer(modifier = Modifier.height(46.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
             MaterialYouRow(
                 isChecked = userPreferences.isMaterialYouEnabled,
@@ -156,7 +159,11 @@ private fun MaterialYouRow(
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(text = stringResource(R.string.label_material_you))
+        Text(
+            text = stringResource(R.string.label_material_you),
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onSurface
+        )
 
         Spacer(modifier = Modifier.weight(1f))
 

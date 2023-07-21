@@ -36,7 +36,7 @@ fun MediaCard(
     Column(
         modifier = Modifier
             .animateContentSize()
-            .clip(MaterialTheme.shapes.medium)
+            .clip(MaterialTheme.shapes.extraSmall)
             .clickable { onMediaClicked(id, alt) }
             .padding(4.dp)
 
@@ -70,7 +70,9 @@ fun MediaCard(
         Text(
             text = text,
             maxLines = if (!isStaggered && !isSingleColumn) 2 else Int.MAX_VALUE,
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurface
         )
     }
 }

@@ -1,7 +1,6 @@
 package ir.thatsmejavad.backgroundable.screens.downloadpicker
 
 import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -38,9 +37,13 @@ fun DownloadPickerScreen(
         LazyColumn {
             item {
                 Text(
+                    modifier = Modifier.padding(
+                        vertical = 20.dp,
+                        horizontal = 32.dp
+                    ),
                     text = stringResource(R.string.label_download_wallpaper),
                     color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.padding(24.dp)
+                    style = MaterialTheme.typography.titleLarge
                 )
             }
             item {
@@ -93,12 +96,12 @@ private fun DownloadItem(
     Text(
         modifier = Modifier
             .padding(vertical = 8.dp, horizontal = 16.dp)
-            .clip(MaterialTheme.shapes.extraLarge)
-            .background(MaterialTheme.colorScheme.surface)
-            .clickable { onClick() }
+            .clip(MaterialTheme.shapes.extraSmall)
+            .clickable(onClick = onClick)
             .fillMaxWidth()
             .padding(horizontal = 24.dp, vertical = 16.dp),
         text = name,
-        color = MaterialTheme.colorScheme.onSurface
+        color = MaterialTheme.colorScheme.onSurface,
+        style = MaterialTheme.typography.bodyLarge
     )
 }

@@ -7,6 +7,7 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,15 +20,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MediumTopAppBar
+import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -41,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -81,9 +83,13 @@ fun MediaDetailScreen(
                 enter = fadeIn() + expandVertically(),
                 exit = fadeOut() + shrinkVertically(),
             ) {
-                LargeTopAppBar(
+                MediumTopAppBar(
                     title = {
-                        Text(text = title)
+                        Text(
+                            text = title,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     },
                     navigationIcon = {
                         IconButton(onClick = onBackClicked) {
@@ -139,7 +145,7 @@ fun MediaDetailScreen(
                             modifier = Modifier.padding(16.dp),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            Button(
+                            ElevatedButton(
                                 modifier = Modifier
                                     .height(56.dp)
                                     .weight(1f),
@@ -161,7 +167,15 @@ fun MediaDetailScreen(
                                         }
                                     }
                                 },
-                                shape = MaterialTheme.shapes.large,
+                                shape = MaterialTheme.shapes.extraSmall,
+                                elevation = ButtonDefaults.elevatedButtonElevation(
+                                    defaultElevation = 2.dp,
+                                    pressedElevation = 5.dp
+                                ),
+                                colors = ButtonDefaults.elevatedButtonColors(
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                    contentColor = MaterialTheme.colorScheme.onPrimary
+                                )
                             ) {
                                 Text(
                                     text = stringResource(R.string.label_set_as_wallpaper)
@@ -170,16 +184,17 @@ fun MediaDetailScreen(
 
                             Spacer(modifier = Modifier.width(8.dp))
 
-                            FilledIconButton(
+                            OutlinedIconButton(
                                 modifier = Modifier.size(56.dp),
-                                shape = MaterialTheme.shapes.large,
-                                onClick = {
-                                    navigateToDownloadPicker()
-                                },
-                            ) {
+                                shape = MaterialTheme.shapes.extraSmall,
+                                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+                                onClick = navigateToDownloadPicker,
+
+                                ) {
                                 Icon(
                                     painter = painterResource(R.drawable.ic_download),
                                     contentDescription = "Download",
+                                    tint = MaterialTheme.colorScheme.primary
                                 )
                             }
                         }
