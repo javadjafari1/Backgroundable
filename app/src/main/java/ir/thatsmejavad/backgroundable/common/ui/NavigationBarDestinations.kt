@@ -6,6 +6,8 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import ir.thatsmejavad.backgroundable.R
 
@@ -21,12 +23,12 @@ enum class NavigationBarDestinations(
     ),
     SEARCH(
         selectedIcon = Icons.Filled.Search,
-        unselectedIcon = Icons.Filled.Search,
+        unselectedIcon = Icons.Outlined.Search,
         text = R.string.label_search,
     ),
     SETTING(
         selectedIcon = Icons.Filled.Settings,
-        unselectedIcon = Icons.Filled.Settings,
+        unselectedIcon = Icons.Outlined.Settings,
         text = R.string.label_setting,
     )
 }

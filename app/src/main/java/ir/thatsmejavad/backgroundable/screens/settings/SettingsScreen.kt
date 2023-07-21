@@ -3,6 +3,7 @@ package ir.thatsmejavad.backgroundable.screens.settings
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,7 +45,11 @@ fun SettingsScreen(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(text = stringResource(R.string.label_setting))
+                    Text(
+                        text = stringResource(R.string.label_setting),
+                        style = MaterialTheme.typography.headlineSmall,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
                 }
             )
         }
@@ -51,7 +57,8 @@ fun SettingsScreen(
         Column(
             Modifier
                 .padding(it)
-                .fillMaxSize()
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             SettingItem(
                 textId = R.string.label_language,
@@ -80,7 +87,8 @@ fun SettingsScreen(
 
             Text(
                 modifier = Modifier.align(CenterHorizontally),
-                text = stringResource(R.string.label_version, BuildConfig.VERSION_NAME)
+                text = stringResource(R.string.label_version, BuildConfig.VERSION_NAME),
+                style = MaterialTheme.typography.bodyLarge
             )
         }
     }
@@ -96,15 +104,23 @@ private fun SettingItem(
         modifier = Modifier
             .clickable(onClick = onClick)
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(
+                horizontal = 24.dp,
+                vertical = 16.dp
+            )
     ) {
         Icon(
             painter = painterResource(imageId),
-            contentDescription = stringResource(textId)
+            contentDescription = stringResource(textId),
+            tint = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
         Spacer(modifier = Modifier.width(16.dp))
 
-        Text(text = stringResource(textId))
+        Text(
+            text = stringResource(textId),
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSurface
+        )
     }
 }
