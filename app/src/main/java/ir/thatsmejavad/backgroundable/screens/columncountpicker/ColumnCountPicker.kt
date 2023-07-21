@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ir.thatsmejavad.backgroundable.R
@@ -25,9 +26,13 @@ fun ColumnCountPicker(
     LazyColumn {
         item {
             Text(
+                modifier = Modifier.padding(
+                    vertical = 20.dp,
+                    horizontal = 32.dp
+                ),
                 text = stringResource(R.string.label_grid_count),
                 color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(24.dp)
+                style = MaterialTheme.typography.titleLarge,
             )
         }
         item {
@@ -38,10 +43,21 @@ fun ColumnCountPicker(
             Text(
                 modifier = Modifier
                     .padding(vertical = 8.dp, horizontal = 16.dp)
-                    .clip(MaterialTheme.shapes.extraLarge)
+                    .then(
+                        if (selectedItem == it) {
+                            Modifier.shadow(
+                                2.dp,
+                                shape = MaterialTheme.shapes.extraSmall,
+                                ambientColor = MaterialTheme.colorScheme.primary
+                            )
+                        } else {
+                            Modifier
+                        }
+                    )
+                    .clip(MaterialTheme.shapes.extraSmall)
                     .background(
                         color = if (selectedItem == it) {
-                            MaterialTheme.colorScheme.secondary
+                            MaterialTheme.colorScheme.primary
                         } else {
                             MaterialTheme.colorScheme.surface
                         }
@@ -51,10 +67,11 @@ fun ColumnCountPicker(
                     .padding(horizontal = 24.dp, vertical = 16.dp),
                 text = it.toString(),
                 color = if (selectedItem == it) {
-                    MaterialTheme.colorScheme.onSecondary
+                    MaterialTheme.colorScheme.onPrimary
                 } else {
                     MaterialTheme.colorScheme.onSurface
-                }
+                },
+                style = MaterialTheme.typography.bodyLarge,
             )
         }
     }

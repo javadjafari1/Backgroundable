@@ -208,7 +208,11 @@ private fun BackgroundableNavigationBar(
                     }
                 },
                 label = {
-                    Text(text = stringResource(destination.text))
+                    Text(
+                        text = stringResource(destination.text),
+                        color = MaterialTheme.colorScheme.onSurface,
+                        style = MaterialTheme.typography.bodySmall
+                    )
                 },
             )
         }

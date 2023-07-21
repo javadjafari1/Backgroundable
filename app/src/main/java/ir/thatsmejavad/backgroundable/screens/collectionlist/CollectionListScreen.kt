@@ -3,7 +3,7 @@ package ir.thatsmejavad.backgroundable.screens.collectionlist
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,8 +23,8 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -79,7 +79,11 @@ fun CollectionListScreen(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(text = stringResource(R.string.app_name))
+                    Text(
+                        text = stringResource(R.string.app_name),
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
                 },
                 actions = {
                     IconButton(onClick = { openColumnCountPicker(columnCounts) }) {
@@ -125,7 +129,10 @@ fun CollectionListScreen(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(
+    ExperimentalFoundationApi::class,
+    ExperimentalMaterial3Api::class
+)
 @Composable
 private fun LazyGridItemScope.CollectionCard(
     isGrid: Boolean,
@@ -134,15 +141,18 @@ private fun LazyGridItemScope.CollectionCard(
 ) {
     ElevatedCard(
         modifier = Modifier
-            .clip(CardDefaults.elevatedShape)
             .fillMaxWidth()
-            .animateItemPlacement()
-            .clickable { onCollectionClicked(collection.id, collection.title) }
+            .animateItemPlacement(),
+        colors = CardDefaults.elevatedCardColors(containerColor = MaterialTheme.colorScheme.surface),
+        shape = MaterialTheme.shapes.extraSmall,
+        elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp),
+        onClick = { onCollectionClicked(collection.id, collection.title) },
+        interactionSource = remember { MutableInteractionSource() }
     ) {
         ConstraintLayout {
             val (count, title) = createRefs()
 
-            val primaryColor = MaterialTheme.colorScheme.primary
+            val primaryColor = MaterialTheme.colorScheme.secondary
             Text(
                 modifier = Modifier
                     .padding(vertical = 8.dp)
@@ -175,7 +185,7 @@ private fun LazyGridItemScope.CollectionCard(
                         }
                     },
                 text = collection.photosCount.toString(),
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onPrimary
             )
 
@@ -193,14 +203,15 @@ private fun LazyGridItemScope.CollectionCard(
                             top.linkTo(parent.top)
                             bottom.linkTo(parent.bottom)
                             start.linkTo(count.end, margin = 10.dp)
-                            /*TODO fix not showing the end of the text*/
+                            // TODO fix not showing the end of the text
                             // end.linkTo(parent.end)
                         }
                     },
                 text = collection.title,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface
             )
         }
     }

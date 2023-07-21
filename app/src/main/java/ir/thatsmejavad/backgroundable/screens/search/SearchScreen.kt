@@ -33,6 +33,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -91,7 +92,8 @@ fun SearchScreen(
                 .padding(
                     horizontal = 16.dp,
                     vertical = 16.dp
-                ),
+                )
+                .shadow(2.dp, MaterialTheme.shapes.extraSmall),
             value = queryString,
             onValueChange = { text ->
                 if (text.length < 40) {
@@ -99,7 +101,10 @@ fun SearchScreen(
                 }
             },
             placeholder = {
-                Text(text = stringResource(R.string.search_text_field_place_holder))
+                Text(
+                    text = stringResource(R.string.search_text_field_place_holder),
+                    style = MaterialTheme.typography.titleMedium
+                )
             },
             leadingIcon = {
                 Icon(
@@ -107,7 +112,7 @@ fun SearchScreen(
                     contentDescription = "search"
                 )
             },
-            shape = MaterialTheme.shapes.extraLarge,
+            shape = MaterialTheme.shapes.extraSmall,
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Search
@@ -133,7 +138,7 @@ fun SearchScreen(
                         )
                     }
                 }
-            }
+            },
         )
 
         Box(
@@ -162,7 +167,7 @@ fun SearchScreen(
                             height = media.height,
                             avgColor = media.avgColor,
                             isSingleColumn = false,
-                            /*TODO we should get the staggered type from data store*/
+                            // TODO we should get the staggered type from data store
                             isStaggered = true,
                             photographer = media.photographer,
                             resourceUrl = media.resources.medium,
