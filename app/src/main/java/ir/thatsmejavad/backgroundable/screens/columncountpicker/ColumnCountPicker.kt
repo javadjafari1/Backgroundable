@@ -50,7 +50,9 @@ fun ColumnCountPicker(
                                 shape = MaterialTheme.shapes.extraSmall,
                                 ambientColor = MaterialTheme.colorScheme.primary
                             )
-                        } else Modifier
+                        } else {
+                            Modifier
+                        }
                     )
                     .clip(MaterialTheme.shapes.extraSmall)
                     .background(

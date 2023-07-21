@@ -189,8 +189,7 @@ fun MediaDetailScreen(
                                 shape = MaterialTheme.shapes.extraSmall,
                                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
                                 onClick = navigateToDownloadPicker,
-
-                                ) {
+                            ) {
                                 Icon(
                                     painter = painterResource(R.drawable.ic_download),
                                     contentDescription = "Download",
