@@ -11,6 +11,7 @@ import ir.thatsmejavad.backgroundable.common.ui.ObserveArgument
 import ir.thatsmejavad.backgroundable.common.ui.animatedComposable
 import ir.thatsmejavad.backgroundable.core.AppScreens
 import ir.thatsmejavad.backgroundable.core.viewmodel.daggerViewModel
+import ir.thatsmejavad.backgroundable.screens.aboutus.AboutUsScreen
 import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListScreen
 import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListViewModel
 import ir.thatsmejavad.backgroundable.screens.columncountpicker.ColumnCountPicker
@@ -174,8 +175,8 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         route = AppScreens.Settings.route,
     ) {
         SettingsScreen(
-            navigateTo = {
-                navController.navigate(it)
+            navigateTo = { route ->
+                navController.navigate(route)
             }
         )
     }
@@ -202,6 +203,14 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         DownloadPickerScreen(
             viewModel = daggerViewModel(),
             navigateBack = {
+                navController.navigateUp()
+            }
+        )
+    }
+
+    animatedComposable(AppScreens.AboutUs.route) {
+        AboutUsScreen(
+            onBackClicked = {
                 navController.navigateUp()
             }
         )

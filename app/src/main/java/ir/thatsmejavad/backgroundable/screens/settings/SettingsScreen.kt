@@ -81,7 +81,9 @@ fun SettingsScreen(
             SettingItem(
                 textId = R.string.label_about_us,
                 imageId = R.drawable.ic_info,
-                onClick = {}
+                onClick = {
+                    navigateTo(AppScreens.AboutUs.route)
+                }
             )
             Spacer(modifier = Modifier.weight(1f))
 
