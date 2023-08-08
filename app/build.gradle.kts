@@ -18,7 +18,7 @@ detekt {
 
 android {
     namespace = "ir.thatsmejavad.backgroundable"
-    compileSdk = 33
+    compileSdk = 34
     val properties = Properties()
     val propertiesExist = rootProject.file("properties/authorization.properties").exists()
     if (propertiesExist) {
@@ -30,7 +30,7 @@ android {
     defaultConfig {
         applicationId = "ir.thatsmejavad.backgroundable"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 3
         versionName = "1.1.0"
 
@@ -102,7 +102,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
         resources {
@@ -138,12 +138,13 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
 
     implementation("androidx.activity:activity-compose:1.7.2")
-    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     implementation("androidx.navigation:navigation-compose:2.6.0")
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
+
+    val composeUi = "1.6.0-alpha02"
+    implementation("androidx.compose.ui:ui:$composeUi")
+    implementation("androidx.compose.ui:ui-graphics:$composeUi")
+    implementation("androidx.compose.ui:ui-tooling-preview:$composeUi")
+    implementation("androidx.compose.material3:material3:1.2.0-alpha04")
 
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
 
@@ -155,9 +156,9 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
 
-    implementation("com.google.dagger:dagger:2.46.1")
-    implementation("androidx.paging:paging-common-ktx:3.1.1")
-    kapt("com.google.dagger:dagger-compiler:2.46.1")
+    implementation("androidx.paging:paging-common-ktx:3.2.0")
+    implementation("com.google.dagger:dagger:2.47")
+    kapt("com.google.dagger:dagger-compiler:2.47")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -167,9 +168,10 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-    implementation("androidx.paging:paging-runtime-ktx:3.1.1")
-    implementation("androidx.paging:paging-common-ktx:3.1.1")
-    implementation("androidx.paging:paging-compose:3.2.0-rc01")
+    val paging = "3.2.0"
+    implementation("androidx.paging:paging-runtime-ktx:$paging")
+    implementation("androidx.paging:paging-common-ktx:$paging")
+    implementation("androidx.paging:paging-compose:$paging")
     implementation("io.coil-kt:coil-compose:2.4.0")
 
     val roomVersion = "2.5.2"
@@ -178,7 +180,7 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
 
-    debugImplementation("com.github.chuckerteam.chucker:library:3.5.2")
+    debugImplementation("com.github.chuckerteam.chucker:library:4.0.0")
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:3.5.2")
 
     implementation("me.saket.telephoto:zoomable-image-coil:0.4.0")
