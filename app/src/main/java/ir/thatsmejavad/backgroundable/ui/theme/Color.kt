@@ -53,6 +53,3 @@ val neutralVariant60 = Color(0xFF889392)
 val neutralVariant80 = Color(0xFFBEC9C8)
 val neutralVariant90 = Color(0xFFDAE5E3)
 val neutralVariant95 = Color(0xFF6F7978)
-
-val white = Color(0xFFFFFFFF)
-val black = Color(0xFF000000)
