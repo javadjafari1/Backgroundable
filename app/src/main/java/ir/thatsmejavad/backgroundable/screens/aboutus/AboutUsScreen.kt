@@ -76,7 +76,9 @@ fun AboutUsScreen(
             BackgroundableAbout()
 
             contributors.forEach { contributor ->
-                ContributorItem(contributor) {}
+                ContributorItem(contributor) {
+
+                }
             }
         }
     }
@@ -94,7 +96,7 @@ private fun ContributorItem(
             Modifier
                 .padding(top = 60.dp)
                 .background(
-                    MaterialTheme.colorScheme.tertiaryContainer,
+                    MaterialTheme.colorScheme.surfaceContainerLow,
                     shape = MaterialTheme.shapes.small
                 )
                 .fillMaxWidth()
@@ -119,13 +121,18 @@ private fun ContributorItem(
             Spacer(modifier = Modifier.size(24.dp))
 
             Row(
-                modifier = Modifier.align(CenterHorizontally)
+                modifier = Modifier.align(CenterHorizontally),
+                horizontalArrangement = Arrangement.spacedBy(32.dp)
             ) {
                 contributor.links.forEach { link ->
-                    IconButton(onClick = { openUrl(link.url) }) {
+                    IconButton(
+                        modifier = Modifier.size(32.dp),
+                        onClick = { openUrl(link.url) },
+                    ) {
                         Icon(
                             painter = painterResource(link.icon),
-                            contentDescription = link.name
+                            contentDescription = link.name,
+                            tint = MaterialTheme.colorScheme.surfaceTint
                         )
 
                     }
@@ -157,7 +164,7 @@ private fun BackgroundableAbout() {
             Modifier
                 .padding(top = 60.dp)
                 .background(
-                    MaterialTheme.colorScheme.tertiaryContainer,
+                    MaterialTheme.colorScheme.surfaceContainerLow,
                     shape = MaterialTheme.shapes.small
                 )
                 .fillMaxWidth()
@@ -227,10 +234,20 @@ val contributors = listOf(
         image = R.drawable.ic_grid,
         links = listOf(
             ContributorLink(
-                icon = R.drawable.ic_info,
-                url = "LinkedIn",
+                icon = R.drawable.ic_linkedin,
+                url = "https://www.linkedin.com/in/javadjafari1/",
                 name = "LinkedIn"
-            )
+            ),
+            ContributorLink(
+                icon = R.drawable.ic_github,
+                url = "https://github.com/javadjafari1",
+                name = "Github"
+            ),
+            ContributorLink(
+                icon = R.drawable.ic_mail,
+                url = "javad2147@yahoo.com",
+                name = "Mail"
+            ),
         )
     ),
     Contributor(
@@ -239,10 +256,20 @@ val contributors = listOf(
         image = R.drawable.ic_language,
         links = listOf(
             ContributorLink(
-                icon = R.drawable.ic_info,
-                url = "LinkedIn",
+                icon = R.drawable.ic_linkedin,
+                url = "https://www.linkedin.com/in/mohammadghasemi-de/",
                 name = "LinkedIn"
-            )
+            ),
+            ContributorLink(
+                icon = R.drawable.ic_mail,
+                url = "github",
+                name = "mail"
+            ),
+            ContributorLink(
+                icon = R.drawable.ic_dribble,
+                url = "github",
+                name = "mail"
+            ),
         )
     )
 )
