@@ -120,10 +120,14 @@ fun SearchScreen(
             keyboardActions = KeyboardActions(
                 onSearch = { viewModel.search() }
             ),
-            colors = TextFieldDefaults.textFieldColors(
+            colors = TextFieldDefaults.colors(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
+                focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainer,
+                focusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                focusedLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant
             ),
             trailingIcon = {
                 AnimatedVisibility(

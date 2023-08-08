@@ -12,6 +12,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -24,20 +25,20 @@ private val shapes = Shapes(
 
 private val lightColorScheme = lightColorScheme(
     primary = primary40,
-    onPrimary = white,
+    onPrimary = Color.White,
     primaryContainer = primary90,
     onPrimaryContainer = primary10,
     secondary = secondary40,
-    onSecondary = white,
+    onSecondary = Color.White,
     secondaryContainer = secondary90,
     onSecondaryContainer = secondary10,
     tertiary = tertiary40,
-    onTertiary = white,
+    onTertiary = Color.White,
     tertiaryContainer = tertiary90,
     onTertiaryContainer = tertiary10,
     error = error40,
     errorContainer = error90,
-    onError = white,
+    onError = Color.White,
     onErrorContainer = error10,
     background = neutral99,
     onBackground = neutral10,
@@ -51,7 +52,14 @@ private val lightColorScheme = lightColorScheme(
     inversePrimary = primary80,
     surfaceTint = primary40,
     outlineVariant = neutralVariant80,
-    scrim = black,
+    scrim = Color.Black,
+    surfaceContainerHighest = neutral90,
+    surfaceContainerHigh = neutral92,
+    surfaceContainer = neutral94,
+    surfaceContainerLow = neutral96,
+    surfaceContainerLowest = Color.White,
+    surfaceDim = neutral87,
+    surfaceBright = neutral98,
 )
 
 private val darkColorScheme = darkColorScheme(
@@ -83,7 +91,14 @@ private val darkColorScheme = darkColorScheme(
     inversePrimary = primary40,
     surfaceTint = primary80,
     outlineVariant = neutralVariant30,
-    scrim = black,
+    scrim = Color.Black,
+    surfaceContainerHighest = neutral22,
+    surfaceContainerHigh = neutral17,
+    surfaceContainer = neutral12,
+    surfaceContainerLow = neutral10,
+    surfaceContainerLowest = neutral04,
+    surfaceDim = neutral06,
+    surfaceBright = neutral24,
 )
 
 @Composable

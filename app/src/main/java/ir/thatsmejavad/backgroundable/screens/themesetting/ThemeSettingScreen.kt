@@ -93,7 +93,8 @@ fun ThemeSettingScreen(
                     .padding(horizontal = 16.dp)
                     .clip(MaterialTheme.shapes.extraLarge),
                 selectedTabIndex = selectedTabIndex,
-                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                divider = {},
+                containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
                 indicator = { tabPositions ->
                     Box(
                         modifier = Modifier
@@ -161,7 +162,7 @@ private fun MaterialYouRow(
     ) {
         Text(
             text = stringResource(R.string.label_material_you),
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurface
         )
 

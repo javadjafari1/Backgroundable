@@ -143,7 +143,9 @@ private fun LazyGridItemScope.CollectionCard(
         modifier = Modifier
             .fillMaxWidth()
             .animateItemPlacement(),
-        colors = CardDefaults.elevatedCardColors(containerColor = MaterialTheme.colorScheme.surface),
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+        ),
         shape = MaterialTheme.shapes.extraSmall,
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp),
         onClick = { onCollectionClicked(collection.id, collection.title) },
@@ -152,7 +154,7 @@ private fun LazyGridItemScope.CollectionCard(
         ConstraintLayout {
             val (count, title) = createRefs()
 
-            val primaryColor = MaterialTheme.colorScheme.secondary
+            val secondaryColor = MaterialTheme.colorScheme.secondary
             Text(
                 modifier = Modifier
                     .padding(vertical = 8.dp)
@@ -161,7 +163,7 @@ private fun LazyGridItemScope.CollectionCard(
                         drawContent()
                         drawPath(
                             path = drawCustomHexagonPath(size),
-                            color = primaryColor,
+                            color = secondaryColor,
                             style = Stroke(
                                 width = 10.dp.toPx(),
                                 pathEffect = PathEffect.cornerPathEffect(8f)
@@ -169,7 +171,7 @@ private fun LazyGridItemScope.CollectionCard(
                         )
                     }
                     .background(
-                        color = primaryColor,
+                        color = secondaryColor,
                         shape = HexagonShape
                     )
                     .padding(12.dp)
