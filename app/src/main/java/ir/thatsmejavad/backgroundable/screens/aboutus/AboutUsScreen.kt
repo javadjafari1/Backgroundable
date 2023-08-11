@@ -1,5 +1,6 @@
 package ir.thatsmejavad.backgroundable.screens.aboutus
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -37,6 +39,8 @@ import ir.thatsmejavad.backgroundable.BuildConfig
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.HexagonShape
 import ir.thatsmejavad.backgroundable.common.ui.drawCustomHexagonPath
+import ir.thatsmejavad.backgroundable.core.composeMail
+import ir.thatsmejavad.backgroundable.core.openUrl
 import ir.thatsmejavad.backgroundable.model.Contributor
 import ir.thatsmejavad.backgroundable.model.ContributorLink
 
@@ -45,6 +49,8 @@ import ir.thatsmejavad.backgroundable.model.ContributorLink
 fun AboutUsScreen(
     onBackClicked: () -> Unit
 ) {
+    val context = LocalContext.current
+
     Scaffold(
         topBar = {
             MediumTopAppBar(
@@ -76,9 +82,15 @@ fun AboutUsScreen(
             BackgroundableAbout()
 
             contributors.forEach { contributor ->
-                ContributorItem(contributor) {
-
-                }
+                ContributorItem(
+                    contributor = contributor,
+                    openEmail = { mail ->
+                        context.composeMail(mail)
+                    },
+                    openUrl = { url ->
+                        context.openUrl(url)
+                    }
+                )
             }
         }
     }
@@ -87,7 +99,8 @@ fun AboutUsScreen(
 @Composable
 private fun ContributorItem(
     contributor: Contributor,
-    openUrl: (String) -> Unit
+    openUrl: (String) -> Unit,
+    openEmail: (String) -> Unit,
 ) {
     Box(
         modifier = Modifier.fillMaxWidth(),
@@ -126,12 +139,19 @@ private fun ContributorItem(
             ) {
                 contributor.links.forEach { link ->
                     IconButton(
-                        modifier = Modifier.size(32.dp),
-                        onClick = { openUrl(link.url) },
+                        modifier = Modifier
+                            .size(54.dp),
+                        onClick = {
+                            if (link.name == "mail") {
+                                openEmail(link.url)
+                            } else {
+                                openUrl(link.url)
+                            }
+                        },
                     ) {
                         Icon(
                             painter = painterResource(link.icon),
-                            contentDescription = link.name,
+                            contentDescription = "${contributor.name}'s ${link.name}",
                             tint = MaterialTheme.colorScheme.surfaceTint
                         )
 
@@ -142,7 +162,7 @@ private fun ContributorItem(
             Spacer(modifier = Modifier.size(40.dp))
         }
 
-        Icon(
+        Image(
             modifier = Modifier
                 .padding(top = 10.dp)
                 .size(100.dp)
@@ -150,7 +170,6 @@ private fun ContributorItem(
                 .clip(CircleShape),
             painter = painterResource(contributor.image),
             contentDescription = "${contributor.name}'s image",
-            tint = MaterialTheme.colorScheme.primaryContainer
         )
     }
 }
@@ -231,7 +250,7 @@ val contributors = listOf(
     Contributor(
         name = "Javad Jafari",
         position = "Android Developer",
-        image = R.drawable.ic_grid,
+        image = R.drawable.jai_photo,
         links = listOf(
             ContributorLink(
                 icon = R.drawable.ic_linkedin,
@@ -246,14 +265,14 @@ val contributors = listOf(
             ContributorLink(
                 icon = R.drawable.ic_mail,
                 url = "javad2147@yahoo.com",
-                name = "Mail"
+                name = "mail"
             ),
         )
     ),
     Contributor(
         name = "Mohammad Ghasemi",
         position = "UI/UX Designer",
-        image = R.drawable.ic_language,
+        image = R.drawable.mmd_photo,
         links = listOf(
             ContributorLink(
                 icon = R.drawable.ic_linkedin,
@@ -262,13 +281,13 @@ val contributors = listOf(
             ),
             ContributorLink(
                 icon = R.drawable.ic_mail,
-                url = "github",
+                url = "Mohammadghasemi.de@gmail.com",
                 name = "mail"
             ),
             ContributorLink(
                 icon = R.drawable.ic_dribble,
-                url = "github",
-                name = "mail"
+                url = "https://dribbble.com/MohammadGhasemi-de",
+                name = "dribble"
             ),
         )
     )
