@@ -1,10 +1,13 @@
 package ir.thatsmejavad.backgroundable.core
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.Color
 import androidx.core.content.FileProvider
 import ir.thatsmejavad.backgroundable.R
@@ -96,6 +99,43 @@ fun Bitmap.saveIn(
         compress(Bitmap.CompressFormat.JPEG, 100, it)
     }
     return tempFile
+}
+
+fun Context.openUrl(url: String) {
+    try {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+    } catch (e: ActivityNotFoundException) {
+        toast(R.string.label_no_app_found_to_handle_this_request)
+    }
+}
+
+fun Context.composeMail(
+    recipientMail: String,
+    subject: String = "",
+    message: String = "",
+) {
+    try {
+        val selectorIntent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:")
+        }
+        val emailIntent = Intent(Intent.ACTION_SEND).apply {
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(recipientMail))
+            putExtra(Intent.EXTRA_SUBJECT, subject)
+            putExtra(Intent.EXTRA_TEXT, message)
+            selector = selectorIntent
+        }
+        startActivity(emailIntent)
+    } catch (e: ActivityNotFoundException) {
+        toast(R.string.label_no_app_found_to_handle_this_request)
+    }
+}
+
+fun Context.toast(message: String, duration: Int = Toast.LENGTH_LONG) {
+    Toast.makeText(this, message, duration).show()
+}
+
+fun Context.toast(@StringRes stringRes: Int, duration: Int = Toast.LENGTH_LONG) {
+    Toast.makeText(this, stringRes, duration).show()
 }
 
 fun String.capitalizeFirstChar(): String {

@@ -30,7 +30,6 @@ val error40 = Color(0xFFBA1A1A)
 val error80 = Color(0xFFFFB4AB)
 val error90 = Color(0xFFFFDAD6)
 
-
 val neutral04 = Color(0xFF0B0F0F)
 val neutral06 = Color(0xFF101414)
 val neutral10 = Color(0xFF191C1C)

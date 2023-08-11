@@ -40,4 +40,8 @@ internal sealed class AppScreens(val route: String) {
             return "download-picker?id:$id"
         }
     }
+
+    object AboutUs : AppScreens(
+        "about-us"
+    )
 }

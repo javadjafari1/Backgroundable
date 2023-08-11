@@ -26,4 +26,6 @@
     <string name="label_light">Light</string>
     <string name="label_download_wallpaper">Download Wallpaper</string>
     <string name="label_download_is_about_to_begin">Your image download is about to begin.</string>
+    <string name="label_pexels">Powered by Pexels Api</string>
+    <string name="label_no_app_found_to_handle_this_request">No App Found To Handle This Request!</string>
 </resources>
