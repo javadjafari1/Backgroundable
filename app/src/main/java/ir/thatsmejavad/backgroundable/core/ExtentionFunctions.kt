@@ -14,6 +14,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import java.util.Locale
 
 fun Throwable.getErrorMessage(): Any {
     return when (this) {
@@ -95,4 +96,14 @@ fun Bitmap.saveIn(
         compress(Bitmap.CompressFormat.JPEG, 100, it)
     }
     return tempFile
+}
+
+fun String.capitalizeFirstChar(): String {
+    return replaceFirstChar { firstChar ->
+        if (firstChar.isLowerCase()) {
+            firstChar.titlecase(Locale.getDefault())
+        } else {
+            firstChar.toString()
+        }
+    }
 }

@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob
-import ir.thatsmejavad.backgroundable.core.sealeds.RotationMode
+import ir.thatsmejavad.backgroundable.core.sealeds.OrientationMode
 
 @Composable
 fun DownloadPickerScreen(
@@ -32,7 +32,7 @@ fun DownloadPickerScreen(
 
     if (mediaResult is AsyncJob.Success) {
         val mediaMap = remember {
-            (mediaResult as AsyncJob.Success).value.resources.groupBy { it.size is RotationMode }
+            (mediaResult as AsyncJob.Success).value.resources.groupBy { it.size is OrientationMode }
         }
         LazyColumn {
             item {
@@ -47,7 +47,7 @@ fun DownloadPickerScreen(
                 )
             }
             item {
-                Divider()
+                HorizontalDivider()
             }
             mediaMap[false]?.let { resources ->
                 items(resources) { resourceEntity ->
@@ -66,7 +66,7 @@ fun DownloadPickerScreen(
                 }
             }
             item {
-                Divider()
+                HorizontalDivider()
             }
             mediaMap[true]?.let { resources ->
                 items(resources) { resourceEntity ->

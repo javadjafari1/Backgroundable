@@ -8,6 +8,8 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,8 +20,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -42,18 +48,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.CircularLoading
 import ir.thatsmejavad.backgroundable.common.ui.ZoomableCoilImage
+import ir.thatsmejavad.backgroundable.core.capitalizeFirstChar
 import ir.thatsmejavad.backgroundable.core.getStringMessage
 import ir.thatsmejavad.backgroundable.core.getUri
 import ir.thatsmejavad.backgroundable.core.saveIn
 import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob
+import ir.thatsmejavad.backgroundable.core.sealeds.OrientationMode
 import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
 import ir.thatsmejavad.backgroundable.core.setWallpaperWithImage
 import kotlinx.coroutines.Dispatchers
@@ -74,6 +86,7 @@ fun MediaDetailScreen(
 
     var isToolsVisible by rememberSaveable { mutableStateOf(true) }
     var isImageLoading by rememberSaveable { mutableStateOf(false) }
+    var isDetailDialogShowing by rememberSaveable { mutableStateOf(false) }
 
     BackgroundableScaffold(
         snackbarManager = viewModel.snackbarManager,
@@ -99,6 +112,14 @@ fun MediaDetailScreen(
                             )
                         }
                     },
+                    actions = {
+                        IconButton(onClick = { isDetailDialogShowing = true }) {
+                            Icon(
+                                imageVector = Icons.Outlined.Info,
+                                contentDescription = "info"
+                            )
+                        }
+                    }
                 )
             }
         },
@@ -122,6 +143,18 @@ fun MediaDetailScreen(
                 val mediaWithResources = (mediaResult as AsyncJob.Success).value
                 var drawable by remember { mutableStateOf<Drawable?>(null) }
                 val scope = rememberCoroutineScope()
+
+                if (isDetailDialogShowing) {
+                    DetailDialog(
+                        onDismiss = { isDetailDialogShowing = false },
+                        width = mediaWithResources.media.width,
+                        height = mediaWithResources.media.height,
+                        alt = mediaWithResources.media.alt,
+                        avgColor = mediaWithResources.media.avgColor,
+                        photographer = mediaWithResources.media.photographer,
+                        sizes = mediaWithResources.resources.map { it.size }
+                    )
+                }
 
                 Column(
                     modifier = Modifier
@@ -203,3 +236,119 @@ fun MediaDetailScreen(
         }
     }
 }
+
+@Composable
+private fun DetailDialog(
+    alt: String,
+    width: Int,
+    height: Int,
+    avgColor: String,
+    photographer: String,
+    sizes: List<ResourceSize>,
+    onDismiss: () -> Unit,
+) {
+    Dialog(onDismissRequest = onDismiss) {
+        Column(
+            Modifier
+                .background(
+                    color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                    shape = MaterialTheme.shapes.large
+                )
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            val wallpaperText = buildAnnotatedString {
+                append("Wallpaper: ")
+                addStyle(SpanStyle(fontSize = 22.sp), start = 0, end = 9)
+                append(alt)
+                addStyle(SpanStyle(fontSize = 16.sp), start = 9, end = alt.length + 9)
+            }
+            Text(text = wallpaperText)
+
+            val photographerText = buildAnnotatedString {
+                append("Photographer: ")
+                addStyle(SpanStyle(fontSize = 22.sp), start = 0, end = 12)
+                append(photographer)
+                addStyle(SpanStyle(fontSize = 16.sp), start = 12, end = photographer.length + 12)
+            }
+            Text(text = photographerText)
+
+            val mailColorText = buildAnnotatedString {
+                append("Main Color: ")
+                addStyle(SpanStyle(fontSize = 22.sp), start = 0, end = 11)
+                append(avgColor)
+                addStyle(SpanStyle(fontSize = 16.sp), start = 11, end = avgColor.length + 11)
+            }
+            Text(text = mailColorText)
+
+            val widthText = buildAnnotatedString {
+                append("Width: ")
+                addStyle(SpanStyle(fontSize = 22.sp), start = 0, end = 5)
+                append(width.toString())
+                addStyle(
+                    SpanStyle(fontSize = 16.sp),
+                    start = 5,
+                    end = width.toString().length + 5
+                )
+            }
+            Text(text = widthText)
+
+            val heightText = buildAnnotatedString {
+                append("Height: ")
+                addStyle(SpanStyle(fontSize = 22.sp), start = 0, end = 6)
+                append(height.toString())
+                addStyle(
+                    SpanStyle(fontSize = 16.sp),
+                    start = 6,
+                    end = height.toString().length + 6
+                )
+            }
+            Text(text = heightText)
+
+            val sizesString = remember(sizes) {
+                sizes
+                    .filter { it !is OrientationMode }
+                    .joinToString(", ") { it.size.capitalizeFirstChar() }
+            }
+
+            val sizesText = buildAnnotatedString {
+                append("Sizes: ")
+                addStyle(SpanStyle(fontSize = 22.sp), start = 0, end = 5)
+                append(sizesString)
+                addStyle(
+                    SpanStyle(fontSize = 16.sp),
+                    start = 5,
+                    end = sizesString.length + 5
+                )
+            }
+            Text(text = sizesText)
+
+            val orientationString = remember(sizes) {
+                sizes
+                    .filter { it is OrientationMode }
+                    .joinToString(", ") { it.size.capitalizeFirstChar() }
+            }
+
+            val orientationText = buildAnnotatedString {
+                append("Orientation: ")
+                addStyle(SpanStyle(fontSize = 22.sp), start = 0, end = 11)
+                append(orientationString)
+                addStyle(
+                    SpanStyle(fontSize = 16.sp),
+                    start = 11,
+                    end = orientationString.length + 11
+                )
+            }
+            Text(text = orientationText)
+
+            Button(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                onClick = onDismiss,
+            ) {
+                Text(text = "Ok")
+            }
+        }
+    }
+}
+

@@ -1,3 +1,3 @@
 package ir.thatsmejavad.backgroundable.core.sealeds
 
-sealed interface RotationMode
+sealed interface OrientationMode
