@@ -28,7 +28,7 @@ Explore the app's design and mockups on Figma by following this link: [Figma Des
 
 Backgroundable is powered by the Pexels API, which provides a vast collection of high-quality images for use in the app. According to the Pexels API, thousands of new images are added every day, ensuring a constantly growing selection for our users.
 
-![Pexels Logo](pexels_logo.png)
+![Pexels Logo](resource/pexels.svg)
 
 ## Download
 
