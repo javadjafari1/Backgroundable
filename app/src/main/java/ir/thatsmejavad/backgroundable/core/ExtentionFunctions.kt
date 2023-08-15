@@ -1,6 +1,5 @@
 package ir.thatsmejavad.backgroundable.core
 
-import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -17,6 +16,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import java.util.Locale
 
 fun Throwable.getErrorMessage(): Any {
     return when (this) {
@@ -67,15 +67,15 @@ fun String.toColor(): Color {
     )
 }
 
-fun Activity.setWallpaperWithImage(uri: Uri, onError: (Throwable) -> Unit) {
+fun Uri.setAsWallpaper(context: Context, onError: (Throwable) -> Unit) {
     runCatching {
         val intent = Intent(Intent.ACTION_ATTACH_DATA)
-        intent.setDataAndType(uri, "image/*")
+        intent.setDataAndType(this, "image/*")
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         intent.putExtra("mimeType", "image/*")
-        intent.putExtra(Intent.EXTRA_STREAM, uri)
+        intent.putExtra(Intent.EXTRA_STREAM, this)
 
-        startActivity(intent)
+        context.startActivity(intent)
     }.getOrElse {
         onError(it)
     }
@@ -135,4 +135,14 @@ fun Context.toast(message: String, duration: Int = Toast.LENGTH_LONG) {
 
 fun Context.toast(@StringRes stringRes: Int, duration: Int = Toast.LENGTH_LONG) {
     Toast.makeText(this, stringRes, duration).show()
+}
+
+fun String.capitalizeFirstChar(): String {
+    return replaceFirstChar { firstChar ->
+        if (firstChar.isLowerCase()) {
+            firstChar.titlecase(Locale.getDefault())
+        } else {
+            firstChar.toString()
+        }
+    }
 }

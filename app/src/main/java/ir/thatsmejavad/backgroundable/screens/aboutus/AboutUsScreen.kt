@@ -154,7 +154,6 @@ private fun ContributorItem(
                             contentDescription = "${contributor.name}'s ${link.name}",
                             tint = MaterialTheme.colorScheme.surfaceTint
                         )
-
                     }
                 }
             }
@@ -214,7 +213,6 @@ private fun BackgroundableAbout() {
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurface,
             )
-
         }
 
         val primaryColor = MaterialTheme.colorScheme.primary
@@ -244,7 +242,6 @@ private fun BackgroundableAbout() {
         )
     }
 }
-
 
 val contributors = listOf(
     Contributor(
