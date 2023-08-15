@@ -1,6 +1,5 @@
 package ir.thatsmejavad.backgroundable.core
 
-import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -68,15 +67,15 @@ fun String.toColor(): Color {
     )
 }
 
-fun Activity.setWallpaperWithImage(uri: Uri, onError: (Throwable) -> Unit) {
+fun Uri.setAsWallpaper(context: Context, onError: (Throwable) -> Unit) {
     runCatching {
         val intent = Intent(Intent.ACTION_ATTACH_DATA)
-        intent.setDataAndType(uri, "image/*")
+        intent.setDataAndType(this, "image/*")
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         intent.putExtra("mimeType", "image/*")
-        intent.putExtra(Intent.EXTRA_STREAM, uri)
+        intent.putExtra(Intent.EXTRA_STREAM, this)
 
-        startActivity(intent)
+        context.startActivity(intent)
     }.getOrElse {
         onError(it)
     }

@@ -1,6 +1,5 @@
 package ir.thatsmejavad.backgroundable.screens.mediadetail
 
-import android.app.Activity
 import android.graphics.drawable.Drawable
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
@@ -21,6 +20,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -49,7 +49,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -63,11 +65,13 @@ import ir.thatsmejavad.backgroundable.common.ui.ZoomableCoilImage
 import ir.thatsmejavad.backgroundable.core.capitalizeFirstChar
 import ir.thatsmejavad.backgroundable.core.getStringMessage
 import ir.thatsmejavad.backgroundable.core.getUri
+import ir.thatsmejavad.backgroundable.core.openUrl
 import ir.thatsmejavad.backgroundable.core.saveIn
 import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob
 import ir.thatsmejavad.backgroundable.core.sealeds.OrientationMode
 import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
-import ir.thatsmejavad.backgroundable.core.setWallpaperWithImage
+import ir.thatsmejavad.backgroundable.core.setAsWallpaper
+import ir.thatsmejavad.backgroundable.core.toast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -152,7 +156,10 @@ fun MediaDetailScreen(
                         alt = mediaWithResources.media.alt,
                         avgColor = mediaWithResources.media.avgColor,
                         photographer = mediaWithResources.media.photographer,
-                        sizes = mediaWithResources.resources.map { it.size }
+                        sizes = mediaWithResources.resources.map { it.size },
+                        openPhotographerLink = {
+                            context.openUrl(mediaWithResources.media.photographerUrl)
+                        }
                     )
                 }
 
@@ -192,9 +199,11 @@ fun MediaDetailScreen(
                                                         .toBitmap()
                                                         .saveIn(context.cacheDir)
                                                         .getUri(context)
-                                                    (context as Activity).setWallpaperWithImage(
-                                                        uri = uri,
-                                                        onError = {}
+                                                    uri.setAsWallpaper(
+                                                        context = context,
+                                                        onError = {
+                                                            context.toast(R.string.label_no_app_found_to_handle_this_request)
+                                                        }
                                                     )
                                                 }
                                         }
@@ -246,6 +255,7 @@ private fun DetailDialog(
     photographer: String,
     sizes: List<ResourceSize>,
     onDismiss: () -> Unit,
+    openPhotographerLink: () -> Unit
 ) {
     Dialog(onDismissRequest = onDismiss) {
         Column(
@@ -270,9 +280,35 @@ private fun DetailDialog(
                 append("Photographer: ")
                 addStyle(SpanStyle(fontSize = 22.sp), start = 0, end = 12)
                 append(photographer)
-                addStyle(SpanStyle(fontSize = 16.sp), start = 12, end = photographer.length + 12)
+                addStyle(
+                    style = SpanStyle(
+                        textDecoration = TextDecoration.Underline,
+                        fontSize = 16.sp,
+                        color = MaterialTheme.colorScheme.primary
+                    ),
+                    start = 14,
+                    end = photographer.length + 14
+                )
+                addStringAnnotation(
+                    tag = "Name",
+                    start = 12,
+                    end = photographer.length + 12,
+                    annotation = "Link"
+                )
             }
-            Text(text = photographerText)
+            ClickableText(
+                text = photographerText,
+                onClick = { offset ->
+                    photographerText.getStringAnnotations(
+                        start = offset,
+                        end = offset,
+                        tag = "Name"
+                    ).firstOrNull()?.let { _ ->
+                        openPhotographerLink()
+                    }
+                },
+                style = TextStyle(color = MaterialTheme.colorScheme.onSurface)
+            )
 
             val mailColorText = buildAnnotatedString {
                 append("Main Color: ")
@@ -346,7 +382,7 @@ private fun DetailDialog(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 onClick = onDismiss,
             ) {
-                Text(text = "Ok")
+                Text(text = stringResource(R.string.label_ok))
             }
         }
     }
