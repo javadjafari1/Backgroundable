@@ -14,16 +14,17 @@ import ir.thatsmejavad.backgroundable.core.SnackbarManager
 import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelAssistedFactory
 import ir.thatsmejavad.backgroundable.data.repository.MediaRepository
 import ir.thatsmejavad.backgroundable.model.media.Media
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import kotlin.time.Duration.Companion.seconds
 
+@OptIn(FlowPreview::class)
 class SearchViewModel @AssistedInject constructor(
     val snackbarManager: SnackbarManager,
     private val mediaRepository: MediaRepository,
@@ -51,12 +52,13 @@ class SearchViewModel @AssistedInject constructor(
 
     init {
         viewModelScope.launch {
-            _searchQuery.collectLatest {
-                delay(1.seconds)
-                if (it.length > 3) {
-                    search()
+            _searchQuery
+                .debounce(1000)
+                .collectLatest {
+                    if (it.length >= 3) {
+                        search()
+                    }
                 }
-            }
         }
     }
 

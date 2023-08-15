@@ -24,7 +24,7 @@ fun CoilImage(
         modifier = modifier,
         model = ImageRequest.Builder(LocalContext.current)
             .data(url)
-            .crossfade(true)
+            .crossfade(500)
             .build(),
         placeholder = placeHolder,
         contentDescription = contentDescription ?: "a server image without content description",
