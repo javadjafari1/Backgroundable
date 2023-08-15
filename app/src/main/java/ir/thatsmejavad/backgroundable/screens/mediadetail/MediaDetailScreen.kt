@@ -202,7 +202,9 @@ fun MediaDetailScreen(
                                                     uri.setAsWallpaper(
                                                         context = context,
                                                         onError = {
-                                                            context.toast(R.string.label_no_app_found_to_handle_this_request)
+                                                            context.toast(
+                                                                R.string.label_no_app_found_to_handle_this_request
+                                                            )
                                                         }
                                                     )
                                                 }
@@ -269,16 +271,32 @@ private fun DetailDialog(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             val wallpaperText = buildAnnotatedString {
-                append("Wallpaper: ")
-                addStyle(SpanStyle(fontSize = 22.sp), start = 0, end = 9)
+                val text = stringResource(R.string.label_wallpaper)
+                append(text)
+                addStyle(
+                    style = SpanStyle(fontSize = 22.sp),
+                    start = 0,
+                    end = text.length
+                )
+
                 append(alt)
-                addStyle(SpanStyle(fontSize = 16.sp), start = 9, end = alt.length + 9)
+                addStyle(
+                    style = SpanStyle(fontSize = 16.sp),
+                    start = text.length,
+                    end = alt.length + text.length
+                )
             }
             Text(text = wallpaperText)
 
             val photographerText = buildAnnotatedString {
-                append("Photographer: ")
-                addStyle(SpanStyle(fontSize = 22.sp), start = 0, end = 12)
+                val text = stringResource(R.string.label_photographer)
+                append(text)
+                addStyle(
+                    style = SpanStyle(fontSize = 22.sp),
+                    start = 0,
+                    end = text.length
+                )
+
                 append(photographer)
                 addStyle(
                     style = SpanStyle(
@@ -286,13 +304,13 @@ private fun DetailDialog(
                         fontSize = 16.sp,
                         color = MaterialTheme.colorScheme.primary
                     ),
-                    start = 14,
-                    end = photographer.length + 14
+                    start = text.length,
+                    end = photographer.length + text.length
                 )
                 addStringAnnotation(
                     tag = "Name",
                     start = 12,
-                    end = photographer.length + 12,
+                    end = photographer.length + text.length,
                     annotation = "Link"
                 )
             }
@@ -311,33 +329,55 @@ private fun DetailDialog(
             )
 
             val mailColorText = buildAnnotatedString {
-                append("Main Color: ")
-                addStyle(SpanStyle(fontSize = 22.sp), start = 0, end = 11)
+                val text = stringResource(R.string.label_main_color)
+                append(text)
+                addStyle(
+                    style = SpanStyle(fontSize = 22.sp),
+                    start = 0,
+                    end = text.length
+                )
+
                 append(avgColor)
-                addStyle(SpanStyle(fontSize = 16.sp), start = 11, end = avgColor.length + 11)
+                addStyle(
+                    style = SpanStyle(fontSize = 16.sp),
+                    start = text.length,
+                    end = avgColor.length + text.length
+                )
             }
             Text(text = mailColorText)
 
             val widthText = buildAnnotatedString {
-                append("Width: ")
-                addStyle(SpanStyle(fontSize = 22.sp), start = 0, end = 5)
+                val text = stringResource(R.string.label_width)
+                append(text)
+                addStyle(
+                    style = SpanStyle(fontSize = 22.sp),
+                    start = 0,
+                    end = text.length
+                )
+
                 append(width.toString())
                 addStyle(
-                    SpanStyle(fontSize = 16.sp),
-                    start = 5,
-                    end = width.toString().length + 5
+                    style = SpanStyle(fontSize = 16.sp),
+                    start = text.length,
+                    end = width.toString().length + text.length
                 )
             }
             Text(text = widthText)
 
             val heightText = buildAnnotatedString {
-                append("Height: ")
-                addStyle(SpanStyle(fontSize = 22.sp), start = 0, end = 6)
+                val text = stringResource(R.string.label_height)
+                append(text)
+                addStyle(
+                    style = SpanStyle(fontSize = 22.sp),
+                    start = 0,
+                    end = text.length
+                )
+
                 append(height.toString())
                 addStyle(
-                    SpanStyle(fontSize = 16.sp),
-                    start = 6,
-                    end = height.toString().length + 6
+                    style = SpanStyle(fontSize = 16.sp),
+                    start = text.length,
+                    end = height.toString().length + text.length
                 )
             }
             Text(text = heightText)
@@ -349,13 +389,19 @@ private fun DetailDialog(
             }
 
             val sizesText = buildAnnotatedString {
-                append("Sizes: ")
-                addStyle(SpanStyle(fontSize = 22.sp), start = 0, end = 5)
+                val text = stringResource(R.string.label_sizes)
+                append(text)
+                addStyle(
+                    style = SpanStyle(fontSize = 22.sp),
+                    start = 0,
+                    end = text.length
+                )
+
                 append(sizesString)
                 addStyle(
                     SpanStyle(fontSize = 16.sp),
-                    start = 5,
-                    end = sizesString.length + 5
+                    start = text.length,
+                    end = sizesString.length + text.length
                 )
             }
             Text(text = sizesText)
@@ -367,13 +413,18 @@ private fun DetailDialog(
             }
 
             val orientationText = buildAnnotatedString {
-                append("Orientation: ")
-                addStyle(SpanStyle(fontSize = 22.sp), start = 0, end = 11)
+                val text = stringResource(R.string.label_orientation)
+                append(text)
+                addStyle(
+                    style = SpanStyle(fontSize = 22.sp),
+                    start = 0,
+                    end = text.length
+                )
                 append(orientationString)
                 addStyle(
                     SpanStyle(fontSize = 16.sp),
-                    start = 11,
-                    end = orientationString.length + 11
+                    start = text.length,
+                    end = orientationString.length + text.length
                 )
             }
             Text(text = orientationText)
