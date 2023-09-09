@@ -75,7 +75,7 @@ android {
             isShrinkResources = true
             isDebuggable = false
             if (securityPropertiesExist && keyStoreFileExist) {
-                signingConfig = signingConfigs.getByName("release")
+                signingConfig = signingConfigs["release"]
             }
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -140,11 +140,11 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.7.2")
     implementation("androidx.navigation:navigation-compose:2.7.2")
 
-    val composeUi = "1.6.0-alpha05"
+    val composeUi = "1.5.1"
     implementation("androidx.compose.ui:ui:$composeUi")
     implementation("androidx.compose.ui:ui-graphics:$composeUi")
     implementation("androidx.compose.ui:ui-tooling-preview:$composeUi")
-    implementation("androidx.compose.material3:material3:1.2.0-alpha07")
+    implementation("androidx.compose.material3:material3:1.2.0-alpha04")
 
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
 
@@ -156,7 +156,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
 
-    implementation("androidx.paging:paging-common-ktx:3.2.0")
+    implementation("androidx.paging:paging-common-ktx:3.2.1")
     implementation("com.google.dagger:dagger:2.47")
     kapt("com.google.dagger:dagger-compiler:2.47")
 
@@ -168,7 +168,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-    val paging = "3.2.0"
+    val paging = "3.2.1"
     implementation("androidx.paging:paging-runtime-ktx:$paging")
     implementation("androidx.paging:paging-common-ktx:$paging")
     implementation("androidx.paging:paging-compose:$paging")
