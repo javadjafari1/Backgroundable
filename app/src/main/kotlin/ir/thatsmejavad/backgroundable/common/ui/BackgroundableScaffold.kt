@@ -27,7 +27,6 @@ fun BackgroundableScaffold(
     contentWindowInsets: WindowInsets = ScaffoldDefaults.contentWindowInsets,
     content: @Composable (PaddingValues) -> Unit,
 ) {
-
     Scaffold(
         modifier = modifier,
         topBar = topBar,

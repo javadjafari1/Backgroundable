@@ -184,7 +184,7 @@ dependencies {
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:3.5.2")
 
     implementation("me.saket.telephoto:zoomable-image-coil:0.4.0")
-    implementation("androidx.compose.material:material:1.4.3") {
+    implementation("androidx.compose.material:material:1.5.1") {
         because("just for the swipe refresh")
     }
 

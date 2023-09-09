@@ -10,7 +10,10 @@ import javax.inject.Singleton
 @Singleton
 class SnackbarManager @Inject constructor() {
 
-    private val channel = Channel<SnackbarMessage>(capacity = 5, BufferOverflow.DROP_OLDEST)
+    private val channel = Channel<SnackbarMessage>(
+        capacity = 5,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
 
     val messageSharedFlow: Flow<SnackbarMessage> = channel.receiveAsFlow()
 

@@ -44,7 +44,7 @@ fun BoxWithSwipeRefresh(
             modifier = Modifier.align(Alignment.TopCenter),
             scale = true,
             backgroundColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
         )
     }
 }

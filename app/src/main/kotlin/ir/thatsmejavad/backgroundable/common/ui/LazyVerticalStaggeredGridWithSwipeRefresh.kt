@@ -1,6 +1,5 @@
 package ir.thatsmejavad.backgroundable.common.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,7 +26,6 @@ import androidx.paging.compose.LazyPagingItems
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.core.getStringMessage
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun <T : Any> LazyVerticalStaggeredGridWithSwipeRefresh(
     columns: StaggeredGridCells,

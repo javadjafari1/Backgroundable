@@ -7,6 +7,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun BoxScope.CircularLoading() {
-    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+fun BoxScope.CircularLoading(modifier: Modifier = Modifier) {
+    CircularProgressIndicator(modifier = modifier.align(Alignment.Center))
 }
