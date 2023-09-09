@@ -11,7 +11,9 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -96,7 +98,7 @@ class MainActivity : ComponentActivity() {
                         Theme.FollowSystem -> isSystemInDarkTheme()
                         Theme.DarkTheme -> true
                         Theme.LightTheme -> false
-                    }
+                    },
                 ) {
                     BackgroundableApp()
                 }
@@ -143,45 +145,44 @@ private fun BackgroundableApp() {
          * we have to add bottom bar like this, and not in Scaffold because
          * in scaffold we can't add animation for showing and hiding the bottomBar
          * */
-        Box(modifier = Modifier.align(Alignment.BottomCenter)) {
-            AnimatedVisibility(
-                visible = isMainScreen(navController.currentBackStackEntryAsState().value?.destination?.route),
-                enter = slideInVertically { it },
-                exit = slideOutVertically { it },
-            ) {
-                BackgroundableNavigationBar(
-                    selectedNavigationBarItem = when (navController.currentDestination?.route) {
-                        AppScreens.Search.route -> SEARCH
-                        AppScreens.Settings.route -> SETTING
-                        else -> HOME
-                    },
-                    navigationBarDestinations = NavigationBarDestinations.entries,
-                    onItemSelected = { destinations ->
-                        navController.navigate(destinations.route) {
-                            launchSingleTop = true
-                            restoreState = true
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
+        val backStackEntry by navController.currentBackStackEntryAsState()
+        AnimatedVisibility(
+            modifier = Modifier.align(Alignment.BottomCenter),
+            visible = backStackEntry?.destination?.route in NavigationBarDestinations.entries.map { it.route },
+            enter = slideInVertically { it },
+            exit = slideOutVertically { it },
+        ) {
+            BackgroundableNavigationBar(
+                selectedItem = when (navController.currentDestination?.route) {
+                    AppScreens.Search.route -> SEARCH
+                    AppScreens.Settings.route -> SETTING
+                    else -> HOME
+                },
+                onItemSelected = { destinations ->
+                    navController.navigate(destinations.route) {
+                        launchSingleTop = true
+                        restoreState = true
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
                         }
                     }
-                )
-            }
+                }
+            )
         }
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun BackgroundableNavigationBar(
-    selectedNavigationBarItem: NavigationBarDestinations,
-    navigationBarDestinations: List<NavigationBarDestinations>,
+    selectedItem: NavigationBarDestinations,
     onItemSelected: (NavigationBarDestinations) -> Unit,
 ) {
     NavigationBar(
         modifier = Modifier.height(NAVIGATION_BAR_HEIGHT),
         containerColor = MaterialTheme.colorScheme.surfaceBright,
     ) {
-        navigationBarDestinations.forEach { destination ->
+        NavigationBarDestinations.entries.forEach { destination ->
             NavigationBarItem(
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = MaterialTheme.colorScheme.onSecondaryContainer,
@@ -189,12 +190,12 @@ private fun BackgroundableNavigationBar(
                     selectedTextColor = MaterialTheme.colorScheme.onSurface,
                     indicatorColor = MaterialTheme.colorScheme.secondaryContainer
                 ),
-                selected = destination == selectedNavigationBarItem,
+                selected = destination == selectedItem,
                 onClick = { onItemSelected(destination) },
                 alwaysShowLabel = false,
                 icon = {
                     Crossfade(
-                        targetState = selectedNavigationBarItem == destination,
+                        targetState = selectedItem == destination,
                         label = "navigation items animation"
                     ) { isSelected ->
                         Icon(
@@ -209,16 +210,13 @@ private fun BackgroundableNavigationBar(
                 },
                 label = {
                     Text(
+                        modifier = Modifier.basicMarquee(),
                         text = stringResource(destination.text),
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodySmall,
+                        maxLines = 1
                     )
                 },
             )
         }
     }
 }
-
-private fun isMainScreen(route: String?): Boolean =
-    route == AppScreens.CollectionList.route ||
-        route == AppScreens.Search.route ||
-        route == AppScreens.Settings.route
