@@ -1,23 +1,23 @@
 package ir.thatsmejavad.backgroundable.core
 
 internal sealed class AppScreens(val route: String) {
-    object CollectionList : AppScreens("collection-list")
+    data object CollectionList : AppScreens("collection-list")
 
-    object Search : AppScreens("search")
+    data object Search : AppScreens("search")
 
-    object MediaList : AppScreens("media-list?id={id}&title={title}") {
+    data object MediaList : AppScreens("media-list?id={id}&title={title}") {
         fun createRoute(id: String, title: String): String {
             return "media-list?id=$id&title=$title"
         }
     }
 
-    object MediaDetail : AppScreens("media-detail?id={id}&title={title}") {
+    data object MediaDetail : AppScreens("media-detail?id={id}&title={title}") {
         fun createRoute(id: Int, title: String): String {
             return "media-detail?id=$id&title=$title"
         }
     }
 
-    object ColumnCountPicker : AppScreens(
+    data object ColumnCountPicker : AppScreens(
         "column-count-picker?items={items}?selectedItem={selectedItem}"
     ) {
         fun createRoute(items: String, selectedItem: Int): String {
@@ -25,15 +25,15 @@ internal sealed class AppScreens(val route: String) {
         }
     }
 
-    object Settings : AppScreens(
+    data object Settings : AppScreens(
         "settings"
     )
 
-    object ThemeSetting : AppScreens(
+    data object ThemeSetting : AppScreens(
         "theme-settings"
     )
 
-    object DownloadPicker : AppScreens(
+    data object DownloadPicker : AppScreens(
         "download-picker?id:{id}"
     ) {
         fun createRoute(id: Int): String {
@@ -41,7 +41,7 @@ internal sealed class AppScreens(val route: String) {
         }
     }
 
-    object AboutUs : AppScreens(
+    data object AboutUs : AppScreens(
         "about-us"
     )
 }

@@ -1,14 +1,14 @@
 package ir.thatsmejavad.backgroundable.core.sealeds
 
 sealed class ResourceSize(val size: String) {
-    object Original : ResourceSize("original")
-    object Large2x : ResourceSize("large2x")
-    object Large : ResourceSize("large")
-    object Medium : ResourceSize("medium")
-    object Small : ResourceSize("small")
-    object Portrait : ResourceSize("portrait"), OrientationMode
-    object Landscape : ResourceSize("landscape"), OrientationMode
-    object Tiny : ResourceSize("tiny")
+    data object Original : ResourceSize("original")
+    data object Large2x : ResourceSize("large2x")
+    data object Large : ResourceSize("large")
+    data object Medium : ResourceSize("medium")
+    data object Small : ResourceSize("small")
+    data object Portrait : ResourceSize("portrait"), OrientationMode
+    data object Landscape : ResourceSize("landscape"), OrientationMode
+    data object Tiny : ResourceSize("tiny")
 
     companion object {
         fun fromString(size: String): ResourceSize {

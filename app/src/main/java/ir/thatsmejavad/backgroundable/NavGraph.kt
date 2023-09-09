@@ -1,6 +1,5 @@
 package ir.thatsmejavad.backgroundable
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -26,7 +25,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-@OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialNavigationApi::class)
+@OptIn(ExperimentalMaterialNavigationApi::class)
 internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
     animatedComposable(
         route = AppScreens.CollectionList.route

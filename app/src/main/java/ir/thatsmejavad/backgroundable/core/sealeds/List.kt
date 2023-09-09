@@ -3,9 +3,9 @@ package ir.thatsmejavad.backgroundable.core.sealeds
 import ir.thatsmejavad.backgroundable.ListType as ProtoListType
 
 sealed interface List {
-    object ListType : List
-    object GridType : List
-    object StaggeredType : List
+    data object ListType : List
+    data object GridType : List
+    data object StaggeredType : List
 
     companion object {
         fun toList(theme: ProtoListType): List {

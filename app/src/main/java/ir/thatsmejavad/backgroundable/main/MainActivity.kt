@@ -9,7 +9,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
@@ -39,9 +38,9 @@ import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.material.BottomSheetNavigator
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
@@ -107,7 +106,6 @@ class MainActivity : ComponentActivity() {
 }
 
 @OptIn(
-    ExperimentalAnimationApi::class,
     ExperimentalMaterialNavigationApi::class,
     ExperimentalMaterialApi::class
 )
@@ -118,7 +116,7 @@ private fun BackgroundableApp() {
         skipHalfExpanded = true
     )
     val bottomSheetNavigator = remember { BottomSheetNavigator(sheetState) }
-    val navController = rememberAnimatedNavController(bottomSheetNavigator)
+    val navController = rememberNavController(bottomSheetNavigator)
 
     Box(
         modifier = Modifier
@@ -133,7 +131,7 @@ private fun BackgroundableApp() {
             ),
             sheetBackgroundColor = MaterialTheme.colorScheme.surface,
         ) {
-            AnimatedNavHost(
+            NavHost(
                 navController = navController,
                 startDestination = AppScreens.CollectionList.route
             ) {
@@ -157,15 +155,9 @@ private fun BackgroundableApp() {
                         AppScreens.Settings.route -> SETTING
                         else -> HOME
                     },
-                    navigationBarDestinations = NavigationBarDestinations.values().toList(),
+                    navigationBarDestinations = NavigationBarDestinations.entries,
                     onItemSelected = { destinations ->
-                        val route = when (destinations) {
-                            HOME -> AppScreens.CollectionList
-                            SEARCH -> AppScreens.Search
-                            SETTING -> AppScreens.Settings
-                        }.route
-
-                        navController.navigate(route) {
+                        navController.navigate(destinations.route) {
                             launchSingleTop = true
                             restoreState = true
                             popUpTo(navController.graph.findStartDestination().id) {
