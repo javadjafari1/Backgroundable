@@ -17,6 +17,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
@@ -43,6 +44,7 @@ import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.HexagonShape
 import ir.thatsmejavad.backgroundable.common.ui.LazyVerticalGridWithSwipeRefresh
+import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
 import ir.thatsmejavad.backgroundable.common.ui.drawCustomHexagonPath
 import ir.thatsmejavad.backgroundable.core.Constants.NAVIGATION_BAR_HEIGHT
 import ir.thatsmejavad.backgroundable.core.getSnackbarMessage
@@ -66,6 +68,9 @@ fun CollectionListScreen(
         }
     }
 
+    val snackbarHostState = remember { SnackbarHostState() }
+    viewModel.snackbarManager.ObserveSnackbars(snackbarHostState)
+
     BackgroundableScaffold(
         modifier = Modifier
             /*
@@ -75,7 +80,7 @@ fun CollectionListScreen(
              */
             .padding(bottom = NAVIGATION_BAR_HEIGHT)
             .nestedScroll(scrollBehavior.nestedScrollConnection),
-        snackbarManager = viewModel.snackbarManager,
+        snackbarHostState = snackbarHostState,
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
@@ -105,6 +110,7 @@ fun CollectionListScreen(
     ) {
         LazyVerticalGridWithSwipeRefresh(
             modifier = Modifier
+                .padding(it)
                 .padding(horizontal = 8.dp)
                 .fillMaxSize(),
             pagingItems = collections,

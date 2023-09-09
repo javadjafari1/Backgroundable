@@ -23,7 +23,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -35,6 +35,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.OutlinedIconButton
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -61,6 +62,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.CircularLoading
+import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
 import ir.thatsmejavad.backgroundable.common.ui.ZoomableCoilImage
 import ir.thatsmejavad.backgroundable.core.capitalizeFirstChar
 import ir.thatsmejavad.backgroundable.core.getStringMessage
@@ -92,8 +94,10 @@ fun MediaDetailScreen(
     var isImageLoading by rememberSaveable { mutableStateOf(false) }
     var isDetailDialogShowing by rememberSaveable { mutableStateOf(false) }
 
+    val snackbarHostState = remember { SnackbarHostState() }
+    viewModel.snackbarManager.ObserveSnackbars(snackbarHostState)
+
     BackgroundableScaffold(
-        snackbarManager = viewModel.snackbarManager,
         topBar = {
             AnimatedVisibility(
                 visible = isToolsVisible && title.isNotEmpty(),
@@ -111,7 +115,7 @@ fun MediaDetailScreen(
                     navigationIcon = {
                         IconButton(onClick = onBackClicked) {
                             Icon(
-                                imageVector = Icons.Filled.ArrowBack,
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = "Navigate back"
                             )
                         }
@@ -127,7 +131,8 @@ fun MediaDetailScreen(
                 )
             }
         },
-    ) {
+        snackbarHostState = snackbarHostState
+    ) { paddingValues ->
         when (mediaResult) {
             is AsyncJob.Fail -> {
                 Text(text = (mediaResult as AsyncJob.Fail).exception.getStringMessage(context))
@@ -165,7 +170,8 @@ fun MediaDetailScreen(
 
                 Column(
                     modifier = Modifier
-                        .fillMaxSize(),
+                        .fillMaxSize()
+                        .padding(paddingValues),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     AnimatedVisibility(isImageLoading) {

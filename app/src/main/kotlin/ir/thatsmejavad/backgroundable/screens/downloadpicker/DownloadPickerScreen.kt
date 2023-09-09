@@ -10,6 +10,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -31,8 +32,10 @@ fun DownloadPickerScreen(
     val context = LocalContext.current
 
     if (mediaResult is AsyncJob.Success) {
-        val mediaMap = remember {
-            (mediaResult as AsyncJob.Success).value.resources.groupBy { it.size is OrientationMode }
+        val mediaMap by remember {
+            derivedStateOf {
+                (mediaResult as AsyncJob.Success).value.resources.groupBy { it.size is OrientationMode }
+            }
         }
         LazyColumn {
             item {

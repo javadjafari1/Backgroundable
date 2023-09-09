@@ -26,7 +26,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
-internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
+fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
     animatedComposable(
         route = AppScreens.CollectionList.route
     ) {

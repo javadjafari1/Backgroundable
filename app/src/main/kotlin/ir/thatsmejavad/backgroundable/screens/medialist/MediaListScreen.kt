@@ -4,18 +4,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
@@ -29,6 +31,7 @@ import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.LazyVerticalStaggeredGridWithSwipeRefresh
 import ir.thatsmejavad.backgroundable.common.ui.MediaCard
+import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
 import ir.thatsmejavad.backgroundable.core.getSnackbarMessage
 import ir.thatsmejavad.backgroundable.core.sealeds.List
 import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
@@ -46,9 +49,12 @@ internal fun MediaListScreen(
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
+    val snackbarHostState = remember { SnackbarHostState() }
+    viewModel.snackbarManager.ObserveSnackbars(snackbarHostState)
+
     BackgroundableScaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        snackbarManager = viewModel.snackbarManager,
+        snackbarHostState = snackbarHostState,
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
@@ -61,7 +67,7 @@ internal fun MediaListScreen(
                 navigationIcon = {
                     IconButton(onClick = onBackClicked) {
                         Icon(
-                            imageVector = Icons.Filled.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Navigate back"
                         )
                     }
@@ -83,7 +89,7 @@ internal fun MediaListScreen(
                 scrollBehavior = scrollBehavior
             )
         },
-    ) {
+    ) { paddingValues ->
         LaunchedEffect(medias.loadState.refresh) {
             val refresh = medias.loadState.refresh
             if (refresh is LoadState.Error && medias.itemCount != 0) {
@@ -92,6 +98,10 @@ internal fun MediaListScreen(
         }
 
         LazyVerticalStaggeredGridWithSwipeRefresh(
+            modifier = Modifier
+                .padding(paddingValues)
+                .padding(horizontal = 16.dp)
+                .fillMaxSize(),
             pagingItems = medias,
             columns = StaggeredGridCells.Fixed(
                 when (columnType) {
@@ -99,9 +109,6 @@ internal fun MediaListScreen(
                     List.ListType -> 1
                 }
             ),
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .fillMaxSize(),
         ) {
             items(
                 count = medias.itemCount,
