@@ -19,13 +19,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import ir.thatsmejavad.backgroundable.R
-import ir.thatsmejavad.backgroundable.core.getStringMessage
+import ir.thatsmejavad.backgroundable.core.getErrorMessage
 
 @Composable
 fun <T : Any> LazyVerticalGridWithSwipeRefresh(
@@ -38,7 +37,6 @@ fun <T : Any> LazyVerticalGridWithSwipeRefresh(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     content: LazyGridScope.() -> Unit,
 ) {
-    val context = LocalContext.current
     val refreshLoadState = pagingItems.loadState.refresh
 
     BoxWithSwipeRefresh(
@@ -63,7 +61,7 @@ fun <T : Any> LazyVerticalGridWithSwipeRefresh(
                             Box(Modifier.fillMaxSize()) {
                                 Text(
                                     modifier = Modifier.align(Alignment.Center),
-                                    text = paginationLoadState.error.getStringMessage(context)
+                                    text = paginationLoadState.error.getErrorMessage().asString()
                                 )
                             }
                         }
@@ -91,8 +89,10 @@ fun <T : Any> LazyVerticalGridWithSwipeRefresh(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
-                    text = (refreshLoadState as? LoadState.Error)?.error?.getStringMessage(context)
-                        ?: ""
+                    text = (refreshLoadState as? LoadState.Error)
+                        ?.error
+                        .getErrorMessage()
+                        .asString()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 ElevatedButton(onClick = { pagingItems.retry() }) {

@@ -37,7 +37,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -51,8 +50,8 @@ import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.MediaCard
 import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
 import ir.thatsmejavad.backgroundable.core.Constants.NAVIGATION_BAR_HEIGHT
+import ir.thatsmejavad.backgroundable.core.getErrorMessage
 import ir.thatsmejavad.backgroundable.core.getSnackbarMessage
-import ir.thatsmejavad.backgroundable.core.getStringMessage
 
 @Composable
 fun SearchScreen(
@@ -62,7 +61,6 @@ fun SearchScreen(
     val queryString by viewModel.searchQuery.collectAsStateWithLifecycle()
     val medias = viewModel.medias.collectAsLazyPagingItems()
 
-    val context = LocalContext.current
     val refreshLoadState = medias.loadState.refresh
     val lazyStaggeredGridState = rememberLazyStaggeredGridState()
 
@@ -196,9 +194,10 @@ fun SearchScreen(
                                     Box(Modifier.fillMaxSize()) {
                                         Text(
                                             modifier = Modifier.align(Alignment.Center),
-                                            text = paginationLoadState.error.getStringMessage(
-                                                context
-                                            )
+                                            text = paginationLoadState
+                                                .error
+                                                .getErrorMessage()
+                                                .asString()
                                         )
                                     }
                                 }
@@ -243,10 +242,10 @@ fun SearchScreen(
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Text(
-                            text = (refreshLoadState as? LoadState.Error)?.error?.getStringMessage(
-                                context
-                            )
-                                ?: ""
+                            text = (refreshLoadState as? LoadState.Error)
+                                ?.error
+                                .getErrorMessage()
+                                .asString()
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         ElevatedButton(onClick = { medias.retry() }) {

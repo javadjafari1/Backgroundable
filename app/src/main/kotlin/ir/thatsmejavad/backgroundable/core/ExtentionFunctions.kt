@@ -10,6 +10,8 @@ import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.Color
 import androidx.core.content.FileProvider
 import ir.thatsmejavad.backgroundable.R
+import ir.thatsmejavad.backgroundable.common.ui.UiText
+import ir.thatsmejavad.backgroundable.common.ui.UiText.StringResource
 import ir.thatsmejavad.backgroundable.core.Constants.RATE_LIMIT_CODE
 import kotlinx.serialization.SerializationException
 import java.io.File
@@ -18,35 +20,29 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.Locale
 
-fun Throwable.getErrorMessage(): Any {
+fun Throwable?.getErrorMessage(): UiText {
     return when (this) {
         is ServerException -> {
             if (code == RATE_LIMIT_CODE) {
-                R.string.rate_limit_error_message
+                StringResource(R.string.rate_limit_error_message)
             } else {
-                message ?: R.string.unexpected_error_message
+                if (message != null) {
+                    UiText.DynamicString(message!!)
+                } else {
+                    StringResource(R.string.unexpected_error_message)
+                }
             }
         }
 
-        is SerializationException -> R.string.serialization_error_message
-        is SocketTimeoutException -> R.string.timeout_error_message
-        is UnknownHostException -> R.string.label_cant_connect_to_server
-        else -> R.string.unexpected_error_message
-    }
-}
-
-fun Throwable.getStringMessage(context: Context): String {
-    return when (val message = getErrorMessage()) {
-        is String -> message
-        is Int -> context.getString(message)
-        else -> context.getString(R.string.unexpected_error_message)
+        is SerializationException -> StringResource(R.string.serialization_error_message)
+        is SocketTimeoutException -> StringResource(R.string.timeout_error_message)
+        is UnknownHostException -> StringResource(R.string.label_cant_connect_to_server)
+        else -> StringResource(R.string.unexpected_error_message)
     }
 }
 
 fun Throwable.getSnackbarMessage(): SnackbarMessage {
-    return SnackbarMessage(
-        message = getErrorMessage()
-    )
+    return SnackbarMessage(getErrorMessage())
 }
 
 fun String.toColor(): Color {

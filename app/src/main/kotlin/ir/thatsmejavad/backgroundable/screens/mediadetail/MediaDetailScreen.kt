@@ -65,7 +65,7 @@ import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
 import ir.thatsmejavad.backgroundable.common.ui.ZoomableCoilImage
 import ir.thatsmejavad.backgroundable.core.capitalizeFirstChar
-import ir.thatsmejavad.backgroundable.core.getStringMessage
+import ir.thatsmejavad.backgroundable.core.getErrorMessage
 import ir.thatsmejavad.backgroundable.core.getUri
 import ir.thatsmejavad.backgroundable.core.openUrl
 import ir.thatsmejavad.backgroundable.core.saveIn
@@ -135,7 +135,12 @@ fun MediaDetailScreen(
     ) { paddingValues ->
         when (mediaResult) {
             is AsyncJob.Fail -> {
-                Text(text = (mediaResult as AsyncJob.Fail).exception.getStringMessage(context))
+                Text(
+                    text = (mediaResult as AsyncJob.Fail)
+                        .exception
+                        .getErrorMessage()
+                        .asString(context)
+                )
                 Spacer(modifier = Modifier.height(8.dp))
                 ElevatedButton(onClick = { viewModel.getMedia(mediaId) }) {
                     Text(text = stringResource(R.string.label_try_again))

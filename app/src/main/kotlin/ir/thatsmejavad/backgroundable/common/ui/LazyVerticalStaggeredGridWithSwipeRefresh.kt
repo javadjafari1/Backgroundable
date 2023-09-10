@@ -19,13 +19,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import ir.thatsmejavad.backgroundable.R
-import ir.thatsmejavad.backgroundable.core.getStringMessage
+import ir.thatsmejavad.backgroundable.core.getErrorMessage
 
 @Composable
 fun <T : Any> LazyVerticalStaggeredGridWithSwipeRefresh(
@@ -36,7 +35,6 @@ fun <T : Any> LazyVerticalStaggeredGridWithSwipeRefresh(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     content: LazyStaggeredGridScope.() -> Unit,
 ) {
-    val context = LocalContext.current
     val refreshLoadState = pagingItems.loadState.refresh
 
     BoxWithSwipeRefresh(
@@ -59,7 +57,7 @@ fun <T : Any> LazyVerticalStaggeredGridWithSwipeRefresh(
                             Box(Modifier.fillMaxSize()) {
                                 Text(
                                     modifier = Modifier.align(Alignment.Center),
-                                    text = paginationLoadState.error.getStringMessage(context)
+                                    text = paginationLoadState.error.getErrorMessage().asString()
                                 )
                             }
                         }
@@ -87,8 +85,10 @@ fun <T : Any> LazyVerticalStaggeredGridWithSwipeRefresh(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
-                    text = (refreshLoadState as? LoadState.Error)?.error?.getStringMessage(context)
-                        ?: ""
+                    text = (refreshLoadState as? LoadState.Error)
+                        ?.error
+                        .getErrorMessage()
+                        .asString()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 ElevatedButton(onClick = { pagingItems.retry() }) {
