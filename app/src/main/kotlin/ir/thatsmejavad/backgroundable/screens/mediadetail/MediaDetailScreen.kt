@@ -27,6 +27,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -61,7 +62,6 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
-import ir.thatsmejavad.backgroundable.common.ui.CircularLoading
 import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
 import ir.thatsmejavad.backgroundable.common.ui.ZoomableCoilImage
 import ir.thatsmejavad.backgroundable.core.capitalizeFirstChar
@@ -144,7 +144,7 @@ fun MediaDetailScreen(
 
             AsyncJob.Loading, AsyncJob.Uninitialized -> {
                 Box(modifier = Modifier.fillMaxSize()) {
-                    CircularLoading()
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
             }
 

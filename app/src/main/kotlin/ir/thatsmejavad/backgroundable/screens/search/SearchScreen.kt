@@ -19,6 +19,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -47,7 +48,6 @@ import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
-import ir.thatsmejavad.backgroundable.common.ui.CircularLoading
 import ir.thatsmejavad.backgroundable.common.ui.MediaCard
 import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
 import ir.thatsmejavad.backgroundable.core.Constants.NAVIGATION_BAR_HEIGHT
@@ -67,8 +67,8 @@ fun SearchScreen(
     val lazyStaggeredGridState = rememberLazyStaggeredGridState()
 
     val pagingIsLoading = medias.loadState.prepend is LoadState.Loading ||
-        medias.loadState.append is LoadState.Loading ||
-        medias.loadState.refresh is LoadState.Loading
+            medias.loadState.append is LoadState.Loading ||
+            medias.loadState.refresh is LoadState.Loading
 
     LaunchedEffect(medias.loadState.refresh) {
         val refresh = medias.loadState.refresh
@@ -208,7 +208,7 @@ fun SearchScreen(
                         is LoadState.Loading -> {
                             item {
                                 Box(Modifier.fillMaxSize()) {
-                                    CircularLoading()
+                                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                                 }
                             }
                         }

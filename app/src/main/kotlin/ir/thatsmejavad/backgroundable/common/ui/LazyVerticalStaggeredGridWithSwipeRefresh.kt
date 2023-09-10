@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -68,7 +69,7 @@ fun <T : Any> LazyVerticalStaggeredGridWithSwipeRefresh(
                 is LoadState.Loading -> {
                     item {
                         Box(Modifier.fillMaxSize()) {
-                            CircularLoading()
+                            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                         }
                     }
                 }

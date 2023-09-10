@@ -31,15 +31,15 @@ fun MediaCard(
     resourceUrl: String,
     isSingleColumn: Boolean,
     isStaggered: Boolean,
+    modifier: Modifier = Modifier,
     onMediaClicked: (Int, String) -> Unit,
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .animateContentSize()
             .clip(MaterialTheme.shapes.extraSmall)
             .clickable { onMediaClicked(id, alt) }
             .padding(4.dp)
-
     ) {
         CoilImage(
             modifier = Modifier
