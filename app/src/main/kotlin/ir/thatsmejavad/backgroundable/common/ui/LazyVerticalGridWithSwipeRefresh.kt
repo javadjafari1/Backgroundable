@@ -41,7 +41,7 @@ fun <T : Any> LazyVerticalGridWithSwipeRefresh(
     val refreshLoadState = pagingItems.loadState.refresh
 
     BoxWithSwipeRefresh(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         onSwipe = { pagingItems.refresh() },
         isRefreshing = pagingItems.loadState.refresh is LoadState.Loading
     ) {
@@ -50,7 +50,7 @@ fun <T : Any> LazyVerticalGridWithSwipeRefresh(
             state = state,
             verticalArrangement = verticalArrangement,
             horizontalArrangement = horizontalArrangement,
-            modifier = modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             contentPadding = contentPadding,
         ) {
             content()

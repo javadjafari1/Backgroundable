@@ -52,6 +52,13 @@ internal fun MediaListScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     viewModel.snackbarManager.ObserveSnackbars(snackbarHostState)
 
+    LaunchedEffect(medias.loadState.refresh) {
+        val refresh = medias.loadState.refresh
+        if (refresh is LoadState.Error && medias.itemCount != 0) {
+            viewModel.snackbarManager.sendError(refresh.error.getSnackbarMessage())
+        }
+    }
+
     BackgroundableScaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         snackbarHostState = snackbarHostState,
@@ -90,17 +97,10 @@ internal fun MediaListScreen(
             )
         },
     ) { paddingValues ->
-        LaunchedEffect(medias.loadState.refresh) {
-            val refresh = medias.loadState.refresh
-            if (refresh is LoadState.Error && medias.itemCount != 0) {
-                viewModel.snackbarManager.sendError(refresh.error.getSnackbarMessage())
-            }
-        }
-
         LazyVerticalStaggeredGridWithSwipeRefresh(
             modifier = Modifier
-                .padding(paddingValues)
                 .padding(horizontal = 16.dp)
+                .padding(paddingValues)
                 .fillMaxSize(),
             pagingItems = medias,
             columns = StaggeredGridCells.Fixed(
