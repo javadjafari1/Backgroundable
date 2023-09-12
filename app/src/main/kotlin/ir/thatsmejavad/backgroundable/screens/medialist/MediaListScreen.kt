@@ -1,5 +1,7 @@
 package ir.thatsmejavad.backgroundable.screens.medialist
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
@@ -38,7 +41,10 @@ import ir.thatsmejavad.backgroundable.core.getSnackbarMessage
 import ir.thatsmejavad.backgroundable.core.sealeds.List
 import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(
+    ExperimentalMaterial3Api::class,
+    ExperimentalFoundationApi::class
+)
 @Composable
 internal fun MediaListScreen(
     title: String,
@@ -68,9 +74,12 @@ internal fun MediaListScreen(
             CenterAlignedTopAppBar(
                 title = {
                     Text(
+                        modifier = Modifier.basicMarquee(),
                         text = title,
                         style = MaterialTheme.typography.headlineSmall,
-                        color = MaterialTheme.colorScheme.onSurface
+                        color = MaterialTheme.colorScheme.onSurface,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 },
                 navigationIcon = {

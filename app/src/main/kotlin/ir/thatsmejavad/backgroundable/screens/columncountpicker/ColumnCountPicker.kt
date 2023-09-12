@@ -3,6 +3,7 @@ package ir.thatsmejavad.backgroundable.screens.columncountpicker
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -23,7 +24,9 @@ fun ColumnCountPicker(
     selectedItem: Int,
     onSelect: (Int) -> Unit
 ) {
-    LazyColumn {
+    LazyColumn(
+        modifier = Modifier.navigationBarsPadding()
+    ) {
         item {
             Text(
                 modifier = Modifier.padding(

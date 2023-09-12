@@ -17,7 +17,7 @@ import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
@@ -38,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -69,6 +70,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         val backgroundableApplication = (application as BackgroundableApplication)
 
@@ -179,7 +181,7 @@ private fun BackgroundableNavigationBar(
     onItemSelected: (NavigationBarDestinations) -> Unit,
 ) {
     NavigationBar(
-        modifier = Modifier.height(NAVIGATION_BAR_HEIGHT),
+        modifier = Modifier.heightIn(min = NAVIGATION_BAR_HEIGHT),
         containerColor = MaterialTheme.colorScheme.surfaceBright,
     ) {
         NavigationBarDestinations.entries.forEach { destination ->
