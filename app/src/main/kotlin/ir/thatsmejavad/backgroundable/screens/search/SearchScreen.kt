@@ -200,7 +200,12 @@ fun SearchScreen(
                 }
             }
 
-            if (medias.itemCount == 0 && !pagingIsLoading && !medias.loadState.append.endOfPaginationReached) {
+            if (
+                medias.itemCount == 0 &&
+                !pagingIsLoading &&
+                !medias.loadState.append.endOfPaginationReached &&
+                refreshLoadState !is LoadState.Error
+            ) {
                 Text(
                     modifier = Modifier.align(Alignment.Center),
                     text = stringResource(R.string.label_looking_for_wallpapers_start_here)

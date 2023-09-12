@@ -18,6 +18,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
@@ -125,6 +126,7 @@ private fun BackgroundableApp() {
     ModalBottomSheetLayout(
         modifier = Modifier
             .fillMaxSize()
+            .imePadding()
             .background(MaterialTheme.colorScheme.background),
         bottomSheetNavigator = bottomSheetNavigator,
         sheetShape = MaterialTheme.shapes.large.copy(
