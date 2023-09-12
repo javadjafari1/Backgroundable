@@ -113,13 +113,6 @@ fun SearchScreen(
     val density = LocalDensity.current
 
     BackgroundableScaffold(
-        modifier = Modifier
-            /*
-            The padding of the bottomBar,
-            can't use Scaffold to add bottomBar with animation.
-            the bottom of the ui will jump
-             */
-            .padding(bottom = NAVIGATION_BAR_HEIGHT),
         snackbarHostState = snackbarHostState
     ) { paddingValues ->
         Box(
@@ -146,7 +139,15 @@ fun SearchScreen(
                     }
                 ),
                 state = lazyStaggeredGridState,
-                contentPadding = PaddingValues(top = with(density) { textFieldSize.toDp() + 32.dp }),
+                contentPadding = PaddingValues(
+                    top = with(density) { textFieldSize.toDp() + 32.dp },
+                    /*
+                     The padding of the bottomBar,
+                     can't use Scaffold to add bottomBar with animation.
+                     the bottom of the ui will jump
+                      */
+                    bottom = NAVIGATION_BAR_HEIGHT
+                ),
                 verticalItemSpacing = 12.dp,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {

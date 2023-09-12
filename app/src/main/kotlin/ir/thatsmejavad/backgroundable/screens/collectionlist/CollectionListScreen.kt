@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -73,12 +74,6 @@ fun CollectionListScreen(
 
     BackgroundableScaffold(
         modifier = Modifier
-            /*
-            The padding of the bottomBar,
-            can't use Scaffold to add bottomBar with animation.
-            the bottom of the ui will jump
-             */
-            .padding(bottom = NAVIGATION_BAR_HEIGHT)
             .nestedScroll(scrollBehavior.nestedScrollConnection),
         snackbarHostState = snackbarHostState,
         topBar = {
@@ -116,7 +111,13 @@ fun CollectionListScreen(
             pagingItems = collections,
             columns = GridCells.Fixed(columnCounts),
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            /*
+     The padding of the bottomBar,
+     can't use Scaffold to add bottomBar with animation.
+     the bottom of the ui will jump
+      */
+            contentPadding = PaddingValues(bottom = NAVIGATION_BAR_HEIGHT)
         ) {
             items(
                 count = collections.itemCount,

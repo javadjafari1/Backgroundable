@@ -122,54 +122,52 @@ private fun BackgroundableApp() {
     val bottomSheetNavigator = remember { BottomSheetNavigator(sheetState) }
     val navController = rememberNavController(bottomSheetNavigator)
 
-    Box(
+    ModalBottomSheetLayout(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
+        bottomSheetNavigator = bottomSheetNavigator,
+        sheetShape = MaterialTheme.shapes.large.copy(
+            bottomEnd = CornerSize(0.dp),
+            bottomStart = CornerSize(0.dp)
+        ),
+        sheetBackgroundColor = MaterialTheme.colorScheme.surface,
     ) {
-        ModalBottomSheetLayout(
-            bottomSheetNavigator = bottomSheetNavigator,
-            sheetShape = MaterialTheme.shapes.large.copy(
-                bottomEnd = CornerSize(0.dp),
-                bottomStart = CornerSize(0.dp)
-            ),
-            sheetBackgroundColor = MaterialTheme.colorScheme.surface,
-        ) {
+        Box {
             NavHost(
                 navController = navController,
                 startDestination = AppScreens.CollectionList.route
             ) {
                 mainNavGraph(navController)
             }
-        }
-
-        /*
-         * we have to add bottom bar like this, and not in Scaffold because
-         * in scaffold we can't add animation for showing and hiding the bottomBar
-         * */
-        val backStackEntry by navController.currentBackStackEntryAsState()
-        AnimatedVisibility(
-            modifier = Modifier.align(Alignment.BottomCenter),
-            visible = backStackEntry?.destination?.route in NavigationBarDestinations.entries.map { it.route },
-            enter = slideInVertically { it },
-            exit = slideOutVertically { it },
-        ) {
-            BackgroundableNavigationBar(
-                selectedItem = when (navController.currentDestination?.route) {
-                    AppScreens.Search.route -> SEARCH
-                    AppScreens.Settings.route -> SETTING
-                    else -> HOME
-                },
-                onItemSelected = { destinations ->
-                    navController.navigate(destinations.route) {
-                        launchSingleTop = true
-                        restoreState = true
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
+            /*
+       * we have to add bottom bar like this, and not in Scaffold because
+       * in scaffold we can't add animation for showing and hiding the bottomBar
+       * */
+            val backStackEntry by navController.currentBackStackEntryAsState()
+            AnimatedVisibility(
+                modifier = Modifier.align(Alignment.BottomCenter),
+                visible = backStackEntry?.destination?.route in NavigationBarDestinations.entries.map { it.route },
+                enter = slideInVertically { it },
+                exit = slideOutVertically { it },
+            ) {
+                BackgroundableNavigationBar(
+                    selectedItem = when (navController.currentDestination?.route) {
+                        AppScreens.Search.route -> SEARCH
+                        AppScreens.Settings.route -> SETTING
+                        else -> HOME
+                    },
+                    onItemSelected = { destinations ->
+                        navController.navigate(destinations.route) {
+                            launchSingleTop = true
+                            restoreState = true
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
                         }
                     }
-                }
-            )
+                )
+            }
         }
     }
 }
