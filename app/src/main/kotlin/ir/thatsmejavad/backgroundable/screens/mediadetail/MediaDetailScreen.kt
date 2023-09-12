@@ -189,7 +189,9 @@ fun MediaDetailScreen(
                         LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
                     }
                     ZoomableCoilImage(
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth(),
                         onClick = { isToolsVisible = !isToolsVisible },
                         url = mediaWithResources.resources.first { it.size == ResourceSize.Original }.url,
                         placeHolder = mediaWithResources.resources.first { it.size == ResourceSize.Medium }.url,

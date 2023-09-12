@@ -5,6 +5,7 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -51,6 +52,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.Dp
@@ -206,9 +208,20 @@ fun SearchScreen(
                 !medias.loadState.append.endOfPaginationReached &&
                 refreshLoadState !is LoadState.Error
             ) {
-                Text(
-                    modifier = Modifier.align(Alignment.Center),
-                    text = stringResource(R.string.label_looking_for_wallpapers_start_here)
+                Image(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(
+                            top = with(density) { textFieldSize.toDp() + 38.dp },
+                            /*
+                             The padding of the bottomBar,
+                             can't use Scaffold to add bottomBar with animation.
+                             the bottom of the ui will jump
+                              */
+                            bottom = NAVIGATION_BAR_HEIGHT + 4.dp
+                        ),
+                    painter = painterResource(R.drawable.ic_search),
+                    contentDescription = "search_icon"
                 )
             }
 
