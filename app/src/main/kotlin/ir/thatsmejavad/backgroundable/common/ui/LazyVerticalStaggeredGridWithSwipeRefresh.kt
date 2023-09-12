@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -33,6 +34,8 @@ fun <T : Any> LazyVerticalStaggeredGridWithSwipeRefresh(
     modifier: Modifier = Modifier,
     state: LazyStaggeredGridState = rememberLazyStaggeredGridState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
+    verticalItemSpacing: Dp = 0.dp,
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.spacedBy(0.dp),
     content: LazyStaggeredGridScope.() -> Unit,
 ) {
     val refreshLoadState = pagingItems.loadState.refresh
@@ -45,6 +48,8 @@ fun <T : Any> LazyVerticalStaggeredGridWithSwipeRefresh(
         LazyVerticalStaggeredGrid(
             columns = columns,
             state = state,
+            horizontalArrangement = horizontalArrangement,
+            verticalItemSpacing = verticalItemSpacing,
             modifier = Modifier.fillMaxSize(),
             contentPadding = contentPadding,
         ) {

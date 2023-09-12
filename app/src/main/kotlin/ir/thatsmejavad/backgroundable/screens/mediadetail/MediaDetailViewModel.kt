@@ -13,6 +13,7 @@ import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
 import ir.thatsmejavad.backgroundable.data.repository.MediaRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class MediaDetailViewModel @AssistedInject constructor(
@@ -24,9 +25,10 @@ class MediaDetailViewModel @AssistedInject constructor(
     @AssistedFactory
     interface Factory : ViewModelAssistedFactory<MediaDetailViewModel>
 
-    private val _media =
-        MutableStateFlow<AsyncJob<MediaWithResources>>(AsyncJob.Uninitialized)
-    val media: StateFlow<AsyncJob<MediaWithResources>> = _media
+    private val _media = MutableStateFlow<AsyncJob<MediaWithResources>>(
+        AsyncJob.Uninitialized
+    )
+    val media: StateFlow<AsyncJob<MediaWithResources>> = _media.asStateFlow()
 
     init {
         val id = checkNotNull(savedStateHandle.get<Int>("id")) {

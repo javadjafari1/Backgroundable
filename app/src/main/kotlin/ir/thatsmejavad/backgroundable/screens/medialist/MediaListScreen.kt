@@ -1,5 +1,7 @@
 package ir.thatsmejavad.backgroundable.screens.medialist
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
@@ -45,7 +47,7 @@ internal fun MediaListScreen(
     onBackClicked: () -> Unit,
 ) {
     val medias = viewModel.medias.collectAsLazyPagingItems()
-    val columnType by viewModel.mediaColumnTypeFlow.collectAsStateWithLifecycle(List.StaggeredType)
+    val columnType by viewModel.mediaColumnTypeFlow.collectAsStateWithLifecycle()
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
@@ -109,6 +111,10 @@ internal fun MediaListScreen(
                     List.ListType -> 1
                 }
             ),
+            verticalItemSpacing = 12.dp,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(top = 16.dp)
+
         ) {
             items(
                 count = medias.itemCount,

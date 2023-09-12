@@ -14,10 +14,13 @@ import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelAssistedFactory
 import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
 import ir.thatsmejavad.backgroundable.data.repository.MediaRepository
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class MediaListViewModel @AssistedInject constructor(
@@ -31,9 +34,13 @@ class MediaListViewModel @AssistedInject constructor(
 
     private val _medias =
         MutableStateFlow<PagingData<MediaWithResources>>(value = PagingData.empty())
-    val medias: StateFlow<PagingData<MediaWithResources>> = _medias
+    val medias: StateFlow<PagingData<MediaWithResources>> = _medias.asStateFlow()
 
-    val mediaColumnTypeFlow = mediaRepository.mediaColumnTypeFlow
+    val mediaColumnTypeFlow = mediaRepository.mediaColumnTypeFlow.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = List.StaggeredType
+    )
 
     init {
         val id = checkNotNull(savedStateHandle.get<String>("id")) {

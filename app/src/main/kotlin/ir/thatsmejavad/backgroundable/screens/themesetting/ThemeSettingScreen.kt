@@ -39,7 +39,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.core.sealeds.Theme
-import ir.thatsmejavad.backgroundable.model.UserPreferences
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,9 +47,7 @@ fun ThemeSettingScreen(
     viewModel: ThemeSettingViewModel,
     onBackClicked: () -> Unit,
 ) {
-    val userPreferences by viewModel.userPreferencesFlow.collectAsStateWithLifecycle(
-        initialValue = UserPreferences()
-    )
+    val userPreferences by viewModel.userPreferencesFlow.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
 
     BackgroundableScaffold(

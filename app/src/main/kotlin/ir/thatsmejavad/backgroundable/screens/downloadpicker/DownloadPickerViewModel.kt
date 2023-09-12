@@ -14,6 +14,7 @@ import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
 import ir.thatsmejavad.backgroundable.data.repository.MediaRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class DownloadPickerViewModel @AssistedInject constructor(
@@ -27,7 +28,7 @@ class DownloadPickerViewModel @AssistedInject constructor(
 
     private val _media =
         MutableStateFlow<AsyncJob<MediaWithResources>>(AsyncJob.Uninitialized)
-    val media: StateFlow<AsyncJob<MediaWithResources>> = _media
+    val media: StateFlow<AsyncJob<MediaWithResources>> = _media.asStateFlow()
 
     init {
         val id = checkNotNull(savedStateHandle.get<Int>("id")) {
