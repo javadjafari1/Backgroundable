@@ -1,7 +1,6 @@
 package ir.thatsmejavad.backgroundable.data.repository
 
 import androidx.datastore.core.DataStore
-import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -34,7 +33,6 @@ class MediaRepositoryImpl @Inject constructor(
     private val userPreferencesStore: DataStore<UserPref>,
 ) : MediaRepository {
 
-    @OptIn(ExperimentalPagingApi::class)
     override fun getMediasByCollectionId(
         collectionId: String,
     ): Flow<PagingData<MediaWithResources>> {

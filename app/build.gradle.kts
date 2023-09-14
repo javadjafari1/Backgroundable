@@ -97,6 +97,13 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+        freeCompilerArgs += "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi"
+        freeCompilerArgs += "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
+        freeCompilerArgs += "-opt-in=androidx.paging.ExperimentalPagingApi"
+        freeCompilerArgs += "-opt-in=com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi"
+        freeCompilerArgs += "-opt-in=kotlinx.serialization.ExperimentalSerializationApi"
+        freeCompilerArgs += "-opt-in=kotlinx.coroutines.FlowPreview"
+        freeCompilerArgs += "-opt-in=androidx.compose.material.ExperimentalMaterialApi"
     }
     buildFeatures {
         compose = true

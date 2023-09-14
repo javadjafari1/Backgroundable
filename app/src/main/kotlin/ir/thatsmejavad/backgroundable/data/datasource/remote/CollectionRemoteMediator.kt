@@ -1,6 +1,5 @@
 package ir.thatsmejavad.backgroundable.data.datasource.remote
 
-import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
@@ -15,7 +14,6 @@ import ir.thatsmejavad.backgroundable.model.Collection
 import java.util.concurrent.TimeUnit
 import kotlin.math.ceil
 
-@OptIn(ExperimentalPagingApi::class)
 class CollectionRemoteMediator(
     private val collectionRemoteDataSource: CollectionRemoteDataSource,
     private val collectionLocalDataSource: CollectionLocalDataSource,

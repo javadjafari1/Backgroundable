@@ -1,6 +1,5 @@
 package ir.thatsmejavad.backgroundable.data.repository
 
-import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -20,7 +19,6 @@ class CollectionRepositoryImpl @Inject constructor(
     private val database: BackgroundableDatabase,
     private val pageKeyLocalDataSource: PageKeyLocalDataSource,
 ) : CollectionRepository {
-    @OptIn(ExperimentalPagingApi::class)
     override fun getCollections(): Flow<PagingData<CollectionEntity>> {
         return Pager(
             config = PagingConfig(

@@ -11,7 +11,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -20,7 +19,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.Icon
@@ -46,7 +44,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.material.BottomSheetNavigator
-import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import ir.thatsmejavad.backgroundable.BackgroundableApplication
 import ir.thatsmejavad.backgroundable.BuildConfig
@@ -110,10 +107,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(
-    ExperimentalMaterialNavigationApi::class,
-    ExperimentalMaterialApi::class
-)
 @Composable
 private fun BackgroundableApp() {
     val sheetState = rememberModalBottomSheetState(
@@ -174,7 +167,6 @@ private fun BackgroundableApp() {
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun BackgroundableNavigationBar(
     selectedItem: NavigationBarDestinations,

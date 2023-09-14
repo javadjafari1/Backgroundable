@@ -4,7 +4,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.bottomSheet
 import ir.thatsmejavad.backgroundable.common.ui.ObserveArgument
 import ir.thatsmejavad.backgroundable.common.ui.animatedComposable
@@ -25,7 +24,6 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-@OptIn(ExperimentalMaterialNavigationApi::class)
 fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
     animatedComposable(
         route = AppScreens.CollectionList.route

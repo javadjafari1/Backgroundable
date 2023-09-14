@@ -15,7 +15,6 @@ import ir.thatsmejavad.backgroundable.core.sealeds.List
 import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelAssistedFactory
 import ir.thatsmejavad.backgroundable.data.repository.MediaRepository
 import ir.thatsmejavad.backgroundable.model.media.Media
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -28,7 +27,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-@OptIn(FlowPreview::class)
 class SearchViewModel @AssistedInject constructor(
     val snackbarManager: SnackbarManager,
     private val mediaRepository: MediaRepository,

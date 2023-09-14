@@ -1,6 +1,5 @@
 package ir.thatsmejavad.backgroundable.screens.collectionlist
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -22,7 +21,6 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -61,7 +59,6 @@ import ir.thatsmejavad.backgroundable.core.getErrorMessage
 import ir.thatsmejavad.backgroundable.core.getSnackbarMessage
 import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CollectionListScreen(
     viewModel: CollectionListViewModel,
@@ -200,10 +197,6 @@ fun CollectionListScreen(
     }
 }
 
-@OptIn(
-    ExperimentalFoundationApi::class,
-    ExperimentalMaterial3Api::class
-)
 @Composable
 private fun LazyGridItemScope.CollectionCard(
     isGrid: Boolean,
