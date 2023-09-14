@@ -21,7 +21,6 @@ import ir.thatsmejavad.backgroundable.screens.settings.SettingsScreen
 import ir.thatsmejavad.backgroundable.screens.themesetting.ThemeSettingScreen
 import ir.thatsmejavad.backgroundable.screens.themesetting.ThemeSettingViewModel
 import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
@@ -45,12 +44,9 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
                 )
             },
             openColumnCountPicker = { selectedItem ->
-                // Todo fix this. this action will take place every time.
-                val items = listOf(1, 2, 3)
-                val stringItem = Json.encodeToString(items)
                 navController.navigate(
                     AppScreens.ColumnCountPicker.createRoute(
-                        items = stringItem,
+                        items = viewModel.columnCountPickerData,
                         selectedItem = selectedItem
                     )
                 )

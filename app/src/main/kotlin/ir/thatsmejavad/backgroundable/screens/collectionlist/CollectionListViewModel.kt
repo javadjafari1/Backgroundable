@@ -20,6 +20,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class CollectionListViewModel @AssistedInject constructor(
     private val collectionRepository: CollectionRepository,
@@ -31,6 +33,8 @@ class CollectionListViewModel @AssistedInject constructor(
     @AssistedFactory
     interface Factory : ViewModelAssistedFactory<CollectionListViewModel>
 
+    var columnCountPickerData: String = ""
+
     private val _collections = MutableStateFlow<PagingData<CollectionEntity>>(PagingData.empty())
     val collection: StateFlow<PagingData<CollectionEntity>> = _collections.asStateFlow()
 
@@ -39,6 +43,10 @@ class CollectionListViewModel @AssistedInject constructor(
 
     init {
         getCollections()
+        viewModelScope.launch {
+            val items = listOf(1, 2, 3)
+            columnCountPickerData = Json.encodeToString(items)
+        }
 
         viewModelScope.launch {
             columnCountsPreferences.collectionColumnCountFlow.collectLatest {
