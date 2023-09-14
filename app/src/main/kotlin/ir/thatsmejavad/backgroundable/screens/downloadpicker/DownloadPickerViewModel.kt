@@ -31,17 +31,17 @@ class DownloadPickerViewModel @AssistedInject constructor(
     val media: StateFlow<AsyncJob<MediaWithResources>> = _media.asStateFlow()
 
     init {
+        getMedia()
+    }
+
+    fun getMedia() {
         val id = checkNotNull(savedStateHandle.get<Int>("id")) {
             "id should not be null in $this"
         }
-        getMedia(id)
-    }
-
-    private fun getMedia(mediaId: Int) {
         viewModelScope.launch {
             _media.value = AsyncJob.Loading
             try {
-                mediaRepository.getMediaWithResources(mediaId)?.let { result ->
+                mediaRepository.getMediaWithResources(id)?.let { result ->
                     _media.value = AsyncJob.Success(result)
                 }
             } catch (e: Exception) {

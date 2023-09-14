@@ -46,7 +46,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
@@ -104,11 +103,13 @@ fun SearchScreen(
     val focusRequester = remember { FocusRequester() }
 
     val padding: Dp by animateDpAsState(
-        if (isFocused) 0.dp else 16.dp, tween(400),
+        if (isFocused) 0.dp else 16.dp,
+        tween(400),
         label = "padding animation"
     )
     val cornerRadius: Dp by animateDpAsState(
-        if (isFocused) 0.dp else 16.dp, tween(400),
+        if (isFocused) 0.dp else 16.dp,
+        tween(400),
         label = "corner radius animation"
     )
 
@@ -147,7 +148,7 @@ fun SearchScreen(
                      The padding of the bottomBar,
                      can't use Scaffold to add bottomBar with animation.
                      the bottom of the ui will jump
-                      */
+                     */
                     bottom = NAVIGATION_BAR_HEIGHT
                 ),
                 verticalItemSpacing = 12.dp,
@@ -217,7 +218,7 @@ fun SearchScreen(
                              The padding of the bottomBar,
                              can't use Scaffold to add bottomBar with animation.
                              the bottom of the ui will jump
-                              */
+                             */
                             bottom = NAVIGATION_BAR_HEIGHT + 4.dp
                         ),
                     painter = painterResource(R.drawable.ic_search),
@@ -260,7 +261,7 @@ fun SearchScreen(
                 modifier = Modifier
                     .padding(vertical = 16.dp, horizontal = padding)
                     .fillMaxWidth()
-                    .onFocusChanged { it: FocusState ->
+                    .onFocusChanged {
                         isFocused = it.isFocused
                     }
                     .focusRequester(focusRequester)
