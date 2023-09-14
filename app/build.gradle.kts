@@ -149,7 +149,6 @@ dependencies {
     implementation(libs.composeMaterial) {
         because("just for the swipe refresh")
     }
-    implementation(libs.constraintLayoutCompose)
     implementation(libs.coilCompose)
 
     /*Retrofit*/

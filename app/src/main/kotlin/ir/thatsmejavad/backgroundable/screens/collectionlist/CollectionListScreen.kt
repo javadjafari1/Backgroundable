@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -42,7 +43,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -137,7 +137,7 @@ fun CollectionListScreen(
                 ) { index ->
                     collections[index]?.let { collection ->
                         CollectionCard(
-                            isGrid = columnCounts > 2,
+                            isVertical = columnCounts > 2,
                             collection = collection,
                             onCollectionClicked = onCollectionClicked
                         )
@@ -199,7 +199,7 @@ fun CollectionListScreen(
 
 @Composable
 private fun LazyGridItemScope.CollectionCard(
-    isGrid: Boolean,
+    isVertical: Boolean,
     collection: CollectionEntity,
     onCollectionClicked: (String, String) -> Unit
 ) {
@@ -215,14 +215,13 @@ private fun LazyGridItemScope.CollectionCard(
         onClick = { onCollectionClicked(collection.id, collection.title) },
         interactionSource = remember { MutableInteractionSource() }
     ) {
-        ConstraintLayout {
-            val (count, title) = createRefs()
-
+        val content = @Composable {
             val secondaryColor = MaterialTheme.colorScheme.secondary
             Text(
                 modifier = Modifier
-                    .padding(vertical = 8.dp)
-                    .padding(start = 8.dp)
+                    .padding(top = 8.dp)
+                    .padding(bottom = if (isVertical) 0.dp else 8.dp)
+                    .padding(start = 8.dp, end = 8.dp)
                     .drawWithContent {
                         drawContent()
                         drawPath(
@@ -234,22 +233,8 @@ private fun LazyGridItemScope.CollectionCard(
                             )
                         )
                     }
-                    .background(
-                        color = secondaryColor,
-                        shape = HexagonShape
-                    )
-                    .padding(12.dp)
-                    .constrainAs(count) {
-                        if (isGrid) {
-                            top.linkTo(parent.top)
-                            bottom.linkTo(title.top)
-                        } else {
-                            top.linkTo(parent.top)
-                            bottom.linkTo(parent.bottom)
-                            start.linkTo(parent.start)
-                            end.linkTo(title.start)
-                        }
-                    },
+                    .background(color = secondaryColor, shape = HexagonShape)
+                    .padding(12.dp),
                 text = collection.photosCount.toString(),
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onPrimary
@@ -260,25 +245,25 @@ private fun LazyGridItemScope.CollectionCard(
                     .basicMarquee()
                     .padding(vertical = 8.dp)
                     .padding(end = 8.dp)
-                    .padding(horizontal = if (isGrid) 8.dp else 0.dp)
-                    .constrainAs(title) {
-                        if (isGrid) {
-                            top.linkTo(count.bottom)
-                            bottom.linkTo(parent.bottom)
-                        } else {
-                            top.linkTo(parent.top)
-                            bottom.linkTo(parent.bottom)
-                            start.linkTo(count.end, margin = 10.dp)
-                            // TODO fix not showing the end of the text
-                            // end.linkTo(parent.end)
-                        }
-                    },
+                    .padding(horizontal = if (isVertical) 8.dp else 0.dp),
                 text = collection.title,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface
             )
+
+        }
+
+        if (isVertical) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) { content() }
+        } else {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) { content() }
         }
     }
 }
