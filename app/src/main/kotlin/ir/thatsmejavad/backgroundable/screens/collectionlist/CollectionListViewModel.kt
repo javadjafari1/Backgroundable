@@ -34,6 +34,7 @@ class CollectionListViewModel @AssistedInject constructor(
     interface Factory : ViewModelAssistedFactory<CollectionListViewModel>
 
     var columnCountPickerData: String = ""
+        private set
 
     private val _collections = MutableStateFlow<PagingData<CollectionEntity>>(PagingData.empty())
     val collection: StateFlow<PagingData<CollectionEntity>> = _collections.asStateFlow()
