@@ -16,6 +16,7 @@ import ir.thatsmejavad.backgroundable.core.Constants.RATE_LIMIT_CODE
 import kotlinx.serialization.SerializationException
 import java.io.File
 import java.io.FileOutputStream
+import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.Locale
@@ -36,7 +37,7 @@ fun Throwable?.getErrorMessage(): UiText {
 
         is SerializationException -> StringResource(R.string.serialization_error_message)
         is SocketTimeoutException -> StringResource(R.string.timeout_error_message)
-        is UnknownHostException -> StringResource(R.string.label_cant_connect_to_server)
+        is UnknownHostException, is ConnectException -> StringResource(R.string.label_cant_connect_to_server)
         else -> StringResource(R.string.unexpected_error_message)
     }
 }
