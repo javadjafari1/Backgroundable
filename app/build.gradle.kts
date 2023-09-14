@@ -1,18 +1,18 @@
 import org.jetbrains.kotlin.konan.properties.Properties
 
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.plugin.serialization")
-    id("io.gitlab.arturbosch.detekt")
-    id("com.google.devtools.ksp")
-    id("com.google.protobuf")
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.protobuf)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.ksp)
 }
 
 detekt {
     autoCorrect = true
     buildUponDefaultConfig = true
-    config = files("$rootDir/detekt.yml")
+    config.from(files("$rootDir/detekt.yml"))
 }
 
 android {
@@ -108,7 +108,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
+        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
     packaging {
         resources {
@@ -137,78 +137,56 @@ protobuf {
 }
 
 dependencies {
+    detektPlugins(libs.detektFormatting)
 
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.1")
-
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-
-    // compose specific libs
-    implementation("androidx.activity:activity-compose:1.7.2")
-    implementation("androidx.navigation:navigation-compose:2.7.2")
-
-    val composeUi = "1.5.1"
-    implementation("androidx.compose.ui:ui:$composeUi")
-    implementation("androidx.compose.ui:ui-graphics:$composeUi")
-    implementation("androidx.compose.ui:ui-tooling-preview:$composeUi")
-    implementation("androidx.compose.material3:material3:1.2.0-alpha04")
-    implementation("androidx.compose.foundation:foundation:1.5.1")
-    implementation("androidx.compose.runtime:runtime:1.5.1")
-    implementation("androidx.compose.animation:animation:1.5.1")
-
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
-
-    implementation("androidx.compose.material:material:1.5.1") {
+    /*Compose*/
+    implementation(libs.bundles.compose)
+    implementation(libs.activityCompose)
+    implementation(libs.navigationCompose)
+    implementation(libs.composeUi)
+    implementation(libs.composeMaterial3)
+    implementation(libs.lifecycleRuntimeCompose)
+    implementation(libs.composeMaterial) {
         because("just for the swipe refresh")
     }
+    implementation(libs.constraintLayoutCompose)
+    implementation(libs.coilCompose)
 
-    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+    /*Retrofit*/
+    implementation(libs.retrofit)
+    implementation(libs.kotlinxSerialization)
+    implementation(libs.retrofitKotlinxSerializationConverter)
 
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
-    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
+    /*dagger*/
+    implementation(libs.dagger)
+    ksp(libs.daggerCompiler)
 
-    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.10.0"))
-    implementation("com.squareup.okhttp3:okhttp")
-    implementation("com.squareup.okhttp3:logging-interceptor")
+    /*room*/
+    implementation(libs.bundles.room)
+    ksp(libs.roomCompiler)
 
-    implementation("androidx.paging:paging-common-ktx:3.2.1")
-    implementation("com.google.dagger:dagger:2.48")
-    ksp("com.google.dagger:dagger-compiler:2.48")
+    /*chucker*/
+    debugImplementation(libs.chucker)
+    releaseImplementation(libs.chuckerNoOp)
 
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    /*datastore*/
+    implementation(libs.bundles.datastore)
+    implementation(libs.datastorePreferences)
 
-    val paging = "3.2.1"
-    implementation("androidx.paging:paging-runtime-ktx:$paging")
-    implementation("androidx.paging:paging-common-ktx:$paging")
-    implementation("androidx.paging:paging-compose:$paging")
-    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation(libs.coreKtx)
+    implementation(libs.lifecycleRuntimeKtx)
+    implementation(libs.bundles.okhttp)
+    implementation(libs.bundles.paging)
+    implementation(libs.zoomableImageCoil)
+    implementation(libs.accompanistNavigationMaterial)
+    implementation(libs.splashscreen)
 
-    val roomVersion = "2.5.2"
-    implementation("androidx.room:room-runtime:$roomVersion")
-    implementation("androidx.room:room-paging:$roomVersion")
-    implementation("androidx.room:room-ktx:$roomVersion")
-    ksp("androidx.room:room-compiler:$roomVersion")
-
-    debugImplementation("com.github.chuckerteam.chucker:library:4.0.0")
-    releaseImplementation("com.github.chuckerteam.chucker:library-no-op:3.5.2")
-
-    implementation("me.saket.telephoto:zoomable-image-coil:0.4.0")
-
-    implementation("com.google.accompanist:accompanist-navigation-material:0.32.0")
-
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
-
-    implementation("androidx.datastore:datastore:1.0.0")
-    implementation("com.google.protobuf:protobuf-javalite:3.23.0")
-
-    implementation("androidx.core:core-splashscreen:1.0.1")
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidxJunit)
+    androidTestImplementation(libs.espressoCore)
+    androidTestImplementation(libs.composeUiJunit4)
+    debugImplementation(libs.composeUiTooling)
+    debugImplementation(libs.composeUiManifest)
 }
 
 class RoomSchemaArgProvider(
