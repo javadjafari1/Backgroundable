@@ -109,7 +109,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
     packaging {
         resources {
@@ -144,6 +144,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
 
+    // compose specific libs
     implementation("androidx.activity:activity-compose:1.7.2")
     implementation("androidx.navigation:navigation-compose:2.7.2")
 
@@ -152,8 +153,17 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics:$composeUi")
     implementation("androidx.compose.ui:ui-tooling-preview:$composeUi")
     implementation("androidx.compose.material3:material3:1.2.0-alpha04")
+    implementation("androidx.compose.foundation:foundation:1.5.1")
+    implementation("androidx.compose.runtime:runtime:1.5.1")
+    implementation("androidx.compose.animation:animation:1.5.1")
 
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
+
+    implementation("androidx.compose.material:material:1.5.1") {
+        because("just for the swipe refresh")
+    }
+
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
@@ -191,15 +201,10 @@ dependencies {
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:3.5.2")
 
     implementation("me.saket.telephoto:zoomable-image-coil:0.4.0")
-    implementation("androidx.compose.material:material:1.5.1") {
-        because("just for the swipe refresh")
-    }
 
     implementation("com.google.accompanist:accompanist-navigation-material:0.32.0")
 
     implementation("androidx.datastore:datastore-preferences:1.0.0")
-
-    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 
     implementation("androidx.datastore:datastore:1.0.0")
     implementation("com.google.protobuf:protobuf-javalite:3.23.0")
