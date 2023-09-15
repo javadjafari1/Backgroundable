@@ -121,7 +121,11 @@ fun BackgroundableTheme(
         SideEffect {
             val window = (view.context as Activity).window
             window.statusBarColor = colorScheme.background.copy(alpha = 0.1f).toArgb()
-            window.navigationBarColor = colorScheme.background.copy(alpha = 0.1f).toArgb()
+            if (!darkTheme && Build.VERSION.SDK_INT < Build.VERSION_CODES.O_MR1) {
+                window.navigationBarColor = Color.Black.copy(alpha = 0.3f).toArgb()
+            } else {
+                window.navigationBarColor = colorScheme.background.copy(alpha = 0.1f).toArgb()
+            }
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
             WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars =
                 !darkTheme
