@@ -37,8 +37,6 @@ formatting:
     active: false
   ModifierOrdering:
     active: true
-  NoBlankLineBeforeRbrace:
-    active: true
   NoConsecutiveBlankLines:
     active: true
   NoEmptyClassBody:
