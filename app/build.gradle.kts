@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.konan.properties.Properties
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlin)
+    alias(libs.plugins.kapt)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.protobuf)
     alias(libs.plugins.detekt)
@@ -158,7 +159,7 @@ dependencies {
 
     /*dagger*/
     implementation(libs.dagger)
-    ksp(libs.daggerCompiler)
+    kapt(libs.daggerCompiler)
 
     /*room*/
     implementation(libs.bundles.room)

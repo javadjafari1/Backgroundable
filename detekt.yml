@@ -319,9 +319,6 @@ style:
     active: true
   ExpressionBodySyntax:
     active: false
-  ForbiddenComment:
-    active: false
-    values: [ 'TODO:', 'FIXME:', 'STOPSHIP:' ]
   ForbiddenImport:
     active: false
     imports: [ ]
@@ -342,8 +339,10 @@ style:
     ignoreAnnotation: false
     ignoreNamedArgument: true
     ignoreEnums: false
-  MandatoryBracesIfStatements:
+  BracesOnIfStatements:
     active: true
+    singleLine: 'never'
+    multiLine: 'always'
   MaxLineLength:
     active: true
     maxLineLength: 175
@@ -363,8 +362,6 @@ style:
   OptionalAbstractKeyword:
     active: true
   OptionalUnit:
-    active: false
-  OptionalWhenBraces:
     active: false
   PreferToOverPairSyntax:
     active: true
@@ -395,6 +392,8 @@ style:
     active: false
   UntilInsteadOfRangeTo:
     active: true
+  UnusedPrivateProperty:
+    active: false
   UnusedImports:
     active: true
   UnusedPrivateMember:
