@@ -15,8 +15,8 @@ Backgroundable is an Android app that allows you to set beautiful wallpapers for
 
 ## Screenshots
 
-| Home                                     | Media List                               | Media Detail                             | Search                                   | Settings                                 |
-|------------------------------------------|------------------------------------------|------------------------------------------|------------------------------------------|------------------------------------------|
+| Home                                                                      | Media List                                                                           | Media Detail                                                                             | Search                                                                        | Settings                                                                          |
+|---------------------------------------------------------------------------|--------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
 | <img src="resource/screenshots/home.png" alt="Home" style="width:200px"/> | <img src="resource/screenshots/mediaList.png" alt="Media List" style="width:200px"/> | <img src="resource/screenshots/mediaDetail.png" alt="Media Detail" style="width:200px"/> | <img src="resource/screenshots/search.png" alt="Search" style="width:200px"/> | <img src="resource/screenshots/settings.png" alt="Settings" style="width:200px"/> |
 
 
