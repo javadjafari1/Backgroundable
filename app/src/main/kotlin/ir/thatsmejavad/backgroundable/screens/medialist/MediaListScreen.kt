@@ -56,8 +56,8 @@ import ir.thatsmejavad.backgroundable.common.ui.MediaCard
 import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
 import ir.thatsmejavad.backgroundable.core.getErrorMessage
 import ir.thatsmejavad.backgroundable.core.getSnackbarMessage
+import ir.thatsmejavad.backgroundable.core.sealeds.ImageQuality.Companion.toResourceSize
 import ir.thatsmejavad.backgroundable.core.sealeds.List
-import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
 
 @Composable
 internal fun MediaListScreen(
@@ -68,6 +68,8 @@ internal fun MediaListScreen(
 ) {
     val medias = viewModel.medias.collectAsLazyPagingItems()
     val columnType by viewModel.mediaColumnTypeFlow.collectAsStateWithLifecycle()
+
+    val imageQuality by viewModel.imageQuality.collectAsStateWithLifecycle()
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
@@ -170,7 +172,9 @@ internal fun MediaListScreen(
                                     aspectRatio = media.media.width / media.media.height.toFloat(),
                                     avgColor = media.media.avgColor,
                                     photographer = media.media.photographer,
-                                    resourceUrl = media.resources.first { it.size == ResourceSize.Medium }.url,
+                                    resourceUrl = media.resources.first {
+                                        it.size == imageQuality.toResourceSize()
+                                    }.url,
                                     onMediaClicked = onMediaClicked
                                 )
                             }
@@ -230,7 +234,7 @@ internal fun MediaListScreen(
                                     avgColor = media.media.avgColor,
                                     isSingleColumn = columnType == List.ListType,
                                     photographer = media.media.photographer,
-                                    resourceUrl = media.resources.first { it.size == ResourceSize.Medium }.url,
+                                    resourceUrl = media.resources.first { it.size == imageQuality.toResourceSize() }.url,
                                     onMediaClicked = onMediaClicked
                                 )
                             }

@@ -72,6 +72,7 @@ import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
 import ir.thatsmejavad.backgroundable.core.Constants.NAVIGATION_BAR_HEIGHT
 import ir.thatsmejavad.backgroundable.core.getErrorMessage
 import ir.thatsmejavad.backgroundable.core.getSnackbarMessage
+import ir.thatsmejavad.backgroundable.core.sealeds.ImageQuality
 import ir.thatsmejavad.backgroundable.core.sealeds.List
 
 @Composable
@@ -83,6 +84,7 @@ fun SearchScreen(
     val medias = viewModel.medias.collectAsLazyPagingItems()
 
     val columnType by viewModel.mediaColumnTypeFlow.collectAsStateWithLifecycle()
+    val imageQuality by viewModel.imageQuality.collectAsStateWithLifecycle()
 
     val refreshLoadState = medias.loadState.refresh
 
@@ -240,7 +242,11 @@ fun SearchScreen(
                                     aspectRatio = media.width / media.height.toFloat(),
                                     avgColor = media.avgColor,
                                     photographer = media.photographer,
-                                    resourceUrl = media.resources.medium,
+                                    resourceUrl = when (imageQuality) {
+                                        ImageQuality.High -> media.resources.medium
+                                        ImageQuality.Low -> media.resources.small
+                                        ImageQuality.Medium -> media.resources.tiny
+                                    },
                                     onMediaClicked = onMediaClicked
                                 )
                             }
@@ -308,7 +314,11 @@ fun SearchScreen(
                                     avgColor = media.avgColor,
                                     isSingleColumn = columnType == List.ListType,
                                     photographer = media.photographer,
-                                    resourceUrl = media.resources.medium,
+                                    resourceUrl = when (imageQuality) {
+                                        ImageQuality.High -> media.resources.medium
+                                        ImageQuality.Low -> media.resources.small
+                                        ImageQuality.Medium -> media.resources.tiny
+                                    },
                                     onMediaClicked = onMediaClicked
                                 )
                             }

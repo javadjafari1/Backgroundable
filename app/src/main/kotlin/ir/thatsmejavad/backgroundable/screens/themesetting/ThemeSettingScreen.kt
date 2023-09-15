@@ -24,8 +24,8 @@ import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -76,11 +76,7 @@ fun ThemeSettingScreen(
                 Theme.FollowSystem
             )
             val selectedTabIndex by remember(userPreferences.theme) {
-                mutableIntStateOf(
-                    tabs.indexOf(
-                        userPreferences.theme
-                    )
-                )
+                derivedStateOf { tabs.indexOf(userPreferences.theme) }
             }
 
             TabRow(

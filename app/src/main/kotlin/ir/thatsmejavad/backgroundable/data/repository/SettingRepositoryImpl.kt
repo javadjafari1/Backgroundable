@@ -2,6 +2,7 @@ package ir.thatsmejavad.backgroundable.data.repository
 
 import androidx.datastore.core.DataStore
 import ir.thatsmejavad.backgroundable.UserPref
+import ir.thatsmejavad.backgroundable.core.sealeds.ImageQuality
 import ir.thatsmejavad.backgroundable.core.sealeds.List
 import ir.thatsmejavad.backgroundable.core.sealeds.Theme
 import ir.thatsmejavad.backgroundable.model.UserPreferences
@@ -26,7 +27,8 @@ class SettingRepositoryImpl @Inject constructor(
             UserPreferences(
                 isMaterialYouEnabled = it.isMaterialYou,
                 theme = Theme.toTheme(it.theme),
-                listType = List.toList(it.mediaColumnType)
+                listType = List.toList(it.mediaColumnType),
+                imageQuality = ImageQuality.toImageQuality(it.quality)
             )
         }
 
@@ -44,6 +46,15 @@ class SettingRepositoryImpl @Inject constructor(
             currentPref
                 .toBuilder()
                 .setTheme(Theme.fromTheme(theme))
+                .build()
+        }
+    }
+
+    override suspend fun setImageQuality(imageQuality: ImageQuality) {
+        userPreferencesStore.updateData { currentPref ->
+            currentPref
+                .toBuilder()
+                .setQuality(ImageQuality.fromImageQuality(imageQuality))
                 .build()
         }
     }
