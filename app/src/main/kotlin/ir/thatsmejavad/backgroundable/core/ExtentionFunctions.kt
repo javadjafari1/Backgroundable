@@ -19,6 +19,8 @@ import java.io.FileOutputStream
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 fun Throwable?.getErrorMessage(): UiText {
@@ -90,11 +92,15 @@ fun Bitmap.saveIn(
     directory: File,
     name: String = "image"
 ): File {
-    val tempFile = File.createTempFile(name, ".jpg", directory)
-    FileOutputStream(tempFile).use {
-        compress(Bitmap.CompressFormat.JPEG, 100, it)
-    }
-    return tempFile
+    val imageTime = System.currentTimeMillis()
+    val imageDate = SimpleDateFormat("yyyyMMdd-HHmmss", Locale.getDefault()).format(Date(imageTime))
+    val imageName = String.format(Locale.getDefault(), "${name}_%s.png", imageDate)
+
+    val cachedPath = File(directory, "wallpaper").apply { mkdirs() }
+    val imageFile = File(cachedPath, imageName)
+
+    FileOutputStream(imageFile).use { out -> compress(Bitmap.CompressFormat.PNG, 100, out) }
+    return imageFile
 }
 
 fun Context.openUrl(url: String) {
@@ -141,5 +147,26 @@ fun String.capitalizeFirstChar(): String {
         } else {
             firstChar.toString()
         }
+    }
+}
+
+fun Uri.shareFileWithUri(
+    context: Context,
+    contentType: String,
+    text: String = "",
+    onFail: (Exception) -> Unit,
+) {
+    try {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = contentType
+            putExtra(Intent.EXTRA_STREAM, this@shareFileWithUri)
+            putExtra(Intent.EXTRA_TEXT, text)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        val shareTitle = context.getString(R.string.label_send_to)
+        val shareIntent = Intent.createChooser(intent, shareTitle)
+        context.startActivity(shareIntent)
+    } catch (e: Exception) {
+        onFail(e)
     }
 }

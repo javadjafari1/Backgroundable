@@ -36,4 +36,5 @@
     <string name="label_height">"Height: "</string>
     <string name="label_sizes">"Sizes: "</string>
     <string name="label_orientation">"Orientation: "</string>
+    <string name="label_send_to">Share via</string>
 </resources>
