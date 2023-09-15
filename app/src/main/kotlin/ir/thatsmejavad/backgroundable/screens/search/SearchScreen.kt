@@ -244,8 +244,8 @@ fun SearchScreen(
                                     photographer = media.photographer,
                                     resourceUrl = when (imageQuality) {
                                         ImageQuality.High -> media.resources.medium
-                                        ImageQuality.Low -> media.resources.small
-                                        ImageQuality.Medium -> media.resources.tiny
+                                        ImageQuality.Medium -> media.resources.small
+                                        ImageQuality.Low -> media.resources.tiny
                                     },
                                     onMediaClicked = onMediaClicked
                                 )
@@ -316,8 +316,8 @@ fun SearchScreen(
                                     photographer = media.photographer,
                                     resourceUrl = when (imageQuality) {
                                         ImageQuality.High -> media.resources.medium
-                                        ImageQuality.Low -> media.resources.small
-                                        ImageQuality.Medium -> media.resources.tiny
+                                        ImageQuality.Medium -> media.resources.small
+                                        ImageQuality.Low -> media.resources.tiny
                                     },
                                     onMediaClicked = onMediaClicked
                                 )
