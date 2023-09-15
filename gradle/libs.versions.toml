@@ -81,6 +81,7 @@ zoomableImageCoil = { module = "me.saket.telephoto:zoomable-image-coil", version
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobuf" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
