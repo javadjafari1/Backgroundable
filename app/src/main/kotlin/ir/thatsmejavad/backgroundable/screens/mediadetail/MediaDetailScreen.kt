@@ -70,6 +70,7 @@ import ir.thatsmejavad.backgroundable.core.sealeds.OrientationMode
 import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
 import ir.thatsmejavad.backgroundable.core.setAsWallpaper
 import ir.thatsmejavad.backgroundable.core.shareFileWithUri
+import ir.thatsmejavad.backgroundable.core.toColor
 import ir.thatsmejavad.backgroundable.core.toast
 
 @Composable
@@ -404,23 +405,31 @@ private fun DetailDialog(
                 style = TextStyle(color = MaterialTheme.colorScheme.onSurface)
             )
 
-            val mailColorText = buildAnnotatedString {
-                val text = stringResource(R.string.label_main_color)
-                append(text)
-                addStyle(
-                    style = SpanStyle(fontSize = 22.sp),
-                    start = 0,
-                    end = text.length
-                )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                val mainColorText = buildAnnotatedString {
+                    val text = stringResource(R.string.label_main_color)
+                    append(text)
+                    addStyle(
+                        style = SpanStyle(fontSize = 22.sp),
+                        start = 0,
+                        end = text.length
+                    )
 
-                append(avgColor)
-                addStyle(
-                    style = SpanStyle(fontSize = 16.sp),
-                    start = text.length,
-                    end = avgColor.length + text.length
+                    append(avgColor)
+                    addStyle(
+                        style = SpanStyle(fontSize = 16.sp),
+                        start = text.length,
+                        end = avgColor.length + text.length
+                    )
+                }
+                Text(text = mainColorText)
+                Spacer(modifier = Modifier.size(8.dp))
+                Box(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .background(avgColor.toColor())
                 )
             }
-            Text(text = mailColorText)
 
             val widthText = buildAnnotatedString {
                 val text = stringResource(R.string.label_width)
