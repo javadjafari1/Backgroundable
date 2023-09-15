@@ -1,3 +1,4 @@
+@file:Suppress("UsingMaterialAndMaterial3Libraries")
 package ir.thatsmejavad.backgroundable.main
 
 import android.Manifest
@@ -56,7 +57,6 @@ import ir.thatsmejavad.backgroundable.core.Constants.NAVIGATION_BAR_HEIGHT
 import ir.thatsmejavad.backgroundable.core.sealeds.Theme
 import ir.thatsmejavad.backgroundable.core.viewmodel.LocalViewModelFactory
 import ir.thatsmejavad.backgroundable.mainNavGraph
-import ir.thatsmejavad.backgroundable.model.UserPreferences
 import ir.thatsmejavad.backgroundable.ui.theme.BackgroundableTheme
 import javax.inject.Inject
 
@@ -89,9 +89,7 @@ class MainActivity : ComponentActivity() {
             CompositionLocalProvider(
                 LocalViewModelFactory provides backgroundableApplication.appComponent.getViewModelFactory()
             ) {
-                val userPreferences by viewModel.userPreferences.collectAsStateWithLifecycle(
-                    initialValue = UserPreferences()
-                )
+                val userPreferences by viewModel.userPreferences.collectAsStateWithLifecycle()
                 BackgroundableTheme(
                     dynamicColor = userPreferences.isMaterialYouEnabled,
                     darkTheme = when (userPreferences.theme) {
