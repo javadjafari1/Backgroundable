@@ -94,4 +94,3 @@ sealed interface SavePurpose {
     data object SettingWallpaper : SavePurpose
     data object Share : SavePurpose
 }
-

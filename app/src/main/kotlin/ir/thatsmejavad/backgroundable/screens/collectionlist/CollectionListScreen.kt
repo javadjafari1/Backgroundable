@@ -252,7 +252,6 @@ private fun LazyGridItemScope.CollectionCard(
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface
             )
-
         }
 
         if (isVertical) {
