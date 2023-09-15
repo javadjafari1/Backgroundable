@@ -59,9 +59,11 @@ fun SettingsScreen(
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             SettingItem(
-                textId = R.string.label_language,
-                imageId = R.drawable.ic_language,
-                onClick = {}
+                textId = R.string.label_quality,
+                imageId = R.drawable.ic_high_quality,
+                onClick = {
+                    navigateTo(AppScreens.ImageQualitySetting.route)
+                }
             )
 
             Spacer(modifier = Modifier.height(16.dp))

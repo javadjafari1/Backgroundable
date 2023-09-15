@@ -8,6 +8,7 @@ import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelAssistedFactory
 import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelAssistedFactoryKey
 import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListViewModel
 import ir.thatsmejavad.backgroundable.screens.downloadpicker.DownloadPickerViewModel
+import ir.thatsmejavad.backgroundable.screens.imagequalitysetting.ImageQualitySettingViewModel
 import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailViewModel
 import ir.thatsmejavad.backgroundable.screens.medialist.MediaListViewModel
 import ir.thatsmejavad.backgroundable.screens.search.SearchViewModel
@@ -47,4 +48,8 @@ interface AppViewModelModule {
     @Binds
     @[IntoMap ViewModelAssistedFactoryKey(DownloadPickerViewModel::class)]
     fun bindsDownloadPickerViewModelFactory(factory: DownloadPickerViewModel.Factory): ViewModelAssistedFactory<*>
+
+    @Binds
+    @[IntoMap ViewModelAssistedFactoryKey(ImageQualitySettingViewModel::class)]
+    fun bindsImageQualitySettingViewModelFactory(viewModel: ImageQualitySettingViewModel): ViewModel
 }

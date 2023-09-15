@@ -14,6 +14,7 @@ import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListScree
 import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListViewModel
 import ir.thatsmejavad.backgroundable.screens.columncountpicker.ColumnCountPicker
 import ir.thatsmejavad.backgroundable.screens.downloadpicker.DownloadPickerScreen
+import ir.thatsmejavad.backgroundable.screens.imagequalitysetting.ImageQualitySettingScreen
 import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailScreen
 import ir.thatsmejavad.backgroundable.screens.medialist.MediaListScreen
 import ir.thatsmejavad.backgroundable.screens.search.SearchScreen
@@ -201,11 +202,22 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         )
     }
 
-    animatedComposable(AppScreens.AboutUs.route) {
+    animatedComposable(
+        route = AppScreens.AboutUs.route
+    ) {
         AboutUsScreen(
             onBackClicked = {
                 navController.navigateUp()
             }
+        )
+    }
+
+    animatedComposable(
+        route = AppScreens.ImageQualitySetting.route
+    ) {
+        ImageQualitySettingScreen(
+            viewModel = daggerViewModel(),
+            onBackClicked = { navController.navigateUp() }
         )
     }
 }

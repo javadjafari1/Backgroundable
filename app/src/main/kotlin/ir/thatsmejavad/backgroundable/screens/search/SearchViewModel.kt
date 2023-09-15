@@ -9,6 +9,8 @@ import androidx.paging.cachedIn
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
 import ir.thatsmejavad.backgroundable.core.sealeds.List
 import ir.thatsmejavad.backgroundable.data.repository.MediaRepository
+import ir.thatsmejavad.backgroundable.data.repository.SettingRepository
+import ir.thatsmejavad.backgroundable.model.UserPreferences
 import ir.thatsmejavad.backgroundable.model.media.Media
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,6 +20,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -26,6 +29,7 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     val snackbarManager: SnackbarManager,
     private val mediaRepository: MediaRepository,
+    settingRepository: SettingRepository,
 ) : ViewModel() {
 
     private val _searchQuery = MutableStateFlow("")
@@ -49,6 +53,14 @@ class SearchViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(),
         initialValue = List.StaggeredType
     )
+
+    val imageQuality = settingRepository.userPreferencesFlow
+        .map { it.imageQuality }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = UserPreferences().imageQuality
+        )
 
     init {
         viewModelScope.launch {

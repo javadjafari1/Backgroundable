@@ -66,6 +66,7 @@ import ir.thatsmejavad.backgroundable.core.capitalizeFirstChar
 import ir.thatsmejavad.backgroundable.core.getErrorMessage
 import ir.thatsmejavad.backgroundable.core.openUrl
 import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob
+import ir.thatsmejavad.backgroundable.core.sealeds.ImageQuality.Companion.toResourceSize
 import ir.thatsmejavad.backgroundable.core.sealeds.OrientationMode
 import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
 import ir.thatsmejavad.backgroundable.core.setAsWallpaper
@@ -83,6 +84,7 @@ fun MediaDetailScreen(
 ) {
     val mediaResult by viewModel.media.collectAsStateWithLifecycle()
     val fileUrl by viewModel.fileUri.collectAsStateWithLifecycle()
+    val imageQuality by viewModel.imageQuality.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
     var isToolsVisible by rememberSaveable { mutableStateOf(true) }
@@ -215,7 +217,7 @@ fun MediaDetailScreen(
                             .fillMaxWidth(),
                         onClick = { isToolsVisible = !isToolsVisible },
                         url = mediaWithResources.resources.first { it.size == ResourceSize.Original }.url,
-                        placeHolder = mediaWithResources.resources.first { it.size == ResourceSize.Medium }.url,
+                        placeHolder = mediaWithResources.resources.first { it.size == imageQuality.toResourceSize() }.url,
                         contentDescription = mediaWithResources.media.alt,
                         isLoading = { isImageLoading = it },
                         onDrawableLoaded = { drawable = it }

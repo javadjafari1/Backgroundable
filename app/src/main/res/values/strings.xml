@@ -16,7 +16,6 @@
     <string name="label_nothing_found_with_keyword">Nothing found with keyword %1$s</string>
     <string name="label_looking_for_wallpapers_start_here">Looking for wallpapers? Start here</string>
     <string name="label_grid_count">Grid Count</string>
-    <string name="label_language">Language</string>
     <string name="label_theme">Theme</string>
     <string name="label_about_us">About us</string>
     <string name="label_version">Version: %s</string>
@@ -37,4 +36,6 @@
     <string name="label_sizes">"Sizes: "</string>
     <string name="label_orientation">"Orientation: "</string>
     <string name="label_send_to">Share via</string>
+    <string name="label_quality">Image Quality</string>
+    <string name="label_image_quality">Image Quality</string>
 </resources>
