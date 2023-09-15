@@ -1,15 +1,10 @@
 package ir.thatsmejavad.backgroundable.screens.collectionlist
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
-import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelAssistedFactory
 import ir.thatsmejavad.backgroundable.data.datastore.ColumnCountsPreferences
 import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
 import ir.thatsmejavad.backgroundable.data.repository.CollectionRepository
@@ -22,16 +17,13 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import javax.inject.Inject
 
-class CollectionListViewModel @AssistedInject constructor(
+class CollectionListViewModel @Inject constructor(
     private val collectionRepository: CollectionRepository,
     val snackbarManager: SnackbarManager,
-    @Assisted private val savedStateHandle: SavedStateHandle,
     private val columnCountsPreferences: ColumnCountsPreferences,
 ) : ViewModel() {
-
-    @AssistedFactory
-    interface Factory : ViewModelAssistedFactory<CollectionListViewModel>
 
     var columnCountPickerData: String = ""
         private set

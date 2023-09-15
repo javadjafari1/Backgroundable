@@ -1,5 +1,6 @@
 package ir.thatsmejavad.backgroundable.di.modules
 
+import androidx.lifecycle.ViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -25,7 +26,7 @@ interface AppViewModelModule {
 
     @Binds
     @[IntoMap ViewModelAssistedFactoryKey(CollectionListViewModel::class)]
-    fun bindsCollectionListViewModelFactory(factory: CollectionListViewModel.Factory): ViewModelAssistedFactory<*>
+    fun bindsCollectionListViewModelFactory(viewModel: CollectionListViewModel): ViewModel
 
     @Binds
     @[IntoMap ViewModelAssistedFactoryKey(MediaListViewModel::class)]
@@ -37,11 +38,11 @@ interface AppViewModelModule {
 
     @Binds
     @[IntoMap ViewModelAssistedFactoryKey(SearchViewModel::class)]
-    fun bindsSearchViewModelFactory(factory: SearchViewModel.Factory): ViewModelAssistedFactory<*>
+    fun bindsSearchViewModelFactory(viewModel: SearchViewModel): ViewModel
 
     @Binds
     @[IntoMap ViewModelAssistedFactoryKey(ThemeSettingViewModel::class)]
-    fun bindsThemeSettingViewModelFactory(factory: ThemeSettingViewModel.Factory): ViewModelAssistedFactory<*>
+    fun bindsThemeSettingViewModelFactory(viewModel: ThemeSettingViewModel): ViewModel
 
     @Binds
     @[IntoMap ViewModelAssistedFactoryKey(DownloadPickerViewModel::class)]
