@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.MaterialTheme
@@ -26,12 +25,10 @@ import ir.thatsmejavad.backgroundable.core.toColor
 fun MediaCard(
     id: Int,
     alt: String,
-    height: Int,
     avgColor: String,
     photographer: String,
     resourceUrl: String,
     isSingleColumn: Boolean,
-    isStaggered: Boolean,
     modifier: Modifier = Modifier,
     onMediaClicked: (Int, String) -> Unit,
 ) {
@@ -50,13 +47,7 @@ fun MediaCard(
             modifier = Modifier
                 .clip(MaterialTheme.shapes.large)
                 .fillMaxWidth()
-                .then(
-                    if (isStaggered) {
-                        Modifier.heightIn(max = if (isSingleColumn) 420.dp else (height / 20).dp)
-                    } else {
-                        Modifier.aspectRatio(1f)
-                    }
-                ),
+                .aspectRatio(1f),
             url = resourceUrl,
             contentDescription = alt,
             placeHolder = ColorPainter(avgColor.toColor())
@@ -74,7 +65,57 @@ fun MediaCard(
         }
         Text(
             text = text,
-            maxLines = if (!isStaggered && !isSingleColumn) 2 else Int.MAX_VALUE,
+            maxLines = if (isSingleColumn) Int.MAX_VALUE else 2,
+            overflow = TextOverflow.Ellipsis,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurface
+        )
+    }
+}
+
+@Composable
+fun MediaCard(
+    id: Int,
+    alt: String,
+    aspectRatio: Float,
+    avgColor: String,
+    photographer: String,
+    resourceUrl: String,
+    modifier: Modifier = Modifier,
+    onMediaClicked: (Int, String) -> Unit,
+) {
+    Column(
+        modifier = modifier
+            .clip(
+                MaterialTheme.shapes.extraSmall.copy(
+                    bottomEnd = CornerSize(0.dp),
+                    bottomStart = CornerSize(0.dp)
+                )
+            )
+            .clickable { onMediaClicked(id, alt) }
+    ) {
+        CoilImage(
+            modifier = Modifier
+                .clip(MaterialTheme.shapes.large)
+                .fillMaxWidth()
+                .aspectRatio(aspectRatio),
+            url = resourceUrl,
+            contentDescription = alt,
+            placeHolder = ColorPainter(avgColor.toColor())
+        )
+        Spacer(modifier = Modifier.padding(4.dp))
+        val text = buildAnnotatedString {
+            append(alt)
+            addStyle(
+                SpanStyle(fontWeight = FontWeight.Bold),
+                0,
+                alt.length
+            )
+            append(" by ")
+            append(photographer)
+        }
+        Text(
+            text = text,
             overflow = TextOverflow.Ellipsis,
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurface

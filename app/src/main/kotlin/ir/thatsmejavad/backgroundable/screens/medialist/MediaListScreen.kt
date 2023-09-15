@@ -1,5 +1,12 @@
 package ir.thatsmejavad.backgroundable.screens.medialist
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.slideIn
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,6 +16,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.material.icons.Icons
@@ -33,6 +42,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
@@ -120,64 +130,142 @@ internal fun MediaListScreen(
             onSwipe = { medias.refresh() },
             isRefreshing = medias.loadState.refresh is LoadState.Loading
         ) {
-            LazyVerticalStaggeredGrid(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .fillMaxSize(),
-                columns = StaggeredGridCells.Fixed(
-                    when (columnType) {
-                        List.GridType, List.StaggeredType -> 2
-                        List.ListType -> 1
-                    }
-                ),
-                verticalItemSpacing = 12.dp,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                contentPadding = PaddingValues(top = 16.dp)
-            ) {
-                items(
-                    count = medias.itemCount,
-                    key = medias.itemKey { it.media.id },
-                    contentType = medias.itemContentType()
-                ) { index ->
-                    medias[index]?.let { media ->
-                        MediaCard(
-                            id = media.media.id,
-                            alt = media.media.alt,
-                            height = media.media.height,
-                            avgColor = media.media.avgColor,
-                            isSingleColumn = columnType == List.ListType,
-                            isStaggered = columnType == List.StaggeredType,
-                            photographer = media.media.photographer,
-                            resourceUrl = media.resources.first { it.size == ResourceSize.Medium }.url,
-                            onMediaClicked = onMediaClicked
-                        )
-                    }
-                }
-
-                when (val paginationLoadState = medias.loadState.append) {
-                    is LoadState.Error -> {
-                        if (!paginationLoadState.endOfPaginationReached) {
-                            item {
-                                Box(Modifier.fillMaxSize()) {
-                                    Text(
-                                        modifier = Modifier.align(Alignment.Center),
-                                        text = paginationLoadState.error.getErrorMessage()
-                                            .asString()
+            AnimatedContent(
+                targetState = columnType,
+                label = "change Staggered to Grid anim",
+                transitionSpec = {
+                    (
+                            fadeIn(animationSpec = tween(220, delayMillis = 120)) +
+                                    slideIn(
+                                        animationSpec = tween(220, delayMillis = 120),
+                                        initialOffset = { IntOffset.Zero }
+                                    ) +
+                                    scaleIn(
+                                        initialScale = 0.92f,
+                                        animationSpec = tween(220, delayMillis = 120)
                                     )
+                            )
+                        .togetherWith(fadeOut(animationSpec = tween(120)))
+                }
+            ) { type ->
+                if (type == List.StaggeredType) {
+                    LazyVerticalStaggeredGrid(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .fillMaxSize(),
+                        columns = StaggeredGridCells.Fixed(2),
+                        verticalItemSpacing = 12.dp,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        contentPadding = PaddingValues(top = 16.dp)
+                    ) {
+                        items(
+                            count = medias.itemCount,
+                            key = medias.itemKey { it.media.id },
+                            contentType = medias.itemContentType()
+                        ) { index ->
+                            medias[index]?.let { media ->
+                                MediaCard(
+                                    id = media.media.id,
+                                    alt = media.media.alt,
+                                    aspectRatio = media.media.width / media.media.height.toFloat(),
+                                    avgColor = media.media.avgColor,
+                                    photographer = media.media.photographer,
+                                    resourceUrl = media.resources.first { it.size == ResourceSize.Medium }.url,
+                                    onMediaClicked = onMediaClicked
+                                )
+                            }
+                        }
+
+                        when (val paginationLoadState = medias.loadState.append) {
+                            is LoadState.Error -> {
+                                if (!paginationLoadState.endOfPaginationReached) {
+                                    item {
+                                        Box(Modifier.fillMaxSize()) {
+                                            Text(
+                                                modifier = Modifier.align(Alignment.Center),
+                                                text = paginationLoadState.error.getErrorMessage()
+                                                    .asString()
+                                            )
+                                        }
+                                    }
                                 }
                             }
+
+                            is LoadState.Loading -> {
+                                item {
+                                    Box(Modifier.fillMaxSize()) {
+                                        CircularProgressIndicator(
+                                            modifier = Modifier.align(
+                                                Alignment.Center
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+
+                            else -> {}
                         }
                     }
-
-                    is LoadState.Loading -> {
-                        item {
-                            Box(Modifier.fillMaxSize()) {
-                                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                } else {
+                    LazyVerticalGrid(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .fillMaxSize(),
+                        columns = GridCells.Fixed(
+                            if (type == List.ListType) 1 else 2
+                        ),
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        contentPadding = PaddingValues(top = 16.dp)
+                    ) {
+                        items(
+                            count = medias.itemCount,
+                            key = medias.itemKey { it.media.id },
+                            contentType = medias.itemContentType()
+                        ) { index ->
+                            medias[index]?.let { media ->
+                                MediaCard(
+                                    id = media.media.id,
+                                    alt = media.media.alt,
+                                    avgColor = media.media.avgColor,
+                                    isSingleColumn = columnType == List.ListType,
+                                    photographer = media.media.photographer,
+                                    resourceUrl = media.resources.first { it.size == ResourceSize.Medium }.url,
+                                    onMediaClicked = onMediaClicked
+                                )
                             }
                         }
-                    }
 
-                    else -> {}
+                        when (val paginationLoadState = medias.loadState.append) {
+                            is LoadState.Error -> {
+                                if (!paginationLoadState.endOfPaginationReached) {
+                                    item {
+                                        Box(Modifier.fillMaxSize()) {
+                                            Text(
+                                                modifier = Modifier.align(Alignment.Center),
+                                                text = paginationLoadState.error.getErrorMessage()
+                                                    .asString()
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+
+                            is LoadState.Loading -> {
+                                item {
+                                    Box(Modifier.fillMaxSize()) {
+                                        CircularProgressIndicator(
+                                            modifier = Modifier.align(
+                                                Alignment.Center
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+
+                            else -> {}
+                        }
+                    }
                 }
             }
 
