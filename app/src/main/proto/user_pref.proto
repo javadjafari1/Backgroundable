@@ -8,6 +8,7 @@ message UserPref {
   ThemeType theme = 2;
   ListType mediaColumnType = 3;
   Quality quality = 4;
+  ThemeName themeName = 5;
 }
 
 enum ThemeType {
@@ -15,14 +16,25 @@ enum ThemeType {
   THEME_LIGHT = 1;
   THEME_FOLLOW_SYSTEM = 2;
 }
+
 enum ListType {
   LIST_TYPE_LIST = 0;
   LIST_TYPE_GRID = 1;
   LIST_TYPE_STAGGERED = 2;
 }
+
 enum Quality {
   QUALITY_MEDIUM = 0;
   QUALITY_LOW = 1;
   QUALITY_HIGH = 2;
   QUALITY_ULTRA = 3;
+}
+
+enum ThemeName {
+  THEME_SKOBELOFF = 0;
+  THEME_AO = 1;
+  THEME_BLUE_VIOLET = 2;
+  THEME_MIDDLE_RED = 3;
+  THEME_CRAYOLA = 4;
+  THEME_INDIGO = 5;
 }

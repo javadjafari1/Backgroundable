@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.ui.theme
+package ir.thatsmejavad.backgroundable.ui
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

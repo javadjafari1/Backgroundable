@@ -1,33 +1,61 @@
 package ir.thatsmejavad.backgroundable.ui.theme
 
-import android.app.Activity
-import android.os.Build
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ShapeDefaults
-import androidx.compose.material3.Shapes
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.unit.dp
-import androidx.core.view.WindowCompat
 
-private val shapes = Shapes(
-    extraSmall = ShapeDefaults.ExtraSmall.copy(CornerSize(10.dp)),
-    small = ShapeDefaults.ExtraSmall.copy(CornerSize(16.dp)),
-    medium = ShapeDefaults.ExtraSmall.copy(CornerSize(24.dp)),
-    large = ShapeDefaults.ExtraSmall.copy(CornerSize(32.dp)),
-    extraLarge = ShapeDefaults.ExtraSmall.copy(CornerSize(64.dp)),
-)
+private val primary10 = Color(0xFF00201F)
+private val primary20 = Color(0xFF003736)
+private val primary30 = Color(0xFF00504F)
+private val primary40 = Color(0xFF006A69)
+private val primary80 = Color(0xFF4DDAD8)
+private val primary90 = Color(0xFF6FF7F5)
 
-private val lightColorScheme = lightColorScheme(
+private val secondary10 = Color(0xFF051F1F)
+private val secondary20 = Color(0xFF1B3534)
+private val secondary30 = Color(0xFF324B4A)
+private val secondary40 = Color(0xFF4A6362)
+private val secondary80 = Color(0xFFB0CCCB)
+private val secondary90 = Color(0xFFCCE8E7)
+
+private val tertiary10 = Color(0xFF031C35)
+private val tertiary20 = Color(0xFF1B324B)
+private val tertiary30 = Color(0xFF334863)
+private val tertiary40 = Color(0xFF4B607C)
+private val tertiary80 = Color(0xFFB2C8E8)
+private val tertiary90 = Color(0xFFD2E4FF)
+
+private val error10 = Color(0xFF410002)
+private val error20 = Color(0xFF690005)
+private val error30 = Color(0xFF93000A)
+private val error40 = Color(0xFFBA1A1A)
+private val error80 = Color(0xFFFFB4AB)
+private val error90 = Color(0xFFFFDAD6)
+
+private val neutral04 = Color(0xFF0B0F0F)
+private val neutral06 = Color(0xFF101414)
+private val neutral10 = Color(0xFF191C1C)
+private val neutral12 = Color(0xFF1D2020)
+private val neutral17 = Color(0xFF272B2A)
+private val neutral20 = Color(0xFF2D3131)
+private val neutral22 = Color(0xFF323535)
+private val neutral24 = Color(0xFF363A3A)
+private val neutral87 = Color(0xFFD8DADA)
+private val neutral90 = Color(0xFFE0E3E2)
+private val neutral92 = Color(0xFFE6E9E8)
+private val neutral94 = Color(0xFFECEEED)
+private val neutral95 = Color(0xFFEFF1F0)
+private val neutral96 = Color(0xFFF2F4F3)
+private val neutral98 = Color(0xFFF7FAF9)
+private val neutral99 = Color(0xFFFAFDFC)
+
+private val neutralVariant30 = Color(0xFF3F4948)
+private val neutralVariant60 = Color(0xFF889392)
+private val neutralVariant80 = Color(0xFFBEC9C8)
+private val neutralVariant90 = Color(0xFFDAE5E3)
+private val neutralVariant95 = Color(0xFF6F7978)
+
+val skobeloffLightColors = lightColorScheme(
     primary = primary40,
     onPrimary = Color.White,
     primaryContainer = primary90,
@@ -66,7 +94,7 @@ private val lightColorScheme = lightColorScheme(
     surfaceBright = neutral98,
 )
 
-private val darkColorScheme = darkColorScheme(
+val skobeloffDarkColor = darkColorScheme(
     primary = primary80,
     onPrimary = primary20,
     primaryContainer = primary30,
@@ -104,42 +132,3 @@ private val darkColorScheme = darkColorScheme(
     surfaceDim = neutral06,
     surfaceBright = neutral24,
 )
-
-@Composable
-fun BackgroundableTheme(
-    darkTheme: Boolean,
-    dynamicColor: Boolean = true,
-    content: @Composable () -> Unit
-) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
-        darkTheme -> darkColorScheme
-        else -> lightColorScheme
-    }
-    val view = LocalView.current
-    if (!view.isInEditMode) {
-        SideEffect {
-            val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.background.copy(alpha = 0.1f).toArgb()
-            if (!darkTheme && Build.VERSION.SDK_INT < Build.VERSION_CODES.O_MR1) {
-                window.navigationBarColor = Color.Black.copy(alpha = 0.3f).toArgb()
-            } else {
-                window.navigationBarColor = colorScheme.background.copy(alpha = 0.1f).toArgb()
-            }
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
-            WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars =
-                !darkTheme
-        }
-    }
-
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        shapes = shapes,
-        content = content
-    )
-}
