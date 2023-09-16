@@ -208,7 +208,7 @@ private fun LazyGridItemScope.CollectionCard(
             .fillMaxWidth()
             .animateItemPlacement(),
         colors = CardDefaults.elevatedCardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
         ),
         shape = MaterialTheme.shapes.extraSmall,
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp),
