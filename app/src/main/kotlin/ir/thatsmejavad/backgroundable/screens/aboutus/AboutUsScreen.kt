@@ -107,7 +107,7 @@ private fun ContributorItem(
             Modifier
                 .padding(top = 60.dp)
                 .background(
-                    MaterialTheme.colorScheme.surfaceContainerLow,
+                    MaterialTheme.colorScheme.surfaceContainerHigh,
                     shape = MaterialTheme.shapes.small
                 )
                 .fillMaxWidth()
@@ -180,7 +180,7 @@ private fun BackgroundableAbout() {
             Modifier
                 .padding(top = 60.dp)
                 .background(
-                    MaterialTheme.colorScheme.surfaceContainerLow,
+                    MaterialTheme.colorScheme.surfaceContainerHigh,
                     shape = MaterialTheme.shapes.small
                 )
                 .fillMaxWidth()

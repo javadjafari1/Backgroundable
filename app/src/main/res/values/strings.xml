@@ -38,4 +38,6 @@
     <string name="label_send_to">Share via</string>
     <string name="label_quality">Image Quality</string>
     <string name="label_image_quality">Image Quality</string>
+    <string name="label_provide_feedback">Provide Feedback</string>
+    <string name="label_material_you_desc">Android 12+ Only</string>
 </resources>
