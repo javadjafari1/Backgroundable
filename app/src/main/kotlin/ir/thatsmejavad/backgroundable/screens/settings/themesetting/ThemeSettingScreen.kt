@@ -191,7 +191,6 @@ private fun ColumnScope.ThemeRow(
     currentTheme: ThemeColor,
     onChangeTheme: (ThemeColor) -> Unit
 ) {
-
     Text(
         modifier = Modifier
             .padding(horizontal = 16.dp)

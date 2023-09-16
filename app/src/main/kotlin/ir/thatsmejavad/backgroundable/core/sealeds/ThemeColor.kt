@@ -35,7 +35,6 @@ sealed interface ThemeColor {
                 ThemeName.UNRECOGNIZED -> Skobeloff
                 ThemeName.THEME_INDIGO -> Indigo
             }
-
         }
     }
 }
