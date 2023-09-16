@@ -14,13 +14,13 @@ import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListScree
 import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListViewModel
 import ir.thatsmejavad.backgroundable.screens.columncountpicker.ColumnCountPicker
 import ir.thatsmejavad.backgroundable.screens.downloadpicker.DownloadPickerScreen
-import ir.thatsmejavad.backgroundable.screens.imagequalitysetting.ImageQualitySettingScreen
 import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailScreen
 import ir.thatsmejavad.backgroundable.screens.medialist.MediaListScreen
 import ir.thatsmejavad.backgroundable.screens.search.SearchScreen
 import ir.thatsmejavad.backgroundable.screens.settings.SettingsScreen
-import ir.thatsmejavad.backgroundable.screens.themesetting.ThemeSettingScreen
-import ir.thatsmejavad.backgroundable.screens.themesetting.ThemeSettingViewModel
+import ir.thatsmejavad.backgroundable.screens.settings.imagequalitysetting.ImageQualitySettingScreen
+import ir.thatsmejavad.backgroundable.screens.settings.themesetting.ThemeSettingScreen
+import ir.thatsmejavad.backgroundable.screens.settings.themesetting.ThemeSettingViewModel
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 

@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.screens.imagequalitysetting
+package ir.thatsmejavad.backgroundable.screens.settings.imagequalitysetting
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

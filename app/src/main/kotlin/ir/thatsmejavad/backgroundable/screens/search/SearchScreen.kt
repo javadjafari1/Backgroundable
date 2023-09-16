@@ -246,6 +246,7 @@ fun SearchScreen(
                                         ImageQuality.High -> media.resources.medium
                                         ImageQuality.Medium -> media.resources.small
                                         ImageQuality.Low -> media.resources.tiny
+                                        ImageQuality.Ultra -> media.resources.original
                                     },
                                     onMediaClicked = onMediaClicked
                                 )
@@ -318,6 +319,7 @@ fun SearchScreen(
                                         ImageQuality.High -> media.resources.medium
                                         ImageQuality.Medium -> media.resources.small
                                         ImageQuality.Low -> media.resources.tiny
+                                        ImageQuality.Ultra -> media.resources.original
                                     },
                                     onMediaClicked = onMediaClicked
                                 )

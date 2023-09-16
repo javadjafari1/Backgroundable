@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.screens.imagequalitysetting
+package ir.thatsmejavad.backgroundable.screens.settings.imagequalitysetting
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

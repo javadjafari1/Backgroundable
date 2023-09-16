@@ -8,11 +8,11 @@ import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelAssistedFactory
 import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelAssistedFactoryKey
 import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListViewModel
 import ir.thatsmejavad.backgroundable.screens.downloadpicker.DownloadPickerViewModel
-import ir.thatsmejavad.backgroundable.screens.imagequalitysetting.ImageQualitySettingViewModel
 import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailViewModel
 import ir.thatsmejavad.backgroundable.screens.medialist.MediaListViewModel
 import ir.thatsmejavad.backgroundable.screens.search.SearchViewModel
-import ir.thatsmejavad.backgroundable.screens.themesetting.ThemeSettingViewModel
+import ir.thatsmejavad.backgroundable.screens.settings.imagequalitysetting.ImageQualitySettingViewModel
+import ir.thatsmejavad.backgroundable.screens.settings.themesetting.ThemeSettingViewModel
 
 @Module(
     includes = [

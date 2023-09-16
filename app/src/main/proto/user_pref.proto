@@ -21,7 +21,8 @@ enum ListType {
   LIST_TYPE_STAGGERED = 2;
 }
 enum Quality {
-  QUALITY_LOW = 0;
-  QUALITY_MEDIUM = 1;
+  QUALITY_MEDIUM = 0;
+  QUALITY_LOW = 1;
   QUALITY_HIGH = 2;
+  QUALITY_ULTRA = 3;
 }
