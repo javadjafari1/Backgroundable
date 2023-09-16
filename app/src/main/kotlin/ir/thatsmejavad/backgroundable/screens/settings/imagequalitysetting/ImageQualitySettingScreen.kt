@@ -114,7 +114,7 @@ fun ImageQualitySettingScreen(
                 Spacer(modifier = Modifier.size(4.dp))
 
                 val text = buildAnnotatedString {
-                    append("Low: Optimized for slower internet connections.")
+                    append(stringResource(R.string.label_low_desc))
                     addStyle(
                         SpanStyle(
                             color = MaterialTheme.colorScheme.onSurface,
@@ -130,7 +130,7 @@ fun ImageQualitySettingScreen(
                         end = 46
                     )
                     appendLine()
-                    append("Medium: Quality and loading speed are balanced.")
+                    append(stringResource(R.string.label_medium_desc))
                     addStyle(
                         SpanStyle(
                             color = MaterialTheme.colorScheme.onSurface,
@@ -146,7 +146,7 @@ fun ImageQualitySettingScreen(
                         end = 95
                     )
                     appendLine()
-                    append("High: Higher quality for a good experience.")
+                    append(stringResource(R.string.label_high_desc))
                     addStyle(
                         SpanStyle(
                             color = MaterialTheme.colorScheme.onSurface,
@@ -162,7 +162,7 @@ fun ImageQualitySettingScreen(
                         end = 138
                     )
                     appendLine()
-                    append("Ultra: High-quality original photos.")
+                    append(stringResource(R.string.label_ultra_desc))
                     addStyle(
                         SpanStyle(
                             color = MaterialTheme.colorScheme.onSurface,
