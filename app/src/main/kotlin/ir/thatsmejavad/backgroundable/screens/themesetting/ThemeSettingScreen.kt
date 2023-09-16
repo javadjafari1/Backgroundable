@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -155,11 +156,19 @@ private fun MaterialYouRow(
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(
-            text = stringResource(R.string.label_material_you),
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onSurface
-        )
+        Column {
+            Text(
+                text = stringResource(R.string.label_material_you),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Spacer(modifier = Modifier.size(8.dp))
+            Text(
+                text = stringResource(R.string.label_material_you_desc),
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.surfaceTint
+            )
+        }
 
         Spacer(modifier = Modifier.weight(1f))
 
