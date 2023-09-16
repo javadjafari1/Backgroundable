@@ -90,8 +90,8 @@ fun SearchScreen(
     val refreshLoadState = medias.loadState.refresh
 
     val pagingIsLoading = medias.loadState.prepend is LoadState.Loading ||
-            medias.loadState.append is LoadState.Loading ||
-            medias.loadState.refresh is LoadState.Loading
+        medias.loadState.append is LoadState.Loading ||
+        medias.loadState.refresh is LoadState.Loading
 
     LaunchedEffect(medias.loadState.refresh) {
         val refresh = medias.loadState.refresh
@@ -200,16 +200,16 @@ fun SearchScreen(
                 label = "change Staggered to Grid anim",
                 transitionSpec = {
                     (
-                            fadeIn(animationSpec = tween(220, delayMillis = 120)) +
-                                    slideIn(
-                                        animationSpec = tween(220, delayMillis = 120),
-                                        initialOffset = { IntOffset.Zero }
-                                    ) +
-                                    scaleIn(
-                                        initialScale = 0.92f,
-                                        animationSpec = tween(220, delayMillis = 120)
-                                    )
+                        fadeIn(animationSpec = tween(220, delayMillis = 120)) +
+                            slideIn(
+                                animationSpec = tween(220, delayMillis = 120),
+                                initialOffset = { IntOffset.Zero }
+                            ) +
+                            scaleIn(
+                                initialScale = 0.92f,
+                                animationSpec = tween(220, delayMillis = 120)
                             )
+                        )
                         .togetherWith(fadeOut(animationSpec = tween(120)))
                 }
             ) { type ->

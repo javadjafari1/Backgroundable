@@ -137,16 +137,16 @@ internal fun MediaListScreen(
                 label = "change Staggered to Grid anim",
                 transitionSpec = {
                     (
-                            fadeIn(animationSpec = tween(220, delayMillis = 120)) +
-                                    slideIn(
-                                        animationSpec = tween(220, delayMillis = 120),
-                                        initialOffset = { IntOffset.Zero }
-                                    ) +
-                                    scaleIn(
-                                        initialScale = 0.92f,
-                                        animationSpec = tween(220, delayMillis = 120)
-                                    )
+                        fadeIn(animationSpec = tween(220, delayMillis = 120)) +
+                            slideIn(
+                                animationSpec = tween(220, delayMillis = 120),
+                                initialOffset = { IntOffset.Zero }
+                            ) +
+                            scaleIn(
+                                initialScale = 0.92f,
+                                animationSpec = tween(220, delayMillis = 120)
                             )
+                        )
                         .togetherWith(fadeOut(animationSpec = tween(120)))
                 }
             ) { type ->

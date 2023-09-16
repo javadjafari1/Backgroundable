@@ -40,4 +40,5 @@
     <string name="label_image_quality">Image Quality</string>
     <string name="label_provide_feedback">Provide Feedback</string>
     <string name="label_material_you_desc">Android 12+ Only</string>
+    <string name="label_image_quality_desc">Only category photos are affected by your choice.</string>
 </resources>
