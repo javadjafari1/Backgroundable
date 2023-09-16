@@ -20,7 +20,11 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 
 private val shapes = Shapes(
-    extraSmall = ShapeDefaults.ExtraSmall.copy(CornerSize(16.dp))
+    extraSmall = ShapeDefaults.ExtraSmall.copy(CornerSize(10.dp)),
+    small = ShapeDefaults.ExtraSmall.copy(CornerSize(16.dp)),
+    medium = ShapeDefaults.ExtraSmall.copy(CornerSize(24.dp)),
+    large = ShapeDefaults.ExtraSmall.copy(CornerSize(32.dp)),
+    extraLarge = ShapeDefaults.ExtraSmall.copy(CornerSize(64.dp)),
 )
 
 private val lightColorScheme = lightColorScheme(
