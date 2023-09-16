@@ -57,7 +57,7 @@ import ir.thatsmejavad.backgroundable.core.Constants.NAVIGATION_BAR_HEIGHT
 import ir.thatsmejavad.backgroundable.core.sealeds.Theme
 import ir.thatsmejavad.backgroundable.core.viewmodel.LocalViewModelFactory
 import ir.thatsmejavad.backgroundable.mainNavGraph
-import ir.thatsmejavad.backgroundable.ui.theme.BackgroundableTheme
+import ir.thatsmejavad.backgroundable.ui.BackgroundableTheme
 import javax.inject.Inject
 
 class MainActivity : ComponentActivity() {
@@ -91,6 +91,7 @@ class MainActivity : ComponentActivity() {
             ) {
                 val userPreferences by viewModel.userPreferences.collectAsStateWithLifecycle()
                 BackgroundableTheme(
+                    themeColor = userPreferences.themeColor,
                     dynamicColor = userPreferences.isMaterialYouEnabled,
                     darkTheme = when (userPreferences.theme) {
                         Theme.FollowSystem -> isSystemInDarkTheme()
