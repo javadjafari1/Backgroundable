@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.screens.themesetting
+package ir.thatsmejavad.backgroundable.screens.settings.themesetting
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

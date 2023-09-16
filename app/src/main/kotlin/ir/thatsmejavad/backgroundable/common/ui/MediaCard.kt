@@ -45,7 +45,7 @@ fun MediaCard(
     ) {
         CoilImage(
             modifier = Modifier
-                .clip(MaterialTheme.shapes.large)
+                .clip(MaterialTheme.shapes.small)
                 .fillMaxWidth()
                 .aspectRatio(1f),
             url = resourceUrl,
@@ -96,7 +96,7 @@ fun MediaCard(
     ) {
         CoilImage(
             modifier = Modifier
-                .clip(MaterialTheme.shapes.large)
+                .clip(MaterialTheme.shapes.small)
                 .fillMaxWidth()
                 .aspectRatio(aspectRatio),
             url = resourceUrl,

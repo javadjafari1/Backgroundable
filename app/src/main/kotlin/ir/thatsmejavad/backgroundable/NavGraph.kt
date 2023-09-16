@@ -18,8 +18,9 @@ import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailScreen
 import ir.thatsmejavad.backgroundable.screens.medialist.MediaListScreen
 import ir.thatsmejavad.backgroundable.screens.search.SearchScreen
 import ir.thatsmejavad.backgroundable.screens.settings.SettingsScreen
-import ir.thatsmejavad.backgroundable.screens.themesetting.ThemeSettingScreen
-import ir.thatsmejavad.backgroundable.screens.themesetting.ThemeSettingViewModel
+import ir.thatsmejavad.backgroundable.screens.settings.imagequalitysetting.ImageQualitySettingScreen
+import ir.thatsmejavad.backgroundable.screens.settings.themesetting.ThemeSettingScreen
+import ir.thatsmejavad.backgroundable.screens.settings.themesetting.ThemeSettingViewModel
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
@@ -201,11 +202,22 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         )
     }
 
-    animatedComposable(AppScreens.AboutUs.route) {
+    animatedComposable(
+        route = AppScreens.AboutUs.route
+    ) {
         AboutUsScreen(
             onBackClicked = {
                 navController.navigateUp()
             }
+        )
+    }
+
+    animatedComposable(
+        route = AppScreens.ImageQualitySetting.route
+    ) {
+        ImageQualitySettingScreen(
+            viewModel = daggerViewModel(),
+            onBackClicked = { navController.navigateUp() }
         )
     }
 }

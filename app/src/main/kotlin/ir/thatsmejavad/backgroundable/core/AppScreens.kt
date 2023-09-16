@@ -33,6 +33,10 @@ internal sealed class AppScreens(val route: String) {
         "theme-settings"
     )
 
+    data object ImageQualitySetting : AppScreens(
+        "image-quality-setting"
+    )
+
     data object DownloadPicker : AppScreens(
         "download-picker?id:{id}"
     ) {

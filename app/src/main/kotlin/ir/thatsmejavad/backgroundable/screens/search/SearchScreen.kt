@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -72,6 +73,7 @@ import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
 import ir.thatsmejavad.backgroundable.core.Constants.NAVIGATION_BAR_HEIGHT
 import ir.thatsmejavad.backgroundable.core.getErrorMessage
 import ir.thatsmejavad.backgroundable.core.getSnackbarMessage
+import ir.thatsmejavad.backgroundable.core.sealeds.ImageQuality
 import ir.thatsmejavad.backgroundable.core.sealeds.List
 
 @Composable
@@ -83,12 +85,13 @@ fun SearchScreen(
     val medias = viewModel.medias.collectAsLazyPagingItems()
 
     val columnType by viewModel.mediaColumnTypeFlow.collectAsStateWithLifecycle()
+    val imageQuality by viewModel.imageQuality.collectAsStateWithLifecycle()
 
     val refreshLoadState = medias.loadState.refresh
 
     val pagingIsLoading = medias.loadState.prepend is LoadState.Loading ||
-            medias.loadState.append is LoadState.Loading ||
-            medias.loadState.refresh is LoadState.Loading
+        medias.loadState.append is LoadState.Loading ||
+        medias.loadState.refresh is LoadState.Loading
 
     LaunchedEffect(medias.loadState.refresh) {
         val refresh = medias.loadState.refresh
@@ -192,20 +195,21 @@ fun SearchScreen(
             }
 
             AnimatedContent(
+                modifier = Modifier.imePadding(),
                 targetState = columnType,
                 label = "change Staggered to Grid anim",
                 transitionSpec = {
                     (
-                            fadeIn(animationSpec = tween(220, delayMillis = 120)) +
-                                    slideIn(
-                                        animationSpec = tween(220, delayMillis = 120),
-                                        initialOffset = { IntOffset.Zero }
-                                    ) +
-                                    scaleIn(
-                                        initialScale = 0.92f,
-                                        animationSpec = tween(220, delayMillis = 120)
-                                    )
+                        fadeIn(animationSpec = tween(220, delayMillis = 120)) +
+                            slideIn(
+                                animationSpec = tween(220, delayMillis = 120),
+                                initialOffset = { IntOffset.Zero }
+                            ) +
+                            scaleIn(
+                                initialScale = 0.92f,
+                                animationSpec = tween(220, delayMillis = 120)
                             )
+                        )
                         .togetherWith(fadeOut(animationSpec = tween(120)))
                 }
             ) { type ->
@@ -240,7 +244,12 @@ fun SearchScreen(
                                     aspectRatio = media.width / media.height.toFloat(),
                                     avgColor = media.avgColor,
                                     photographer = media.photographer,
-                                    resourceUrl = media.resources.medium,
+                                    resourceUrl = when (imageQuality) {
+                                        ImageQuality.High -> media.resources.medium
+                                        ImageQuality.Medium -> media.resources.small
+                                        ImageQuality.Low -> media.resources.tiny
+                                        ImageQuality.Ultra -> media.resources.original
+                                    },
                                     onMediaClicked = onMediaClicked
                                 )
                             }
@@ -308,7 +317,12 @@ fun SearchScreen(
                                     avgColor = media.avgColor,
                                     isSingleColumn = columnType == List.ListType,
                                     photographer = media.photographer,
-                                    resourceUrl = media.resources.medium,
+                                    resourceUrl = when (imageQuality) {
+                                        ImageQuality.High -> media.resources.medium
+                                        ImageQuality.Medium -> media.resources.small
+                                        ImageQuality.Low -> media.resources.tiny
+                                        ImageQuality.Ultra -> media.resources.original
+                                    },
                                     onMediaClicked = onMediaClicked
                                 )
                             }
