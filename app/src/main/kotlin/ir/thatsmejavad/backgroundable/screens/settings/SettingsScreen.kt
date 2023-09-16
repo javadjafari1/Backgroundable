@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -19,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -27,11 +27,14 @@ import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.core.AppScreens
 import ir.thatsmejavad.backgroundable.core.Constants
+import ir.thatsmejavad.backgroundable.core.composeMail
 
 @Composable
 fun SettingsScreen(
     navigateTo: (String) -> Unit,
 ) {
+    val context = LocalContext.current
+
     BackgroundableScaffold(
         modifier = Modifier
             /*
@@ -56,15 +59,13 @@ fun SettingsScreen(
             Modifier
                 .padding(it)
                 .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             SettingItem(
                 textId = R.string.label_language,
                 imageId = R.drawable.ic_language,
                 onClick = {}
             )
-
-            Spacer(modifier = Modifier.height(16.dp))
 
             SettingItem(
                 textId = R.string.label_theme,
@@ -74,7 +75,15 @@ fun SettingsScreen(
                 }
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            SettingItem(
+                textId = R.string.label_provide_feedback,
+                imageId = R.drawable.ic_feedback,
+                onClick = {
+                    context.composeMail(
+                        recipientMail = "javad2147@yahoo.com"
+                    )
+                }
+            )
 
             SettingItem(
                 textId = R.string.label_about_us,
