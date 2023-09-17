@@ -29,6 +29,7 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
@@ -55,6 +56,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -62,7 +64,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
@@ -70,28 +74,27 @@ import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.MediaCard
 import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
+import ir.thatsmejavad.backgroundable.core.AppScreens
 import ir.thatsmejavad.backgroundable.core.Constants.NAVIGATION_BAR_HEIGHT
 import ir.thatsmejavad.backgroundable.core.getErrorMessage
 import ir.thatsmejavad.backgroundable.core.getSnackbarMessage
 import ir.thatsmejavad.backgroundable.core.sealeds.ImageQuality
 import ir.thatsmejavad.backgroundable.core.sealeds.List
+import ir.thatsmejavad.backgroundable.core.viewmodel.daggerViewModel
+import ir.thatsmejavad.backgroundable.model.media.Media
 
 @Composable
 fun SearchScreen(
-    viewModel: SearchViewModel,
-    onMediaClicked: (Int, String) -> Unit,
+    navController: NavController,
+    viewModel: SearchViewModel = daggerViewModel(),
 ) {
     val queryString by viewModel.searchQuery.collectAsStateWithLifecycle()
     val medias = viewModel.medias.collectAsLazyPagingItems()
-
     val columnType by viewModel.mediaColumnTypeFlow.collectAsStateWithLifecycle()
     val imageQuality by viewModel.imageQuality.collectAsStateWithLifecycle()
 
-    val refreshLoadState = medias.loadState.refresh
-
-    val pagingIsLoading = medias.loadState.prepend is LoadState.Loading ||
-        medias.loadState.append is LoadState.Loading ||
-        medias.loadState.refresh is LoadState.Loading
+    val snackbarHostState = remember { SnackbarHostState() }
+    viewModel.snackbarManager.ObserveSnackbars(snackbarHostState)
 
     LaunchedEffect(medias.loadState.refresh) {
         val refresh = medias.loadState.refresh
@@ -100,11 +103,43 @@ fun SearchScreen(
         }
     }
 
-    val snackbarHostState = remember { SnackbarHostState() }
-    viewModel.snackbarManager.ObserveSnackbars(snackbarHostState)
+    SearchScreen(
+        queryString = queryString,
+        medias = medias,
+        snackbarHostState = snackbarHostState,
+        columnType = columnType,
+        imageQuality = imageQuality,
+        navigateTo = { route ->
+            navController.navigate(route)
+        },
+        updateSearchText = { text ->
+            viewModel.updateSearchText(text)
+        },
+        onSearchClicked = {
+        }
+    )
+}
+
+@Composable
+private fun SearchScreen(
+    columnType: List,
+    queryString: String,
+    imageQuality: ImageQuality,
+    snackbarHostState: SnackbarHostState,
+    medias: LazyPagingItems<Media>,
+    navigateTo: (String) -> Unit,
+    updateSearchText: (String) -> Unit,
+    onSearchClicked: () -> Unit,
+) {
+    val refreshLoadState = medias.loadState.refresh
+
+    val pagingIsLoading = medias.loadState.prepend is LoadState.Loading ||
+        medias.loadState.append is LoadState.Loading ||
+        medias.loadState.refresh is LoadState.Loading
 
     var isFocused by rememberSaveable { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
 
     val padding: Dp by animateDpAsState(
         if (isFocused) 0.dp else 16.dp,
@@ -136,7 +171,7 @@ fun SearchScreen(
                 value = queryString,
                 onValueChange = { text ->
                     if (text.length < 40) {
-                        viewModel.updateSearchText(text)
+                        updateSearchText(text)
                     }
                 },
                 placeholder = {
@@ -146,10 +181,26 @@ fun SearchScreen(
                     )
                 },
                 leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Filled.Search,
-                        contentDescription = "search"
-                    )
+                    AnimatedContent(targetState = isFocused, label = "") {
+                        IconButton(
+                            onClick = {
+                                if (it) {
+                                    focusManager.clearFocus()
+                                } else {
+                                    focusRequester.requestFocus()
+                                }
+                            }
+                        ) {
+                            Icon(
+                                imageVector = if (it) {
+                                    Icons.Filled.ArrowBack
+                                } else {
+                                    Icons.Filled.Search
+                                },
+                                contentDescription = if (it) "back" else "search"
+                            )
+                        }
+                    }
                 },
                 shape = MaterialTheme.shapes.extraSmall.copy(CornerSize(cornerRadius)),
                 singleLine = true,
@@ -157,7 +208,7 @@ fun SearchScreen(
                     imeAction = ImeAction.Search
                 ),
                 keyboardActions = KeyboardActions(
-                    onSearch = { viewModel.search() }
+                    onSearch = { onSearchClicked() }
                 ),
                 colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = Color.Transparent,
@@ -174,7 +225,7 @@ fun SearchScreen(
                         enter = fadeIn(),
                         exit = fadeOut()
                     ) {
-                        IconButton(onClick = { viewModel.updateSearchText("") }) {
+                        IconButton(onClick = { updateSearchText("") }) {
                             Icon(
                                 imageVector = Icons.Filled.Clear,
                                 contentDescription = "clear-text"
@@ -250,7 +301,12 @@ fun SearchScreen(
                                         ImageQuality.Ultra -> media.resources.original
                                     },
                                     onMediaClicked = {
-                                        onMediaClicked(media.id, media.alt)
+                                        navigateTo(
+                                            AppScreens.MediaDetail.createRoute(
+                                                media.id,
+                                                media.alt
+                                            )
+                                        )
                                     }
                                 )
                             }
@@ -323,7 +379,14 @@ fun SearchScreen(
                                         ImageQuality.Low -> media.resources.tiny
                                         ImageQuality.Ultra -> media.resources.original
                                     },
-                                    onMediaClicked = { onMediaClicked(media.id, media.alt) }
+                                    onMediaClicked = {
+                                        navigateTo(
+                                            AppScreens.MediaDetail.createRoute(
+                                                media.id,
+                                                media.alt
+                                            )
+                                        )
+                                    }
                                 )
                             }
                         }
