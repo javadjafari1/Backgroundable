@@ -39,8 +39,10 @@ class MediaDetailViewModel @AssistedInject constructor(
     @AssistedFactory
     interface Factory : ViewModelAssistedFactory<MediaDetailViewModel>
 
-    var savePurpose: SavePurpose = SavePurpose.SettingWallpaper
-        private set
+    private val _savePurpose: MutableStateFlow<SavePurpose> = MutableStateFlow(
+        SavePurpose.SettingWallpaper
+    )
+    var savePurpose: StateFlow<SavePurpose> = _savePurpose.asStateFlow()
 
     private val _media = MutableStateFlow<AsyncJob<MediaWithResources>>(
         AsyncJob.Uninitialized
@@ -87,7 +89,7 @@ class MediaDetailViewModel @AssistedInject constructor(
         context: Context
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            savePurpose = purpose
+            _savePurpose.value = purpose
             _fileUri.emit(AsyncJob.Loading)
             try {
                 val uri = drawable

@@ -1,6 +1,7 @@
 package ir.thatsmejavad.backgroundable.screens.mediadetail
 
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -56,14 +57,17 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
 import ir.thatsmejavad.backgroundable.common.ui.ZoomableCoilImage
+import ir.thatsmejavad.backgroundable.core.AppScreens
 import ir.thatsmejavad.backgroundable.core.capitalizeFirstChar
 import ir.thatsmejavad.backgroundable.core.getErrorMessage
 import ir.thatsmejavad.backgroundable.core.openUrl
 import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob
+import ir.thatsmejavad.backgroundable.core.sealeds.ImageQuality
 import ir.thatsmejavad.backgroundable.core.sealeds.ImageQuality.Companion.toResourceSize
 import ir.thatsmejavad.backgroundable.core.sealeds.OrientationMode
 import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
@@ -71,34 +75,31 @@ import ir.thatsmejavad.backgroundable.core.setAsWallpaper
 import ir.thatsmejavad.backgroundable.core.shareFileWithUri
 import ir.thatsmejavad.backgroundable.core.toColor
 import ir.thatsmejavad.backgroundable.core.toast
+import ir.thatsmejavad.backgroundable.core.viewmodel.daggerViewModel
+import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
 
 @Composable
 fun MediaDetailScreen(
     mediaId: Int,
     title: String,
-    viewModel: MediaDetailViewModel,
-    onBackClicked: () -> Unit,
-    navigateToDownloadPicker: () -> Unit,
+    navController: NavController,
+    viewModel: MediaDetailViewModel = daggerViewModel()
 ) {
     val mediaResult by viewModel.media.collectAsStateWithLifecycle()
-    val fileUrl by viewModel.fileUri.collectAsStateWithLifecycle()
+    val fileUri by viewModel.fileUri.collectAsStateWithLifecycle()
     val imageQuality by viewModel.imageQuality.collectAsStateWithLifecycle()
-    val context = LocalContext.current
-
-    var isToolsVisible by rememberSaveable { mutableStateOf(true) }
-    var isImageLoading by rememberSaveable { mutableStateOf(false) }
-    var isDetailDialogShowing by rememberSaveable { mutableStateOf(false) }
+    val savePurpose by viewModel.savePurpose.collectAsStateWithLifecycle()
 
     val snackbarHostState = remember { SnackbarHostState() }
     viewModel.snackbarManager.ObserveSnackbars(snackbarHostState)
+    val context = LocalContext.current
 
-    LaunchedEffect(key1 = fileUrl) {
-        if (fileUrl is AsyncJob.Success) {
-            val uri = (fileUrl as AsyncJob.Success).value
-            when (viewModel.savePurpose) {
+    LaunchedEffect(key1 = fileUri) {
+        if (fileUri is AsyncJob.Success) {
+            when (savePurpose) {
                 is SavePurpose.Share -> {
                     val media = (mediaResult as AsyncJob.Success).value
-                    uri.shareFileWithUri(
+                    (fileUri as AsyncJob.Success).value.shareFileWithUri(
                         context = context,
                         contentType = "image/plain",
                         text = "${media.media.alt} by ${media.media.photographer} from Backgroundable",
@@ -111,7 +112,7 @@ fun MediaDetailScreen(
                 }
 
                 is SavePurpose.SettingWallpaper -> {
-                    uri.setAsWallpaper(
+                    (fileUri as AsyncJob.Success).value.setAsWallpaper(
                         context = context,
                         onError = {
                             context.toast(
@@ -123,6 +124,85 @@ fun MediaDetailScreen(
             }
         }
     }
+
+    MediaDetailScreen(
+        title = title,
+        fileUri = fileUri,
+        mediaId = mediaId,
+        savePurpose = savePurpose,
+        mediaResult = mediaResult,
+        imageQuality = imageQuality,
+        snackbarHostState = snackbarHostState,
+        onBackClicked = { navController.navigateUp() },
+        navigateTo = {
+            navController.navigate(it) {
+                launchSingleTop = true
+            }
+        },
+        onRetryClick = { viewModel.getMedia(mediaId) },
+        openLink = {
+            context.openUrl(it)
+        },
+        setAsWallpaper = { drawable ->
+            if (fileUri is AsyncJob.Success) {
+                (fileUri as AsyncJob.Success).value.setAsWallpaper(
+                    context = context,
+                    onError = {
+                        context.toast(
+                            R.string.label_no_app_found_to_handle_this_request
+                        )
+                    }
+                )
+            } else {
+                viewModel.saveFile(
+                    purpose = SavePurpose.SettingWallpaper,
+                    context = context,
+                    drawable = drawable
+                )
+            }
+        },
+        share = { drawable, name, photographer ->
+            if (fileUri is AsyncJob.Success) {
+                (fileUri as AsyncJob.Success).value.shareFileWithUri(
+                    context = context,
+                    contentType = "image/plain",
+                    text = "$name by $photographer from Backgroundable",
+                    onFail = {
+                        context.toast(
+                            R.string.label_no_app_found_to_handle_this_request
+                        )
+                    }
+                )
+            } else {
+                viewModel.saveFile(
+                    purpose = SavePurpose.Share,
+                    context = context,
+                    drawable = drawable
+                )
+            }
+        }
+    )
+}
+
+@Composable
+private fun MediaDetailScreen(
+    mediaId: Int,
+    title: String,
+    snackbarHostState: SnackbarHostState,
+    mediaResult: AsyncJob<MediaWithResources>,
+    imageQuality: ImageQuality,
+    savePurpose: SavePurpose,
+    fileUri: AsyncJob<Uri>,
+    onRetryClick: () -> Unit,
+    onBackClicked: () -> Unit,
+    navigateTo: (route: String) -> Unit,
+    openLink: (String) -> Unit,
+    setAsWallpaper: (Drawable) -> Unit,
+    share: (Drawable, name: String, photographer: String) -> Unit
+) {
+    var isToolsVisible by rememberSaveable { mutableStateOf(true) }
+    var isImageLoading by rememberSaveable { mutableStateOf(false) }
+    var isDetailDialogShowing by rememberSaveable { mutableStateOf(false) }
 
     BackgroundableScaffold(
         contentWindowInsets = if (isToolsVisible) {
@@ -169,13 +249,13 @@ fun MediaDetailScreen(
         when (mediaResult) {
             is AsyncJob.Fail -> {
                 Text(
-                    text = (mediaResult as AsyncJob.Fail)
+                    text = mediaResult
                         .exception
                         .getErrorMessage()
-                        .asString(context)
+                        .asString()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                ElevatedButton(onClick = { viewModel.getMedia(mediaId) }) {
+                ElevatedButton(onClick = onRetryClick) {
                     Text(text = stringResource(R.string.label_try_again))
                 }
             }
@@ -187,7 +267,7 @@ fun MediaDetailScreen(
             }
 
             is AsyncJob.Success -> {
-                val mediaWithResources = (mediaResult as AsyncJob.Success).value
+                val mediaWithResources = mediaResult.value
                 var drawable by remember { mutableStateOf<Drawable?>(null) }
 
                 if (isDetailDialogShowing) {
@@ -198,7 +278,7 @@ fun MediaDetailScreen(
                         sizes = mediaWithResources.resources.map { it.size },
                         onDismiss = { isDetailDialogShowing = false },
                         openPhotographerLink = {
-                            context.openUrl(mediaWithResources.media.photographerUrl)
+                            openLink(mediaWithResources.media.photographerUrl)
                         }
                     )
                 }
@@ -233,25 +313,8 @@ fun MediaDetailScreen(
                                 modifier = Modifier
                                     .height(56.dp)
                                     .weight(1f),
-                                enabled = fileUrl !is AsyncJob.Loading,
-                                onClick = {
-                                    if (fileUrl is AsyncJob.Success) {
-                                        (fileUrl as AsyncJob.Success).value.setAsWallpaper(
-                                            context = context,
-                                            onError = {
-                                                context.toast(
-                                                    R.string.label_no_app_found_to_handle_this_request
-                                                )
-                                            }
-                                        )
-                                    } else {
-                                        viewModel.saveFile(
-                                            purpose = SavePurpose.SettingWallpaper,
-                                            drawable = drawable!!,
-                                            context = context
-                                        )
-                                    }
-                                },
+                                enabled = fileUri !is AsyncJob.Loading,
+                                onClick = { setAsWallpaper(drawable!!) },
                                 shape = MaterialTheme.shapes.extraSmall,
                                 elevation = ButtonDefaults.elevatedButtonElevation(
                                     defaultElevation = 2.dp,
@@ -262,7 +325,7 @@ fun MediaDetailScreen(
                                     contentColor = MaterialTheme.colorScheme.onPrimary
                                 )
                             ) {
-                                if (fileUrl is AsyncJob.Loading && viewModel.savePurpose == SavePurpose.SettingWallpaper) {
+                                if (fileUri is AsyncJob.Loading && savePurpose == SavePurpose.SettingWallpaper) {
                                     CircularProgressIndicator(modifier = Modifier.size(36.dp))
                                 } else {
                                     Text(
@@ -274,30 +337,17 @@ fun MediaDetailScreen(
                             OutlinedIconButton(
                                 modifier = Modifier.size(56.dp),
                                 shape = MaterialTheme.shapes.extraSmall,
-                                enabled = fileUrl !is AsyncJob.Loading,
+                                enabled = fileUri !is AsyncJob.Loading,
                                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
                                 onClick = {
-                                    if (fileUrl is AsyncJob.Success) {
-                                        (fileUrl as AsyncJob.Success).value.shareFileWithUri(
-                                            context = context,
-                                            contentType = "image/plain",
-                                            text = "${mediaWithResources.media.alt} by ${mediaWithResources.media.photographer} from Backgroundable",
-                                            onFail = {
-                                                context.toast(
-                                                    R.string.label_no_app_found_to_handle_this_request
-                                                )
-                                            }
-                                        )
-                                    } else {
-                                        viewModel.saveFile(
-                                            purpose = SavePurpose.Share,
-                                            drawable = drawable!!,
-                                            context = context
-                                        )
-                                    }
+                                    share(
+                                        drawable!!,
+                                        mediaWithResources.media.alt,
+                                        mediaWithResources.media.photographer
+                                    )
                                 },
                             ) {
-                                if (fileUrl is AsyncJob.Loading && viewModel.savePurpose == SavePurpose.Share) {
+                                if (fileUri is AsyncJob.Loading && savePurpose == SavePurpose.Share) {
                                     CircularProgressIndicator(modifier = Modifier.size(36.dp))
                                 } else {
                                     Icon(
@@ -312,7 +362,7 @@ fun MediaDetailScreen(
                                 modifier = Modifier.size(56.dp),
                                 shape = MaterialTheme.shapes.extraSmall,
                                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
-                                onClick = navigateToDownloadPicker,
+                                onClick = { navigateTo(AppScreens.DownloadPicker.createRoute(mediaId)) },
                             ) {
                                 Icon(
                                     painter = painterResource(R.drawable.ic_download),

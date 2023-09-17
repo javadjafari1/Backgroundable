@@ -28,19 +28,45 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.core.getErrorMessage
 import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob
 import ir.thatsmejavad.backgroundable.core.sealeds.OrientationMode
+import ir.thatsmejavad.backgroundable.core.viewmodel.daggerViewModel
+import ir.thatsmejavad.backgroundable.data.db.entity.ResourceEntity
+import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
 
 @Composable
 fun DownloadPickerScreen(
-    viewModel: DownloadPickerViewModel,
-    navigateBack: () -> Unit
+    navController: NavController,
+    viewModel: DownloadPickerViewModel = daggerViewModel()
 ) {
     val mediaResult by viewModel.media.collectAsStateWithLifecycle()
+
     val context = LocalContext.current
 
+    DownloadPickerScreen(
+        mediaResult = mediaResult,
+        downloadImage = {
+            viewModel.download(it)
+            navController.navigateUp()
+            Toast.makeText(
+                context,
+                R.string.label_download_is_about_to_begin,
+                Toast.LENGTH_LONG
+            ).show()
+        },
+        onRetryClick = { viewModel.getMedia() }
+    )
+}
+
+@Composable
+private fun DownloadPickerScreen(
+    mediaResult: AsyncJob<MediaWithResources>,
+    downloadImage: (ResourceEntity) -> Unit,
+    onRetryClick: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -53,7 +79,7 @@ fun DownloadPickerScreen(
             is AsyncJob.Success -> {
                 val mediaMap by remember {
                     derivedStateOf {
-                        (mediaResult as AsyncJob.Success).value.resources.groupBy { it.size is OrientationMode }
+                        mediaResult.value.resources.groupBy { it.size is OrientationMode }
                     }
                 }
                 LazyColumn(
@@ -79,15 +105,7 @@ fun DownloadPickerScreen(
                         items(resources) { resourceEntity ->
                             DownloadItem(
                                 name = resourceEntity.size.size.replaceFirstChar { it.uppercaseChar() },
-                                onClick = {
-                                    viewModel.download(resourceEntity)
-                                    navigateBack()
-                                    Toast.makeText(
-                                        context,
-                                        R.string.label_download_is_about_to_begin,
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                                }
+                                onClick = { downloadImage(resourceEntity) }
                             )
                         }
                     }
@@ -98,15 +116,7 @@ fun DownloadPickerScreen(
                         items(resources) { resourceEntity ->
                             DownloadItem(
                                 name = resourceEntity.size.size.replaceFirstChar { it.uppercaseChar() },
-                                onClick = {
-                                    viewModel.download(resourceEntity)
-                                    navigateBack()
-                                    Toast.makeText(
-                                        context,
-                                        R.string.label_download_is_about_to_begin,
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                                }
+                                onClick = { downloadImage(resourceEntity) }
                             )
                         }
                     }
@@ -120,7 +130,7 @@ fun DownloadPickerScreen(
             is AsyncJob.Fail -> {
                 Text(
                     modifier = Modifier.padding(16.dp),
-                    text = (mediaResult as AsyncJob.Fail)
+                    text = mediaResult
                         .exception
                         .getErrorMessage()
                         .asString()
@@ -128,7 +138,7 @@ fun DownloadPickerScreen(
                 Spacer(modifier = Modifier.height(8.dp))
                 ElevatedButton(
                     modifier = Modifier.padding(16.dp),
-                    onClick = { viewModel.getMedia() }
+                    onClick = onRetryClick
                 ) {
                     Text(text = stringResource(R.string.label_try_again))
                 }

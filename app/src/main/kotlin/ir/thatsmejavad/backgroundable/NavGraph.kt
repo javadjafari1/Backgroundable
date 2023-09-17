@@ -80,17 +80,9 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         }
 
         MediaDetailScreen(
-            mediaId = mediaId,
             title = title,
-            viewModel = daggerViewModel(),
-            onBackClicked = { navController.navigateUp() },
-            navigateToDownloadPicker = {
-                navController.navigate(
-                    AppScreens.DownloadPicker.createRoute(mediaId)
-                ) {
-                    launchSingleTop = true
-                }
-            }
+            mediaId = mediaId,
+            navController = navController
         )
     }
 
@@ -168,12 +160,7 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
             }
         )
     ) {
-        DownloadPickerScreen(
-            viewModel = daggerViewModel(),
-            navigateBack = {
-                navController.navigateUp()
-            }
-        )
+        DownloadPickerScreen(navController = navController)
     }
 
     animatedComposable(
