@@ -7,7 +7,6 @@ import androidx.navigation.navArgument
 import com.google.accompanist.navigation.material.bottomSheet
 import ir.thatsmejavad.backgroundable.common.ui.animatedComposable
 import ir.thatsmejavad.backgroundable.core.AppScreens
-import ir.thatsmejavad.backgroundable.core.viewmodel.daggerViewModel
 import ir.thatsmejavad.backgroundable.screens.aboutus.AboutUsScreen
 import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListScreen
 import ir.thatsmejavad.backgroundable.screens.columncountpicker.ColumnCountPicker
@@ -18,7 +17,6 @@ import ir.thatsmejavad.backgroundable.screens.search.SearchScreen
 import ir.thatsmejavad.backgroundable.screens.settings.SettingsScreen
 import ir.thatsmejavad.backgroundable.screens.settings.imagequalitysetting.ImageQualitySettingScreen
 import ir.thatsmejavad.backgroundable.screens.settings.themesetting.ThemeSettingScreen
-import ir.thatsmejavad.backgroundable.screens.settings.themesetting.ThemeSettingViewModel
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
@@ -137,10 +135,8 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
     animatedComposable(
         route = AppScreens.ThemeSetting.route,
     ) {
-        val viewModel: ThemeSettingViewModel = daggerViewModel()
         ThemeSettingScreen(
-            viewModel = viewModel,
-            onBackClicked = { navController.navigateUp() }
+            navController = navController
         )
     }
 

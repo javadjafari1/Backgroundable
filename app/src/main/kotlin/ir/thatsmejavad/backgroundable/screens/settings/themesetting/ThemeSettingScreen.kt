@@ -38,7 +38,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -48,10 +47,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.core.sealeds.Theme
 import ir.thatsmejavad.backgroundable.core.sealeds.ThemeColor
+import ir.thatsmejavad.backgroundable.core.viewmodel.daggerViewModel
+import ir.thatsmejavad.backgroundable.model.UserPreferences
 import ir.thatsmejavad.backgroundable.ui.theme.aoDarkColors
 import ir.thatsmejavad.backgroundable.ui.theme.aoLightColors
 import ir.thatsmejavad.backgroundable.ui.theme.blueVioletDarkColors
@@ -64,15 +66,32 @@ import ir.thatsmejavad.backgroundable.ui.theme.middleRedDarkColors
 import ir.thatsmejavad.backgroundable.ui.theme.middleRedLightColors
 import ir.thatsmejavad.backgroundable.ui.theme.skobeloffDarkColor
 import ir.thatsmejavad.backgroundable.ui.theme.skobeloffLightColors
-import kotlinx.coroutines.launch
 
 @Composable
 fun ThemeSettingScreen(
-    viewModel: ThemeSettingViewModel,
-    onBackClicked: () -> Unit,
+    navController: NavController,
+    viewModel: ThemeSettingViewModel = daggerViewModel()
 ) {
     val userPreferences by viewModel.userPreferencesFlow.collectAsStateWithLifecycle()
-    val scope = rememberCoroutineScope()
+
+    ThemeSettingScreen(
+        userPreferences = userPreferences,
+        onBackClicked = { navController.navigateUp() },
+        onChangeTheme = { viewModel.updateTheme(it) },
+        onMaterialYouClick = { viewModel.updateIsMaterialYouEnabled(it) },
+        onChangeThemeColor = { viewModel.updateThemeColor(it) }
+    )
+
+}
+
+@Composable
+fun ThemeSettingScreen(
+    userPreferences: UserPreferences,
+    onBackClicked: () -> Unit,
+    onChangeTheme: (Theme) -> Unit,
+    onMaterialYouClick: (Boolean) -> Unit,
+    onChangeThemeColor: (ThemeColor) -> Unit
+) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
     BackgroundableScaffold(
@@ -139,7 +158,7 @@ fun ThemeSettingScreen(
                             selected = selectedTabIndex == index,
                             selectedContentColor = MaterialTheme.colorScheme.onPrimary,
                             unselectedContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                            onClick = { scope.launch { viewModel.updateTheme(theme) } },
+                            onClick = { onChangeTheme(theme) },
                             text = {
                                 Text(
                                     text = stringResource(
@@ -161,9 +180,7 @@ fun ThemeSettingScreen(
 
             MaterialYouRow(
                 isChecked = userPreferences.isMaterialYouEnabled,
-                onCheckChanged = {
-                    viewModel.updateIsMaterialYouEnabled(it)
-                }
+                onCheckChanged = { onMaterialYouClick(it) }
             )
 
             Spacer(modifier = Modifier.size(32.dp))
@@ -176,9 +193,7 @@ fun ThemeSettingScreen(
                     Theme.LightTheme -> false
                 },
                 currentTheme = userPreferences.themeColor,
-                onChangeTheme = { color ->
-                    viewModel.updateThemeColor(color)
-                }
+                onChangeTheme = { onChangeThemeColor(it) }
             )
         }
     }
