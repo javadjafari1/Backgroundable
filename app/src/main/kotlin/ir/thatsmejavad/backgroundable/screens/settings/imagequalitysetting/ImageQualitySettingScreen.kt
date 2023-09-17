@@ -33,16 +33,33 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.core.sealeds.ImageQuality
+import ir.thatsmejavad.backgroundable.core.viewmodel.daggerViewModel
+
 
 @Composable
 fun ImageQualitySettingScreen(
-    viewModel: ImageQualitySettingViewModel,
-    onBackClicked: () -> Unit
+    navController: NavController,
+    viewModel: ImageQualitySettingViewModel = daggerViewModel()
 ) {
     val imageQuality by viewModel.imageQuality.collectAsStateWithLifecycle()
+
+    ImageQualitySettingScreen(
+        imageQuality = imageQuality,
+        onBackClicked = { navController.navigateUp() },
+        changeQuality = { viewModel.setImageQuality(it) }
+    )
+}
+
+@Composable
+private fun ImageQualitySettingScreen(
+    imageQuality: ImageQuality,
+    onBackClicked: () -> Unit,
+    changeQuality: (ImageQuality) -> Unit
+) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
     BackgroundableScaffold(
@@ -94,7 +111,7 @@ fun ImageQualitySettingScreen(
                             else -> RectangleShape
                         },
                         selected = imageQuality == quality,
-                        onClick = { viewModel.setImageQuality(quality) }
+                        onClick = { changeQuality(quality) }
                     ) {
                         Text(text = quality.toString())
                     }

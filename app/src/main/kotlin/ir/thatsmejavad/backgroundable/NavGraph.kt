@@ -170,8 +170,7 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         route = AppScreens.ImageQualitySetting.route
     ) {
         ImageQualitySettingScreen(
-            viewModel = daggerViewModel(),
-            onBackClicked = { navController.navigateUp() }
+            navController = navController
         )
     }
 }
