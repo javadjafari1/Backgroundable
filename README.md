@@ -48,6 +48,29 @@ Backgroundable is powered by the Pexels API, which provides a vast collection of
 4. Choose the resolution that matches your device's screen size.
 5. Download or set the wallpaper as your background.
 
+## Libraries
+
+This app is built with the help of the following libraries and dependencies:
+
+- Android Gradle Plugin (Version 8.1.1).
+- [Accompanist]([link_to_library2](https://github.com/google/accompanist)) (Version 0.32.0).
+- [Coil](https://github.com/coil-kt/coil) (Version 2.4.0).
+- Compose (Version 1.5.1).
+- [Detekt](https://github.com/detekt/detekt) (Version 1.23.1).
+- [Dagger](https://dagger.dev/) (Version 2.48).
+- [Chucker](https://github.com/ChuckerTeam/chucker/) (Version 4.0.0).
+- Datastore (Version 1.0.0).
+- [Dagger](https://dagger.dev/) (Version 2.48).
+- [Telephoto](https://github.com/saket/telephoto) (Version 0.4.0).
+- KotlinxSerialization (Version 1.5.0).
+- Kotlin (Version 1.9.10).
+- Navigation Compose (Version 2.7.2).
+- Paging3 (Version 3.2.1).
+- [Retrofit2](https://github.com/square/retrofit) (Version 2.9.0).
+- [okhttp3](https://github.com/square/okhttp) (Version 4.11.0).
+- Room (Version 2.5.2).
+- KSP (Version 1.9.10-1.0.13).
+
 ## Regular Updates
 
 We are committed to providing the best experience for our users, which is why Backgroundable is regularly updated with new features, improvements, and bug fixes. The continuous addition of fresh images from the Pexels API ensures that you have access to the latest and trending wallpapers.
@@ -66,4 +89,9 @@ If you encounter any bugs, glitches, or have suggestions for improvements, pleas
 
 ---
 
+## Contact Us
+
+If you have any questions, encounter issues, or want to provide feedback, please feel free to reach out to us via email at [javad2147@yahoo.com](mailto:javad2147@yahoo.com).
+
+---
 We hope you enjoy using Backgroundable! Feel free to leave feedback, report issues, or contribute to the project. Happy wallpapering! 🎉
