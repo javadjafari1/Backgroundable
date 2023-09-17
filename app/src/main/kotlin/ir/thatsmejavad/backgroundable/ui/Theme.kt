@@ -3,8 +3,8 @@ package ir.thatsmejavad.backgroundable.ui
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -31,11 +31,11 @@ import ir.thatsmejavad.backgroundable.ui.theme.skobeloffDarkColor
 import ir.thatsmejavad.backgroundable.ui.theme.skobeloffLightColors
 
 private val shapes = Shapes(
-    extraSmall = ShapeDefaults.ExtraSmall.copy(CornerSize(10.dp)),
-    small = ShapeDefaults.ExtraSmall.copy(CornerSize(16.dp)),
-    medium = ShapeDefaults.ExtraSmall.copy(CornerSize(24.dp)),
-    large = ShapeDefaults.ExtraSmall.copy(CornerSize(32.dp)),
-    extraLarge = ShapeDefaults.ExtraSmall.copy(CornerSize(64.dp)),
+    extraSmall = RoundedCornerShape(CornerSize(10.dp)),
+    small = RoundedCornerShape(CornerSize(16.dp)),
+    medium = RoundedCornerShape(CornerSize(24.dp)),
+    large = RoundedCornerShape(CornerSize(32.dp)),
+    extraLarge = RoundedCornerShape(CornerSize(64.dp)),
 )
 
 @Composable

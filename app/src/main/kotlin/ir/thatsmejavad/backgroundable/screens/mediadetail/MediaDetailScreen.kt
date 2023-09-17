@@ -9,6 +9,7 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,7 +22,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -51,13 +51,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ir.thatsmejavad.backgroundable.R
@@ -196,13 +192,11 @@ fun MediaDetailScreen(
 
                 if (isDetailDialogShowing) {
                     DetailDialog(
-                        onDismiss = { isDetailDialogShowing = false },
-                        width = mediaWithResources.media.width,
-                        height = mediaWithResources.media.height,
                         alt = mediaWithResources.media.alt,
                         avgColor = mediaWithResources.media.avgColor,
                         photographer = mediaWithResources.media.photographer,
                         sizes = mediaWithResources.resources.map { it.size },
+                        onDismiss = { isDetailDialogShowing = false },
                         openPhotographerLink = {
                             context.openUrl(mediaWithResources.media.photographerUrl)
                         }
@@ -337,8 +331,6 @@ fun MediaDetailScreen(
 @Composable
 private fun DetailDialog(
     alt: String,
-    width: Int,
-    height: Int,
     avgColor: String,
     photographer: String,
     sizes: List<ResourceSize>,
@@ -350,89 +342,66 @@ private fun DetailDialog(
             Modifier
                 .background(
                     color = MaterialTheme.colorScheme.surfaceContainerHigh,
-                    shape = MaterialTheme.shapes.large
+                    shape = MaterialTheme.shapes.small
                 )
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            val wallpaperText = buildAnnotatedString {
-                val text = stringResource(R.string.label_wallpaper)
-                append(text)
-                addStyle(
-                    style = SpanStyle(fontSize = 22.sp),
-                    start = 0,
-                    end = text.length
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    modifier = Modifier.size(32.dp),
+                    painter = painterResource(R.drawable.ic_image),
+                    contentDescription = "name"
                 )
-
-                append(alt)
-                addStyle(
-                    style = SpanStyle(fontSize = 16.sp),
-                    start = text.length,
-                    end = alt.length + text.length
-                )
-            }
-            Text(text = wallpaperText)
-
-            val photographerText = buildAnnotatedString {
-                val text = stringResource(R.string.label_photographer)
-                append(text)
-                addStyle(
-                    style = SpanStyle(fontSize = 22.sp),
-                    start = 0,
-                    end = text.length
-                )
-
-                append(photographer)
-                addStyle(
-                    style = SpanStyle(
-                        textDecoration = TextDecoration.Underline,
-                        fontSize = 16.sp,
-                        color = MaterialTheme.colorScheme.primary
-                    ),
-                    start = text.length,
-                    end = photographer.length + text.length
-                )
-                addStringAnnotation(
-                    tag = "Name",
-                    start = 12,
-                    end = photographer.length + text.length,
-                    annotation = "Link"
+                Spacer(modifier = Modifier.size(12.dp))
+                Text(
+                    text = alt,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.bodyLarge
                 )
             }
-            ClickableText(
-                text = photographerText,
-                onClick = { offset ->
-                    photographerText.getStringAnnotations(
-                        start = offset,
-                        end = offset,
-                        tag = "Name"
-                    ).firstOrNull()?.let { _ ->
-                        openPhotographerLink()
-                    }
-                },
-                style = TextStyle(color = MaterialTheme.colorScheme.onSurface)
-            )
 
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                val mainColorText = buildAnnotatedString {
-                    val text = stringResource(R.string.label_main_color)
-                    append(text)
-                    addStyle(
-                        style = SpanStyle(fontSize = 22.sp),
-                        start = 0,
-                        end = text.length
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    modifier = Modifier.size(32.dp),
+                    painter = painterResource(R.drawable.ic_photographer),
+                    contentDescription = "name"
+                )
+                Spacer(modifier = Modifier.size(12.dp))
+                Text(
+                    modifier = Modifier.clickable { openPhotographerLink() },
+                    text = photographer,
+                    color = MaterialTheme.colorScheme.primary,
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        textDecoration = TextDecoration.Underline
                     )
+                )
+            }
 
-                    append(avgColor)
-                    addStyle(
-                        style = SpanStyle(fontSize = 16.sp),
-                        start = text.length,
-                        end = avgColor.length + text.length
-                    )
-                }
-                Text(text = mainColorText)
-                Spacer(modifier = Modifier.size(8.dp))
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    modifier = Modifier.size(32.dp),
+                    painter = painterResource(R.drawable.ic_palette),
+                    contentDescription = "name"
+                )
+
+                Spacer(modifier = Modifier.size(12.dp))
+
+                Text(
+                    text = avgColor,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+
+                Spacer(modifier = Modifier.size(12.dp))
+
                 Box(
                     modifier = Modifier
                         .size(24.dp)
@@ -440,65 +409,27 @@ private fun DetailDialog(
                 )
             }
 
-            val widthText = buildAnnotatedString {
-                val text = stringResource(R.string.label_width)
-                append(text)
-                addStyle(
-                    style = SpanStyle(fontSize = 22.sp),
-                    start = 0,
-                    end = text.length
-                )
-
-                append(width.toString())
-                addStyle(
-                    style = SpanStyle(fontSize = 16.sp),
-                    start = text.length,
-                    end = width.toString().length + text.length
-                )
-            }
-            Text(text = widthText)
-
-            val heightText = buildAnnotatedString {
-                val text = stringResource(R.string.label_height)
-                append(text)
-                addStyle(
-                    style = SpanStyle(fontSize = 22.sp),
-                    start = 0,
-                    end = text.length
-                )
-
-                append(height.toString())
-                addStyle(
-                    style = SpanStyle(fontSize = 16.sp),
-                    start = text.length,
-                    end = height.toString().length + text.length
-                )
-            }
-            Text(text = heightText)
-
             val sizesString = remember(sizes) {
                 sizes
                     .filter { it !is OrientationMode }
                     .joinToString(", ") { it.size.capitalizeFirstChar() }
             }
 
-            val sizesText = buildAnnotatedString {
-                val text = stringResource(R.string.label_sizes)
-                append(text)
-                addStyle(
-                    style = SpanStyle(fontSize = 22.sp),
-                    start = 0,
-                    end = text.length
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    modifier = Modifier.size(32.dp),
+                    painter = painterResource(R.drawable.ic_sizes),
+                    contentDescription = "name"
                 )
-
-                append(sizesString)
-                addStyle(
-                    SpanStyle(fontSize = 16.sp),
-                    start = text.length,
-                    end = sizesString.length + text.length
+                Spacer(modifier = Modifier.size(12.dp))
+                Text(
+                    text = sizesString,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.bodyLarge
                 )
             }
-            Text(text = sizesText)
 
             val orientationString = remember(sizes) {
                 sizes
@@ -506,22 +437,21 @@ private fun DetailDialog(
                     .joinToString(", ") { it.size.capitalizeFirstChar() }
             }
 
-            val orientationText = buildAnnotatedString {
-                val text = stringResource(R.string.label_orientation)
-                append(text)
-                addStyle(
-                    style = SpanStyle(fontSize = 22.sp),
-                    start = 0,
-                    end = text.length
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    modifier = Modifier.size(32.dp),
+                    painter = painterResource(R.drawable.ic_orientations),
+                    contentDescription = "name"
                 )
-                append(orientationString)
-                addStyle(
-                    SpanStyle(fontSize = 16.sp),
-                    start = text.length,
-                    end = orientationString.length + text.length
+                Spacer(modifier = Modifier.size(12.dp))
+                Text(
+                    text = orientationString,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.bodyLarge
                 )
             }
-            Text(text = orientationText)
 
             Button(
                 modifier = Modifier.align(Alignment.CenterHorizontally),

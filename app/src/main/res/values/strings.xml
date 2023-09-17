@@ -28,13 +28,6 @@
     <string name="label_pexels">Powered by Pexels Api</string>
     <string name="label_no_app_found_to_handle_this_request">No App Found To Handle This Request!</string>
     <string name="label_ok">OK</string>
-    <string name="label_wallpaper">"Wallpaper: "</string>
-    <string name="label_photographer">"Photographer: "</string>
-    <string name="label_main_color">"Main Color: "</string>
-    <string name="label_width">"Width: "</string>
-    <string name="label_height">"Height: "</string>
-    <string name="label_sizes">"Sizes: "</string>
-    <string name="label_orientation">"Orientation: "</string>
     <string name="label_send_to">Share via</string>
     <string name="label_quality">Image Quality</string>
     <string name="label_image_quality">Image Quality</string>
