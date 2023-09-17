@@ -5,13 +5,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.google.accompanist.navigation.material.bottomSheet
-import ir.thatsmejavad.backgroundable.common.ui.ObserveArgument
 import ir.thatsmejavad.backgroundable.common.ui.animatedComposable
 import ir.thatsmejavad.backgroundable.core.AppScreens
 import ir.thatsmejavad.backgroundable.core.viewmodel.daggerViewModel
 import ir.thatsmejavad.backgroundable.screens.aboutus.AboutUsScreen
 import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListScreen
-import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListViewModel
 import ir.thatsmejavad.backgroundable.screens.columncountpicker.ColumnCountPicker
 import ir.thatsmejavad.backgroundable.screens.downloadpicker.DownloadPickerScreen
 import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailScreen
@@ -28,31 +26,7 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
     animatedComposable(
         route = AppScreens.CollectionList.route
     ) {
-        val viewModel = daggerViewModel<CollectionListViewModel>()
-
-        navController.ObserveArgument<Int>(key = "selected-item") {
-            viewModel.setColumnCount(it)
-        }
-
-        CollectionListScreen(
-            viewModel = viewModel,
-            onCollectionClicked = { id, title ->
-                navController.navigate(
-                    AppScreens.MediaList.createRoute(
-                        id = id,
-                        title = title,
-                    )
-                )
-            },
-            openColumnCountPicker = { selectedItem ->
-                navController.navigate(
-                    AppScreens.ColumnCountPicker.createRoute(
-                        items = viewModel.columnCountPickerData,
-                        selectedItem = selectedItem
-                    )
-                )
-            }
-        )
+        CollectionListScreen(navController = navController)
     }
 
     animatedComposable(

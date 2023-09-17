@@ -12,7 +12,7 @@ fun <T> NavController.ObserveArgument(
 ) {
     val backStack by currentBackStackEntryAsState()
     backStack?.let {
-        it.savedStateHandle.get<T>(key)?.let { item ->
+        it.savedStateHandle.remove<T>(key)?.let { item ->
             onReceive(item)
         }
     }

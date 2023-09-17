@@ -44,7 +44,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
@@ -52,23 +54,31 @@ import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.BoxWithSwipeRefresh
 import ir.thatsmejavad.backgroundable.common.ui.HexagonShape
+import ir.thatsmejavad.backgroundable.common.ui.ObserveArgument
 import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
 import ir.thatsmejavad.backgroundable.common.ui.drawCustomHexagonPath
+import ir.thatsmejavad.backgroundable.core.AppScreens
 import ir.thatsmejavad.backgroundable.core.Constants.NAVIGATION_BAR_HEIGHT
 import ir.thatsmejavad.backgroundable.core.getErrorMessage
 import ir.thatsmejavad.backgroundable.core.getSnackbarMessage
+import ir.thatsmejavad.backgroundable.core.viewmodel.daggerViewModel
 import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
 
 @Composable
 fun CollectionListScreen(
-    viewModel: CollectionListViewModel,
-    onCollectionClicked: (String, String) -> Unit,
-    openColumnCountPicker: (Int) -> Unit,
+    navController: NavController,
+    viewModel: CollectionListViewModel = daggerViewModel()
 ) {
-    val collections = viewModel.collection.collectAsLazyPagingItems()
-    val columnCounts by viewModel.columnCount.collectAsStateWithLifecycle()
+    navController.ObserveArgument<Int>(key = "selected-item") {
+        viewModel.setColumnCount(it)
+    }
 
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+    val snackbarHostState = remember { SnackbarHostState() }
+    viewModel.snackbarManager.ObserveSnackbars(snackbarHostState)
+
+    val columnCounts by viewModel.columnCount.collectAsStateWithLifecycle()
+    val collections = viewModel.collection.collectAsLazyPagingItems()
+
     LaunchedEffect(collections.loadState.refresh) {
         val refresh = collections.loadState.refresh
         if (refresh is LoadState.Error && collections.itemCount != 0) {
@@ -76,8 +86,38 @@ fun CollectionListScreen(
         }
     }
 
-    val snackbarHostState = remember { SnackbarHostState() }
-    viewModel.snackbarManager.ObserveSnackbars(snackbarHostState)
+    CollectionListScreen(
+        columnCounts = columnCounts,
+        snackbarHostState = snackbarHostState,
+        collections = collections,
+        onCollectionClicked = { id, title ->
+            navController.navigate(
+                AppScreens.MediaList.createRoute(
+                    id = id,
+                    title = title,
+                )
+            )
+        },
+        openColumnCountPicker = { selectedItem ->
+            navController.navigate(
+                AppScreens.ColumnCountPicker.createRoute(
+                    items = viewModel.columnCountPickerData,
+                    selectedItem = selectedItem
+                )
+            )
+        }
+    )
+}
+
+@Composable
+private fun CollectionListScreen(
+    columnCounts: Int,
+    snackbarHostState: SnackbarHostState,
+    collections: LazyPagingItems<CollectionEntity>,
+    onCollectionClicked: (String, String) -> Unit,
+    openColumnCountPicker: (Int) -> Unit,
+) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
     BackgroundableScaffold(
         modifier = Modifier
