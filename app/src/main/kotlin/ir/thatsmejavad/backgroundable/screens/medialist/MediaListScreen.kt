@@ -45,7 +45,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
@@ -54,24 +56,24 @@ import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.BoxWithSwipeRefresh
 import ir.thatsmejavad.backgroundable.common.ui.MediaCard
 import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
+import ir.thatsmejavad.backgroundable.core.AppScreens
 import ir.thatsmejavad.backgroundable.core.getErrorMessage
 import ir.thatsmejavad.backgroundable.core.getSnackbarMessage
+import ir.thatsmejavad.backgroundable.core.sealeds.ImageQuality
 import ir.thatsmejavad.backgroundable.core.sealeds.ImageQuality.Companion.toResourceSize
 import ir.thatsmejavad.backgroundable.core.sealeds.List
+import ir.thatsmejavad.backgroundable.core.viewmodel.daggerViewModel
+import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
 
 @Composable
-internal fun MediaListScreen(
-    title: String,
-    viewModel: MediaListViewModel,
-    onMediaClicked: (Int, String) -> Unit,
-    onBackClicked: () -> Unit,
+fun MediaListScreen(
+    navController: NavController,
+    viewModel: MediaListViewModel = daggerViewModel(),
+    title: String
 ) {
     val medias = viewModel.medias.collectAsLazyPagingItems()
     val columnType by viewModel.mediaColumnTypeFlow.collectAsStateWithLifecycle()
-
     val imageQuality by viewModel.imageQuality.collectAsStateWithLifecycle()
-
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
     val snackbarHostState = remember { SnackbarHostState() }
     viewModel.snackbarManager.ObserveSnackbars(snackbarHostState)
@@ -82,6 +84,35 @@ internal fun MediaListScreen(
             viewModel.snackbarManager.sendError(refresh.error.getSnackbarMessage())
         }
     }
+
+    MediaListScreen(
+        title = title,
+        columnType = columnType,
+        imageQuality = imageQuality,
+        snackbarHostState = snackbarHostState,
+        medias = medias,
+        navigateTo = {
+            navController.navigate(it) {
+                launchSingleTop = true
+            }
+        },
+        onBackClicked = { navController.navigateUp() },
+        changeColumnType = { viewModel.changeColumnCount() },
+    )
+}
+
+@Composable
+private fun MediaListScreen(
+    title: String,
+    columnType: List,
+    imageQuality: ImageQuality,
+    snackbarHostState: SnackbarHostState,
+    medias: LazyPagingItems<MediaWithResources>,
+    navigateTo: (String) -> Unit,
+    onBackClicked: () -> Unit,
+    changeColumnType: () -> Unit,
+) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
     BackgroundableScaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -107,7 +138,7 @@ internal fun MediaListScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { viewModel.changeColumnCount() }) {
+                    IconButton(onClick = changeColumnType) {
                         Icon(
                             painter = painterResource(
                                 when (columnType) {
@@ -167,7 +198,6 @@ internal fun MediaListScreen(
                         ) { index ->
                             medias[index]?.let { media ->
                                 MediaCard(
-                                    id = media.media.id,
                                     alt = media.media.alt,
                                     aspectRatio = media.media.width / media.media.height.toFloat(),
                                     avgColor = media.media.avgColor,
@@ -175,7 +205,14 @@ internal fun MediaListScreen(
                                     resourceUrl = media.resources.first {
                                         it.size == imageQuality.toResourceSize()
                                     }.url,
-                                    onMediaClicked = onMediaClicked
+                                    onMediaClicked = {
+                                        navigateTo(
+                                            AppScreens.MediaDetail.createRoute(
+                                                media.media.id,
+                                                media.media.alt
+                                            )
+                                        )
+                                    }
                                 )
                             }
                         }
@@ -229,13 +266,19 @@ internal fun MediaListScreen(
                         ) { index ->
                             medias[index]?.let { media ->
                                 MediaCard(
-                                    id = media.media.id,
                                     alt = media.media.alt,
                                     avgColor = media.media.avgColor,
                                     isSingleColumn = columnType == List.ListType,
                                     photographer = media.media.photographer,
                                     resourceUrl = media.resources.first { it.size == imageQuality.toResourceSize() }.url,
-                                    onMediaClicked = onMediaClicked
+                                    onMediaClicked = {
+                                        navigateTo(
+                                            AppScreens.MediaDetail.createRoute(
+                                                media.media.id,
+                                                media.media.alt
+                                            )
+                                        )
+                                    }
                                 )
                             }
                         }

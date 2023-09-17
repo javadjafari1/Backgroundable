@@ -49,11 +49,7 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
 
         MediaListScreen(
             title = title,
-            viewModel = daggerViewModel(),
-            onMediaClicked = { id, alt ->
-                navController.navigate(AppScreens.MediaDetail.createRoute(id, alt))
-            },
-            onBackClicked = { navController.navigateUp() }
+            navController = navController
         )
     }
 

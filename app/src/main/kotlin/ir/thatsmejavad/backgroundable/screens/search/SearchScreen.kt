@@ -239,7 +239,6 @@ fun SearchScreen(
                         ) { index ->
                             medias[index]?.let { media ->
                                 MediaCard(
-                                    id = media.id,
                                     alt = media.alt,
                                     aspectRatio = media.width / media.height.toFloat(),
                                     avgColor = media.avgColor,
@@ -250,7 +249,9 @@ fun SearchScreen(
                                         ImageQuality.Low -> media.resources.tiny
                                         ImageQuality.Ultra -> media.resources.original
                                     },
-                                    onMediaClicked = onMediaClicked
+                                    onMediaClicked = {
+                                        onMediaClicked(media.id, media.alt)
+                                    }
                                 )
                             }
                         }
@@ -312,7 +313,6 @@ fun SearchScreen(
                         ) { index ->
                             medias[index]?.let { media ->
                                 MediaCard(
-                                    id = media.id,
                                     alt = media.alt,
                                     avgColor = media.avgColor,
                                     isSingleColumn = columnType == List.ListType,
@@ -323,7 +323,7 @@ fun SearchScreen(
                                         ImageQuality.Low -> media.resources.tiny
                                         ImageQuality.Ultra -> media.resources.original
                                     },
-                                    onMediaClicked = onMediaClicked
+                                    onMediaClicked = { onMediaClicked(media.id, media.alt) }
                                 )
                             }
                         }

@@ -23,14 +23,13 @@ import ir.thatsmejavad.backgroundable.core.toColor
 
 @Composable
 fun MediaCard(
-    id: Int,
     alt: String,
     avgColor: String,
     photographer: String,
     resourceUrl: String,
     isSingleColumn: Boolean,
     modifier: Modifier = Modifier,
-    onMediaClicked: (Int, String) -> Unit,
+    onMediaClicked: () -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -41,7 +40,7 @@ fun MediaCard(
                     bottomStart = CornerSize(0.dp)
                 )
             )
-            .clickable { onMediaClicked(id, alt) }
+            .clickable(onClick = onMediaClicked)
     ) {
         CoilImage(
             modifier = Modifier
@@ -75,14 +74,13 @@ fun MediaCard(
 
 @Composable
 fun MediaCard(
-    id: Int,
     alt: String,
     aspectRatio: Float,
     avgColor: String,
     photographer: String,
     resourceUrl: String,
     modifier: Modifier = Modifier,
-    onMediaClicked: (Int, String) -> Unit,
+    onMediaClicked: () -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -92,7 +90,7 @@ fun MediaCard(
                     bottomStart = CornerSize(0.dp)
                 )
             )
-            .clickable { onMediaClicked(id, alt) }
+            .clickable(onClick = onMediaClicked)
     ) {
         CoilImage(
             modifier = Modifier
