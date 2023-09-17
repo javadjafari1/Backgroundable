@@ -81,7 +81,6 @@ fun ThemeSettingScreen(
         onMaterialYouClick = { viewModel.updateIsMaterialYouEnabled(it) },
         onChangeThemeColor = { viewModel.updateThemeColor(it) }
     )
-
 }
 
 @Composable

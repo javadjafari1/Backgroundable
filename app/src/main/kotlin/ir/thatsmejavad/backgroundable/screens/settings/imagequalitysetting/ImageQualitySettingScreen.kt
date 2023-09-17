@@ -39,7 +39,6 @@ import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.core.sealeds.ImageQuality
 import ir.thatsmejavad.backgroundable.core.viewmodel.daggerViewModel
 
-
 @Composable
 fun ImageQualitySettingScreen(
     navController: NavController,
