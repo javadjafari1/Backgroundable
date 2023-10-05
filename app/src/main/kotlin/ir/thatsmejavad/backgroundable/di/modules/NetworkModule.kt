@@ -26,6 +26,7 @@ class NetworkModule {
     @Provides
     fun provideJson(): Json {
         return Json {
+            decodeEnumsCaseInsensitive = true
             ignoreUnknownKeys = true
             coerceInputValues = true
             explicitNulls = false
