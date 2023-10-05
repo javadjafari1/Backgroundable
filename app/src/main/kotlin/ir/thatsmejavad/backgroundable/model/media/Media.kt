@@ -12,7 +12,7 @@ data class Media(
     val url: String,
     val height: Int,
     val alt: String,
-    val type: MediaType,
+    val type: MediaType?,
     val liked: Boolean?,
     val photographer: String,
     @SerialName("src")
@@ -29,7 +29,7 @@ data class Media(
         height = height,
         url = url,
         alt = alt,
-        type = type,
+        type = type ?: MediaType.Photo,
         photographer = photographer,
         photographerId = photographerId,
         photographerUrl = photographerUrl,

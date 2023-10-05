@@ -15,8 +15,8 @@ Backgroundable is an Android app that allows you to set beautiful wallpapers for
 
 ## Screenshots
 
-| Home                                                                      | Media List                                                                           | Media Detail                                                                             | Search                                                                        | Settings                                                                          |
-|---------------------------------------------------------------------------|--------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
+| Home                                                                            | Media List                                                                           | Media Detail                                                                             | Search                                                                              | Settings                                                                                |
+|---------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
 | <img src="resource/screenshots/homeScreen.png" alt="Home" style="width:200px"/> | <img src="resource/screenshots/MediaList.png" alt="Media List" style="width:200px"/> | <img src="resource/screenshots/MediaDetail.png" alt="Media Detail" style="width:200px"/> | <img src="resource/screenshots/SearchScreen.png" alt="Search" style="width:200px"/> | <img src="resource/screenshots/SettingsScreen.png" alt="Settings" style="width:200px"/> |
 
 
@@ -52,19 +52,18 @@ Backgroundable is powered by the Pexels API, which provides a vast collection of
 
 This app is built with the help of the following libraries and dependencies:
 
-- Android Gradle Plugin (Version 8.1.1).
+- Android Gradle Plugin (Version 8.1.2).
 - [Accompanist]([link_to_library2](https://github.com/google/accompanist)) (Version 0.32.0).
 - [Coil](https://github.com/coil-kt/coil) (Version 2.4.0).
-- Compose (Version 1.5.1).
+- Compose (Version 1.5.3).
 - [Detekt](https://github.com/detekt/detekt) (Version 1.23.1).
-- [Dagger](https://dagger.dev/) (Version 2.48).
+- [Dagger](https://dagger.dev/) (Version 2.48.1).
 - [Chucker](https://github.com/ChuckerTeam/chucker/) (Version 4.0.0).
 - Datastore (Version 1.0.0).
-- [Dagger](https://dagger.dev/) (Version 2.48).
-- [Telephoto](https://github.com/saket/telephoto) (Version 0.4.0).
-- KotlinxSerialization (Version 1.5.0).
+- [Telephoto](https://github.com/saket/telephoto) (Version 0.6.2).
+- KotlinxSerialization (Version 1.6.0).
 - Kotlin (Version 1.9.10).
-- Navigation Compose (Version 2.7.2).
+- Navigation Compose (Version 2.7.4).
 - Paging3 (Version 3.2.1).
 - [Retrofit2](https://github.com/square/retrofit) (Version 2.9.0).
 - [okhttp3](https://github.com/square/okhttp) (Version 4.11.0).

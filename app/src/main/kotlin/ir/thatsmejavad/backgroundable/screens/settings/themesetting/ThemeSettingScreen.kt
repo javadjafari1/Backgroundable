@@ -21,15 +21,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
+import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -103,7 +103,7 @@ fun ThemeSettingScreen(
                 navigationIcon = {
                     IconButton(onClick = onBackClicked) {
                         Icon(
-                            imageVector = Icons.Filled.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Navigate back"
                         )
                     }
@@ -126,7 +126,7 @@ fun ThemeSettingScreen(
                 derivedStateOf { tabs.indexOf(userPreferences.theme) }
             }
 
-            TabRow(
+            PrimaryTabRow(
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .padding(horizontal = 16.dp)
