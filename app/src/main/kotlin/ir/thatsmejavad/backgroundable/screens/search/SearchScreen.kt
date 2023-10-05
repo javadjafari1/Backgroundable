@@ -29,7 +29,7 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
@@ -193,7 +193,7 @@ private fun SearchScreen(
                         ) {
                             Icon(
                                 imageVector = if (it) {
-                                    Icons.Filled.ArrowBack
+                                    Icons.AutoMirrored.Filled.ArrowBack
                                 } else {
                                     Icons.Filled.Search
                                 },

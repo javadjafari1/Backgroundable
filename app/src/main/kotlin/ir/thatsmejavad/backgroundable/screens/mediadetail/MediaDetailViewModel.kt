@@ -73,12 +73,12 @@ class MediaDetailViewModel @AssistedInject constructor(
     fun getMedia(mediaId: Int) {
         viewModelScope.launch {
             _media.emit(AsyncJob.Uninitialized)
-            try {
+            runCatching {
                 mediaRepository.getMediaWithResources(mediaId)?.let { result ->
                     _media.emit(AsyncJob.Success(result))
                 }
-            } catch (e: Exception) {
-                _media.emit(AsyncJob.Fail(e))
+            }.getOrElse {
+                _media.emit(AsyncJob.Fail(it))
             }
         }
     }
@@ -91,16 +91,16 @@ class MediaDetailViewModel @AssistedInject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             _savePurpose.value = purpose
             _fileUri.emit(AsyncJob.Loading)
-            try {
+            runCatching {
                 val uri = drawable
                     .toBitmap()
                     .saveIn(context.cacheDir)
                     .getUri(context)
 
                 _fileUri.emit(AsyncJob.Success(uri))
-            } catch (e: Exception) {
-                _fileUri.emit(AsyncJob.Fail(e))
-                snackbarManager.sendError(e.getSnackbarMessage())
+            }.getOrElse {
+                _fileUri.emit(AsyncJob.Fail(it))
+                snackbarManager.sendError(it.getSnackbarMessage())
             }
         }
     }

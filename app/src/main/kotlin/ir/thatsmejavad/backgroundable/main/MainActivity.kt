@@ -61,6 +61,7 @@ import ir.thatsmejavad.backgroundable.core.Constants.NAVIGATION_BAR_HEIGHT
 import ir.thatsmejavad.backgroundable.core.sealeds.Theme
 import ir.thatsmejavad.backgroundable.core.viewmodel.LocalViewModelFactory
 import ir.thatsmejavad.backgroundable.mainNavGraph
+import ir.thatsmejavad.backgroundable.settingNavGraph
 import ir.thatsmejavad.backgroundable.ui.BackgroundableTheme
 import javax.inject.Inject
 
@@ -160,6 +161,7 @@ private fun BackgroundableApp() {
                 startDestination = AppScreens.CollectionList.route
             ) {
                 mainNavGraph(navController)
+                settingNavGraph(navController)
             }
             /*
              * we have to add bottom bar like this, and not in Scaffold because

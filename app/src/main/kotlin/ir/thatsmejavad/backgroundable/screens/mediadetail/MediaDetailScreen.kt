@@ -25,7 +25,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -67,6 +67,10 @@ import ir.thatsmejavad.backgroundable.core.capitalizeFirstChar
 import ir.thatsmejavad.backgroundable.core.getErrorMessage
 import ir.thatsmejavad.backgroundable.core.openUrl
 import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob
+import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob.Fail
+import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob.Loading
+import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob.Success
+import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob.Uninitialized
 import ir.thatsmejavad.backgroundable.core.sealeds.ImageQuality
 import ir.thatsmejavad.backgroundable.core.sealeds.ImageQuality.Companion.toResourceSize
 import ir.thatsmejavad.backgroundable.core.sealeds.OrientationMode
@@ -95,11 +99,11 @@ fun MediaDetailScreen(
     val context = LocalContext.current
 
     LaunchedEffect(key1 = fileUri) {
-        if (fileUri is AsyncJob.Success) {
+        if (fileUri is Success) {
             when (savePurpose) {
                 is SavePurpose.Share -> {
-                    val media = (mediaResult as AsyncJob.Success).value
-                    (fileUri as AsyncJob.Success).value.shareFileWithUri(
+                    val media = (mediaResult as Success).value
+                    (fileUri as Success).value.shareFileWithUri(
                         context = context,
                         contentType = "image/plain",
                         text = "${media.media.alt} by ${media.media.photographer} from Backgroundable",
@@ -112,7 +116,7 @@ fun MediaDetailScreen(
                 }
 
                 is SavePurpose.SettingWallpaper -> {
-                    (fileUri as AsyncJob.Success).value.setAsWallpaper(
+                    (fileUri as Success).value.setAsWallpaper(
                         context = context,
                         onError = {
                             context.toast(
@@ -144,8 +148,8 @@ fun MediaDetailScreen(
             context.openUrl(it)
         },
         setAsWallpaper = { drawable ->
-            if (fileUri is AsyncJob.Success) {
-                (fileUri as AsyncJob.Success).value.setAsWallpaper(
+            if (fileUri is Success) {
+                (fileUri as Success).value.setAsWallpaper(
                     context = context,
                     onError = {
                         context.toast(
@@ -162,8 +166,8 @@ fun MediaDetailScreen(
             }
         },
         share = { drawable, name, photographer ->
-            if (fileUri is AsyncJob.Success) {
-                (fileUri as AsyncJob.Success).value.shareFileWithUri(
+            if (fileUri is Success) {
+                (fileUri as Success).value.shareFileWithUri(
                     context = context,
                     contentType = "image/plain",
                     text = "$name by $photographer from Backgroundable",
@@ -228,7 +232,7 @@ private fun MediaDetailScreen(
                     navigationIcon = {
                         IconButton(onClick = onBackClicked) {
                             Icon(
-                                imageVector = Icons.Filled.ArrowBack,
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = "Navigate back"
                             )
                         }
@@ -247,7 +251,7 @@ private fun MediaDetailScreen(
         snackbarHostState = snackbarHostState
     ) { paddingValues ->
         when (mediaResult) {
-            is AsyncJob.Fail -> {
+            is Fail -> {
                 Text(
                     text = mediaResult
                         .exception
@@ -260,13 +264,13 @@ private fun MediaDetailScreen(
                 }
             }
 
-            AsyncJob.Loading, AsyncJob.Uninitialized -> {
+            Loading, Uninitialized -> {
                 Box(modifier = Modifier.fillMaxSize()) {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
             }
 
-            is AsyncJob.Success -> {
+            is Success -> {
                 val mediaWithResources = mediaResult.value
                 var drawable by remember { mutableStateOf<Drawable?>(null) }
 
@@ -297,8 +301,14 @@ private fun MediaDetailScreen(
                             .weight(1f)
                             .fillMaxWidth(),
                         onClick = { isToolsVisible = !isToolsVisible },
-                        url = mediaWithResources.resources.first { it.size == ResourceSize.Original }.url,
-                        placeHolder = mediaWithResources.resources.first { it.size == imageQuality.toResourceSize() }.url,
+                        url = mediaWithResources
+                            .resources
+                            .first { it.size == ResourceSize.Original }
+                            .url,
+                        placeHolder = mediaWithResources
+                            .resources
+                            .first { it.size == imageQuality.toResourceSize() }
+                            .url,
                         contentDescription = mediaWithResources.media.alt,
                         isLoading = { isImageLoading = it },
                         onDrawableLoaded = { drawable = it }
@@ -313,7 +323,7 @@ private fun MediaDetailScreen(
                                 modifier = Modifier
                                     .height(56.dp)
                                     .weight(1f),
-                                enabled = fileUri !is AsyncJob.Loading,
+                                enabled = fileUri !is Loading,
                                 onClick = { setAsWallpaper(drawable!!) },
                                 shape = MaterialTheme.shapes.extraSmall,
                                 elevation = ButtonDefaults.elevatedButtonElevation(
@@ -325,7 +335,7 @@ private fun MediaDetailScreen(
                                     contentColor = MaterialTheme.colorScheme.onPrimary
                                 )
                             ) {
-                                if (fileUri is AsyncJob.Loading && savePurpose == SavePurpose.SettingWallpaper) {
+                                if (fileUri is Loading && savePurpose == SavePurpose.SettingWallpaper) {
                                     CircularProgressIndicator(modifier = Modifier.size(36.dp))
                                 } else {
                                     Text(
@@ -337,7 +347,7 @@ private fun MediaDetailScreen(
                             OutlinedIconButton(
                                 modifier = Modifier.size(56.dp),
                                 shape = MaterialTheme.shapes.extraSmall,
-                                enabled = fileUri !is AsyncJob.Loading,
+                                enabled = fileUri !is Loading,
                                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
                                 onClick = {
                                     share(
@@ -347,7 +357,7 @@ private fun MediaDetailScreen(
                                     )
                                 },
                             ) {
-                                if (fileUri is AsyncJob.Loading && savePurpose == SavePurpose.Share) {
+                                if (fileUri is Loading && savePurpose == SavePurpose.Share) {
                                     CircularProgressIndicator(modifier = Modifier.size(36.dp))
                                 } else {
                                     Icon(

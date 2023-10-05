@@ -41,7 +41,7 @@ class CollectionRemoteMediator(
         loadType: LoadType,
         state: PagingState<Int, CollectionEntity>
     ): MediatorResult {
-        return try {
+        return runCatching {
             val nextPage = when (loadType) {
                 LoadType.PREPEND -> {
                     return MediatorResult.Success(endOfPaginationReached = true)
@@ -79,8 +79,8 @@ class CollectionRemoteMediator(
             MediatorResult.Success(
                 endOfPaginationReached = (response.page * response.perPage >= response.total)
             )
-        } catch (e: Exception) {
-            MediatorResult.Error(e)
+        }.getOrElse {
+            MediatorResult.Error(it)
         }
     }
 

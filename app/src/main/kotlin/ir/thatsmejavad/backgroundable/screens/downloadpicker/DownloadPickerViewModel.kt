@@ -40,12 +40,12 @@ class DownloadPickerViewModel @AssistedInject constructor(
         }
         viewModelScope.launch {
             _media.value = AsyncJob.Loading
-            try {
+            runCatching {
                 mediaRepository.getMediaWithResources(id)?.let { result ->
                     _media.value = AsyncJob.Success(result)
                 }
-            } catch (e: Exception) {
-                _media.value = AsyncJob.Fail(e)
+            }.getOrElse {
+                _media.value = AsyncJob.Fail(it)
             }
         }
     }

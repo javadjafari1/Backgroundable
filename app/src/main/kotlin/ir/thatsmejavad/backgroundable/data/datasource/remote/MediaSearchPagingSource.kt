@@ -20,7 +20,7 @@ class MediaSearchPagingSource @Inject constructor(
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Media> {
-        return try {
+        return runCatching {
             val page = params.key ?: 1
             val response = api.searchPhoto(
                 page = page,
@@ -35,8 +35,8 @@ class MediaSearchPagingSource @Inject constructor(
                 prevKey = if (page == 1) null else page.minus(1),
                 nextKey = if (page * MEDIA_PER_PAGE_ITEM > total) null else page.plus(1),
             )
-        } catch (e: Exception) {
-            LoadResult.Error(e)
+        }.getOrElse {
+            LoadResult.Error(it)
         }
     }
 }

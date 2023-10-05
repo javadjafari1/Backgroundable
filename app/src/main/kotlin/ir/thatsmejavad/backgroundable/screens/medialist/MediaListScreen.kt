@@ -21,7 +21,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
@@ -132,7 +132,7 @@ private fun MediaListScreen(
                 navigationIcon = {
                     IconButton(onClick = onBackClicked) {
                         Icon(
-                            imageVector = Icons.Filled.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Navigate back"
                         )
                     }
@@ -270,7 +270,10 @@ private fun MediaListScreen(
                                     avgColor = media.media.avgColor,
                                     isSingleColumn = columnType == List.ListType,
                                     photographer = media.media.photographer,
-                                    resourceUrl = media.resources.first { it.size == imageQuality.toResourceSize() }.url,
+                                    resourceUrl = media
+                                        .resources
+                                        .first { it.size == imageQuality.toResourceSize() }
+                                        .url,
                                     onMediaClicked = {
                                         navigateTo(
                                             AppScreens.MediaDetail.createRoute(

@@ -17,7 +17,6 @@ import ir.thatsmejavad.backgroundable.screens.search.SearchScreen
 import ir.thatsmejavad.backgroundable.screens.settings.SettingsScreen
 import ir.thatsmejavad.backgroundable.screens.settings.imagequalitysetting.ImageQualitySettingScreen
 import ir.thatsmejavad.backgroundable.screens.settings.themesetting.ThemeSettingScreen
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
@@ -122,24 +121,6 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         )
     }
 
-    animatedComposable(
-        route = AppScreens.Settings.route,
-    ) {
-        SettingsScreen(
-            navigateTo = { route ->
-                navController.navigate(route)
-            }
-        )
-    }
-
-    animatedComposable(
-        route = AppScreens.ThemeSetting.route,
-    ) {
-        ThemeSettingScreen(
-            navController = navController
-        )
-    }
-
     bottomSheet(
         route = AppScreens.DownloadPicker.route,
         arguments = listOf(
@@ -151,7 +132,9 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
     ) {
         DownloadPickerScreen(navController = navController)
     }
+}
 
+fun NavGraphBuilder.settingNavGraph(navController: NavHostController) {
     animatedComposable(
         route = AppScreens.AboutUs.route
     ) {
@@ -166,6 +149,24 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         route = AppScreens.ImageQualitySetting.route
     ) {
         ImageQualitySettingScreen(
+            navController = navController
+        )
+    }
+
+    animatedComposable(
+        route = AppScreens.Settings.route,
+    ) {
+        SettingsScreen(
+            navigateTo = { route ->
+                navController.navigate(route)
+            }
+        )
+    }
+
+    animatedComposable(
+        route = AppScreens.ThemeSetting.route,
+    ) {
+        ThemeSettingScreen(
             navController = navController
         )
     }
