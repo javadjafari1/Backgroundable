@@ -7,7 +7,6 @@ import androidx.paging.PagingData
 import ir.thatsmejavad.backgroundable.UserPref
 import ir.thatsmejavad.backgroundable.core.Constants.MEDIA_PER_PAGE_ITEM
 import ir.thatsmejavad.backgroundable.core.sealeds.List
-import ir.thatsmejavad.backgroundable.core.sealeds.MediaType
 import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
 import ir.thatsmejavad.backgroundable.data.datasource.local.MediaLocalDataSource
 import ir.thatsmejavad.backgroundable.data.datasource.local.PageKeyLocalDataSource
@@ -90,7 +89,7 @@ class MediaRepositoryImpl @Inject constructor(
     private suspend fun updateMedia(mediaId: Int) {
         val media = mediaRemoteDataSource.getMedia(mediaId)
         val resourceEntities = mutableListOf<ResourceEntity>()
-        val mediaEntities = media.toEntity(MediaType.Photo, null)
+        val mediaEntities = media.toEntity(null)
 
         for (value in media.resources) {
             resourceEntities.add(

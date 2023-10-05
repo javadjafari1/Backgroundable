@@ -12,6 +12,7 @@ data class Media(
     val url: String,
     val height: Int,
     val alt: String,
+    val type: MediaType,
     val liked: Boolean?,
     val photographer: String,
     @SerialName("src")
@@ -21,7 +22,6 @@ data class Media(
     val photographerUrl: String,
 ) {
     fun toEntity(
-        type: MediaType,
         collectionId: String?
     ) = MediaEntity(
         id = id,

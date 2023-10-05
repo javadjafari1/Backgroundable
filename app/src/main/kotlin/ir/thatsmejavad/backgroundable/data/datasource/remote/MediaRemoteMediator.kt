@@ -5,7 +5,6 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import ir.thatsmejavad.backgroundable.core.Constants.MEDIA_REFRESH_TIME_IN_HOUR
-import ir.thatsmejavad.backgroundable.core.sealeds.MediaType
 import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
 import ir.thatsmejavad.backgroundable.data.datasource.local.MediaLocalDataSource
 import ir.thatsmejavad.backgroundable.data.datasource.local.PageKeyLocalDataSource
@@ -84,7 +83,7 @@ class MediaRemoteMediator(
                             )
                         )
                     }
-                    media.toEntity(MediaType.Photo, collectionId)
+                    media.toEntity(collectionId)
                 }
 
                 mediaLocalDataSource.insertMedias(mediaEntities)

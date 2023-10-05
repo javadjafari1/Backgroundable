@@ -4,7 +4,6 @@ import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import ir.thatsmejavad.backgroundable.data.db.converter.MediaTypeConverter
 import ir.thatsmejavad.backgroundable.data.db.converter.ResourceSizeConverter
 import ir.thatsmejavad.backgroundable.data.db.dao.CollectionDao
 import ir.thatsmejavad.backgroundable.data.db.dao.MediaDao
@@ -32,7 +31,6 @@ import ir.thatsmejavad.backgroundable.data.db.entity.ResourceEntity
     ]
 )
 @TypeConverters(
-    MediaTypeConverter::class,
     ResourceSizeConverter::class,
 )
 abstract class BackgroundableDatabase : RoomDatabase() {
