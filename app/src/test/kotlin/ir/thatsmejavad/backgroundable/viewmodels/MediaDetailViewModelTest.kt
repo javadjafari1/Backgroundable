@@ -1,5 +1,7 @@
-package ir.thatsmejavad.backgroundable.screens.downloadpicker
+package ir.thatsmejavad.backgroundable.viewmodels
 
+import android.content.Context
+import android.graphics.drawable.Drawable
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import io.kotest.assertions.throwables.shouldThrow
@@ -7,17 +9,23 @@ import io.kotest.matchers.shouldBe
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.verify
-import ir.thatsmejavad.backgroundable.core.Downloader
+import ir.thatsmejavad.backgroundable.core.SnackbarManager
 import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob
+import ir.thatsmejavad.backgroundable.core.sealeds.ImageQuality
 import ir.thatsmejavad.backgroundable.core.sealeds.MediaType
 import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
 import ir.thatsmejavad.backgroundable.data.db.entity.MediaEntity
 import ir.thatsmejavad.backgroundable.data.db.entity.ResourceEntity
 import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
 import ir.thatsmejavad.backgroundable.data.repository.MediaRepository
+import ir.thatsmejavad.backgroundable.data.repository.SettingRepository
+import ir.thatsmejavad.backgroundable.model.UserPreferences
+import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailViewModel
+import ir.thatsmejavad.backgroundable.screens.mediadetail.SavePurpose
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -25,15 +33,24 @@ import org.junit.Before
 import org.junit.Test
 import java.io.IOException
 
-class DownloadPickerViewModelTest {
+class MediaDetailViewModelTest {
+
+    @RelaxedMockK
+    lateinit var snackbarManager: SnackbarManager
 
     @RelaxedMockK
     lateinit var mediaRepository: MediaRepository
 
     @RelaxedMockK
-    lateinit var downloader: Downloader
+    lateinit var settingRepository: SettingRepository
 
-    private val id = 3
+    @RelaxedMockK
+    lateinit var context: Context
+
+    @RelaxedMockK
+    lateinit var drawable: Drawable
+
+    private val id = 4
 
     private val testMediaWithResources = MediaWithResources(
         media = MediaEntity(
@@ -68,6 +85,8 @@ class DownloadPickerViewModelTest {
     @Test
     fun `expect exception if id is null`() {
         shouldThrow<IllegalArgumentException> { createViewModel(null) }
+
+        coVerify(exactly = 0) { mediaRepository.getMediaWithResources(any()) }
     }
 
     @Test
@@ -99,30 +118,41 @@ class DownloadPickerViewModelTest {
         }
     }
 
+
     @Test
-    fun `the downloader's download fun should called on viewModel's download call`() {
-        coEvery { mediaRepository.getMediaWithResources(id) } returns testMediaWithResources
+    fun `imageQuality should update on viewModel init`() = runTest {
+        every { settingRepository.userPreferencesFlow } returns flowOf(
+            UserPreferences(imageQuality = ImageQuality.Medium)
+        )
         val viewModel = createViewModel(id)
 
-        viewModel.download(testMediaWithResources.resources.first())
-
-        verify {
-            downloader.download(
-                url = testMediaWithResources.resources.first().url,
-                alt = testMediaWithResources.media.alt,
-                photographer = testMediaWithResources.media.photographer,
-                size = testMediaWithResources.resources.first().size
-            )
+        viewModel.imageQuality.test {
+            awaitItem() shouldBe ImageQuality.Medium
         }
     }
 
-    private fun createViewModel(id: Int?): DownloadPickerViewModel {
-        return DownloadPickerViewModel(
+    @Test
+    fun `savePurpose should update on saveFile called`() = runTest {
+        val viewModel = createViewModel(id)
+
+        viewModel.saveFile(
+            purpose = SavePurpose.SettingWallpaper,
+            drawable = drawable,
+            context = context
+        )
+
+        viewModel.savePurpose.test {
+            awaitItem() shouldBe SavePurpose.SettingWallpaper
+        }
+    }
+
+    private fun createViewModel(id: Int?): MediaDetailViewModel {
+        return MediaDetailViewModel(
+            snackbarManager = snackbarManager,
             mediaRepository = mediaRepository,
-            downloader = downloader,
+            settingRepository = settingRepository,
             savedStateHandle = id?.let { SavedStateHandle(mapOf("id" to id)) }
                 ?: run { SavedStateHandle() }
         )
     }
-
 }

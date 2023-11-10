@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.screens.collectionlist
+package ir.thatsmejavad.backgroundable.viewmodels
 
 
 import androidx.paging.PagingData
@@ -9,11 +9,12 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.RelaxedMockK
-import ir.thatsmejavad.backgroundable.collectDataForTest
+import ir.thatsmejavad.backgroundable.common.collectDataForTest
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
 import ir.thatsmejavad.backgroundable.data.datastore.ColumnCountsPreferences
 import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
 import ir.thatsmejavad.backgroundable.data.repository.CollectionRepository
+import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.UnconfinedTestDispatcher

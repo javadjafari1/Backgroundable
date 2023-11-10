@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable
+package ir.thatsmejavad.backgroundable.common
 
 import androidx.paging.DifferCallback
 import androidx.paging.NullPaddedList

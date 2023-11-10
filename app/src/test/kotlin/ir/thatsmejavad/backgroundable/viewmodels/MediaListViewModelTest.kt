@@ -1,4 +1,4 @@
-package ir.thatsmejavad.backgroundable.screens.medialist
+package ir.thatsmejavad.backgroundable.viewmodels
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.paging.PagingData
@@ -9,7 +9,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
-import ir.thatsmejavad.backgroundable.collectDataForTest
+import ir.thatsmejavad.backgroundable.common.collectDataForTest
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
 import ir.thatsmejavad.backgroundable.core.sealeds.ImageQuality
 import ir.thatsmejavad.backgroundable.core.sealeds.List
@@ -21,6 +21,7 @@ import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
 import ir.thatsmejavad.backgroundable.data.repository.MediaRepository
 import ir.thatsmejavad.backgroundable.data.repository.SettingRepository
 import ir.thatsmejavad.backgroundable.model.UserPreferences
+import ir.thatsmejavad.backgroundable.screens.medialist.MediaListViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
