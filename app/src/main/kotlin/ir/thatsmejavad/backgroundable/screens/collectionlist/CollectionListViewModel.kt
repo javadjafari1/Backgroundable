@@ -3,24 +3,20 @@ package ir.thatsmejavad.backgroundable.screens.collectionlist
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
 import ir.thatsmejavad.backgroundable.data.datastore.ColumnCountsPreferences
 import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
 import ir.thatsmejavad.backgroundable.data.repository.CollectionRepository
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 class CollectionListViewModel @Inject constructor(
-    private val collectionRepository: CollectionRepository,
+    collectionRepository: CollectionRepository,
     val snackbarManager: SnackbarManager,
     private val columnCountsPreferences: ColumnCountsPreferences,
 ) : ViewModel() {
@@ -28,23 +24,24 @@ class CollectionListViewModel @Inject constructor(
     var columnCountPickerData: String = ""
         private set
 
-    private val _collections = MutableStateFlow<PagingData<CollectionEntity>>(PagingData.empty())
-    val collection: StateFlow<PagingData<CollectionEntity>> = _collections.asStateFlow()
+    val collection: StateFlow<PagingData<CollectionEntity>> = collectionRepository.getCollections()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = PagingData.empty()
+        )
 
-    private val _columnCount = MutableStateFlow(1)
-    val columnCount: StateFlow<Int> = _columnCount.asStateFlow()
+    val columnCount: StateFlow<Int> = columnCountsPreferences.collectionColumnCountFlow
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = 1
+        )
 
     init {
-        getCollections()
         viewModelScope.launch {
             val items = listOf(1, 2, 3)
             columnCountPickerData = Json.encodeToString(items)
-        }
-
-        viewModelScope.launch {
-            columnCountsPreferences.collectionColumnCountFlow.collectLatest {
-                _columnCount.emit(it)
-            }
         }
     }
 
@@ -53,12 +50,4 @@ class CollectionListViewModel @Inject constructor(
             columnCountsPreferences.setCollectionColumnCount(count)
         }
     }
-
-    private fun getCollections() = collectionRepository
-        .getCollections()
-        .cachedIn(viewModelScope)
-        .onEach {
-            _collections.emit(it)
-        }
-        .launchIn(viewModelScope)
 }
