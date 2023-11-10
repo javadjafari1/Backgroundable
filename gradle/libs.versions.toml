@@ -16,11 +16,13 @@ dagger = "2.48.1"
 datastore = "1.0.0"
 detekt = "1.23.1"
 espressoCore = "3.5.1"
+jacoco = "0.8.11"
 javalite = "3.23.0"
 junit = "4.13.2"
 kotestAssertion = "5.8.0"
 kotlin = "1.9.20"
 kotlinxSerialization = "1.6.0"
+kover = "0.7.4"
 ksp = "1.9.20-1.0.14"
 lifecycleRuntime = "2.6.2"
 material = "1.5.4"
@@ -93,6 +95,7 @@ detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobuf" }
 
