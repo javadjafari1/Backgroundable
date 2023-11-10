@@ -118,7 +118,6 @@ class MediaDetailViewModelTest {
         }
     }
 
-
     @Test
     fun `imageQuality should update on viewModel init`() = runTest {
         every { settingRepository.userPreferencesFlow } returns flowOf(
