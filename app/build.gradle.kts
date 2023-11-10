@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.protobuf)
     alias(libs.plugins.detekt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kover)
 }
 
 detekt {
@@ -187,6 +188,10 @@ dependencies {
     androidTestImplementation(libs.composeUiJunit4)
     debugImplementation(libs.composeUiTooling)
     debugImplementation(libs.composeUiManifest)
+}
+
+kover {
+    useJacoco(libs.versions.jacoco.get())
 }
 
 class RoomSchemaArgProvider(
