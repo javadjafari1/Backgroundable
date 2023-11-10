@@ -83,6 +83,8 @@ class MediaDetailViewModelTest {
     @Test
     fun `expect exception if id is null`() {
         shouldThrow<IllegalArgumentException> { createViewModel(null) }
+
+        coVerify(exactly = 0) { mediaRepository.getMediaWithResources(any()) }
     }
 
     @Test
@@ -128,7 +130,7 @@ class MediaDetailViewModelTest {
     }
 
     @Test
-    fun `savePurpuse should update on saveFile called`() = runTest {
+    fun `savePurpose should update on saveFile called`() = runTest {
         val viewModel = createViewModel(id)
 
         viewModel.saveFile(

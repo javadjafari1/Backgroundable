@@ -1,5 +1,6 @@
 package ir.thatsmejavad.backgroundable.screens.medialist
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -29,7 +30,7 @@ import kotlinx.coroutines.launch
 class MediaListViewModel @AssistedInject constructor(
     val snackbarManager: SnackbarManager,
     private val mediaRepository: MediaRepository,
-    private val settingRepository: SettingRepository,
+    settingRepository: SettingRepository,
     @Assisted private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -55,7 +56,7 @@ class MediaListViewModel @AssistedInject constructor(
         )
 
     init {
-        val id = checkNotNull(savedStateHandle.get<String>("id")) {
+        val id = requireNotNull(savedStateHandle.get<String>("id")) {
             "id should not be null in $this"
         }
         getMedias(id)
@@ -73,12 +74,17 @@ class MediaListViewModel @AssistedInject constructor(
 
     fun changeColumnCount() {
         viewModelScope.launch {
-            val type = when (mediaColumnTypeFlow.first()) {
-                List.GridType -> List.ListType
-                List.ListType -> List.StaggeredType
-                List.StaggeredType -> List.GridType
-            }
+            val type = getNewColumnTypeByCurrentType(mediaColumnTypeFlow.first())
             mediaRepository.setMediaColumnType(type)
+        }
+    }
+
+    @VisibleForTesting
+    fun getNewColumnTypeByCurrentType(list: List): List {
+        return when (list) {
+            List.GridType -> List.ListType
+            List.ListType -> List.StaggeredType
+            List.StaggeredType -> List.GridType
         }
     }
 }

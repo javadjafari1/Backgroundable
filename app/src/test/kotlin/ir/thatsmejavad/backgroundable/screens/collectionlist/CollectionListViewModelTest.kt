@@ -1,10 +1,7 @@
 package ir.thatsmejavad.backgroundable.screens.collectionlist
 
 
-import androidx.paging.DifferCallback
-import androidx.paging.NullPaddedList
 import androidx.paging.PagingData
-import androidx.paging.PagingDataDiffer
 import app.cash.turbine.test
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -12,6 +9,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.RelaxedMockK
+import ir.thatsmejavad.backgroundable.collectDataForTest
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
 import ir.thatsmejavad.backgroundable.data.datastore.ColumnCountsPreferences
 import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
@@ -25,7 +23,6 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.junit.Before
 import org.junit.Test
-import kotlin.coroutines.CoroutineContext
 
 class CollectionListViewModelTest {
 
@@ -110,28 +107,4 @@ class CollectionListViewModelTest {
             columnCountsPreferences = columnCountsPreferences
         )
     }
-}
-
-private suspend fun <T : Any> PagingData<T>.collectDataForTest(mainContext: CoroutineContext): List<T> {
-    val dcb = object : DifferCallback {
-        override fun onChanged(position: Int, count: Int) {}
-        override fun onInserted(position: Int, count: Int) {}
-        override fun onRemoved(position: Int, count: Int) {}
-    }
-    val items = mutableListOf<T>()
-    val dif = object : PagingDataDiffer<T>(dcb, mainContext) {
-        override suspend fun presentNewList(
-            previousList: NullPaddedList<T>,
-            newList: NullPaddedList<T>,
-            lastAccessedIndex: Int,
-            onListPresentable: () -> Unit
-        ): Int? {
-            for (idx in 0 until newList.size)
-                items.add(newList.getFromStorage(idx))
-            onListPresentable()
-            return null
-        }
-    }
-    dif.collectFrom(this)
-    return items
 }
