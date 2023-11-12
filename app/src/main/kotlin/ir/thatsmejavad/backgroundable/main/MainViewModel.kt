@@ -13,7 +13,7 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     val userPreferences = settingRepository.userPreferencesFlow.stateIn(
-        viewModelScope,
+        scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(),
         initialValue = UserPreferences()
     )

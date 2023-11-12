@@ -35,7 +35,7 @@ class DownloadPickerViewModel @AssistedInject constructor(
     }
 
     fun getMedia() {
-        val id = checkNotNull(savedStateHandle.get<Int>("id")) {
+        val id = requireNotNull(savedStateHandle.get<Int>("id")) {
             "id should not be null in $this"
         }
         viewModelScope.launch {
