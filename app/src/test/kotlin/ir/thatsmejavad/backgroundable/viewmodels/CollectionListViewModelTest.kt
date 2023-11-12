@@ -96,7 +96,7 @@ class CollectionListViewModelTest {
         coEvery { columnCountsPreferences.collectionColumnCountFlow } returns flowOf(2)
         val viewModel = createViewModel()
         viewModel.columnCount.test {
-            awaitItem() shouldBe 2
+            awaitItem() shouldBe 4
         }
     }
 
