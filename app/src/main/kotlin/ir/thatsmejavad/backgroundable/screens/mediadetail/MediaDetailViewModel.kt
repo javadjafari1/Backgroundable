@@ -52,7 +52,6 @@ class MediaDetailViewModel @AssistedInject constructor(
     private val _fileUri = MutableStateFlow<AsyncJob<Uri>>(
         AsyncJob.Uninitialized
     )
-
     val fileUri: StateFlow<AsyncJob<Uri>> = _fileUri.asStateFlow()
 
     val imageQuality = settingRepository.userPreferencesFlow
@@ -64,7 +63,7 @@ class MediaDetailViewModel @AssistedInject constructor(
         )
 
     init {
-        val id = checkNotNull(savedStateHandle.get<Int>("id")) {
+        val id = requireNotNull(savedStateHandle.get<Int>("id")) {
             "id should not be null in $this"
         }
         getMedia(id)

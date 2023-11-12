@@ -105,12 +105,16 @@ android {
         freeCompilerArgs += "-opt-in=kotlinx.serialization.ExperimentalSerializationApi"
         freeCompilerArgs += "-opt-in=kotlinx.coroutines.FlowPreview"
         freeCompilerArgs += "-opt-in=androidx.compose.material.ExperimentalMaterialApi"
+        freeCompilerArgs += "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
+    }
+    testOptions {
+        unitTests.isReturnDefaultValues = true
     }
     packaging {
         resources {
@@ -153,6 +157,9 @@ dependencies {
     }
     implementation(libs.coilCompose)
 
+    /*coroutine*/
+    implementation(libs.coroutine)
+
     /*Retrofit*/
     implementation(libs.retrofit)
     implementation(libs.kotlinxSerialization)
@@ -183,6 +190,10 @@ dependencies {
     implementation(libs.splashscreen)
 
     testImplementation(libs.junit)
+    testImplementation(libs.kotestAssertion)
+    testImplementation(libs.mockK)
+    testImplementation(libs.turbine)
+    testImplementation(libs.coroutineTest)
     androidTestImplementation(libs.androidxJunit)
     androidTestImplementation(libs.espressoCore)
     androidTestImplementation(libs.composeUiJunit4)
