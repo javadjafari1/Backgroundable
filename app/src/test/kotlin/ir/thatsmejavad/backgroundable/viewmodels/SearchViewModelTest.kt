@@ -92,7 +92,11 @@ class SearchViewModelTest {
 
     @Test
     fun `imageQuality should be update with data of userPreferencesFlow`() = runTest {
-        every { settingRepository.userPreferencesFlow } returns flowOf(UserPreferences(imageQuality = ImageQuality.Ultra))
+        every { settingRepository.userPreferencesFlow } returns flowOf(
+            UserPreferences(
+                imageQuality = ImageQuality.Ultra
+            )
+        )
         val viewModel = createViewModel()
 
         verify(exactly = 1) { settingRepository.userPreferencesFlow }

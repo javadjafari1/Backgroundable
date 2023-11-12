@@ -112,7 +112,6 @@ class MediaDetailViewModelTest {
         coEvery { mediaRepository.getMediaWithResources(id) } throws ioException
         val viewModel = createViewModel(id)
 
-
         viewModel.media.test {
             awaitItem() shouldBe AsyncJob.Fail(ioException)
         }

@@ -117,7 +117,6 @@ class MediaListViewModelTest {
 
         viewModel.medias.test {
             awaitItem().collectDataForTest(dispatcher) shouldBe listOf(testMediaWithResources)
-
         }
     }
 
