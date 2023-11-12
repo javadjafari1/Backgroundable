@@ -22,7 +22,10 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build with Gradle
-      run: ./gradlew build
-      
-    - name: run detekt
+      run: ./gradlew :app:assembleDebug
+
+    - name: Run All Unit Tests
+      run: ./gradlew :app:testDebugUnitTest
+
+    - name: Run Detekt
       run: ./gradlew detekt
