@@ -66,9 +66,17 @@ This app is built with the help of the following libraries and dependencies:
 - Navigation Compose (Version 2.7.5).
 - Paging3 (Version 3.2.1).
 - [Retrofit2](https://github.com/square/retrofit) (Version 2.9.0).
-- [okhttp3](https://github.com/square/okhttp) (Version 4.12.0).
+- [Okhttp3](https://github.com/square/okhttp) (Version 4.12.0).
 - Room (Version 2.6.0).
 - KSP (Version 1.9.20-1.0.14).
+
+Test Libraries
+- [Junit4](https://github.com/junit-team/junit4) (Version 4.13.2)
+- [KotestAssertion](https://github.com/kotest/kotest) (Version 5.8.0)
+- [Kover](https://github.com/Kotlin/kotlinx-kover) (Version 0.7.4)
+- [Jacoco](https://github.com/jacoco/jacoco) (Version 0.8.11)
+- [MockK](https://github.com/mockk/mockk) (Version 1.13.8)
+- [Turbine](https://github.com/cashapp/turbine) (Version 1.0.0)
 
 ## Regular Updates
 
