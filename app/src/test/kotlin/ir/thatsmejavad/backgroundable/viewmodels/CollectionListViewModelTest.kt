@@ -8,23 +8,26 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.RelaxedMockK
+import ir.thatsmejavad.backgroundable.common.CoroutineTest
 import ir.thatsmejavad.backgroundable.common.collectDataForTest
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
 import ir.thatsmejavad.backgroundable.data.datastore.ColumnCountsPreferences
 import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
 import ir.thatsmejavad.backgroundable.data.repository.CollectionRepository
 import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class CollectionListViewModelTest {
+class CollectionListViewModelTest : CoroutineTest {
+
+    override lateinit var testScope: TestScope
+    override lateinit var dispatcher: TestDispatcher
 
     @RelaxedMockK
     lateinit var collectionRepository: CollectionRepository
@@ -34,9 +37,6 @@ class CollectionListViewModelTest {
 
     @RelaxedMockK
     lateinit var columnCountsPreferences: ColumnCountsPreferences
-
-    private val dispatcher = UnconfinedTestDispatcher()
-
     private val testEntity = CollectionEntity(
         id = "wow",
         title = "jai",
@@ -49,7 +49,6 @@ class CollectionListViewModelTest {
 
     @BeforeEach
     fun setUp() {
-        Dispatchers.setMain(dispatcher)
         MockKAnnotations.init(this)
     }
 

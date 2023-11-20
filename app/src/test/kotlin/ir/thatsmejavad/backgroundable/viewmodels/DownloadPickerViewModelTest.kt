@@ -9,6 +9,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.verify
+import ir.thatsmejavad.backgroundable.common.CoroutineTest
 import ir.thatsmejavad.backgroundable.core.Downloader
 import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob
 import ir.thatsmejavad.backgroundable.core.sealeds.MediaType
@@ -18,15 +19,17 @@ import ir.thatsmejavad.backgroundable.data.db.entity.ResourceEntity
 import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
 import ir.thatsmejavad.backgroundable.data.repository.MediaRepository
 import ir.thatsmejavad.backgroundable.screens.downloadpicker.DownloadPickerViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.IOException
 
-class DownloadPickerViewModelTest {
+class DownloadPickerViewModelTest : CoroutineTest {
+
+    override lateinit var testScope: TestScope
+    override lateinit var dispatcher: TestDispatcher
 
     @RelaxedMockK
     lateinit var mediaRepository: MediaRepository
@@ -62,7 +65,6 @@ class DownloadPickerViewModelTest {
 
     @BeforeEach
     fun setUp() {
-        Dispatchers.setMain(UnconfinedTestDispatcher())
         MockKAnnotations.init(this)
     }
 
