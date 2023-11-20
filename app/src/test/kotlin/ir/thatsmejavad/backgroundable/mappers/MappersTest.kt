@@ -7,7 +7,7 @@ import ir.thatsmejavad.backgroundable.data.db.entity.MediaEntity
 import ir.thatsmejavad.backgroundable.model.Collection
 import ir.thatsmejavad.backgroundable.model.media.Media
 import ir.thatsmejavad.backgroundable.model.media.Resources
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class MappersTest {
 

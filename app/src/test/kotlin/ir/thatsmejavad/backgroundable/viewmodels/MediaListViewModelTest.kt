@@ -27,8 +27,8 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 class MediaListViewModelTest {
 
@@ -68,7 +68,7 @@ class MediaListViewModelTest {
         )
     )
 
-    @Before
+    @BeforeEach
     fun setUp() {
         Dispatchers.setMain(dispatcher)
         MockKAnnotations.init(this)
