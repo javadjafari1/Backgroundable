@@ -18,7 +18,7 @@ detekt = "1.23.1"
 espressoCore = "3.5.1"
 jacoco = "0.8.11"
 javalite = "3.23.0"
-junit = "4.13.2"
+junit = "5.10.1"
 kotestAssertion = "5.8.0"
 kotlin = "1.9.20"
 kotlinxSerialization = "1.6.0"
@@ -66,7 +66,7 @@ datastore = { module = "androidx.datastore:datastore", version.ref = "datastore"
 datastorePreferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 espressoCore = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
-junit = { module = "junit:junit", version.ref = "junit" }
+junitJupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
 kotestAssertion = { module = "io.kotest:kotest-assertions-core", version.ref = "kotestAssertion" }
 kotlinxSerialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 lifecycleRuntimeCompose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntime" }

@@ -21,8 +21,8 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 class CollectionListViewModelTest {
 
@@ -47,7 +47,7 @@ class CollectionListViewModelTest {
         isPrivate = false
     )
 
-    @Before
+    @BeforeEach
     fun setUp() {
         Dispatchers.setMain(dispatcher)
         MockKAnnotations.init(this)

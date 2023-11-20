@@ -189,11 +189,12 @@ dependencies {
     implementation(libs.accompanistNavigationMaterial)
     implementation(libs.splashscreen)
 
-    testImplementation(libs.junit)
+    testImplementation(libs.junitJupiter)
     testImplementation(libs.kotestAssertion)
     testImplementation(libs.mockK)
     testImplementation(libs.turbine)
     testImplementation(libs.coroutineTest)
+
     androidTestImplementation(libs.androidxJunit)
     androidTestImplementation(libs.espressoCore)
     androidTestImplementation(libs.composeUiJunit4)
@@ -203,6 +204,10 @@ dependencies {
 
 kover {
     useJacoco(libs.versions.jacoco.get())
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
 
 class RoomSchemaArgProvider(

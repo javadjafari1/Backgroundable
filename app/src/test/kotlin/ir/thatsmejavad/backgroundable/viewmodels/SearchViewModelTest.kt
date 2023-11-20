@@ -26,8 +26,8 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 class SearchViewModelTest {
 
@@ -57,7 +57,7 @@ class SearchViewModelTest {
         photographerUrl = ""
     )
 
-    @Before
+    @BeforeEach
     fun setUp() {
         Dispatchers.setMain(dispatcher)
         MockKAnnotations.init(this)
@@ -182,7 +182,7 @@ class SearchViewModelTest {
         )
         val viewModel = createViewModel()
 
-        viewModel.updateSearchText("wowow")
+        viewModel.updateSearchText("test")
 
         advanceTimeBy(1002)
 

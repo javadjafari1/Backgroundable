@@ -71,7 +71,8 @@ This app is built with the help of the following libraries and dependencies:
 - KSP (Version 1.9.20-1.0.14).
 
 Test Libraries
-- [Junit4](https://github.com/junit-team/junit4) (Version 4.13.2)
+
+- [Junit5](https://github.com/junit-team/junit5) (Version 5.10.1)
 - [KotestAssertion](https://github.com/kotest/kotest) (Version 5.8.0)
 - [Kover](https://github.com/Kotlin/kotlinx-kover) (Version 0.7.4)
 - [Jacoco](https://github.com/jacoco/jacoco) (Version 0.8.11)
