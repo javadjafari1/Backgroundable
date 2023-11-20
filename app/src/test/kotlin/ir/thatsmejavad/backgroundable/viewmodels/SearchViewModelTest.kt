@@ -9,6 +9,7 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.verify
+import ir.thatsmejavad.backgroundable.common.CoroutineTest
 import ir.thatsmejavad.backgroundable.common.collectDataForTest
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
 import ir.thatsmejavad.backgroundable.core.sealeds.ImageQuality
@@ -20,16 +21,18 @@ import ir.thatsmejavad.backgroundable.model.UserPreferences
 import ir.thatsmejavad.backgroundable.model.media.Media
 import ir.thatsmejavad.backgroundable.model.media.Resources
 import ir.thatsmejavad.backgroundable.screens.search.SearchViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class SearchViewModelTest {
+class SearchViewModelTest : CoroutineTest {
+
+    override lateinit var testScope: TestScope
+    override lateinit var dispatcher: TestDispatcher
 
     @RelaxedMockK
     lateinit var snackbarManager: SnackbarManager
@@ -39,8 +42,6 @@ class SearchViewModelTest {
 
     @RelaxedMockK
     lateinit var settingRepository: SettingRepository
-
-    private val dispatcher = UnconfinedTestDispatcher()
 
     private val testMedia = Media(
         id = 23,
@@ -59,7 +60,6 @@ class SearchViewModelTest {
 
     @BeforeEach
     fun setUp() {
-        Dispatchers.setMain(dispatcher)
         MockKAnnotations.init(this)
     }
 

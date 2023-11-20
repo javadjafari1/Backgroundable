@@ -11,6 +11,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
+import ir.thatsmejavad.backgroundable.common.CoroutineTest
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
 import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob
 import ir.thatsmejavad.backgroundable.core.sealeds.ImageQuality
@@ -24,16 +25,19 @@ import ir.thatsmejavad.backgroundable.data.repository.SettingRepository
 import ir.thatsmejavad.backgroundable.model.UserPreferences
 import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailViewModel
 import ir.thatsmejavad.backgroundable.screens.mediadetail.SavePurpose
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.IOException
 
-class MediaDetailViewModelTest {
+class MediaDetailViewModelTest : CoroutineTest {
+
+    override lateinit var testScope: TestScope
+
+    override lateinit var dispatcher: TestDispatcher
 
     @RelaxedMockK
     lateinit var snackbarManager: SnackbarManager
@@ -78,7 +82,6 @@ class MediaDetailViewModelTest {
 
     @BeforeEach
     fun setUp() {
-        Dispatchers.setMain(UnconfinedTestDispatcher())
         MockKAnnotations.init(this)
     }
 
