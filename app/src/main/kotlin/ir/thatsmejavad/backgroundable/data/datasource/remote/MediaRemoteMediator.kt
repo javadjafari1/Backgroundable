@@ -5,6 +5,7 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import ir.thatsmejavad.backgroundable.core.Constants.MEDIA_REFRESH_TIME_IN_HOUR
+import ir.thatsmejavad.backgroundable.core.convertToRelativePath
 import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
 import ir.thatsmejavad.backgroundable.data.datasource.local.MediaLocalDataSource
 import ir.thatsmejavad.backgroundable.data.datasource.local.PageKeyLocalDataSource
@@ -76,7 +77,7 @@ class MediaRemoteMediator(
                             ResourceEntity(
                                 mediaId = media.id,
                                 size = ResourceSize.fromString(value.first),
-                                url = value.second
+                                url = value.second.convertToRelativePath() ?: ""
                             )
                         )
                     }
