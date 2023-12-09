@@ -6,6 +6,7 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
+import ir.thatsmejavad.backgroundable.BuildConfig
 import ir.thatsmejavad.backgroundable.core.Constants.REQUEST_TIMEOUT_IN_SECONDS
 import ir.thatsmejavad.backgroundable.data.api.AuthorizationInterceptor
 import ir.thatsmejavad.backgroundable.data.api.PexelsApi
@@ -93,7 +94,7 @@ class NetworkModule {
     ): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(kotlinConverter)
-            .baseUrl("https://api.pexels.com/")
+            .baseUrl(BuildConfig.SERVER_URL)
             .client(okHttpClient)
             .build()
     }

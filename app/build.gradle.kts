@@ -42,13 +42,41 @@ android {
         val authorization = if (propertiesExist) {
             properties.getProperty("authorization")
         } else {
-            "AUTHORIZATION"
+            "your-token"
+        }
+
+        val urlProperties = Properties()
+        val urlsPropertiesExist = rootProject.file("properties/urls.properties").exists()
+        if (urlsPropertiesExist) {
+            urlProperties.load(
+                project.rootProject.file("properties/urls.properties").inputStream()
+            )
+        }
+        val serverUrl = if (urlsPropertiesExist) {
+            urlProperties.getProperty("main")
+        } else {
+            "https://api.pexels.com/"
+        }
+        val imageServerUrl = if (urlsPropertiesExist) {
+            urlProperties.getProperty("image")
+        } else {
+            "https://images.pexels.com/"
         }
 
         buildConfigField(
             type = "String",
             value = "\"$authorization\"",
             name = "AUTHORIZATION",
+        )
+        buildConfigField(
+            type = "String",
+            value = "\"$serverUrl\"",
+            name = "SERVER_URL",
+        )
+        buildConfigField(
+            type = "String",
+            value = "\"$imageServerUrl\"",
+            name = "IMAGE_SERVER_URL",
         )
     }
 

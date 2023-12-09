@@ -8,6 +8,7 @@ import ir.thatsmejavad.backgroundable.core.Constants.RATE_LIMIT_CODE
 import kotlinx.serialization.SerializationException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
+import java.net.URL
 import java.net.UnknownHostException
 import java.util.Locale
 
@@ -62,4 +63,18 @@ fun String.capitalizeFirstChar(): String {
             firstChar.toString()
         }
     }
+}
+
+fun String.convertToRelativePath(): String? {
+    return runCatching {
+        val url = URL(this)
+        var path = url.path
+        val query = url.query
+
+        if (query != null && query.isNotEmpty()) {
+            path += "?$query"
+        }
+
+        path
+    }.getOrNull()
 }

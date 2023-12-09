@@ -10,6 +10,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import ir.thatsmejavad.backgroundable.BuildConfig
 import me.saket.telephoto.zoomable.coil.ZoomableAsyncImage
 
 @Composable
@@ -23,7 +24,7 @@ fun CoilImage(
     AsyncImage(
         modifier = modifier,
         model = ImageRequest.Builder(LocalContext.current)
-            .data(url)
+            .data(BuildConfig.IMAGE_SERVER_URL + url)
             .crossfade(500)
             .build(),
         placeholder = placeHolder,
@@ -45,8 +46,8 @@ fun ZoomableCoilImage(
     ZoomableAsyncImage(
         modifier = modifier,
         model = ImageRequest.Builder(LocalContext.current)
-            .placeholderMemoryCacheKey(placeHolder)
-            .data(url)
+            .placeholderMemoryCacheKey(BuildConfig.IMAGE_SERVER_URL + placeHolder)
+            .data(BuildConfig.IMAGE_SERVER_URL + url)
             .crossfade(2_000)
             .listener(
                 onError = { _, _ ->
