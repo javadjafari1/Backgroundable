@@ -3,6 +3,7 @@ accompanist = "0.32.0"
 activityCompose = "1.8.1"
 agp = "8.1.2"
 androidxJunit = "1.1.5"
+appMetrica = "5.3.0"
 chucker = "4.0.0"
 coilCompose = "2.5.0"
 composeAnimation = "1.5.4"
@@ -43,6 +44,7 @@ zoomableImageCoil = "0.7.1"
 accompanistNavigationMaterial = { module = "com.google.accompanist:accompanist-navigation-material", version.ref = "accompanist" }
 activityCompose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
 androidxJunit = { module = "androidx.test.ext:junit", version.ref = "androidxJunit" }
+appMetrica = { module = "com.yandex.android:mobmetricalib", version.ref = "appMetrica" }
 chucker = { module = "com.github.chuckerteam.chucker:library", version.ref = "chucker" }
 chuckerNoOp = { module = "com.github.chuckerteam.chucker:library-no-op", version.ref = "chucker" }
 coilCompose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }

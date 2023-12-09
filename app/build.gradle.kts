@@ -44,6 +44,11 @@ android {
         } else {
             "your-token"
         }
+        val metricaToken = if (propertiesExist) {
+            properties.getProperty("metricaToken")
+        } else {
+            "your-token"
+        }
 
         val urlProperties = Properties()
         val urlsPropertiesExist = rootProject.file("properties/urls.properties").exists()
@@ -78,6 +83,12 @@ android {
             value = "\"$imageServerUrl\"",
             name = "IMAGE_SERVER_URL",
         )
+        buildConfigField(
+            type = "String",
+            value = "\"$metricaToken\"",
+            name = "METRICA_TOKEN",
+        )
+
     }
 
     val securityProperties = Properties()
@@ -228,6 +239,8 @@ dependencies {
     androidTestImplementation(libs.composeUiJunit4)
     debugImplementation(libs.composeUiTooling)
     debugImplementation(libs.composeUiManifest)
+
+    implementation(libs.appMetrica)
 }
 
 kover {

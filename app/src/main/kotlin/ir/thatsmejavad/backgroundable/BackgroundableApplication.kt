@@ -3,6 +3,8 @@ package ir.thatsmejavad.backgroundable
 import android.app.Application
 import coil.Coil
 import coil.ImageLoader
+import com.yandex.metrica.YandexMetrica
+import com.yandex.metrica.YandexMetricaConfig
 import ir.thatsmejavad.backgroundable.core.Constants.REQUEST_TIMEOUT_IN_SECONDS
 import ir.thatsmejavad.backgroundable.di.components.AppComponent
 import ir.thatsmejavad.backgroundable.di.components.DaggerAppComponent
@@ -19,6 +21,7 @@ class BackgroundableApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         setupCoil()
+        setupAppMetrica()
         appComponent = DaggerAppComponent.builder()
             .applicationModule(ApplicationModule(this))
             .build()
@@ -39,5 +42,14 @@ class BackgroundableApplication : Application() {
             .crossfade(true)
             .build()
         Coil.setImageLoader(imageLoader)
+    }
+
+    private fun setupAppMetrica() {
+        val config = YandexMetricaConfig.newConfigBuilder(BuildConfig.METRICA_TOKEN)
+            .withLogs()
+            .withAppVersion(BuildConfig.VERSION_NAME)
+            .build()
+        YandexMetrica.activate(applicationContext, config)
+        YandexMetrica.enableActivityAutoTracking(this)
     }
 }
