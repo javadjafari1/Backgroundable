@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import ir.thatsmejavad.backgroundable.BuildConfig
 import ir.thatsmejavad.backgroundable.core.Downloader
 import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob
 import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelAssistedFactory
@@ -53,7 +54,7 @@ class DownloadPickerViewModel @AssistedInject constructor(
     fun download(resourceEntity: ResourceEntity) {
         val media = (_media.value as AsyncJob.Success).value
         downloader.download(
-            url = resourceEntity.url,
+            url = BuildConfig.IMAGE_SERVER_URL + resourceEntity.url,
             alt = media.media.alt,
             photographer = media.media.photographer,
             size = resourceEntity.size
