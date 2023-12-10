@@ -9,6 +9,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.verify
+import ir.thatsmejavad.backgroundable.BuildConfig
 import ir.thatsmejavad.backgroundable.common.CoroutineTest
 import ir.thatsmejavad.backgroundable.core.Downloader
 import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob
@@ -109,7 +110,7 @@ class DownloadPickerViewModelTest : CoroutineTest {
 
         verify {
             downloader.download(
-                url = testMediaWithResources.resources.first().url,
+                url = BuildConfig.IMAGE_SERVER_URL + testMediaWithResources.resources.first().url,
                 alt = testMediaWithResources.media.alt,
                 photographer = testMediaWithResources.media.photographer,
                 size = testMediaWithResources.resources.first().size
