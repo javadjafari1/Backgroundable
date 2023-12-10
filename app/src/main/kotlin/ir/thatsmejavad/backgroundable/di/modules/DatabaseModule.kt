@@ -21,7 +21,9 @@ class DatabaseModule {
             context = context,
             klass = BackgroundableDatabase::class.java,
             name = "backgroundable-db"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides

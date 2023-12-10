@@ -21,7 +21,7 @@ import ir.thatsmejavad.backgroundable.data.db.entity.ResourceEntity
         ResourceEntity::class,
         PageKeyEntity::class
     ],
-    version = 2,
+    version = 3,
     exportSchema = true,
     autoMigrations = [
         AutoMigration(
