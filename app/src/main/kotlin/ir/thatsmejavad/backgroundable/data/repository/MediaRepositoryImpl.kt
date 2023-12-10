@@ -6,6 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import ir.thatsmejavad.backgroundable.UserPref
 import ir.thatsmejavad.backgroundable.core.Constants.MEDIA_PER_PAGE_ITEM
+import ir.thatsmejavad.backgroundable.core.convertToRelativePath
 import ir.thatsmejavad.backgroundable.core.sealeds.List
 import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
 import ir.thatsmejavad.backgroundable.data.datasource.local.MediaLocalDataSource
@@ -96,7 +97,7 @@ class MediaRepositoryImpl @Inject constructor(
                 ResourceEntity(
                     mediaId = media.id,
                     size = ResourceSize.fromString(value.first),
-                    url = value.second
+                    url = value.second.convertToRelativePath() ?: ""
                 )
             )
         }
