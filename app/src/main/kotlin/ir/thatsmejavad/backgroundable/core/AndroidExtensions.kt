@@ -28,14 +28,11 @@ fun Context.composeMail(
     message: String = "",
 ) {
     runCatching {
-        val selectorIntent = Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("mailto:")
-        }
-        val emailIntent = Intent(Intent.ACTION_SEND).apply {
+        val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
             putExtra(Intent.EXTRA_EMAIL, arrayOf(recipientMail))
             putExtra(Intent.EXTRA_SUBJECT, subject)
             putExtra(Intent.EXTRA_TEXT, message)
-            selector = selectorIntent
+            data = Uri.parse("mailto:")
         }
         startActivity(emailIntent)
     }.getOrElse {
