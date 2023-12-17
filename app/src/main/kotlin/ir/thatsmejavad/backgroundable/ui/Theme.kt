@@ -1,6 +1,7 @@
 package ir.thatsmejavad.backgroundable.ui
 
 import android.os.Build
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -8,6 +9,7 @@ import androidx.compose.material3.Shapes
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import ir.thatsmejavad.backgroundable.core.sealeds.ThemeColor
@@ -68,9 +70,17 @@ fun BackgroundableTheme(
         }
     }
 
+    val isPersianSelected = remember {
+        AppCompatDelegate.getApplicationLocales().get(0)?.language == "fa"
+    }
+
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = if (isPersianSelected) {
+            PersianTypography
+        } else {
+            EnglishTypography
+        },
         shapes = shapes,
         content = content
     )
