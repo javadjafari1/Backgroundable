@@ -5,12 +5,12 @@ package ir.thatsmejavad.backgroundable.main
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.slideInVertically
@@ -65,7 +65,7 @@ import ir.thatsmejavad.backgroundable.settingNavGraph
 import ir.thatsmejavad.backgroundable.ui.BackgroundableTheme
 import javax.inject.Inject
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModel: MainViewModel
