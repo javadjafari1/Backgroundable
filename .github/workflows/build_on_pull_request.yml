@@ -25,7 +25,7 @@ jobs:
       run: ./gradlew :app:assembleDebug
 
     - name: Run All Unit Tests
-      run: ./gradlew :app:testDebugUnitTest
+      run: ./gradlew :app:testCafeBazaarDebugUnitTest
 
     - name: Run Detekt
       run: ./gradlew detekt

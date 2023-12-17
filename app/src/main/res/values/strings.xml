@@ -53,4 +53,5 @@
     <string name="label_persian" translatable="false">فارسی</string>
     <string name="label_english_lang_desc" translatable="false">The text of the app changes to English</string>
     <string name="label_persian_lang_desc" translatable="false">متن های برنامه به فارسی تغییر می کند</string>
+    <string name="label_report_a_bug">Report a bug</string>
 </resources>
