@@ -44,4 +44,5 @@
     <string name="label_small">کوچک</string>
     <string name="label_tiny">خیلی کوچک</string>
     <string name="label_language">زبان</string>
+    <string name="label_report_a_bug">گزارش مشکل</string>
 </resources>

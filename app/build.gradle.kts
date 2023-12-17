@@ -132,6 +132,28 @@ android {
 
         }
     }
+
+    flavorDimensionList.add("store")
+    productFlavors {
+        create("cafeBazaar") {
+            dimension = "store"
+            buildConfigField(
+                type = "String",
+                value = "\"bazaar://details?id=ir.thatsmejavad.backgroundable\"",
+                name = "RATE_URL",
+            )
+        }
+
+        create("myket") {
+            dimension = "store"
+            buildConfigField(
+                type = "String",
+                value = "\"myket://comment?id=ir.thatsmejavad.backgroundable\"",
+                name = "RATE_URL",
+            )
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17

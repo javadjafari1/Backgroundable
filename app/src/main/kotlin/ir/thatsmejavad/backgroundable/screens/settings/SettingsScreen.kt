@@ -10,12 +10,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -28,6 +30,7 @@ import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.core.AppScreens
 import ir.thatsmejavad.backgroundable.core.Constants
 import ir.thatsmejavad.backgroundable.core.composeMail
+import ir.thatsmejavad.backgroundable.core.openUrl
 
 @Composable
 fun SettingsScreen(
@@ -95,6 +98,16 @@ fun SettingsScreen(
 
             SettingItem(
                 textId = R.string.label_provide_feedback,
+                imageId = R.drawable.ic_star,
+                onClick = {
+                    context.openUrl(
+                        url = BuildConfig.RATE_URL
+                    )
+                }
+            )
+
+            SettingItem(
+                textId = R.string.label_report_a_bug,
                 imageId = R.drawable.ic_feedback,
                 onClick = {
                     context.composeMail(
@@ -127,9 +140,11 @@ private fun SettingItem(
             .padding(
                 horizontal = 24.dp,
                 vertical = 16.dp
-            )
+            ),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
+            modifier = Modifier.size(32.dp),
             painter = painterResource(imageId),
             contentDescription = stringResource(textId),
             tint = MaterialTheme.colorScheme.onSurfaceVariant
