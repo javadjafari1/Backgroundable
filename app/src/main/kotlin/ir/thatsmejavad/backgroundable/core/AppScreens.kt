@@ -48,4 +48,8 @@ internal sealed class AppScreens(val route: String) {
     data object AboutUs : AppScreens(
         "about-us"
     )
+
+    data object Language : AppScreens(
+        "language"
+    )
 }

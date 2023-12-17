@@ -30,6 +30,7 @@
     <string name="label_ok">OK</string>
     <string name="label_send_to">Share via</string>
     <string name="label_quality">Image Quality</string>
+    <string name="label_language">Language</string>
     <string name="label_provide_feedback">Provide Feedback</string>
     <string name="label_material_you_desc">Android 12+ Only</string>
     <string name="label_image_quality_desc">Only category photos are affected by your choice.</string>
@@ -48,4 +49,8 @@
     <string name="label_tiny">Tiny</string>
     <string name="label_landscape" translatable="false">Landscape</string>
     <string name="label_portrait" translatable="false">Portrait</string>
+    <string name="label_english_en" translatable="false">English</string>
+    <string name="label_persian" translatable="false">فارسی</string>
+    <string name="label_english_lang_desc" translatable="false">The text of the app changes to English</string>
+    <string name="label_persian_lang_desc" translatable="false">متن های برنامه به فارسی تغییر می کند</string>
 </resources>

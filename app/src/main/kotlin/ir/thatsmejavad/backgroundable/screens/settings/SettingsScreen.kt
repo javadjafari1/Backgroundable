@@ -62,6 +62,14 @@ fun SettingsScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             SettingItem(
+                textId = R.string.label_language,
+                imageId = R.drawable.ic_language,
+                onClick = {
+                    navigateTo(AppScreens.Language.route)
+                }
+            )
+
+            SettingItem(
                 textId = R.string.label_quality,
                 imageId = R.drawable.ic_high_quality,
                 onClick = {
@@ -78,6 +86,14 @@ fun SettingsScreen(
             )
 
             SettingItem(
+                textId = R.string.label_about_us,
+                imageId = R.drawable.ic_info,
+                onClick = {
+                    navigateTo(AppScreens.AboutUs.route)
+                }
+            )
+
+            SettingItem(
                 textId = R.string.label_provide_feedback,
                 imageId = R.drawable.ic_feedback,
                 onClick = {
@@ -87,13 +103,6 @@ fun SettingsScreen(
                 }
             )
 
-            SettingItem(
-                textId = R.string.label_about_us,
-                imageId = R.drawable.ic_info,
-                onClick = {
-                    navigateTo(AppScreens.AboutUs.route)
-                }
-            )
             Spacer(modifier = Modifier.weight(1f))
 
             Text(
