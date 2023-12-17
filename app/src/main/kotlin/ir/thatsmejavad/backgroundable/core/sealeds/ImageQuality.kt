@@ -1,6 +1,7 @@
 package ir.thatsmejavad.backgroundable.core.sealeds
 
 import ir.thatsmejavad.backgroundable.Quality
+import ir.thatsmejavad.backgroundable.R
 
 sealed interface ImageQuality {
     data object Low : ImageQuality
@@ -35,6 +36,15 @@ sealed interface ImageQuality {
                 Medium -> ResourceSize.Small
                 Low -> ResourceSize.Tiny
                 Ultra -> ResourceSize.Original
+            }
+        }
+
+        fun ImageQuality.toResId(): Int {
+            return when (this) {
+                High -> R.string.label_high
+                Low -> R.string.label_low
+                Medium -> R.string.label_medium
+                Ultra -> R.string.label_ultra
             }
         }
     }

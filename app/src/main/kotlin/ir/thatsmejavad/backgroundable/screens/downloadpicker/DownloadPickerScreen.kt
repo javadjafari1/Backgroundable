@@ -33,6 +33,7 @@ import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.core.getErrorMessage
 import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob
 import ir.thatsmejavad.backgroundable.core.sealeds.OrientationMode
+import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize.Companion.toResId
 import ir.thatsmejavad.backgroundable.core.viewmodel.daggerViewModel
 import ir.thatsmejavad.backgroundable.data.db.entity.ResourceEntity
 import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
@@ -104,7 +105,7 @@ private fun DownloadPickerScreen(
                     mediaMap[false]?.let { resources ->
                         items(resources) { resourceEntity ->
                             DownloadItem(
-                                name = resourceEntity.size.size.replaceFirstChar { it.uppercaseChar() },
+                                name = stringResource(resourceEntity.size.toResId()),
                                 onClick = { downloadImage(resourceEntity) }
                             )
                         }
@@ -115,7 +116,7 @@ private fun DownloadPickerScreen(
                     mediaMap[true]?.let { resources ->
                         items(resources) { resourceEntity ->
                             DownloadItem(
-                                name = resourceEntity.size.size.replaceFirstChar { it.uppercaseChar() },
+                                name = stringResource(resourceEntity.size.toResId()),
                                 onClick = { downloadImage(resourceEntity) }
                             )
                         }
