@@ -30,12 +30,28 @@
     <string name="label_ok">OK</string>
     <string name="label_send_to">Share via</string>
     <string name="label_quality">Image Quality</string>
-    <string name="label_image_quality">Image Quality</string>
+    <string name="label_language">Language</string>
     <string name="label_provide_feedback">Provide Feedback</string>
     <string name="label_material_you_desc">Android 12+ Only</string>
     <string name="label_image_quality_desc">Only category photos are affected by your choice.</string>
-    <string name="label_low_desc">Low: Optimized for slower internet connections.</string>
-    <string name="label_medium_desc">Medium: Quality and loading speed are balanced.</string>
-    <string name="label_high_desc">High: Higher quality for a good experience.</string>
-    <string name="label_ultra_desc">Ultra: High-quality original photos.</string>
+    <string name="label_low_desc">Optimized for slower internet connections.</string>
+    <string name="label_medium_desc">Quality and loading speed are balanced.</string>
+    <string name="label_high_desc">Higher quality for a good experience.</string>
+    <string name="label_ultra_desc">High-quality original photos.</string>
+    <string name="label_ultra">Ultra</string>
+    <string name="label_high">High</string>
+    <string name="label_medium">Medium</string>
+    <string name="label_low">low</string>
+    <string name="label_large" translatable="false">Large</string>
+    <string name="label_large2x" translatable="false">Large2x</string>
+    <string name="label_original">Original</string>
+    <string name="label_small">Small</string>
+    <string name="label_tiny">Tiny</string>
+    <string name="label_landscape" translatable="false">Landscape</string>
+    <string name="label_portrait" translatable="false">Portrait</string>
+    <string name="label_english_en" translatable="false">English</string>
+    <string name="label_persian" translatable="false">فارسی</string>
+    <string name="label_english_lang_desc" translatable="false">The text of the app changes to English</string>
+    <string name="label_persian_lang_desc" translatable="false">متن های برنامه به فارسی تغییر می کند</string>
+    <string name="label_report_a_bug">Report a bug</string>
 </resources>

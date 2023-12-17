@@ -35,6 +35,7 @@ android {
         versionCode = 7
         versionName = "1.3.0"
 
+        resourceConfigurations.addAll(listOf("en", "fa"))
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
@@ -131,6 +132,28 @@ android {
 
         }
     }
+
+    flavorDimensionList.add("store")
+    productFlavors {
+        create("cafeBazaar") {
+            dimension = "store"
+            buildConfigField(
+                type = "String",
+                value = "\"bazaar://details?id=ir.thatsmejavad.backgroundable\"",
+                name = "RATE_URL",
+            )
+        }
+
+        create("myket") {
+            dimension = "store"
+            buildConfigField(
+                type = "String",
+                value = "\"myket://comment?id=ir.thatsmejavad.backgroundable\"",
+                name = "RATE_URL",
+            )
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -184,6 +207,7 @@ protobuf {
 dependencies {
     detektPlugins(libs.detektFormatting)
 
+    implementation(libs.appcompat)
     /*Compose*/
     implementation(libs.bundles.compose)
     implementation(libs.activityCompose)

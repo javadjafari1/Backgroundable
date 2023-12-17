@@ -16,6 +16,7 @@ import ir.thatsmejavad.backgroundable.screens.medialist.MediaListScreen
 import ir.thatsmejavad.backgroundable.screens.search.SearchScreen
 import ir.thatsmejavad.backgroundable.screens.settings.SettingsScreen
 import ir.thatsmejavad.backgroundable.screens.settings.imagequalitysetting.ImageQualitySettingScreen
+import ir.thatsmejavad.backgroundable.screens.settings.language.LanguageScreen
 import ir.thatsmejavad.backgroundable.screens.settings.themesetting.ThemeSettingScreen
 import kotlinx.serialization.json.Json
 
@@ -167,6 +168,13 @@ fun NavGraphBuilder.settingNavGraph(navController: NavHostController) {
         route = AppScreens.ThemeSetting.route,
     ) {
         ThemeSettingScreen(
+            navController = navController
+        )
+    }
+    animatedComposable(
+        route = AppScreens.Language.route,
+    ) {
+        LanguageScreen(
             navController = navController
         )
     }
