@@ -35,6 +35,7 @@ android {
         versionCode = 7
         versionName = "1.3.0"
 
+        resourceConfigurations.addAll(listOf("en", "fa"))
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
@@ -184,6 +185,7 @@ protobuf {
 dependencies {
     detektPlugins(libs.detektFormatting)
 
+    implementation(libs.appcompat)
     /*Compose*/
     implementation(libs.bundles.compose)
     implementation(libs.activityCompose)
