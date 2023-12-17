@@ -66,7 +66,7 @@ private fun ImageQualitySettingScreen(
         topBar = {
             MediumTopAppBar(
                 title = {
-                    Text(text = stringResource(R.string.label_image_quality))
+                    Text(text = stringResource(R.string.label_quality))
                 },
                 navigationIcon = {
                     IconButton(onClick = onBackClicked) {
