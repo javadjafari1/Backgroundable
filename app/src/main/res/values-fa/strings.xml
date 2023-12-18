@@ -45,4 +45,8 @@
     <string name="label_tiny">خیلی کوچک</string>
     <string name="label_language">زبان</string>
     <string name="label_report_a_bug">گزارش مشکل</string>
+    <string name="label_javad_name">جواد جعفری</string>
+    <string name="label_android_developer">برنامه نویس اندروید</string>
+    <string name="label_mmd_name">محمد قاسمی</string>
+    <string name="label_designer">طراح رابط کاربری</string>
 </resources>

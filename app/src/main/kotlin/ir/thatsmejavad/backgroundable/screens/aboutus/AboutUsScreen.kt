@@ -122,7 +122,7 @@ private fun ContributorItem(
         ) {
             Text(
                 modifier = Modifier.align(CenterHorizontally),
-                text = contributor.name,
+                text = stringResource(contributor.name),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -131,7 +131,7 @@ private fun ContributorItem(
 
             Text(
                 modifier = Modifier.align(CenterHorizontally),
-                text = contributor.position,
+                text = stringResource(contributor.position),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.surfaceTint,
             )
@@ -250,8 +250,8 @@ private fun BackgroundableAbout() {
 
 val contributors = listOf(
     Contributor(
-        name = "Javad Jafari",
-        position = "Android Developer",
+        name = R.string.label_javad_name,
+        position = R.string.label_android_developer,
         image = R.drawable.jai_photo,
         links = listOf(
             ContributorLink(
@@ -272,8 +272,8 @@ val contributors = listOf(
         )
     ),
     Contributor(
-        name = "Mohammad Ghasemi",
-        position = "UI/UX Designer",
+        name = R.string.label_mmd_name,
+        position = R.string.label_designer,
         image = R.drawable.mmd_photo,
         links = listOf(
             ContributorLink(
