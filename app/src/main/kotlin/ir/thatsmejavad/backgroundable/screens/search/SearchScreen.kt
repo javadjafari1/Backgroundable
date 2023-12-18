@@ -74,6 +74,7 @@ import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.MediaCard
 import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
+import ir.thatsmejavad.backgroundable.common.ui.clearFocusOnKeyboardDismiss
 import ir.thatsmejavad.backgroundable.core.AppScreens
 import ir.thatsmejavad.backgroundable.core.Constants.NAVIGATION_BAR_HEIGHT
 import ir.thatsmejavad.backgroundable.core.getErrorMessage
@@ -160,6 +161,7 @@ private fun SearchScreen(
                     .statusBarsPadding()
                     .padding(horizontal = padding)
                     .fillMaxWidth()
+                    .clearFocusOnKeyboardDismiss()
                     .onFocusChanged {
                         isFocused = it.isFocused
                     }
