@@ -1,10 +1,11 @@
 package ir.thatsmejavad.backgroundable.model
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 
 data class Contributor(
-    val name: String,
-    val position: String,
+    @StringRes val name: Int,
+    @StringRes val position: Int,
     @DrawableRes val image: Int,
     val links: List<ContributorLink>
 )

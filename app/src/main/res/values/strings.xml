@@ -54,4 +54,8 @@
     <string name="label_english_lang_desc" translatable="false">The text of the app changes to English</string>
     <string name="label_persian_lang_desc" translatable="false">متن های برنامه به فارسی تغییر می کند</string>
     <string name="label_report_a_bug">Report a bug</string>
+    <string name="label_javad_name">Javad Jafari</string>
+    <string name="label_android_developer">Android Developer</string>
+    <string name="label_mmd_name">Mohammad Ghasemi</string>
+    <string name="label_designer">UI/UX Designer</string>
 </resources>
