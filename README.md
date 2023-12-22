@@ -34,11 +34,30 @@ Backgroundable is powered by the Pexels API, which provides a vast collection of
 
 [Download the latest version of Backgroundable](https://github.com/javadjafari1/Backgroundable/releases)
 
-## Installation
+## Building the Project
 
-1. Download the APK from the link above.
-2. Open the APK file on your Android device.
-3. Allow installation from unknown sources if prompted.
+Follow these steps to build the Backgroundable project:
+
+1. **Clone the Project:**
+   ```bash
+   git clone https://github.com/javadjafari1/Backgroundable.git
+   ```
+2. **Setup Authorization:**
+   - For better security, sensitive information such as URLs and tokens are stored in an `authorization.properties` file, which is not pushed to the git repository.
+   - Create a file named authorization.properties in the properties folder.
+   - Add your token with the name authorization in the authorization.properties file.
+     Example authorization.properties:
+     `authorization=your_token_here`
+3. **Optional: Configure Nexus Properties:**
+   - If you have a personal Nexus repository, you can configure your personal Nexus properties in the `nexus.properties` file.
+   - Create a file named `nexus.properties` in the properties folder.
+   - Add your Nexus properties in the `nexus.properties` file.
+   - Example nexus.properties:
+     ```
+     username=your-nexus-username
+     password=your-nexus-password
+     url=your-nexus-url
+     ```
 
 ## Usage
 
@@ -99,7 +118,13 @@ If you encounter any bugs, glitches, or have suggestions for improvements, pleas
 
 ## Contact Us
 
-If you have any questions, encounter issues, or want to provide feedback, please feel free to reach out to us via email at [javad2147@yahoo.com](mailto:javad2147@yahoo.com).
+If you have any questions, encounter issues, or want to provide feedback, please feel free to email me at [javad2147@yahoo.com](mailto:javad2147@yahoo.com).
+
+## Support the Project
+
+If you find Backgroundable useful and would like to support its development, consider buying me a coffee! Your contribution helps keep this project alive and growing.
+
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Donate-blue)](https://www.buymeacoffee.com/javad21476q)
 
 ---
 We hope you enjoy using Backgroundable! Feel free to leave feedback, report issues, or contribute to the project. Happy wallpapering! 🎉
