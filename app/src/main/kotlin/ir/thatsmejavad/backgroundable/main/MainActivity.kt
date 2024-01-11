@@ -32,7 +32,7 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -107,26 +107,8 @@ class MainActivity : AppCompatActivity() {
                         Theme.FollowSystem -> isSystemInDarkTheme()
                         Theme.LightTheme -> false
                     }
-                    DisposableEffect(isDark) {
-                        enableEdgeToEdge(
-                            statusBarStyle = if (isDark) {
-                                SystemBarStyle.dark(Color.Transparent.toArgb())
-                            } else {
-                                SystemBarStyle.light(
-                                    scrim = Color.Transparent.toArgb(),
-                                    darkScrim = Color.Black.copy(alpha = 0.3f).toArgb()
-                                )
-                            },
-                            navigationBarStyle = if (isDark) {
-                                SystemBarStyle.dark(Color.Transparent.toArgb())
-                            } else {
-                                SystemBarStyle.light(
-                                    Color.Transparent.toArgb(),
-                                    Color.Black.copy(alpha = 0.3f).toArgb()
-                                )
-                            }
-                        )
-                        onDispose {}
+                    LaunchedEffect(isDark) {
+                        setSystemBarsColor(isDark)
                     }
                     BackgroundableApp()
                 }
@@ -241,4 +223,25 @@ private fun BackgroundableNavigationBar(
             )
         }
     }
+}
+
+internal fun AppCompatActivity.setSystemBarsColor(isDark: Boolean) {
+    enableEdgeToEdge(
+        statusBarStyle = if (isDark) {
+            SystemBarStyle.dark(Color.Transparent.toArgb())
+        } else {
+            SystemBarStyle.light(
+                scrim = Color.Transparent.toArgb(),
+                darkScrim = Color.Black.copy(alpha = 0.3f).toArgb()
+            )
+        },
+        navigationBarStyle = if (isDark) {
+            SystemBarStyle.dark(Color.Transparent.toArgb())
+        } else {
+            SystemBarStyle.light(
+                Color.Transparent.toArgb(),
+                Color.Black.copy(alpha = 0.3f).toArgb()
+            )
+        }
+    )
 }

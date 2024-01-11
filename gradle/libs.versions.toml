@@ -5,6 +5,7 @@ agp = "8.1.2"
 androidxJunit = "1.1.5"
 appMetrica = "5.3.0"
 appcompat = "1.6.1"
+caoc = "2.4.0"
 chucker = "4.0.0"
 coilCompose = "2.5.0"
 composeAnimation = "1.5.4"
@@ -47,6 +48,7 @@ activityCompose = { module = "androidx.activity:activity-compose", version.ref =
 androidxJunit = { module = "androidx.test.ext:junit", version.ref = "androidxJunit" }
 appMetrica = { module = "com.yandex.android:mobmetricalib", version.ref = "appMetrica" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+caoc = { group = "cat.ereza", name = "customactivityoncrash", version.ref = "caoc" }
 chucker = { module = "com.github.chuckerteam.chucker:library", version.ref = "chucker" }
 chuckerNoOp = { module = "com.github.chuckerteam.chucker:library-no-op", version.ref = "chucker" }
 coilCompose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }

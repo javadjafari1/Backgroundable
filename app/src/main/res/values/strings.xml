@@ -58,4 +58,5 @@
     <string name="label_android_developer">Android Developer</string>
     <string name="label_mmd_name">Mohammad Ghasemi</string>
     <string name="label_designer">UI/UX Designer</string>
+    <string name="label_crash_message">We apologize for the inconvenience, but backgroundable has encountered a critical error and must close.</string>
 </resources>
