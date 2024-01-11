@@ -57,7 +57,6 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.Dp
@@ -75,6 +74,7 @@ import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.MediaCard
 import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
 import ir.thatsmejavad.backgroundable.common.ui.clearFocusOnKeyboardDismiss
+import ir.thatsmejavad.backgroundable.common.ui.icons.getSearchImage
 import ir.thatsmejavad.backgroundable.core.AppScreens
 import ir.thatsmejavad.backgroundable.core.Constants.NAVIGATION_BAR_HEIGHT
 import ir.thatsmejavad.backgroundable.core.getErrorMessage
@@ -444,7 +444,7 @@ private fun SearchScreen(
                              */
                             bottom = NAVIGATION_BAR_HEIGHT + 4.dp
                         ),
-                    painter = painterResource(R.drawable.ic_search),
+                    imageVector = getSearchImage(MaterialTheme.colorScheme.primary),
                     contentDescription = "search_icon"
                 )
             }
