@@ -1,5 +1,3 @@
-@file:Suppress("UsingMaterialAndMaterial3Libraries")
-
 package ir.thatsmejavad.backgroundable.main
 
 import android.Manifest
@@ -22,8 +20,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -35,7 +31,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -48,8 +43,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.navigation.material.BottomSheetNavigator
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
+import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import ir.thatsmejavad.backgroundable.BackgroundableApplication
 import ir.thatsmejavad.backgroundable.BuildConfig
 import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations
@@ -119,11 +114,7 @@ class MainActivity : AppCompatActivity() {
 
 @Composable
 private fun BackgroundableApp() {
-    val sheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true
-    )
-    val bottomSheetNavigator = remember { BottomSheetNavigator(sheetState) }
+    val bottomSheetNavigator = rememberBottomSheetNavigator()
     val navController = rememberNavController(bottomSheetNavigator)
 
     ModalBottomSheetLayout(

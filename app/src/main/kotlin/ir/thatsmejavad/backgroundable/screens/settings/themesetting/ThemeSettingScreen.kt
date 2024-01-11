@@ -30,7 +30,6 @@ import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
@@ -134,10 +133,10 @@ fun ThemeSettingScreen(
                 selectedTabIndex = selectedTabIndex,
                 divider = {},
                 containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-                indicator = { tabPositions ->
+                indicator = {
                     Box(
                         modifier = Modifier
-                            .tabIndicatorOffset(tabPositions[selectedTabIndex])
+                            .tabIndicatorOffset(selectedTabIndex)
                             .fillMaxHeight()
                             .clip(MaterialTheme.shapes.extraLarge)
                             .padding(10.dp)

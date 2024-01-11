@@ -2,18 +2,13 @@ package ir.thatsmejavad.backgroundable.common.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import kotlinx.coroutines.launch
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 
 @Composable
 fun BoxWithSwipeRefresh(
@@ -22,27 +17,25 @@ fun BoxWithSwipeRefresh(
     modifier: Modifier = Modifier,
     content: @Composable BoxScope.() -> Unit
 ) {
-    val refreshScope = rememberCoroutineScope()
-    fun refresh() = refreshScope.launch { onSwipe() }
-    val refreshing by remember(isRefreshing) { mutableStateOf(isRefreshing) }
-    val pullRefreshState = rememberPullRefreshState(refreshing, ::refresh)
+    val state = rememberPullToRefreshState()
 
-    Box(
-        modifier = modifier
-            .pullRefresh(
-                state = pullRefreshState,
-                enabled = !refreshing
-            ),
-    ) {
+    if (state.isRefreshing) {
+        LaunchedEffect(true) {
+            onSwipe()
+        }
+    }
+
+    if (!isRefreshing) {
+        LaunchedEffect(true) {
+            state.endRefresh()
+        }
+    }
+
+    Box(modifier = modifier.nestedScroll(state.nestedScrollConnection)) {
         content()
-
-        PullRefreshIndicator(
-            refreshing = refreshing,
-            state = pullRefreshState,
+        PullToRefreshContainer(
             modifier = Modifier.align(Alignment.TopCenter),
-            scale = true,
-            backgroundColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            state = state,
         )
     }
 }
