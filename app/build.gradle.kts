@@ -160,14 +160,15 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
-        freeCompilerArgs += "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi"
-        freeCompilerArgs += "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
-        freeCompilerArgs += "-opt-in=androidx.paging.ExperimentalPagingApi"
-        freeCompilerArgs += "-opt-in=com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi"
-        freeCompilerArgs += "-opt-in=kotlinx.serialization.ExperimentalSerializationApi"
-        freeCompilerArgs += "-opt-in=kotlinx.coroutines.FlowPreview"
-        freeCompilerArgs += "-opt-in=androidx.compose.material.ExperimentalMaterialApi"
-        freeCompilerArgs += "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+        freeCompilerArgs += listOf(
+            "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+            "-opt-in=androidx.paging.ExperimentalPagingApi",
+            "-opt-in=com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi",
+            "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
+            "-opt-in=kotlinx.coroutines.FlowPreview",
+            "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+        )
     }
     buildFeatures {
         compose = true
@@ -215,9 +216,6 @@ dependencies {
     implementation(libs.composeUi)
     implementation(libs.composeMaterial3)
     implementation(libs.lifecycleRuntimeCompose)
-    implementation(libs.composeMaterial) {
-        because("just for the swipe refresh")
-    }
     implementation(libs.coilCompose)
 
     /*coroutine*/

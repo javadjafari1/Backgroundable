@@ -54,21 +54,21 @@ This app is built with the help of the following libraries and dependencies:
 
 - Android Gradle Plugin (Version 8.1.2).
 - [Accompanist]([link_to_library2](https://github.com/google/accompanist)) (Version 0.32.0).
-- [Coil](https://github.com/coil-kt/coil) (Version 2.4.0).
+- [Coil](https://github.com/coil-kt/coil) (Version 2.5.0).
 - Compose (Version 1.5.4).
-- [Detekt](https://github.com/detekt/detekt) (Version 1.23.1).
-- [Dagger](https://dagger.dev/) (Version 2.48.1).
+- [Detekt](https://github.com/detekt/detekt) (Version 1.23.4).
+- [Dagger](https://dagger.dev/) (Version 2.50.0).
 - [Chucker](https://github.com/ChuckerTeam/chucker/) (Version 4.0.0).
 - Datastore (Version 1.0.0).
-- [Telephoto](https://github.com/saket/telephoto) (Version 0.6.2).
-- KotlinxSerialization (Version 1.6.0).
-- Kotlin (Version 1.9.20).
-- Navigation Compose (Version 2.7.5).
+- [Telephoto](https://github.com/saket/telephoto) (Version 0.7.1).
+- KotlinxSerialization (Version 1.6.2).
+- Kotlin (Version 1.9.22).
+- Navigation Compose (Version 2.7.6).
 - Paging3 (Version 3.2.1).
 - [Retrofit2](https://github.com/square/retrofit) (Version 2.9.0).
 - [Okhttp3](https://github.com/square/okhttp) (Version 4.12.0).
-- Room (Version 2.6.0).
-- KSP (Version 1.9.20-1.0.14).
+- Room (Version 2.6.1).
+- KSP (Version 1.9.22-1.0.16).
 
 Test Libraries
 
