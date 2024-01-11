@@ -32,8 +32,8 @@ android {
         applicationId = "ir.thatsmejavad.backgroundable"
         minSdk = 24
         targetSdk = 34
-        versionCode = 8
-        versionName = "1.3.1"
+        versionCode = 9
+        versionName = "1.3.2"
 
         resourceConfigurations.addAll(listOf("en", "fa"))
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
