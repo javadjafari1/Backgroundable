@@ -265,6 +265,7 @@ dependencies {
     debugImplementation(libs.composeUiManifest)
 
     implementation(libs.appMetrica)
+    implementation(libs.caoc)
 }
 
 kover {
