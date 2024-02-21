@@ -23,9 +23,9 @@ android {
     val properties = Properties()
     val propertiesExist = rootProject.file("properties/authorization.properties").exists()
     if (propertiesExist) {
-        properties.load(
-            project.rootProject.file("properties/authorization.properties").inputStream()
-        )
+        project.rootProject.file("properties/authorization.properties").inputStream().use {
+            properties.load(it)
+        }
     }
 
     defaultConfig {
@@ -54,9 +54,10 @@ android {
         val urlProperties = Properties()
         val urlsPropertiesExist = rootProject.file("properties/urls.properties").exists()
         if (urlsPropertiesExist) {
-            urlProperties.load(
-                project.rootProject.file("properties/urls.properties").inputStream()
-            )
+            project.rootProject.file("properties/urls.properties").inputStream().use {
+                urlProperties.load(it)
+            }
+
         }
         val serverUrl = if (urlsPropertiesExist) {
             urlProperties.getProperty("main")
@@ -96,9 +97,10 @@ android {
     val securityPropertiesExist = rootProject.file("properties/security.properties").exists()
     val keyStoreFileExist = rootProject.file("Backgroundable.jks").exists()
     if (securityPropertiesExist && keyStoreFileExist) {
-        securityProperties.load(
-            project.rootProject.file("properties/security.properties").inputStream()
-        )
+        project.rootProject.file("properties/security.properties").inputStream().use {
+            securityProperties.load(it)
+        }
+
 
         signingConfigs {
             create("release") {
