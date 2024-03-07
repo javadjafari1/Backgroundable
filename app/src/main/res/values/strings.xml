@@ -13,8 +13,7 @@
     <string name="label_search">Search</string>
     <string name="label_setting">Settings</string>
     <string name="search_text_field_place_holder">Search Wallpaper</string>
-    <string name="label_nothing_found_with_keyword">Nothing found with keyword %1$s</string>
-    <string name="label_looking_for_wallpapers_start_here">Looking for wallpapers? Start here</string>
+    <string name="label_nothing_found_with_keyword">Nothing found!</string>
     <string name="label_grid_count">Grid Count</string>
     <string name="label_theme">Theme</string>
     <string name="label_about_us">About us</string>

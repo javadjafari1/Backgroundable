@@ -3,7 +3,6 @@ import org.jetbrains.kotlin.konan.properties.Properties
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlin)
-    alias(libs.plugins.kapt)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.protobuf)
     alias(libs.plugins.detekt)
@@ -174,6 +173,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
@@ -230,7 +230,7 @@ dependencies {
 
     /*dagger*/
     implementation(libs.dagger)
-    kapt(libs.daggerCompiler)
+    ksp(libs.daggerCompiler)
 
     /*room*/
     implementation(libs.bundles.room)
@@ -266,6 +266,7 @@ dependencies {
 
     implementation(libs.appMetrica)
     implementation(libs.caoc)
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 kover {

@@ -1,23 +1,23 @@
 [versions]
 accompanist = "0.34.0"
 activityCompose = "1.8.2"
-agp = "8.1.4"
+agp = "8.3.0"
 androidxJunit = "1.1.5"
 appMetrica = "5.3.0"
 appcompat = "1.6.1"
 caoc = "2.4.0"
 chucker = "4.0.0"
-coilCompose = "2.5.0"
-composeAnimation = "1.6.1"
-composeCompiler = "1.5.9"
-composeRuntime = "1.6.1"
-composeUi = "1.6.1"
-compsoeFoundation = "1.6.1"
+coilCompose = "2.6.0"
+composeAnimation = "1.6.3"
+composeCompiler = "1.5.10"
+composeRuntime = "1.6.3"
+composeUi = "1.6.3"
+compsoeFoundation = "1.6.3"
 coreKtx = "1.12.0"
 coroutine = "1.8.0"
-dagger = "2.50"
+dagger = "2.51"
 datastore = "1.0.0"
-detekt = "1.23.4"
+detekt = "1.23.5"
 espressoCore = "3.5.1"
 jacoco = "0.8.11"
 javalite = "3.23.0"
@@ -28,8 +28,8 @@ kotlinxSerialization = "1.6.3"
 kover = "0.7.4"
 ksp = "1.9.22-1.0.17"
 lifecycleRuntime = "2.7.0"
-material3 = "1.2.0"
-mockK = "1.13.9"
+material3 = "1.2.1"
+mockK = "1.13.10"
 navigationCompose = "2.7.7"
 okhttp = "4.12.0"
 paging = "3.2.1"
@@ -39,7 +39,7 @@ retrofitKotlinxSerializationConverter = "1.0.0"
 room = "2.6.1"
 splashscreen = "1.0.1"
 turbine = "1.0.0"
-zoomableImageCoil = "0.7.1"
+zoomableImageCoil = "0.8.0"
 
 [libraries]
 accompanistNavigationMaterial = { module = "com.google.accompanist:accompanist-navigation-material", version.ref = "accompanist" }
@@ -96,7 +96,6 @@ zoomableImageCoil = { module = "me.saket.telephoto:zoomable-image-coil", version
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }

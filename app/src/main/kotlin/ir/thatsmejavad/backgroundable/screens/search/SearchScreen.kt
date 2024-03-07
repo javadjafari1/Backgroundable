@@ -452,10 +452,7 @@ private fun SearchScreen(
             if (medias.itemCount == 0 && !pagingIsLoading && medias.loadState.append.endOfPaginationReached) {
                 Text(
                     modifier = Modifier.align(Alignment.Center),
-                    text = stringResource(
-                        R.string.label_nothing_found_with_keyword,
-                        queryString
-                    )
+                    text = stringResource(R.string.label_nothing_found_with_keyword)
                 )
             }
 
