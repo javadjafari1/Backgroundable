@@ -4,7 +4,9 @@ import ir.thatsmejavad.backgroundable.ListType as ProtoListType
 
 sealed interface List {
     data object ListType : List
+
     data object GridType : List
+
     data object StaggeredType : List
 
     companion object {

@@ -21,7 +21,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class ThemeSettingViewModelTest : CoroutineTest {
-
     override lateinit var testScope: TestScope
     override lateinit var dispatcher: TestDispatcher
 
@@ -34,17 +33,16 @@ class ThemeSettingViewModelTest : CoroutineTest {
     }
 
     @Test
-    fun `userPreferencesFlow should be updated with data of settingRepo's userPreferencesFlow`() =
-        runTest {
-            every { settingRepository.userPreferencesFlow } returns flowOf(UserPreferences())
-            val viewModel = createViewModel()
+    fun `userPreferencesFlow should be updated with data of settingRepo's userPreferencesFlow`() = runTest {
+        every { settingRepository.userPreferencesFlow } returns flowOf(UserPreferences())
+        val viewModel = createViewModel()
 
-            verify(exactly = 1) { settingRepository.userPreferencesFlow }
+        verify(exactly = 1) { settingRepository.userPreferencesFlow }
 
-            viewModel.userPreferencesFlow.test {
-                awaitItem() shouldBe UserPreferences()
-            }
+        viewModel.userPreferencesFlow.test {
+            awaitItem() shouldBe UserPreferences()
         }
+    }
 
     @Test
     fun `repo's setThemeMode should call when updateTheme called`() {

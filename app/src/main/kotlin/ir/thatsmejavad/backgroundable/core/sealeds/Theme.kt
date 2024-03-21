@@ -4,8 +4,11 @@ import ir.thatsmejavad.backgroundable.ThemeType
 
 sealed interface Theme {
     data object DarkTheme : Theme
+
     data object LightTheme : Theme
+
     data object FollowSystem : Theme
+
     companion object {
         fun toTheme(theme: ThemeType): Theme {
             return when (theme) {

@@ -21,9 +21,7 @@ data class Media(
     val photographerId: Int,
     val photographerUrl: String,
 ) {
-    fun toEntity(
-        collectionId: String?
-    ) = MediaEntity(
+    fun toEntity(collectionId: String?) = MediaEntity(
         id = id,
         width = width,
         height = height,

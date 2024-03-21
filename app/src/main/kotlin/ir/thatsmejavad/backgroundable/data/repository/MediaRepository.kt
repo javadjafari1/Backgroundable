@@ -7,7 +7,6 @@ import ir.thatsmejavad.backgroundable.model.media.Media
 import kotlinx.coroutines.flow.Flow
 
 interface MediaRepository {
-
     fun getMediasByCollectionId(collectionId: String): Flow<PagingData<MediaWithResources>>
 
     suspend fun getMediaWithResources(id: Int): MediaWithResources?

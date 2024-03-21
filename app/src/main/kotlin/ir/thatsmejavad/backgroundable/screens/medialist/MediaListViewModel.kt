@@ -33,7 +33,6 @@ class MediaListViewModel @AssistedInject constructor(
     settingRepository: SettingRepository,
     @Assisted private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-
     @AssistedFactory
     interface Factory : ViewModelAssistedFactory<MediaListViewModel>
 

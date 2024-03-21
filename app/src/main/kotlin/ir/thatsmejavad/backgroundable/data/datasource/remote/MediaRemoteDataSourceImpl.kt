@@ -28,9 +28,7 @@ class MediaRemoteDataSourceImpl @Inject constructor(
         ).bodyOrException()
     }
 
-    override fun searchPhoto(
-        query: String,
-    ): Flow<PagingData<Media>> {
+    override fun searchPhoto(query: String): Flow<PagingData<Media>> {
         return Pager(
             config = PagingConfig(
                 pageSize = MEDIA_PER_PAGE_ITEM,

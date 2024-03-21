@@ -28,7 +28,6 @@ import org.junit.jupiter.api.Test
 import java.io.IOException
 
 class DownloadPickerViewModelTest : CoroutineTest {
-
     override lateinit var testScope: TestScope
     override lateinit var dispatcher: TestDispatcher
 

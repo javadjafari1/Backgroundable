@@ -30,7 +30,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class SearchViewModelTest : CoroutineTest {
-
     override lateinit var testScope: TestScope
     override lateinit var dispatcher: TestDispatcher
 
@@ -138,18 +137,17 @@ class SearchViewModelTest : CoroutineTest {
     }
 
     @Test
-    fun `searchPhoto should be called on text with chars more than 3 after 1 second debounce`() =
-        runTest {
-            val viewModel = createViewModel()
-            viewModel.updateSearchText("text test")
+    fun `searchPhoto should be called on text with chars more than 3 after 1 second debounce`() = runTest {
+        val viewModel = createViewModel()
+        viewModel.updateSearchText("text test")
 
-            viewModel.medias.test {
-                awaitItem().collectDataForTest(dispatcher) shouldBe listOf()
-            }
-
-            advanceTimeBy(1002)
-            verify(exactly = 1) { mediaRepository.searchPhoto(any()) }
+        viewModel.medias.test {
+            awaitItem().collectDataForTest(dispatcher) shouldBe listOf()
         }
+
+        advanceTimeBy(1002)
+        verify(exactly = 1) { mediaRepository.searchPhoto(any()) }
+    }
 
     @Test
     fun `medias should be update with searchPhoto`() = runTest {

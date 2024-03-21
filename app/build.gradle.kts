@@ -57,7 +57,6 @@ android {
             project.rootProject.file("properties/urls.properties").inputStream().use {
                 urlProperties.load(it)
             }
-
         }
         val serverUrl = if (urlsPropertiesExist) {
             urlProperties.getProperty("main")

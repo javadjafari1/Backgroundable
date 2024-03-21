@@ -10,7 +10,6 @@ import ir.thatsmejavad.backgroundable.main.MainViewModel
 
 @Module
 class MainViewModelModule {
-
     @Provides
     fun provideMyViewModel(
         activity: ComponentActivity,

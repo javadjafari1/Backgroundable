@@ -11,7 +11,6 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     settingRepository: SettingRepository,
 ) : ViewModel() {
-
     val userPreferences = settingRepository.userPreferencesFlow.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(),

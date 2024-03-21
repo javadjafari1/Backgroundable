@@ -14,7 +14,6 @@ import javax.inject.Inject
 class ThemeSettingViewModel @Inject constructor(
     private val settingRepository: SettingRepository,
 ) : ViewModel() {
-
     val userPreferencesFlow = settingRepository.userPreferencesFlow.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(),

@@ -33,9 +33,7 @@ import ir.thatsmejavad.backgroundable.core.composeMail
 import ir.thatsmejavad.backgroundable.core.openUrl
 
 @Composable
-fun SettingsScreen(
-    navigateTo: (String) -> Unit,
-) {
+fun SettingsScreen(navigateTo: (String) -> Unit) {
     val context = LocalContext.current
 
     BackgroundableScaffold(

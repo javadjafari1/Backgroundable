@@ -40,11 +40,17 @@ fun Context.composeMail(
     }
 }
 
-fun Context.toast(message: String, duration: Int = Toast.LENGTH_LONG) {
+fun Context.toast(
+    message: String,
+    duration: Int = Toast.LENGTH_LONG
+) {
     Toast.makeText(this, message, duration).show()
 }
 
-fun Context.toast(@StringRes stringRes: Int, duration: Int = Toast.LENGTH_LONG) {
+fun Context.toast(
+    @StringRes stringRes: Int,
+    duration: Int = Toast.LENGTH_LONG
+) {
     Toast.makeText(this, stringRes, duration).show()
 }
 
@@ -77,7 +83,10 @@ fun File.getUri(context: Context): Uri {
     )
 }
 
-fun Uri.setAsWallpaper(context: Context, onError: (Throwable) -> Unit) {
+fun Uri.setAsWallpaper(
+    context: Context,
+    onError: (Throwable) -> Unit
+) {
     runCatching {
         val intent = Intent(Intent.ACTION_ATTACH_DATA)
         intent.setDataAndType(this, "image/*")

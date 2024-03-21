@@ -34,18 +34,14 @@ import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 
 @Composable
-fun LanguageScreen(
-    navController: NavController,
-) {
+fun LanguageScreen(navController: NavController) {
     LanguageScreen(
         onBackClicked = { navController.navigateUp() },
     )
 }
 
 @Composable
-private fun LanguageScreen(
-    onBackClicked: () -> Unit,
-) {
+private fun LanguageScreen(onBackClicked: () -> Unit) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
     val isPersianSelected = remember {

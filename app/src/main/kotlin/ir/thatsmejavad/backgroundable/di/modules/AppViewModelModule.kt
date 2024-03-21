@@ -24,7 +24,6 @@ import ir.thatsmejavad.backgroundable.screens.settings.themesetting.ThemeSetting
     ]
 )
 interface AppViewModelModule {
-
     @Binds
     @[IntoMap ViewModelAssistedFactoryKey(CollectionListViewModel::class)]
     fun bindsCollectionListViewModelFactory(viewModel: CollectionListViewModel): ViewModel

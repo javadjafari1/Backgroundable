@@ -8,6 +8,7 @@ import androidx.compose.ui.res.stringResource
 @Suppress("SpreadOperator")
 sealed interface UiText {
     data class DynamicString(val value: String) : UiText
+
     class StringResource(
         @StringRes val resId: Int,
         vararg val args: Any

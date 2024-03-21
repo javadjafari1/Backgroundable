@@ -262,7 +262,7 @@ private fun SearchScreen(
                                 initialScale = 0.92f,
                                 animationSpec = tween(220, delayMillis = 120)
                             )
-                        )
+                    )
                         .togetherWith(fadeOut(animationSpec = tween(120)))
                 }
             ) { type ->
@@ -276,7 +276,6 @@ private fun SearchScreen(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         contentPadding = PaddingValues(
                             top = 16.dp,
-
                             /*
                              The padding of the bottomBar,
                              can't use Scaffold to add bottomBar with animation.

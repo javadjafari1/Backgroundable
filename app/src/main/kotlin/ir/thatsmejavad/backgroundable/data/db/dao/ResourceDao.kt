@@ -8,7 +8,6 @@ import ir.thatsmejavad.backgroundable.data.db.entity.ResourceEntity
 
 @Dao
 interface ResourceDao {
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertResources(list: List<ResourceEntity>)
 

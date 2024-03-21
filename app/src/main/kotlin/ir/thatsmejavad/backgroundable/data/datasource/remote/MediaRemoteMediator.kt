@@ -25,7 +25,6 @@ class MediaRemoteMediator(
     private val collectionId: String,
     private val database: BackgroundableDatabase,
 ) : RemoteMediator<Int, MediaWithResources>() {
-
     private var pageKeyEntity: PageKeyEntity? = null
 
     override suspend fun initialize(): InitializeAction {

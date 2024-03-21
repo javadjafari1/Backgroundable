@@ -17,11 +17,13 @@ import org.junit.jupiter.api.extension.TestInstancePostProcessor
  * */
 @ExperimentalCoroutinesApi
 class TestCoroutineExtension : TestInstancePostProcessor, BeforeAllCallback, AfterAllCallback {
-
     private val dispatcher = UnconfinedTestDispatcher()
     private val testScope = TestScope(dispatcher)
 
-    override fun postProcessTestInstance(testInstance: Any?, context: ExtensionContext?) {
+    override fun postProcessTestInstance(
+        testInstance: Any?,
+        context: ExtensionContext?
+    ) {
         (testInstance as? CoroutineTest)?.let { coroutineTest ->
             coroutineTest.testScope = testScope
             coroutineTest.dispatcher = dispatcher

@@ -13,7 +13,6 @@ import javax.inject.Singleton
 
 @Module
 class DatabaseModule {
-
     @Provides
     @Singleton
     fun provideDatabase(context: Context): BackgroundableDatabase {
@@ -28,25 +27,25 @@ class DatabaseModule {
 
     @Provides
     @Singleton
-    fun providesCollectionDao(
-        backgroundableDatabase: BackgroundableDatabase
-    ): CollectionDao = backgroundableDatabase.collectionDao()
+    fun providesCollectionDao(backgroundableDatabase: BackgroundableDatabase): CollectionDao {
+        return backgroundableDatabase.collectionDao()
+    }
 
     @Provides
     @Singleton
-    fun provideMediaDao(
-        backgroundableDatabase: BackgroundableDatabase
-    ): MediaDao = backgroundableDatabase.mediaDao()
+    fun provideMediaDao(backgroundableDatabase: BackgroundableDatabase): MediaDao {
+        return backgroundableDatabase.mediaDao()
+    }
 
     @Provides
     @Singleton
-    fun provideResourceDao(
-        backgroundableDatabase: BackgroundableDatabase
-    ): ResourceDao = backgroundableDatabase.resourceDao()
+    fun provideResourceDao(backgroundableDatabase: BackgroundableDatabase): ResourceDao {
+        return backgroundableDatabase.resourceDao()
+    }
 
     @Provides
     @Singleton
-    fun providePageKeyDao(
-        backgroundableDatabase: BackgroundableDatabase
-    ): PageKeyDao = backgroundableDatabase.pageKeyDao()
+    fun providePageKeyDao(backgroundableDatabase: BackgroundableDatabase): PageKeyDao {
+        return backgroundableDatabase.pageKeyDao()
+    }
 }

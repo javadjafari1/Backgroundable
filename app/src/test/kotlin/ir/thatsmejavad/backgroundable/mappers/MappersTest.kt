@@ -10,7 +10,6 @@ import ir.thatsmejavad.backgroundable.model.media.Resources
 import org.junit.jupiter.api.Test
 
 class MappersTest {
-
     @Test
     fun mediaMapperTest() {
         val media = Media(
@@ -35,7 +34,6 @@ class MappersTest {
             avgColor = "massa",
             photographerId = 3686,
             photographerUrl = "https://www.google.com/#q=contentiones"
-
         )
         val expected = media.toEntity(null)
         val actual = MediaEntity(
@@ -51,7 +49,6 @@ class MappersTest {
             photographerId = 3686,
             photographerUrl = "https://www.google.com/#q=contentiones",
             orderId = 0
-
         )
         expected shouldBe actual
     }

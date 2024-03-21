@@ -21,7 +21,6 @@ class CollectionListViewModel @Inject constructor(
     val snackbarManager: SnackbarManager,
     private val columnCountsPreferences: ColumnCountsPreferences,
 ) : ViewModel() {
-
     var columnCountPickerData: String = ""
         private set
 

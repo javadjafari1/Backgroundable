@@ -7,7 +7,6 @@ import ir.thatsmejavad.backgroundable.data.db.entity.ResourceEntity
 
 data class MediaWithResources(
     @Embedded val media: MediaEntity,
-
     @Relation(
         parentColumn = "id",
         entityColumn = "media-id",

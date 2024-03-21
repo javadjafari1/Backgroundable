@@ -20,7 +20,6 @@ class CollectionRemoteMediator(
     private val database: BackgroundableDatabase,
     private val pageKeyLocalDataSource: PageKeyLocalDataSource,
 ) : RemoteMediator<Int, CollectionEntity>() {
-
     private var pageKeyEntity: PageKeyEntity? = null
 
     override suspend fun initialize(): InitializeAction {

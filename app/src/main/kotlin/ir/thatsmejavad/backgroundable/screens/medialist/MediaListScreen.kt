@@ -177,7 +177,7 @@ private fun MediaListScreen(
                                 initialScale = 0.92f,
                                 animationSpec = tween(220, delayMillis = 120)
                             )
-                        )
+                    )
                         .togetherWith(fadeOut(animationSpec = tween(120)))
                 }
             ) { type ->

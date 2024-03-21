@@ -7,7 +7,6 @@ import javax.inject.Inject
 class PageKeyLocalDataSourceImpl @Inject constructor(
     private val pageKeyDao: PageKeyDao,
 ) : PageKeyLocalDataSource {
-
     override suspend fun insertPageKey(pageKey: PageKeyEntity) {
         pageKeyDao.insertPageKey(pageKey)
     }

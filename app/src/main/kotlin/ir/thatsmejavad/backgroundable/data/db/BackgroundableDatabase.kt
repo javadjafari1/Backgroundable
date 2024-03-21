@@ -35,7 +35,10 @@ import ir.thatsmejavad.backgroundable.data.db.entity.ResourceEntity
 )
 abstract class BackgroundableDatabase : RoomDatabase() {
     abstract fun resourceDao(): ResourceDao
+
     abstract fun collectionDao(): CollectionDao
+
     abstract fun mediaDao(): MediaDao
+
     abstract fun pageKeyDao(): PageKeyDao
 }

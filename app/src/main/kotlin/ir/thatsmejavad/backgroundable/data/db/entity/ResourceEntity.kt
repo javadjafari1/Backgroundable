@@ -20,7 +20,6 @@ import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
     ]
 )
 data class ResourceEntity(
-
     @ColumnInfo(name = "media-id")
     val mediaId: Int,
     val size: ResourceSize,

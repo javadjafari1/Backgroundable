@@ -35,7 +35,6 @@ class MediaDetailViewModel @AssistedInject constructor(
     settingRepository: SettingRepository,
     @Assisted private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-
     @AssistedFactory
     interface Factory : ViewModelAssistedFactory<MediaDetailViewModel>
 
@@ -107,5 +106,6 @@ class MediaDetailViewModel @AssistedInject constructor(
 
 sealed interface SavePurpose {
     data object SettingWallpaper : SavePurpose
+
     data object Share : SavePurpose
 }

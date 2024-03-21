@@ -32,10 +32,7 @@ class MediaRepositoryImpl @Inject constructor(
     private val database: BackgroundableDatabase,
     private val userPreferencesStore: DataStore<UserPref>,
 ) : MediaRepository {
-
-    override fun getMediasByCollectionId(
-        collectionId: String,
-    ): Flow<PagingData<MediaWithResources>> {
+    override fun getMediasByCollectionId(collectionId: String): Flow<PagingData<MediaWithResources>> {
         return Pager(
             config = PagingConfig(
                 pageSize = MEDIA_PER_PAGE_ITEM,

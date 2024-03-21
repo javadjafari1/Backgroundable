@@ -4,16 +4,20 @@ import ir.thatsmejavad.backgroundable.ThemeName
 
 sealed interface ThemeColor {
     data object Ao : ThemeColor
+
     data object Skobeloff : ThemeColor
+
     data object BlueViolet : ThemeColor
+
     data object MiddleRed : ThemeColor
+
     data object Crayola : ThemeColor
 
     data object Indigo : ThemeColor
 
     companion object {
-
         val items = listOf(Skobeloff, Ao, BlueViolet, MiddleRed, Crayola, Indigo)
+
         fun fromThemeColor(color: ThemeColor): ThemeName {
             return when (color) {
                 Ao -> ThemeName.THEME_AO

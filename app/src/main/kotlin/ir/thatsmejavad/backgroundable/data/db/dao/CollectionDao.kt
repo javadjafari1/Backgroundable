@@ -9,7 +9,6 @@ import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
 
 @Dao
 interface CollectionDao {
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCollections(collections: List<CollectionEntity>)
 

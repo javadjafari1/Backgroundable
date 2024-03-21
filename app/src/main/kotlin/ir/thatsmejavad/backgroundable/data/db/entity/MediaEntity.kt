@@ -14,22 +14,16 @@ data class MediaEntity(
     val url: String,
     val alt: String,
     val type: MediaType,
-
     @ColumnInfo(name = "collection-id")
     val collectionId: String?,
-
     @ColumnInfo(index = true)
     val photographer: String,
-
     @ColumnInfo(name = "avg-color", index = true)
     val avgColor: String,
-
     @ColumnInfo("photographer-id")
     val photographerId: Int,
-
     @ColumnInfo("photographer-url")
     val photographerUrl: String,
-
     // we should save orderId because server data is shuffled,and we should sort the data to fix jump in screen.
     @ColumnInfo("order-id")
     @PrimaryKey(autoGenerate = true)
