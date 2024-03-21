@@ -27,7 +27,8 @@ kotlin = "1.9.22"
 kotlinxSerialization = "1.6.3"
 kover = "0.7.4"
 ksp = "1.9.22-1.0.17"
-ktlint = "12.1.0"
+ktlint = "1.2.1"
+ktlintGradle = "12.1.0"
 lifecycleRuntime = "2.7.0"
 material3 = "1.2.1"
 mockK = "1.13.10"
@@ -69,7 +70,6 @@ dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 daggerCompiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
 datastorePreferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
-detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 espressoCore = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
 junitJupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
 kotestAssertion = { module = "io.kotest:kotest-assertions-core", version.ref = "kotestAssertion" }
@@ -101,7 +101,7 @@ kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintGradle" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobuf" }
 
 [bundles]

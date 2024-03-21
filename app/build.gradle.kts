@@ -11,6 +11,14 @@ plugins {
     alias(libs.plugins.ktlint)
 }
 
+ktlint {
+    version.set(libs.versions.ktlint)
+    android.set(true)
+    filter {
+        exclude("**/generated/**")
+    }
+}
+
 detekt {
     autoCorrect = true
     buildUponDefaultConfig = true
@@ -205,8 +213,6 @@ protobuf {
 }
 
 dependencies {
-    detektPlugins(libs.detektFormatting)
-
     implementation(libs.appcompat)
     // Compose
     implementation(libs.bundles.compose)
