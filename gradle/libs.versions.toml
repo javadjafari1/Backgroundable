@@ -27,6 +27,7 @@ kotlin = "1.9.22"
 kotlinxSerialization = "1.6.3"
 kover = "0.7.4"
 ksp = "1.9.22-1.0.17"
+ktlint = "12.1.0"
 lifecycleRuntime = "2.7.0"
 material3 = "1.2.1"
 mockK = "1.13.10"
@@ -100,6 +101,7 @@ kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobuf" }
 
 [bundles]
