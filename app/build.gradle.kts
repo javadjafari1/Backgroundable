@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.detekt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kover)
+    alias(libs.plugins.ktlint)
 }
 
 detekt {
@@ -89,7 +90,6 @@ android {
             value = "\"$metricaToken\"",
             name = "METRICA_TOKEN",
         )
-
     }
 
     val securityProperties = Properties()
@@ -99,7 +99,6 @@ android {
         project.rootProject.file("properties/security.properties").inputStream().use {
             securityProperties.load(it)
         }
-
 
         signingConfigs {
             create("release") {
@@ -130,7 +129,6 @@ android {
             isDebuggable = true
             applicationIdSuffix = ".debug"
             versionNameSuffix = ".debug"
-
         }
     }
 
@@ -211,7 +209,7 @@ dependencies {
     detektPlugins(libs.detektFormatting)
 
     implementation(libs.appcompat)
-    /*Compose*/
+    // Compose
     implementation(libs.bundles.compose)
     implementation(libs.activityCompose)
     implementation(libs.navigationCompose)
@@ -220,27 +218,27 @@ dependencies {
     implementation(libs.lifecycleRuntimeCompose)
     implementation(libs.coilCompose)
 
-    /*coroutine*/
+    // coroutine
     implementation(libs.coroutine)
 
-    /*Retrofit*/
+    // Retrofit
     implementation(libs.retrofit)
     implementation(libs.kotlinxSerialization)
     implementation(libs.retrofitKotlinxSerializationConverter)
 
-    /*dagger*/
+    // dagger
     implementation(libs.dagger)
     ksp(libs.daggerCompiler)
 
-    /*room*/
+    // room
     implementation(libs.bundles.room)
     ksp(libs.roomCompiler)
 
-    /*chucker*/
+    // chucker
     debugImplementation(libs.chucker)
     releaseImplementation(libs.chuckerNoOp)
 
-    /*datastore*/
+    // datastore
     implementation(libs.bundles.datastore)
     implementation(libs.datastorePreferences)
 
@@ -282,7 +280,6 @@ class RoomSchemaArgProvider(
     @get:PathSensitive(PathSensitivity.RELATIVE)
     val schemaDir: File
 ) : CommandLineArgumentProvider {
-
     override fun asArguments(): Iterable<String> {
         return listOf("room.schemaLocation=${schemaDir.path}")
     }
