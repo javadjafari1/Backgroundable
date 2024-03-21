@@ -18,7 +18,10 @@ object UserPreferencesSerializer : Serializer<UserPref> {
         }
     }
 
-    override suspend fun writeTo(t: UserPref, output: OutputStream) {
+    override suspend fun writeTo(
+        t: UserPref,
+        output: OutputStream
+    ) {
         t.writeTo(output)
     }
 }

@@ -8,9 +8,23 @@ import kotlin.coroutines.CoroutineContext
 
 suspend fun <T : Any> PagingData<T>.collectDataForTest(mainContext: CoroutineContext): List<T> {
     val dcb = object : DifferCallback {
-        override fun onChanged(position: Int, count: Int) {}
-        override fun onInserted(position: Int, count: Int) {}
-        override fun onRemoved(position: Int, count: Int) {}
+        override fun onChanged(
+            position: Int,
+            count: Int
+        ) {
+        }
+
+        override fun onInserted(
+            position: Int,
+            count: Int
+        ) {
+        }
+
+        override fun onRemoved(
+            position: Int,
+            count: Int
+        ) {
+        }
     }
     val items = mutableListOf<T>()
     val dif = object : PagingDataDiffer<T>(dcb, mainContext) {

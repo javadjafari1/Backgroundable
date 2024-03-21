@@ -10,7 +10,6 @@ import javax.inject.Inject
 class AndroidDownloader @Inject constructor(
     context: Context
 ) : Downloader {
-
     private val downloadManager = context.getSystemService(
         DownloadManager::class.java
     )

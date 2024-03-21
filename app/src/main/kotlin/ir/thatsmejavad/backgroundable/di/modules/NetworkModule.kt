@@ -22,7 +22,6 @@ import javax.inject.Singleton
 
 @Module
 class NetworkModule {
-
     @Singleton
     @Provides
     fun provideJson(): Json {
@@ -38,9 +37,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideChuckerInterceptor(
-        context: Context
-    ): ChuckerInterceptor {
+    fun provideChuckerInterceptor(context: Context): ChuckerInterceptor {
         val chuckerCollector = ChuckerCollector(
             context = context,
             showNotification = true,

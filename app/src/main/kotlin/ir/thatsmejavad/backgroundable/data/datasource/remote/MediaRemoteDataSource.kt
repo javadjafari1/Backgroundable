@@ -8,7 +8,10 @@ import kotlinx.coroutines.flow.Flow
 interface MediaRemoteDataSource {
     suspend fun getMedia(photoId: Int): Media
 
-    suspend fun getMediasByCollectionId(collectionId: String, page: Int): PagedResponse<Media>
+    suspend fun getMediasByCollectionId(
+        collectionId: String,
+        page: Int
+    ): PagedResponse<Media>
 
     fun searchPhoto(query: String): Flow<PagingData<Media>>
 }

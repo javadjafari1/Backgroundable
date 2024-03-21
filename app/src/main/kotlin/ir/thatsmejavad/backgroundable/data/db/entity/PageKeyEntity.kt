@@ -9,12 +9,9 @@ data class PageKeyEntity(
     @PrimaryKey
     @ColumnInfo(name = "collection-id")
     val collectionId: String,
-
     @ColumnInfo(name = "last-loaded-page")
     val lastLoadedPage: Int,
-
     @ColumnInfo(name = "max-page")
     val maxPage: Int,
-
     val timestamp: Long = System.currentTimeMillis()
 )

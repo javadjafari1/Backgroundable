@@ -14,7 +14,6 @@ import javax.inject.Inject
 class ImageQualitySettingViewModel @Inject constructor(
     private val settingRepository: SettingRepository,
 ) : ViewModel() {
-
     val imageQuality = settingRepository.userPreferencesFlow
         .map { it.imageQuality }
         .stateIn(

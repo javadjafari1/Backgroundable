@@ -22,17 +22,11 @@ interface CollectionModule {
     fun bindCollectionRepository(impl: CollectionRepositoryImpl): CollectionRepository
 
     @Binds
-    fun bindCollectionRemoteDataSource(
-        impl: CollectionRemoteDataSourceImpl
-    ): CollectionRemoteDataSource
+    fun bindCollectionRemoteDataSource(impl: CollectionRemoteDataSourceImpl): CollectionRemoteDataSource
 
     @Binds
-    fun bindCollectionLocalDataSource(
-        impl: CollectionLocalDataSourceImpl
-    ): CollectionLocalDataSource
+    fun bindCollectionLocalDataSource(impl: CollectionLocalDataSourceImpl): CollectionLocalDataSource
 
     @Binds
-    fun bindPageKeyLocalDataSource(
-        impl: PageKeyLocalDataSourceImpl
-    ): PageKeyLocalDataSource
+    fun bindPageKeyLocalDataSource(impl: PageKeyLocalDataSourceImpl): PageKeyLocalDataSource
 }

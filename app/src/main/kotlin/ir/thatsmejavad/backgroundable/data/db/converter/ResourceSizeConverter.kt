@@ -4,7 +4,6 @@ import androidx.room.TypeConverter
 import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize
 
 class ResourceSizeConverter {
-
     @TypeConverter
     fun fromResourceSize(resourceSize: ResourceSize): String {
         return resourceSize.size

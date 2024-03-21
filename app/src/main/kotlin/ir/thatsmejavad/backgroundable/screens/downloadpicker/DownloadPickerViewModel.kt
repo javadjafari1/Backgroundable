@@ -23,7 +23,6 @@ class DownloadPickerViewModel @AssistedInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle,
     private val downloader: Downloader,
 ) : ViewModel() {
-
     @AssistedFactory
     interface Factory : ViewModelAssistedFactory<DownloadPickerViewModel>
 

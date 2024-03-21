@@ -18,7 +18,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class MainViewModelTest : CoroutineTest {
-
     override lateinit var testScope: TestScope
     override lateinit var dispatcher: TestDispatcher
 
