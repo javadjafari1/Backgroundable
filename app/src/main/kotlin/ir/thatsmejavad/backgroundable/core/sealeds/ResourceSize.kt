@@ -4,12 +4,19 @@ import ir.thatsmejavad.backgroundable.R
 
 sealed class ResourceSize(val size: String) {
     data object Original : ResourceSize("original")
+
     data object Large2x : ResourceSize("large2x")
+
     data object Large : ResourceSize("large")
+
     data object Medium : ResourceSize("medium")
+
     data object Small : ResourceSize("small")
+
     data object Portrait : ResourceSize("portrait"), OrientationMode
+
     data object Landscape : ResourceSize("landscape"), OrientationMode
+
     data object Tiny : ResourceSize("tiny")
 
     companion object {

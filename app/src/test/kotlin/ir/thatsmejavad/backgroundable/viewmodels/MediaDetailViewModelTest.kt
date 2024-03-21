@@ -34,7 +34,6 @@ import org.junit.jupiter.api.Test
 import java.io.IOException
 
 class MediaDetailViewModelTest : CoroutineTest {
-
     override lateinit var testScope: TestScope
 
     override lateinit var dispatcher: TestDispatcher

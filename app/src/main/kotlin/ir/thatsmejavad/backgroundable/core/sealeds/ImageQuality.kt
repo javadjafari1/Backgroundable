@@ -5,9 +5,13 @@ import ir.thatsmejavad.backgroundable.R
 
 sealed interface ImageQuality {
     data object Low : ImageQuality
+
     data object Medium : ImageQuality
+
     data object High : ImageQuality
+
     data object Ultra : ImageQuality
+
     companion object {
         fun toImageQuality(quality: Quality): ImageQuality {
             return when (quality) {

@@ -19,22 +19,14 @@ interface MediaModule {
     fun bindMediaRepository(impl: MediaRepositoryImpl): MediaRepository
 
     @Binds
-    fun bindMediaRemoteDataSource(
-        impl: MediaRemoteDataSourceImpl
-    ): MediaRemoteDataSource
+    fun bindMediaRemoteDataSource(impl: MediaRemoteDataSourceImpl): MediaRemoteDataSource
 
     @Binds
-    fun bindMediaLocalDataSource(
-        impl: MediaLocalDataSourceImpl
-    ): MediaLocalDataSource
+    fun bindMediaLocalDataSource(impl: MediaLocalDataSourceImpl): MediaLocalDataSource
 
     @Binds
-    fun bindResourceLocalDataSource(
-        impl: ResourceLocalDataSourceImpl
-    ): ResourceLocalDataSource
+    fun bindResourceLocalDataSource(impl: ResourceLocalDataSourceImpl): ResourceLocalDataSource
 
     @Binds
-    fun bindAndroidDownloader(
-        impl: AndroidDownloader
-    ): Downloader
+    fun bindAndroidDownloader(impl: AndroidDownloader): Downloader
 }

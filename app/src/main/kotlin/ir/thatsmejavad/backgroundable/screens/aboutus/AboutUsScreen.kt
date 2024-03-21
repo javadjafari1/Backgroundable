@@ -47,9 +47,7 @@ import ir.thatsmejavad.backgroundable.model.Contributor
 import ir.thatsmejavad.backgroundable.model.ContributorLink
 
 @Composable
-fun AboutUsScreen(
-    onBackClicked: () -> Unit
-) {
+fun AboutUsScreen(onBackClicked: () -> Unit) {
     val context = LocalContext.current
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())

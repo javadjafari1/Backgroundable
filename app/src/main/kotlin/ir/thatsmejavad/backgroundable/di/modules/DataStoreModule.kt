@@ -22,12 +22,9 @@ import javax.inject.Singleton
 
 @Module
 object DataStoreModule {
-
     @Singleton
     @Provides
-    fun providePreferencesDataStore(
-        appContext: Context
-    ): DataStore<Preferences> {
+    fun providePreferencesDataStore(appContext: Context): DataStore<Preferences> {
         return PreferenceDataStoreFactory.create(
             corruptionHandler = ReplaceFileCorruptionHandler(
                 produceNewData = { emptyPreferences() }
@@ -38,9 +35,7 @@ object DataStoreModule {
 
     @Singleton
     @Provides
-    fun provideUserPreferencesDataStore(
-        appContext: Context
-    ): DataStore<UserPref> {
+    fun provideUserPreferencesDataStore(appContext: Context): DataStore<UserPref> {
         return DataStoreFactory.create(
             serializer = UserPreferencesSerializer,
             produceFile = { appContext.dataStoreFile(USER_PREF_DATA_STORE_FILE_NAME) },

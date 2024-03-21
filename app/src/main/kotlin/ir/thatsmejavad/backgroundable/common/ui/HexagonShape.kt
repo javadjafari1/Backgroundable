@@ -10,7 +10,6 @@ import java.lang.Float.min
 import kotlin.math.sqrt
 
 object HexagonShape : Shape {
-
     override fun createOutline(
         size: Size,
         layoutDirection: LayoutDirection,
@@ -29,7 +28,10 @@ fun drawCustomHexagonPath(size: Size): Path {
     }
 }
 
-private fun Path.customHexagon(radius: Float, size: Size) {
+private fun Path.customHexagon(
+    radius: Float,
+    size: Size
+) {
     val triangleHeight = (sqrt(3.0) * radius / 2)
     val centerX = size.width / 2
     val centerY = size.height / 2

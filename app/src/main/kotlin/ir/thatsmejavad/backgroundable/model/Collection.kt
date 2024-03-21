@@ -11,7 +11,6 @@ data class Collection(
     val description: String? = null,
     val mediaCount: Int,
     val photosCount: Int,
-
     @SerialName("private")
     val isPrivate: Boolean,
     val videosCount: Int,

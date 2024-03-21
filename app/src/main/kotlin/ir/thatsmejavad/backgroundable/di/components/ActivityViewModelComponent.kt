@@ -8,11 +8,11 @@ import ir.thatsmejavad.backgroundable.main.MainActivity
 
 @Subcomponent(modules = [MainViewModelModule::class])
 interface ActivityViewModelComponent {
-
     @Subcomponent.Builder
     interface Builder {
         @BindsInstance
         fun componentActivity(activity: ComponentActivity): Builder
+
         fun build(): ActivityViewModelComponent
     }
 

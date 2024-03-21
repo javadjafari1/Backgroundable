@@ -16,7 +16,6 @@ import javax.inject.Inject
 class SettingRepositoryImpl @Inject constructor(
     private val userPreferencesStore: DataStore<UserPref>
 ) : SettingRepository {
-
     override val userPreferencesFlow: Flow<UserPreferences> = userPreferencesStore.data
         .catch { exception ->
             if (exception is IOException) {
