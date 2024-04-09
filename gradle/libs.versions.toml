@@ -1,18 +1,18 @@
 [versions]
 accompanist = "0.34.0"
 activityCompose = "1.8.2"
-agp = "8.3.0"
+agp = "8.3.1"
 androidxJunit = "1.1.5"
 appMetrica = "5.3.0"
 appcompat = "1.6.1"
 caoc = "2.4.0"
 chucker = "4.0.0"
 coilCompose = "2.6.0"
-composeAnimation = "1.6.3"
-composeCompiler = "1.5.10"
-composeRuntime = "1.6.3"
-composeUi = "1.6.3"
-compsoeFoundation = "1.6.3"
+composeAnimation = "1.6.5"
+composeCompiler = "1.5.11"
+composeRuntime = "1.6.5"
+composeUi = "1.6.5"
+compsoeFoundation = "1.6.5"
 coreKtx = "1.12.0"
 coroutine = "1.8.0"
 dagger = "2.51"
@@ -23,10 +23,10 @@ jacoco = "0.8.11"
 javalite = "3.23.0"
 junit = "5.10.1"
 kotestAssertion = "5.8.0"
-kotlin = "1.9.22"
+kotlin = "1.9.23"
 kotlinxSerialization = "1.6.3"
 kover = "0.7.4"
-ksp = "1.9.22-1.0.17"
+ksp = "1.9.23-1.0.20"
 ktlint = "1.2.1"
 ktlintGradle = "12.1.0"
 lifecycleRuntime = "2.7.0"
@@ -36,12 +36,11 @@ navigationCompose = "2.7.7"
 okhttp = "4.12.0"
 paging = "3.2.1"
 protobuf = "0.9.4"
-retrofit = "2.9.0"
-retrofitKotlinxSerializationConverter = "1.0.0"
+retrofit = "2.11.0"
 room = "2.6.1"
 splashscreen = "1.0.1"
-turbine = "1.0.0"
-zoomableImageCoil = "0.8.0"
+turbine = "1.1.0"
+zoomableImageCoil = "0.9.0"
 
 [libraries]
 accompanistNavigationMaterial = { module = "com.google.accompanist:accompanist-navigation-material", version.ref = "accompanist" }
@@ -72,6 +71,7 @@ datastore = { module = "androidx.datastore:datastore", version.ref = "datastore"
 datastorePreferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 espressoCore = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
 junitJupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
+junitPlatformLauncher = { module = "org.junit.platform:junit-platform-launcher" }
 kotestAssertion = { module = "io.kotest:kotest-assertions-core", version.ref = "kotestAssertion" }
 kotlinxSerialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 lifecycleRuntimeCompose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntime" }
@@ -85,7 +85,7 @@ pagingCompose = { module = "androidx.paging:paging-compose", version.ref = "pagi
 pagingRuntimektx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "paging" }
 protobufJavalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "javalite" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-retrofitKotlinxSerializationConverter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofitKotlinxSerializationConverter" }
+retrofitKotlinxSerializationConverter = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit" }
 roomCompiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 roomKtx = { module = "androidx.room:room-ktx", version.ref = "room" }
 roomPaging = { module = "androidx.room:room-paging", version.ref = "room" }
