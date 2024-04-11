@@ -270,6 +270,8 @@ dependencies {
     implementation(libs.appMetrica)
     implementation(libs.caoc)
     testRuntimeOnly(libs.junitPlatformLauncher)
+
+    implementation(libs.ok2curl)
 }
 
 kover {
