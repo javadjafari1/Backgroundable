@@ -1,3 +1,5 @@
+import kotlinx.kover.gradle.plugin.dsl.AggregationType
+import kotlinx.kover.gradle.plugin.dsl.MetricType
 import org.jetbrains.kotlin.konan.properties.Properties
 
 plugins {
@@ -276,6 +278,44 @@ dependencies {
 
 kover {
     useJacoco(libs.versions.jacoco.get())
+}
+
+koverReport {
+    androidReports("cafeBazaarDebug") {
+        verify {
+            onCheck = true
+            rule {
+                isEnabled = true
+                bound {
+                    minValue = 90
+                    aggregation = AggregationType.COVERED_PERCENTAGE
+                    metric = MetricType.LINE
+                }
+            }
+            rule {
+                isEnabled = true
+                bound {
+                    minValue = 97
+                    aggregation = AggregationType.COVERED_PERCENTAGE
+                    metric = MetricType.INSTRUCTION
+                }
+            }
+            rule {
+                isEnabled = true
+                bound {
+                    minValue = 94
+                    aggregation = AggregationType.COVERED_PERCENTAGE
+                    metric = MetricType.BRANCH
+                }
+            }
+        }
+    }
+
+    filters {
+        includes {
+            classes("*ViewModel")
+        }
+    }
 }
 
 tasks.withType<Test> {

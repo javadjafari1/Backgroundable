@@ -27,6 +27,9 @@ jobs:
     - name: Run All Unit Tests
       run: ./gradlew :app:testCafeBazaarDebugUnitTest
 
+    - name: Verify tests With Kover
+      run: ./gradlew :app:koverVerifyCafeBazaarDebug
+
     - name: Run Detekt
       run: ./gradlew detekt
 
