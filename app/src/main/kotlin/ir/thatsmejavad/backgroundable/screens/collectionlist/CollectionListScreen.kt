@@ -1,5 +1,6 @@
 package ir.thatsmejavad.backgroundable.screens.collectionlist
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -24,6 +25,7 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -155,59 +157,64 @@ private fun CollectionListScreen(
             onSwipe = { collections.refresh() },
             isRefreshing = collections.loadState.refresh is LoadState.Loading
         ) {
-            LazyVerticalGrid(
-                modifier = Modifier
-                    .padding(horizontal = 8.dp)
-                    .fillMaxSize(),
-                columns = GridCells.Fixed(columnCounts),
-                state = rememberLazyGridState(),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                /*
-                The padding of the bottomBar,
-                can't use Scaffold to add bottomBar with animation.
-                the bottom of the ui will jump
-                 */
-                contentPadding = PaddingValues(bottom = NAVIGATION_BAR_HEIGHT)
-            ) {
-                items(
-                    count = collections.itemCount,
-                    key = collections.itemKey(),
-                    contentType = collections.itemContentType()
-                ) { index ->
-                    collections[index]?.let { collection ->
-                        CollectionCard(
-                            isVertical = columnCounts > 2,
-                            collection = collection,
-                            onCollectionClicked = onCollectionClicked
-                        )
-                    }
+            Column(modifier = Modifier.fillMaxSize()) {
+                AnimatedVisibility(collections.loadState.refresh is LoadState.Loading) {
+                    LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
                 }
+                LazyVerticalGrid(
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                        .fillMaxSize(),
+                    columns = GridCells.Fixed(columnCounts),
+                    state = rememberLazyGridState(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    /*
+                    The padding of the bottomBar,
+                    can't use Scaffold to add bottomBar with animation.
+                    the bottom of the ui will jump
+                     */
+                    contentPadding = PaddingValues(bottom = NAVIGATION_BAR_HEIGHT)
+                ) {
+                    items(
+                        count = collections.itemCount,
+                        key = collections.itemKey(),
+                        contentType = collections.itemContentType()
+                    ) { index ->
+                        collections[index]?.let { collection ->
+                            CollectionCard(
+                                isVertical = columnCounts > 2,
+                                collection = collection,
+                                onCollectionClicked = onCollectionClicked
+                            )
+                        }
+                    }
 
-                when (val paginationLoadState = collections.loadState.append) {
-                    is LoadState.Error -> {
-                        if (!paginationLoadState.endOfPaginationReached) {
-                            item {
-                                Box(Modifier.fillMaxSize()) {
-                                    Text(
-                                        modifier = Modifier.align(Alignment.Center),
-                                        text = paginationLoadState.error.getErrorMessage()
-                                            .asString()
-                                    )
+                    when (val paginationLoadState = collections.loadState.append) {
+                        is LoadState.Error -> {
+                            if (!paginationLoadState.endOfPaginationReached) {
+                                item {
+                                    Box(Modifier.fillMaxSize()) {
+                                        Text(
+                                            modifier = Modifier.align(Alignment.Center),
+                                            text = paginationLoadState.error.getErrorMessage()
+                                                .asString()
+                                        )
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    is LoadState.Loading -> {
-                        item {
-                            Box(Modifier.fillMaxSize()) {
-                                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                        is LoadState.Loading -> {
+                            item {
+                                Box(Modifier.fillMaxSize()) {
+                                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                                }
                             }
                         }
-                    }
 
-                    else -> {}
+                        else -> {}
+                    }
                 }
             }
 
