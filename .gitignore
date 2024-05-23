@@ -24,4 +24,5 @@ deploymentTargetDropDown.xml
 render.experimental.xml
 
 *.jks
+.kotlin
 
