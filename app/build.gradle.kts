@@ -213,7 +213,6 @@ protobuf {
 }
 
 dependencies {
-    implementation(libs.appcompat)
     // Compose
     implementation(libs.bundles.compose)
     implementation(libs.activityCompose)
@@ -261,9 +260,6 @@ dependencies {
     testImplementation(libs.turbine)
     testImplementation(libs.coroutineTest)
 
-    androidTestImplementation(libs.androidxJunit)
-    androidTestImplementation(libs.espressoCore)
-    androidTestImplementation(libs.composeUiJunit4)
     debugImplementation(libs.composeUiTooling)
     debugImplementation(libs.composeUiManifest)
 
