@@ -69,17 +69,6 @@ android {
                 urlProperties.load(it)
             }
         }
-        val serverUrl = if (urlsPropertiesExist) {
-            urlProperties.getProperty("main")
-        } else {
-            "https://api.pexels.com/"
-        }
-        val imageServerUrl = if (urlsPropertiesExist) {
-            urlProperties.getProperty("image")
-        } else {
-            "https://images.pexels.com/"
-        }
-
         buildConfigField(
             type = "String",
             value = "\"$authorization\"",
@@ -87,12 +76,12 @@ android {
         )
         buildConfigField(
             type = "String",
-            value = "\"$serverUrl\"",
+            value = "\"https://api.pexels.com/\"",
             name = "SERVER_URL",
         )
         buildConfigField(
             type = "String",
-            value = "\"$imageServerUrl\"",
+            value = "\"https://images.pexels.com/\"",
             name = "IMAGE_SERVER_URL",
         )
         buildConfigField(
