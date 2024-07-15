@@ -71,29 +71,29 @@ Follow these steps to build the Backgroundable project:
 
 This app is built with the help of the following libraries and dependencies:
 
-- Android Gradle Plugin (Version 8.3.1).
+- Android Gradle Plugin (Version 8.5.0).
 - [Accompanist]([link_to_library2](https://github.com/google/accompanist)) (Version 0.34.0).
 - [Coil](https://github.com/coil-kt/coil) (Version 2.6.0).
-- Compose (Version 1.6.5).
-- [Detekt](https://github.com/detekt/detekt) (Version 1.23.5).
-- [Dagger](https://dagger.dev/) (Version 2.51.0).
+- Compose (Version 1.6.8).
+- [Detekt](https://github.com/detekt/detekt) (Version 1.23.6).
+- [Dagger](https://dagger.dev/) (Version 2.51.1).
 - [Chucker](https://github.com/ChuckerTeam/chucker/) (Version 4.0.0).
-- Datastore (Version 1.0.0).
-- [Telephoto](https://github.com/saket/telephoto) (Version 0.9.0).
-- KotlinxSerialization (Version 1.6.3).
-- Kotlin (Version 1.9.23).
+- Datastore (Version 1.1.1).
+- [Telephoto](https://github.com/saket/telephoto) (Version 0.11.2).
+- KotlinxSerialization (Version 1.7.1).
+- Kotlin (Version 2.0.0).
 - Navigation Compose (Version 2.7.7).
-- Paging3 (Version 3.2.1).
+- Paging3 (Version 3.3.0).
 - [Retrofit2](https://github.com/square/retrofit) (Version 2.11.0).
 - [Okhttp3](https://github.com/square/okhttp) (Version 4.12.0).
 - Room (Version 2.6.1).
-- KSP (Version 1.9.23-1.0.20).
+- KSP (Version 2.0.0-1.0.21).
 
 Test Libraries
 
 - [Junit5](https://github.com/junit-team/junit5) (Version 5.10.1)
-- [KotestAssertion](https://github.com/kotest/kotest) (Version 5.8.0)
-- [Kover](https://github.com/Kotlin/kotlinx-kover) (Version 0.7.4)
+- [KotestAssertion](https://github.com/kotest/kotest) (Version 5.9.1)
+- [Kover](https://github.com/Kotlin/kotlinx-kover) (Version 0.7.6)
 - [Jacoco](https://github.com/jacoco/jacoco) (Version 0.8.11)
 - [MockK](https://github.com/mockk/mockk) (Version 1.13.10)
 - [Turbine](https://github.com/cashapp/turbine) (Version 1.1.0)
