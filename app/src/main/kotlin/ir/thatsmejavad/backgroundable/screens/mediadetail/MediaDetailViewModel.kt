@@ -7,9 +7,11 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import ir.thatsmejavad.backgroundable.core.AppDestination
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
 import ir.thatsmejavad.backgroundable.core.getSnackbarMessage
 import ir.thatsmejavad.backgroundable.core.getUri
@@ -62,10 +64,8 @@ class MediaDetailViewModel @AssistedInject constructor(
         )
 
     init {
-        val id = requireNotNull(savedStateHandle.get<Int>("id")) {
-            "id should not be null in $this"
-        }
-        getMedia(id)
+        val route = savedStateHandle.toRoute<AppDestination.MediaDetail>()
+        getMedia(route.id)
     }
 
     fun getMedia(mediaId: Int) {

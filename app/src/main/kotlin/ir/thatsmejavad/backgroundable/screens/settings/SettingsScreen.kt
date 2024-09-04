@@ -27,13 +27,13 @@ import androidx.compose.ui.unit.dp
 import ir.thatsmejavad.backgroundable.BuildConfig
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
-import ir.thatsmejavad.backgroundable.core.AppScreens
+import ir.thatsmejavad.backgroundable.core.AppDestination
 import ir.thatsmejavad.backgroundable.core.Constants
 import ir.thatsmejavad.backgroundable.core.composeMail
 import ir.thatsmejavad.backgroundable.core.openUrl
 
 @Composable
-fun SettingsScreen(navigateTo: (String) -> Unit) {
+internal fun SettingsScreen(navigateTo: (AppDestination) -> Unit) {
     val context = LocalContext.current
 
     BackgroundableScaffold(
@@ -66,7 +66,7 @@ fun SettingsScreen(navigateTo: (String) -> Unit) {
                 textId = R.string.label_language,
                 imageId = R.drawable.ic_language,
                 onClick = {
-                    navigateTo(AppScreens.Language.route)
+                    navigateTo(AppDestination.Language)
                 }
             )
 
@@ -74,7 +74,7 @@ fun SettingsScreen(navigateTo: (String) -> Unit) {
                 textId = R.string.label_quality,
                 imageId = R.drawable.ic_high_quality,
                 onClick = {
-                    navigateTo(AppScreens.ImageQualitySetting.route)
+                    navigateTo(AppDestination.ImageQualitySetting)
                 }
             )
 
@@ -82,7 +82,7 @@ fun SettingsScreen(navigateTo: (String) -> Unit) {
                 textId = R.string.label_theme,
                 imageId = R.drawable.ic_theme,
                 onClick = {
-                    navigateTo(AppScreens.ThemeSetting.route)
+                    navigateTo(AppDestination.ThemeSetting)
                 }
             )
 
@@ -90,7 +90,7 @@ fun SettingsScreen(navigateTo: (String) -> Unit) {
                 textId = R.string.label_about_us,
                 imageId = R.drawable.ic_info,
                 onClick = {
-                    navigateTo(AppScreens.AboutUs.route)
+                    navigateTo(AppDestination.AboutUs)
                 }
             )
 

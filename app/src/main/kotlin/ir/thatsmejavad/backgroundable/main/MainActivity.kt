@@ -20,7 +20,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.shape.CornerSize
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.navigation.ModalBottomSheetLayout
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.navigation.rememberBottomSheetNavigator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -41,6 +43,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -51,7 +54,7 @@ import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations
 import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations.HOME
 import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations.SEARCH
 import ir.thatsmejavad.backgroundable.common.ui.NavigationBarDestinations.SETTING
-import ir.thatsmejavad.backgroundable.core.AppScreens
+import ir.thatsmejavad.backgroundable.core.AppDestination
 import ir.thatsmejavad.backgroundable.core.Constants.NAVIGATION_BAR_HEIGHT
 import ir.thatsmejavad.backgroundable.core.sealeds.Theme
 import ir.thatsmejavad.backgroundable.core.viewmodel.LocalViewModelFactory
@@ -130,7 +133,7 @@ private fun BackgroundableApp() {
         Box {
             NavHost(
                 navController = navController,
-                startDestination = AppScreens.CollectionList.route
+                startDestination = AppDestination.CollectionList
             ) {
                 mainNavGraph(navController)
                 settingNavGraph(navController)
@@ -142,14 +145,16 @@ private fun BackgroundableApp() {
             val backStackEntry by navController.currentBackStackEntryAsState()
             AnimatedVisibility(
                 modifier = Modifier.align(Alignment.BottomCenter),
-                visible = backStackEntry?.destination?.route in NavigationBarDestinations.entries.map { it.route },
+                visible = backStackEntry?.destination?.hasRoute(AppDestination.Search::class) == true
+                        || backStackEntry?.destination?.hasRoute(AppDestination.Settings::class) == true
+                        || backStackEntry?.destination?.hasRoute(AppDestination.CollectionList::class) == true,
                 enter = slideInVertically { it },
                 exit = slideOutVertically { it },
             ) {
                 BackgroundableNavigationBar(
-                    selectedItem = when (navController.currentDestination?.route) {
-                        AppScreens.Search.route -> SEARCH
-                        AppScreens.Settings.route -> SETTING
+                    selectedItem = when {
+                        backStackEntry?.destination?.hasRoute(AppDestination.Search::class) == true -> SEARCH
+                        backStackEntry?.destination?.hasRoute(AppDestination.Settings::class) == true -> SETTING
                         else -> HOME
                     },
                     onItemSelected = { destinations ->

@@ -4,11 +4,13 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import ir.thatsmejavad.backgroundable.core.AppDestination
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
 import ir.thatsmejavad.backgroundable.core.sealeds.List
 import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelAssistedFactory
@@ -55,10 +57,8 @@ class MediaListViewModel @AssistedInject constructor(
         )
 
     init {
-        val id = requireNotNull(savedStateHandle.get<String>("id")) {
-            "id should not be null in $this"
-        }
-        getMedias(id)
+        val params = savedStateHandle.toRoute<AppDestination.MediaList>()
+        getMedias(params.id)
     }
 
     private fun getMedias(id: String) {

@@ -10,30 +10,30 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import ir.thatsmejavad.backgroundable.R
-import ir.thatsmejavad.backgroundable.core.AppScreens
+import ir.thatsmejavad.backgroundable.core.AppDestination
 
-enum class NavigationBarDestinations(
+internal enum class NavigationBarDestinations(
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
     @StringRes val text: Int,
-    val route: String,
+    val route: AppDestination,
 ) {
     HOME(
         selectedIcon = Icons.Filled.Home,
         unselectedIcon = Icons.Outlined.Home,
         text = R.string.label_home,
-        route = AppScreens.CollectionList.route,
+        route = AppDestination.CollectionList,
     ),
     SEARCH(
         selectedIcon = Icons.Filled.Search,
         unselectedIcon = Icons.Outlined.Search,
         text = R.string.label_search,
-        route = AppScreens.Search.route,
+        route = AppDestination.Search,
     ),
     SETTING(
         selectedIcon = Icons.Filled.Settings,
         unselectedIcon = Icons.Outlined.Settings,
         text = R.string.label_setting,
-        route = AppScreens.Settings.route,
+        route = AppDestination.Settings,
     )
 }

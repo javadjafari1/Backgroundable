@@ -59,7 +59,8 @@ import ir.thatsmejavad.backgroundable.common.ui.HexagonShape
 import ir.thatsmejavad.backgroundable.common.ui.ObserveArgument
 import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
 import ir.thatsmejavad.backgroundable.common.ui.drawCustomHexagonPath
-import ir.thatsmejavad.backgroundable.core.AppScreens
+import ir.thatsmejavad.backgroundable.core.AppDestination
+import ir.thatsmejavad.backgroundable.core.AppBottomSheets
 import ir.thatsmejavad.backgroundable.core.Constants.NAVIGATION_BAR_HEIGHT
 import ir.thatsmejavad.backgroundable.core.getErrorMessage
 import ir.thatsmejavad.backgroundable.core.getSnackbarMessage
@@ -94,7 +95,7 @@ fun CollectionListScreen(
         collections = collections,
         onCollectionClicked = { id, title ->
             navController.navigate(
-                AppScreens.MediaList.createRoute(
+                AppDestination.MediaList(
                     id = id,
                     title = title,
                 )
@@ -102,7 +103,7 @@ fun CollectionListScreen(
         },
         openColumnCountPicker = { selectedItem ->
             navController.navigate(
-                AppScreens.ColumnCountPicker.createRoute(
+                AppBottomSheets.ColumnCountPicker.createRoute(
                     items = viewModel.columnCountPickerData,
                     selectedItem = selectedItem
                 )
@@ -251,9 +252,7 @@ private fun LazyGridItemScope.CollectionCard(
     onCollectionClicked: (String, String) -> Unit
 ) {
     ElevatedCard(
-        modifier = Modifier
-            .fillMaxWidth()
-            .animateItemPlacement(),
+        modifier = Modifier.animateItem(),
         colors = CardDefaults.elevatedCardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
         ),

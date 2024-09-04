@@ -62,7 +62,7 @@ import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
 import ir.thatsmejavad.backgroundable.common.ui.ZoomableCoilImage
-import ir.thatsmejavad.backgroundable.core.AppScreens
+import ir.thatsmejavad.backgroundable.core.AppBottomSheets
 import ir.thatsmejavad.backgroundable.core.capitalizeFirstChar
 import ir.thatsmejavad.backgroundable.core.getErrorMessage
 import ir.thatsmejavad.backgroundable.core.openUrl
@@ -372,7 +372,7 @@ private fun MediaDetailScreen(
                                 modifier = Modifier.size(56.dp),
                                 shape = MaterialTheme.shapes.extraSmall,
                                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
-                                onClick = { navigateTo(AppScreens.DownloadPicker.createRoute(mediaId)) },
+                                onClick = { navigateTo(AppBottomSheets.DownloadPicker.createRoute(mediaId)) },
                             ) {
                                 Icon(
                                     painter = painterResource(R.drawable.ic_download),

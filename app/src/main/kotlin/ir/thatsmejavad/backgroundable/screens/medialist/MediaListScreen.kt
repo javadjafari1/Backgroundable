@@ -59,7 +59,7 @@ import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.BoxWithSwipeRefresh
 import ir.thatsmejavad.backgroundable.common.ui.MediaCard
 import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
-import ir.thatsmejavad.backgroundable.core.AppScreens
+import ir.thatsmejavad.backgroundable.core.AppDestination
 import ir.thatsmejavad.backgroundable.core.getErrorMessage
 import ir.thatsmejavad.backgroundable.core.getSnackbarMessage
 import ir.thatsmejavad.backgroundable.core.sealeds.ImageQuality
@@ -111,7 +111,7 @@ private fun MediaListScreen(
     imageQuality: ImageQuality,
     snackbarHostState: SnackbarHostState,
     medias: LazyPagingItems<MediaWithResources>,
-    navigateTo: (String) -> Unit,
+    navigateTo: (AppDestination) -> Unit,
     onBackClicked: () -> Unit,
     changeColumnType: () -> Unit,
 ) {
@@ -214,9 +214,9 @@ private fun MediaListScreen(
                                         }.url,
                                         onMediaClicked = {
                                             navigateTo(
-                                                AppScreens.MediaDetail.createRoute(
-                                                    media.media.id,
-                                                    media.media.alt
+                                                AppDestination.MediaDetail(
+                                                    id = media.media.id,
+                                                    title = media.media.alt
                                                 )
                                             )
                                         }
@@ -283,9 +283,9 @@ private fun MediaListScreen(
                                             .url,
                                         onMediaClicked = {
                                             navigateTo(
-                                                AppScreens.MediaDetail.createRoute(
-                                                    media.media.id,
-                                                    media.media.alt
+                                                AppDestination.MediaDetail(
+                                                    id = media.media.id,
+                                                    title = media.media.alt
                                                 )
                                             )
                                         }
