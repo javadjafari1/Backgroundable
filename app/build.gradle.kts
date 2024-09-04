@@ -240,8 +240,8 @@ dependencies {
     implementation(libs.bundles.okhttp)
     implementation(libs.bundles.paging)
     implementation(libs.zoomableImageCoil)
-    implementation(libs.accompanistNavigationMaterial)
     implementation(libs.splashscreen)
+    implementation(libs.materialNavigation)
 
     testImplementation(libs.junitJupiter)
     testImplementation(libs.kotestAssertion)

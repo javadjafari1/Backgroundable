@@ -4,7 +4,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import com.google.accompanist.navigation.material.bottomSheet
 import ir.thatsmejavad.backgroundable.common.ui.animatedComposable
 import ir.thatsmejavad.backgroundable.core.AppScreens
 import ir.thatsmejavad.backgroundable.screens.aboutus.AboutUsScreen
@@ -15,6 +14,7 @@ import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailScreen
 import ir.thatsmejavad.backgroundable.screens.medialist.MediaListScreen
 import ir.thatsmejavad.backgroundable.screens.search.SearchScreen
 import ir.thatsmejavad.backgroundable.screens.settings.SettingsScreen
+import androidx.compose.material.navigation.bottomSheet
 import ir.thatsmejavad.backgroundable.screens.settings.imagequalitysetting.ImageQualitySettingScreen
 import ir.thatsmejavad.backgroundable.screens.settings.language.LanguageScreen
 import ir.thatsmejavad.backgroundable.screens.settings.themesetting.ThemeSettingScreen
