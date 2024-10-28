@@ -71,23 +71,22 @@ Follow these steps to build the Backgroundable project:
 
 This app is built with the help of the following libraries and dependencies:
 
-- Android Gradle Plugin (Version 8.5.0).
-- [Accompanist]([link_to_library2](https://github.com/google/accompanist)) (Version 0.34.0).
-- [Coil](https://github.com/coil-kt/coil) (Version 2.6.0).
-- Compose (Version 1.6.8).
+- Android Gradle Plugin (Version 8.5.2).
+- [Coil](https://github.com/coil-kt/coil) (Version 2.7.0).
+- Compose (Version 1.7.4).
 - [Detekt](https://github.com/detekt/detekt) (Version 1.23.6).
-- [Dagger](https://dagger.dev/) (Version 2.51.1).
+- [Dagger](https://dagger.dev/) (Version 2.52).
 - [Chucker](https://github.com/ChuckerTeam/chucker/) (Version 4.0.0).
 - Datastore (Version 1.1.1).
-- [Telephoto](https://github.com/saket/telephoto) (Version 0.11.2).
-- KotlinxSerialization (Version 1.7.1).
-- Kotlin (Version 2.0.0).
-- Navigation Compose (Version 2.7.7).
-- Paging3 (Version 3.3.0).
+- [Telephoto](https://github.com/saket/telephoto) (Version 0.13.0).
+- KotlinxSerialization (Version 1.7.2).
+- Kotlin (Version 2.0.20).
+- Navigation Compose (Version 2.8.3).
+- Paging3 (Version 3.3.2).
 - [Retrofit2](https://github.com/square/retrofit) (Version 2.11.0).
 - [Okhttp3](https://github.com/square/okhttp) (Version 4.12.0).
 - Room (Version 2.6.1).
-- KSP (Version 2.0.0-1.0.21).
+- KSP (Version 2.0.20-1.0.24).
 
 Test Libraries
 

@@ -159,10 +159,8 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_21.toString()
         freeCompilerArgs += listOf(
-            "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
             "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
             "-opt-in=androidx.paging.ExperimentalPagingApi",
-            "-opt-in=com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi",
             "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
             "-opt-in=kotlinx.coroutines.FlowPreview",
             "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
@@ -239,7 +237,8 @@ dependencies {
     implementation(libs.lifecycleRuntimeKtx)
     implementation(libs.bundles.okhttp)
     implementation(libs.bundles.paging)
-    implementation(libs.zoomableImageCoil)
+    testImplementation(libs.pagingTest)
+    implementation(libs.telephoto)
     implementation(libs.splashscreen)
     implementation(libs.materialNavigation)
 

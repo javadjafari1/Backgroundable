@@ -1,7 +1,10 @@
 package ir.thatsmejavad.backgroundable.viewmodels
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.paging.PagingData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.testing.asPagingSourceFactory
+import androidx.paging.testing.asSnapshot
 import app.cash.turbine.test
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
@@ -10,7 +13,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
 import ir.thatsmejavad.backgroundable.common.CoroutineTest
-import ir.thatsmejavad.backgroundable.common.collectDataForTest
+import ir.thatsmejavad.backgroundable.common.toPagingData
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
 import ir.thatsmejavad.backgroundable.core.sealeds.ImageQuality
 import ir.thatsmejavad.backgroundable.core.sealeds.List
@@ -106,18 +109,12 @@ class MediaListViewModelTest : CoroutineTest {
 
     @Test
     fun `media flow should update by the getMediasByCollectionId`() = runTest {
-        every { mediaRepository.getMediasByCollectionId(any()) } returns flowOf(
-            PagingData.from(
-                listOf(testMediaWithResources)
-            )
-        )
+        every { mediaRepository.getMediasByCollectionId(any()) } returns listOf(testMediaWithResources).toPagingData()
         val viewModel = createViewModel(id)
 
         coVerify(exactly = 1) { mediaRepository.getMediasByCollectionId(id) }
 
-        viewModel.medias.test {
-            awaitItem().collectDataForTest(dispatcher) shouldBe listOf(testMediaWithResources)
-        }
+        viewModel.medias.asSnapshot() shouldBe listOf(testMediaWithResources)
     }
 
     @Test

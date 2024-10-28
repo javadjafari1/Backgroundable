@@ -1,16 +1,7 @@
 pluginManagement {
     repositories {
-        if (File("properties/nexus.properties").exists()) {
-            val localProperties = java.util.Properties().apply {
-                load(java.io.FileInputStream("properties/nexus.properties"))
-            }
-            maven {
-                url = uri(localProperties.getProperty("url"))
-                credentials {
-                    username = localProperties.getProperty("username")
-                    password = localProperties.getProperty("password")
-                }
-            }
+        maven {
+            url = uri("https://maven.myket.ir")
         }
         google()
         mavenCentral()
@@ -20,17 +11,8 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        if (File("properties/nexus.properties").exists()) {
-            val localProperties = java.util.Properties().apply {
-                load(java.io.FileInputStream("properties/nexus.properties"))
-            }
-            maven {
-                url = uri(localProperties.getProperty("url"))
-                credentials {
-                    username = localProperties.getProperty("username")
-                    password = localProperties.getProperty("password")
-                }
-            }
+        maven {
+            url = uri("https://maven.myket.ir")
         }
         google()
         gradlePluginPortal()

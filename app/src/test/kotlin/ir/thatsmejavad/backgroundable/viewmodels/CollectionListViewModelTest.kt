@@ -1,6 +1,6 @@
 package ir.thatsmejavad.backgroundable.viewmodels
 
-import androidx.paging.PagingData
+import androidx.paging.testing.asSnapshot
 import app.cash.turbine.test
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -9,7 +9,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.RelaxedMockK
 import ir.thatsmejavad.backgroundable.common.CoroutineTest
-import ir.thatsmejavad.backgroundable.common.collectDataForTest
+import ir.thatsmejavad.backgroundable.common.toPagingData
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
 import ir.thatsmejavad.backgroundable.data.datastore.ColumnCountsPreferences
 import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
@@ -61,15 +61,11 @@ class CollectionListViewModelTest : CoroutineTest {
 
     @Test
     fun `collection should not be empty at first`() = runTest {
-        coEvery { collectionRepository.getCollections() } returns flowOf(
-            PagingData.from(listOf(testEntity))
-        )
+        coEvery { collectionRepository.getCollections() } returns listOf(testEntity).toPagingData()
         val viewModel = createViewModel()
 
         coVerify(exactly = 1) { collectionRepository.getCollections() }
-        viewModel.collection.test {
-            awaitItem().collectDataForTest(testScheduler) shouldBe listOf(testEntity)
-        }
+        viewModel.collection.asSnapshot() shouldBe listOf(testEntity)
     }
 
     @Test

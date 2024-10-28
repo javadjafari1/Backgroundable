@@ -1,6 +1,6 @@
 package ir.thatsmejavad.backgroundable.viewmodels
 
-import androidx.paging.PagingData
+import androidx.paging.testing.asSnapshot
 import app.cash.turbine.test
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldBeEmpty
@@ -10,7 +10,7 @@ import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.verify
 import ir.thatsmejavad.backgroundable.common.CoroutineTest
-import ir.thatsmejavad.backgroundable.common.collectDataForTest
+import ir.thatsmejavad.backgroundable.common.toPagingData
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
 import ir.thatsmejavad.backgroundable.core.sealeds.ImageQuality
 import ir.thatsmejavad.backgroundable.core.sealeds.List
@@ -73,9 +73,7 @@ class SearchViewModelTest : CoroutineTest {
     @Test
     fun `medias should be empty at first`() = runTest {
         val viewModel = createViewModel()
-        viewModel.medias.test {
-            awaitItem().collectDataForTest(dispatcher) shouldBe listOf()
-        }
+        viewModel.medias.asSnapshot() shouldBe listOf()
     }
 
     @Test
@@ -109,9 +107,7 @@ class SearchViewModelTest : CoroutineTest {
         val viewModel = createViewModel()
         viewModel.updateSearchText("test text")
 
-        viewModel.medias.test {
-            awaitItem().collectDataForTest(dispatcher) shouldBe listOf()
-        }
+        viewModel.medias.asSnapshot() shouldBe listOf()
     }
 
     @Test
@@ -119,9 +115,7 @@ class SearchViewModelTest : CoroutineTest {
         val viewModel = createViewModel()
         viewModel.updateSearchText("te")
 
-        viewModel.medias.test {
-            awaitItem().collectDataForTest(dispatcher) shouldBe listOf()
-        }
+        viewModel.medias.asSnapshot() shouldBe listOf()
     }
 
     @Test
@@ -129,55 +123,38 @@ class SearchViewModelTest : CoroutineTest {
         val viewModel = createViewModel()
         viewModel.updateSearchText("te")
 
-        viewModel.medias.test {
-            awaitItem().collectDataForTest(dispatcher) shouldBe listOf()
-
-            verify(exactly = 0) { mediaRepository.searchPhoto(any()) }
-        }
+        viewModel.medias.asSnapshot() shouldBe listOf()
+        verify(exactly = 0) { mediaRepository.searchPhoto(any()) }
     }
 
     @Test
-    fun `searchPhoto should be called on text with chars more than 3 after 1 second debounce`() = runTest {
-        val viewModel = createViewModel()
-        viewModel.updateSearchText("text test")
+    fun `searchPhoto should be called on text with chars more than 3 after 1 second debounce`() =
+        runTest {
+            val viewModel = createViewModel()
+            viewModel.updateSearchText("text test")
 
-        viewModel.medias.test {
-            awaitItem().collectDataForTest(dispatcher) shouldBe listOf()
+            viewModel.medias.asSnapshot() shouldBe listOf()
+
+            advanceTimeBy(1002)
+            verify(exactly = 1) { mediaRepository.searchPhoto(any()) }
         }
-
-        advanceTimeBy(1002)
-        verify(exactly = 1) { mediaRepository.searchPhoto(any()) }
-    }
 
     @Test
     fun `medias should be update with searchPhoto`() = runTest {
-        coEvery { mediaRepository.searchPhoto(any()) } returns flowOf(
-            PagingData.from(
-                listOf(
-                    testMedia
-                )
-            )
-        )
+        coEvery { mediaRepository.searchPhoto(any()) } returns listOf(testMedia).toPagingData()
         val viewModel = createViewModel()
 
         viewModel.updateSearchText("test")
 
         advanceTimeBy(1002)
         verify(exactly = 1) { mediaRepository.searchPhoto(any()) }
-        viewModel.medias.test {
-            awaitItem().collectDataForTest(dispatcher) shouldBe listOf(testMedia)
-        }
+
+        viewModel.medias.asSnapshot() shouldBe listOf(testMedia)
     }
 
     @Test
     fun `medias should be empty on deleting all the searchQuery`() = runTest {
-        coEvery { mediaRepository.searchPhoto(any()) } returns flowOf(
-            PagingData.from(
-                listOf(
-                    testMedia
-                )
-            )
-        )
+        coEvery { mediaRepository.searchPhoto(any()) } returns  listOf(testMedia).toPagingData()
         val viewModel = createViewModel()
 
         viewModel.updateSearchText("test")
@@ -185,14 +162,11 @@ class SearchViewModelTest : CoroutineTest {
         advanceTimeBy(1002)
 
         verify(exactly = 1) { mediaRepository.searchPhoto(any()) }
-        viewModel.medias.test {
-            awaitItem().collectDataForTest(dispatcher) shouldBe listOf(testMedia)
-        }
+        viewModel.medias.asSnapshot() shouldBe listOf(testMedia)
 
         viewModel.updateSearchText("")
-        viewModel.medias.test {
-            awaitItem().collectDataForTest(dispatcher) shouldBe listOf()
-        }
+
+        viewModel.medias.asSnapshot() shouldBe listOf()
     }
 
     private fun createViewModel(): SearchViewModel {

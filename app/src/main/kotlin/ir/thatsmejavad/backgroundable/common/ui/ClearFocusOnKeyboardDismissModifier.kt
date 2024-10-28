@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewTreeObserver
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,8 +18,9 @@ import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalView
 
+@ReadOnlyComposable
 @Composable
-fun Modifier.clearFocusOnKeyboardDismiss(): Modifier = composed {
+internal fun Modifier.clearFocusOnKeyboardDismiss(): Modifier = composed {
     var isFocused by remember { mutableStateOf(false) }
     var keyboardAppearedSinceLastFocused by remember { mutableStateOf(false) }
 
@@ -45,7 +47,7 @@ fun Modifier.clearFocusOnKeyboardDismiss(): Modifier = composed {
 }
 
 @Composable
-fun rememberIsKeyboardOpen(): State<Boolean> {
+internal fun rememberIsKeyboardOpen(): State<Boolean> {
     val view = LocalView.current
 
     return produceState(initialValue = view.isKeyboardOpen()) {

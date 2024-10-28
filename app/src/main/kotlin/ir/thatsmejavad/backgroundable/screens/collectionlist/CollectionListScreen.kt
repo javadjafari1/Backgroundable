@@ -27,6 +27,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -124,7 +125,12 @@ private fun CollectionListScreen(
     BackgroundableScaffold(
         modifier = Modifier
             .nestedScroll(scrollBehavior.nestedScrollConnection),
-        snackbarHostState = snackbarHostState,
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHostState,
+                modifier = Modifier.padding(bottom = NAVIGATION_BAR_HEIGHT)
+            )
+        },
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
@@ -253,7 +259,7 @@ private fun LazyGridItemScope.CollectionCard(
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
-            .animateItemPlacement(),
+            .animateItem(),
         colors = CardDefaults.elevatedCardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
         ),
