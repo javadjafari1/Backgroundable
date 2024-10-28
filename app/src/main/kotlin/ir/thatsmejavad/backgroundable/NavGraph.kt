@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import ir.thatsmejavad.backgroundable.common.ui.animatedComposable
-import ir.thatsmejavad.backgroundable.core.AppBottomSheets
+import ir.thatsmejavad.backgroundable.core.AppScreens
 import ir.thatsmejavad.backgroundable.screens.aboutus.AboutUsScreen
 import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListScreen
 import ir.thatsmejavad.backgroundable.screens.columncountpicker.ColumnCountPicker
@@ -14,45 +14,82 @@ import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailScreen
 import ir.thatsmejavad.backgroundable.screens.medialist.MediaListScreen
 import ir.thatsmejavad.backgroundable.screens.search.SearchScreen
 import ir.thatsmejavad.backgroundable.screens.settings.SettingsScreen
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.navigation.bottomSheet
-import androidx.navigation.toRoute
-import ir.thatsmejavad.backgroundable.core.AppDestination
 import ir.thatsmejavad.backgroundable.screens.settings.imagequalitysetting.ImageQualitySettingScreen
 import ir.thatsmejavad.backgroundable.screens.settings.language.LanguageScreen
 import ir.thatsmejavad.backgroundable.screens.settings.themesetting.ThemeSettingScreen
 import kotlinx.serialization.json.Json
 
-internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
-    animatedComposable<AppDestination.CollectionList> {
+fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
+    animatedComposable(
+        route = AppScreens.CollectionList.route
+    ) {
         CollectionListScreen(navController = navController)
     }
 
-    animatedComposable<AppDestination.MediaList> { entry ->
-        val route = entry.toRoute<AppDestination.MediaList>()
+    animatedComposable(
+        route = AppScreens.MediaList.route,
+        arguments = listOf(
+            navArgument("id") {
+                type = NavType.StringType
+                nullable = false
+            },
+            navArgument("title") {
+                type = NavType.StringType
+                nullable = false
+            },
+        ),
+    ) { entry ->
+
+        val title = checkNotNull(entry.arguments?.getString("title")) {
+            "title should not be null!"
+        }
+
         MediaListScreen(
-            title = route.title,
+            title = title,
             navController = navController
         )
     }
 
-    animatedComposable<AppDestination.MediaDetail> { entry ->
-        val route = entry.toRoute<AppDestination.MediaDetail>()
+    animatedComposable(
+        route = AppScreens.MediaDetail.route,
+        arguments = listOf(
+            navArgument("id") {
+                type = NavType.IntType
+                nullable = false
+            },
+            navArgument("title") {
+                type = NavType.StringType
+                nullable = false
+            }
+        ),
+    ) { entry ->
+
+        val mediaId = checkNotNull(entry.arguments?.getInt("id")) {
+            "mediaId should not be null"
+        }
+
+        val title = checkNotNull(entry.arguments?.getString("title")) {
+            "title should not be null"
+        }
+
         MediaDetailScreen(
-            title = route.title,
-            mediaId = route.id,
+            title = title,
+            mediaId = mediaId,
             navController = navController
         )
     }
 
-    animatedComposable<AppDestination.Search> {
+    animatedComposable(
+        route = AppScreens.Search.route,
+    ) {
         SearchScreen(
             navController = navController
         )
     }
 
     bottomSheet(
-        route = AppBottomSheets.ColumnCountPicker.route,
+        route = AppScreens.ColumnCountPicker.route,
         arguments = listOf(
             navArgument("items") {
                 type = NavType.StringType
@@ -86,7 +123,7 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
     }
 
     bottomSheet(
-        route = AppBottomSheets.DownloadPicker.route,
+        route = AppScreens.DownloadPicker.route,
         arguments = listOf(
             navArgument("id") {
                 type = NavType.IntType
@@ -98,8 +135,10 @@ internal fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
     }
 }
 
-internal fun NavGraphBuilder.settingNavGraph(navController: NavHostController) {
-    animatedComposable<AppDestination.AboutUs> {
+fun NavGraphBuilder.settingNavGraph(navController: NavHostController) {
+    animatedComposable(
+        route = AppScreens.AboutUs.route
+    ) {
         AboutUsScreen(
             onBackClicked = {
                 navController.navigateUp()
@@ -107,13 +146,17 @@ internal fun NavGraphBuilder.settingNavGraph(navController: NavHostController) {
         )
     }
 
-    animatedComposable<AppDestination.ImageQualitySetting> {
+    animatedComposable(
+        route = AppScreens.ImageQualitySetting.route
+    ) {
         ImageQualitySettingScreen(
             navController = navController
         )
     }
 
-    animatedComposable<AppDestination.Settings> {
+    animatedComposable(
+        route = AppScreens.Settings.route,
+    ) {
         SettingsScreen(
             navigateTo = { route ->
                 navController.navigate(route)
@@ -121,13 +164,16 @@ internal fun NavGraphBuilder.settingNavGraph(navController: NavHostController) {
         )
     }
 
-    animatedComposable<AppDestination.ThemeSetting> {
+    animatedComposable(
+        route = AppScreens.ThemeSetting.route,
+    ) {
         ThemeSettingScreen(
             navController = navController
         )
     }
-
-    animatedComposable<AppDestination.Language> {
+    animatedComposable(
+        route = AppScreens.Language.route,
+    ) {
         LanguageScreen(
             navController = navController
         )

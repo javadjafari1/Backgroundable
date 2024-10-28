@@ -75,7 +75,7 @@ import ir.thatsmejavad.backgroundable.common.ui.MediaCard
 import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
 import ir.thatsmejavad.backgroundable.common.ui.clearFocusOnKeyboardDismiss
 import ir.thatsmejavad.backgroundable.common.ui.icons.getSearchImage
-import ir.thatsmejavad.backgroundable.core.AppDestination
+import ir.thatsmejavad.backgroundable.core.AppScreens
 import ir.thatsmejavad.backgroundable.core.Constants.NAVIGATION_BAR_HEIGHT
 import ir.thatsmejavad.backgroundable.core.getErrorMessage
 import ir.thatsmejavad.backgroundable.core.getSnackbarMessage
@@ -128,7 +128,7 @@ private fun SearchScreen(
     imageQuality: ImageQuality,
     snackbarHostState: SnackbarHostState,
     medias: LazyPagingItems<Media>,
-    navigateTo: (AppDestination) -> Unit,
+    navigateTo: (String) -> Unit,
     updateSearchText: (String) -> Unit,
     onSearchClicked: () -> Unit,
 ) {
@@ -303,9 +303,9 @@ private fun SearchScreen(
                                     },
                                     onMediaClicked = {
                                         navigateTo(
-                                            AppDestination.MediaDetail(
-                                                id = media.id,
-                                                title = media.alt
+                                            AppScreens.MediaDetail.createRoute(
+                                                media.id,
+                                                media.alt
                                             )
                                         )
                                     }
@@ -382,9 +382,9 @@ private fun SearchScreen(
                                     },
                                     onMediaClicked = {
                                         navigateTo(
-                                            AppDestination.MediaDetail(
-                                                id = media.id,
-                                                title = media.alt
+                                            AppScreens.MediaDetail.createRoute(
+                                                media.id,
+                                                media.alt
                                             )
                                         )
                                     }

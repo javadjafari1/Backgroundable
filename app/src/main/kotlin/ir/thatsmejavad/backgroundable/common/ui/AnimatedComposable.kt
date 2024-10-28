@@ -1,10 +1,9 @@
 package ir.thatsmejavad.backgroundable.common.ui
 
-import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -12,19 +11,17 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
+import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavType
 import androidx.navigation.compose.composable
-import kotlin.reflect.KType
 
-internal inline fun <reified T : Any> NavGraphBuilder.animatedComposable(
-    typeMap: Map<KType, @JvmSuppressWildcards NavType<*>> = emptyMap(),
+fun NavGraphBuilder.animatedComposable(
+    route: String,
+    arguments: List<NamedNavArgument> = emptyList(),
     deepLinks: List<NavDeepLink> = emptyList(),
-    noinline enterTransition: (
-    AnimatedContentTransitionScope<NavBackStackEntry>.() -> @JvmSuppressWildcards EnterTransition?
-    )? = {
+    enterTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? = {
         slideInHorizontally(
             initialOffsetX = { -300 },
             animationSpec = tween(
@@ -33,9 +30,7 @@ internal inline fun <reified T : Any> NavGraphBuilder.animatedComposable(
             )
         ) + fadeIn(animationSpec = tween(durationMillis = 300))
     },
-    noinline exitTransition: (
-    AnimatedContentTransitionScope<NavBackStackEntry>.() -> @JvmSuppressWildcards ExitTransition?
-    )? = {
+    exitTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? = {
         slideOutHorizontally(
             targetOffsetX = { 300 },
             animationSpec = tween(
@@ -44,25 +39,18 @@ internal inline fun <reified T : Any> NavGraphBuilder.animatedComposable(
             )
         ) + fadeOut(animationSpec = tween(durationMillis = 300))
     },
-    noinline popEnterTransition: (
-    AnimatedContentTransitionScope<NavBackStackEntry>.() -> @JvmSuppressWildcards EnterTransition?
-    )? = enterTransition,
-    noinline popExitTransition: (
-    AnimatedContentTransitionScope<NavBackStackEntry>.() -> @JvmSuppressWildcards ExitTransition?
-    )? = exitTransition,
-    noinline sizeTransform: (
-    AnimatedContentTransitionScope<NavBackStackEntry>.() -> @JvmSuppressWildcards SizeTransform?
-    )? = null,
-    noinline content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit
+    popEnterTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? = enterTransition,
+    popExitTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? = exitTransition,
+    content: @Composable AnimatedVisibilityScope.(NavBackStackEntry) -> Unit
 ) {
-    composable<T>(
-        typeMap = typeMap,
+    composable(
+        route = route,
+        arguments = arguments,
         deepLinks = deepLinks,
         enterTransition = enterTransition,
         exitTransition = exitTransition,
         popEnterTransition = popEnterTransition,
         popExitTransition = popExitTransition,
-        sizeTransform = sizeTransform,
         content = content
     )
 }
