@@ -1,7 +1,6 @@
 package ir.thatsmejavad.backgroundable.screens.medialist
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -15,7 +14,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -29,7 +27,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -171,157 +168,152 @@ private fun MediaListScreen(
                 label = "change Staggered to Grid anim",
                 transitionSpec = {
                     (
-                        fadeIn(animationSpec = tween(220, delayMillis = 120)) +
-                            slideIn(
-                                animationSpec = tween(220, delayMillis = 120),
-                                initialOffset = { IntOffset.Zero }
-                            ) +
-                            scaleIn(
-                                initialScale = 0.92f,
-                                animationSpec = tween(220, delayMillis = 120)
+                            fadeIn(animationSpec = tween(220, delayMillis = 120)) +
+                                    slideIn(
+                                        animationSpec = tween(220, delayMillis = 120),
+                                        initialOffset = { IntOffset.Zero }
+                                    ) +
+                                    scaleIn(
+                                        initialScale = 0.92f,
+                                        animationSpec = tween(220, delayMillis = 120)
+                                    )
                             )
-                    )
                         .togetherWith(fadeOut(animationSpec = tween(120)))
                 }
             ) { type ->
-                Column(modifier = Modifier.fillMaxSize()) {
-                    AnimatedVisibility(refreshLoadState is LoadState.Loading) {
-                        LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-                    }
-                    if (type == List.StaggeredType) {
-                        LazyVerticalStaggeredGrid(
-                            modifier = Modifier
-                                .padding(horizontal = 16.dp)
-                                .fillMaxSize(),
-                            columns = StaggeredGridCells.Fixed(2),
-                            verticalItemSpacing = 12.dp,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            contentPadding = PaddingValues(top = 16.dp)
-                        ) {
-                            items(
-                                count = medias.itemCount,
-                                key = medias.itemKey { it.media.id },
-                                contentType = medias.itemContentType()
-                            ) { index ->
-                                medias[index]?.let { media ->
-                                    MediaCard(
-                                        alt = media.media.alt,
-                                        aspectRatio = media.media.width / media.media.height.toFloat(),
-                                        avgColor = media.media.avgColor,
-                                        photographer = media.media.photographer,
-                                        resourceUrl = media.resources.first {
-                                            it.size == imageQuality.toResourceSize()
-                                        }.url,
-                                        onMediaClicked = {
-                                            navigateTo(
-                                                AppScreens.MediaDetail.createRoute(
-                                                    media.media.id,
-                                                    media.media.alt
-                                                )
+                if (type == List.StaggeredType) {
+                    LazyVerticalStaggeredGrid(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .fillMaxSize(),
+                        columns = StaggeredGridCells.Fixed(2),
+                        verticalItemSpacing = 12.dp,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        contentPadding = PaddingValues(top = 16.dp)
+                    ) {
+                        items(
+                            count = medias.itemCount,
+                            key = medias.itemKey { it.media.id },
+                            contentType = medias.itemContentType()
+                        ) { index ->
+                            medias[index]?.let { media ->
+                                MediaCard(
+                                    alt = media.media.alt,
+                                    aspectRatio = media.media.width / media.media.height.toFloat(),
+                                    avgColor = media.media.avgColor,
+                                    photographer = media.media.photographer,
+                                    resourceUrl = media.resources.first {
+                                        it.size == imageQuality.toResourceSize()
+                                    }.url,
+                                    onMediaClicked = {
+                                        navigateTo(
+                                            AppScreens.MediaDetail.createRoute(
+                                                media.media.id,
+                                                media.media.alt
                                             )
-                                        }
-                                    )
-                                }
-                            }
-
-                            when (val paginationLoadState = medias.loadState.append) {
-                                is LoadState.Error -> {
-                                    if (!paginationLoadState.endOfPaginationReached) {
-                                        item {
-                                            Box(Modifier.fillMaxSize()) {
-                                                Text(
-                                                    modifier = Modifier.align(Alignment.Center),
-                                                    text = paginationLoadState.error.getErrorMessage()
-                                                        .asString()
-                                                )
-                                            }
-                                        }
+                                        )
                                     }
-                                }
-
-                                is LoadState.Loading -> {
-                                    item {
-                                        Box(Modifier.fillMaxSize()) {
-                                            CircularProgressIndicator(
-                                                modifier = Modifier.align(
-                                                    Alignment.Center
-                                                )
-                                            )
-                                        }
-                                    }
-                                }
-
-                                else -> {}
+                                )
                             }
                         }
-                    } else {
-                        LazyVerticalGrid(
-                            modifier = Modifier
-                                .padding(horizontal = 16.dp)
-                                .fillMaxSize(),
-                            columns = GridCells.Fixed(
-                                if (type == List.ListType) 1 else 2
-                            ),
-                            verticalArrangement = Arrangement.spacedBy(12.dp),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            contentPadding = PaddingValues(top = 16.dp)
-                        ) {
-                            items(
-                                count = medias.itemCount,
-                                key = medias.itemKey { it.media.id },
-                                contentType = medias.itemContentType()
-                            ) { index ->
-                                medias[index]?.let { media ->
-                                    MediaCard(
-                                        alt = media.media.alt,
-                                        avgColor = media.media.avgColor,
-                                        isSingleColumn = columnType == List.ListType,
-                                        photographer = media.media.photographer,
-                                        resourceUrl = media
-                                            .resources
-                                            .first { it.size == imageQuality.toResourceSize() }
-                                            .url,
-                                        onMediaClicked = {
-                                            navigateTo(
-                                                AppScreens.MediaDetail.createRoute(
-                                                    media.media.id,
-                                                    media.media.alt
-                                                )
-                                            )
-                                        }
-                                    )
-                                }
-                            }
 
-                            when (val paginationLoadState = medias.loadState.append) {
-                                is LoadState.Error -> {
-                                    if (!paginationLoadState.endOfPaginationReached) {
-                                        item {
-                                            Box(Modifier.fillMaxSize()) {
-                                                Text(
-                                                    modifier = Modifier.align(Alignment.Center),
-                                                    text = paginationLoadState.error.getErrorMessage()
-                                                        .asString()
-                                                )
-                                            }
-                                        }
-                                    }
-                                }
-
-                                is LoadState.Loading -> {
+                        when (val paginationLoadState = medias.loadState.append) {
+                            is LoadState.Error -> {
+                                if (!paginationLoadState.endOfPaginationReached) {
                                     item {
                                         Box(Modifier.fillMaxSize()) {
-                                            CircularProgressIndicator(
-                                                modifier = Modifier.align(
-                                                    Alignment.Center
-                                                )
+                                            Text(
+                                                modifier = Modifier.align(Alignment.Center),
+                                                text = paginationLoadState.error.getErrorMessage()
+                                                    .asString()
                                             )
                                         }
                                     }
                                 }
-
-                                else -> {}
                             }
+
+                            is LoadState.Loading -> {
+                                item {
+                                    Box(Modifier.fillMaxSize()) {
+                                        CircularProgressIndicator(
+                                            modifier = Modifier.align(
+                                                Alignment.Center
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+
+                            else -> {}
+                        }
+                    }
+                } else {
+                    LazyVerticalGrid(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .fillMaxSize(),
+                        columns = GridCells.Fixed(
+                            if (type == List.ListType) 1 else 2
+                        ),
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        contentPadding = PaddingValues(top = 16.dp)
+                    ) {
+                        items(
+                            count = medias.itemCount,
+                            key = medias.itemKey { it.media.id },
+                            contentType = medias.itemContentType()
+                        ) { index ->
+                            medias[index]?.let { media ->
+                                MediaCard(
+                                    alt = media.media.alt,
+                                    avgColor = media.media.avgColor,
+                                    isSingleColumn = columnType == List.ListType,
+                                    photographer = media.media.photographer,
+                                    resourceUrl = media
+                                        .resources
+                                        .first { it.size == imageQuality.toResourceSize() }
+                                        .url,
+                                    onMediaClicked = {
+                                        navigateTo(
+                                            AppScreens.MediaDetail.createRoute(
+                                                media.media.id,
+                                                media.media.alt
+                                            )
+                                        )
+                                    }
+                                )
+                            }
+                        }
+
+                        when (val paginationLoadState = medias.loadState.append) {
+                            is LoadState.Error -> {
+                                if (!paginationLoadState.endOfPaginationReached) {
+                                    item {
+                                        Box(Modifier.fillMaxSize()) {
+                                            Text(
+                                                modifier = Modifier.align(Alignment.Center),
+                                                text = paginationLoadState.error.getErrorMessage()
+                                                    .asString()
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+
+                            is LoadState.Loading -> {
+                                item {
+                                    Box(Modifier.fillMaxSize()) {
+                                        CircularProgressIndicator(
+                                            modifier = Modifier.align(
+                                                Alignment.Center
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+
+                            else -> {}
                         }
                     }
                 }
