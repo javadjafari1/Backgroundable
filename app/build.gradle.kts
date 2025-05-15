@@ -42,7 +42,7 @@ android {
     defaultConfig {
         applicationId = "ir.thatsmejavad.backgroundable"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 11
         versionName = "1.3.4"
 
