@@ -2,8 +2,10 @@ package ir.thatsmejavad.backgroundable
 
 import android.app.Application
 import cat.ereza.customactivityoncrash.config.CaocConfig
-import coil.Coil
-import coil.ImageLoader
+import coil3.ImageLoader
+import coil3.SingletonImageLoader
+import coil3.network.okhttp.OkHttpNetworkFetcherFactory
+import coil3.request.crossfade
 import com.yandex.metrica.YandexMetrica
 import com.yandex.metrica.YandexMetricaConfig
 import ir.thatsmejavad.backgroundable.core.Constants.REQUEST_TIMEOUT_IN_SECONDS
@@ -30,20 +32,27 @@ class BackgroundableApplication : Application() {
     }
 
     private fun setupCoil() {
-        val imageLoader = ImageLoader.Builder(applicationContext)
-            .okHttpClient {
-                val dispatcher = Dispatcher().apply {
-                    maxRequestsPerHost = 4
+        SingletonImageLoader.setSafe {
+            ImageLoader.Builder(applicationContext)
+                .components {
+                    add(
+                        OkHttpNetworkFetcherFactory(
+                            callFactory = {
+                                val dispatcher = Dispatcher().apply {
+                                    maxRequestsPerHost = 4
+                                }
+                                OkHttpClient.Builder()
+                                    .readTimeout(REQUEST_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
+                                    .connectTimeout(REQUEST_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
+                                    .dispatcher(dispatcher)
+                                    .build()
+                            }
+                        )
+                    )
                 }
-                OkHttpClient.Builder()
-                    .readTimeout(REQUEST_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
-                    .connectTimeout(REQUEST_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
-                    .dispatcher(dispatcher)
-                    .build()
-            }
-            .crossfade(true)
-            .build()
-        Coil.setImageLoader(imageLoader)
+                .crossfade(true)
+                .build()
+        }
     }
 
     private fun setupAppMetrica() {

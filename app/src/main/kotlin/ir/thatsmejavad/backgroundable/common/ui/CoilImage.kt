@@ -8,8 +8,10 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import coil3.compose.AsyncImage as AsyncImage3
+import coil3.request.ImageRequest as ImageRequest3
+import coil3.request.crossfade as crossfade3
 import ir.thatsmejavad.backgroundable.BuildConfig
 import me.saket.telephoto.zoomable.coil.ZoomableAsyncImage
 
@@ -21,11 +23,11 @@ fun CoilImage(
     contentDescription: String? = null,
     contentScale: ContentScale = ContentScale.Crop,
 ) {
-    AsyncImage(
+    AsyncImage3(
         modifier = modifier,
-        model = ImageRequest.Builder(LocalContext.current)
+        model = ImageRequest3.Builder(LocalContext.current)
             .data(BuildConfig.IMAGE_SERVER_URL + url)
-            .crossfade(500)
+            .crossfade3(500)
             .build(),
         placeholder = placeHolder,
         contentDescription = contentDescription ?: "a server image without content description",

@@ -209,7 +209,7 @@ dependencies {
     implementation(libs.composeUi)
     implementation(libs.composeMaterial3)
     implementation(libs.lifecycleRuntimeCompose)
-    implementation(libs.coilCompose)
+    implementation(libs.bundles.coil)
 
     // coroutine
     implementation(libs.coroutine)
