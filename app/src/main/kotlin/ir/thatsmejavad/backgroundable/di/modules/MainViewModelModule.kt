@@ -17,11 +17,7 @@ class MainViewModelModule {
     ): MainViewModel {
         return ViewModelProvider(
             activity.viewModelStore,
-            MainViewModelFactory(
-                owner = activity,
-                repository = settingRepository,
-                defaultArgs = activity.intent.extras
-            )
+            MainViewModelFactory(repository = settingRepository)
         )[MainViewModel::class.java]
     }
 }

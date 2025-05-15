@@ -21,7 +21,7 @@ class DatabaseModule {
             klass = BackgroundableDatabase::class.java,
             name = "backgroundable-db"
         )
-            .fallbackToDestructiveMigration()
+            .fallbackToDestructiveMigration(dropAllTables = true)
             .build()
     }
 
