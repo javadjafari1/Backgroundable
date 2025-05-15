@@ -30,7 +30,7 @@ detekt {
 
 android {
     namespace = "ir.thatsmejavad.backgroundable"
-    compileSdk = 34
+    compileSdk = 36
     val properties = Properties()
     val propertiesExist = rootProject.file("properties/authorization.properties").exists()
     if (propertiesExist) {
