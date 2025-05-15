@@ -65,27 +65,27 @@ Follow these steps to build the Backgroundable project:
 2. Browse or search for wallpapers using the intuitive interface.
 3. Select a wallpaper you like.
 4. Choose the resolution that matches your device's screen size.
-5. Download or set the wallpaper as your background.
+5. Download or set the wallpaper as your background.~~~~
 
 ## Libraries
 
 This app is built with the help of the following libraries and dependencies:
 
-- Android Gradle Plugin (Version 8.5.2).
-- [Coil](https://github.com/coil-kt/coil) (Version 2.7.0).
-- Compose (Version 1.7.4).
+- Android Gradle Plugin (Version 8.10.0).
+- [Coil](https://github.com/coil-kt/coil) (Version 3.2.0).
+- Compose (Version 1.8.1).
 - [Detekt](https://github.com/detekt/detekt) (Version 1.23.6).
-- [Dagger](https://dagger.dev/) (Version 2.52).
-- [Chucker](https://github.com/ChuckerTeam/chucker/) (Version 4.0.0).
-- Datastore (Version 1.1.1).
-- [Telephoto](https://github.com/saket/telephoto) (Version 0.13.0).
-- KotlinxSerialization (Version 1.7.2).
+- [Dagger](https://dagger.dev/) (Version 2.56.2).
+- [Chucker](https://github.com/ChuckerTeam/chucker/) (Version 4.1.0).
+- Datastore (Version 1.1.6).
+- [Telephoto](https://github.com/saket/telephoto) (Version 0.15.1).
+- KotlinxSerialization (Version 1.8.0).
 - Kotlin (Version 2.0.20).
-- Navigation Compose (Version 2.8.3).
-- Paging3 (Version 3.3.2).
+- Navigation Compose (Version 2.9.0).
+- Paging3 (Version 3.3.6).
 - [Retrofit2](https://github.com/square/retrofit) (Version 2.11.0).
 - [Okhttp3](https://github.com/square/okhttp) (Version 4.12.0).
-- Room (Version 2.6.1).
+- Room (Version 2.7.1).
 - KSP (Version 2.0.20-1.0.24).
 
 Test Libraries
