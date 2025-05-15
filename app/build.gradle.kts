@@ -46,7 +46,9 @@ android {
         versionCode = 11
         versionName = "1.3.4"
 
-        resourceConfigurations.addAll(listOf("en", "fa"))
+        androidResources {
+            localeFilters += listOf("en", "fa")
+        }
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true

@@ -1,6 +1,6 @@
 [versions]
 activityCompose = "1.9.2"
-agp = "8.5.2"
+agp = "8.10.0"
 appMetrica = "5.3.0"
 caoc = "2.4.0"
 chucker = "4.0.0"
