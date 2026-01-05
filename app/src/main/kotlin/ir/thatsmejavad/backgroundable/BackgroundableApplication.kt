@@ -6,8 +6,8 @@ import coil3.ImageLoader
 import coil3.SingletonImageLoader
 import coil3.network.okhttp.OkHttpNetworkFetcherFactory
 import coil3.request.crossfade
-import com.yandex.metrica.YandexMetrica
-import com.yandex.metrica.YandexMetricaConfig
+import io.appmetrica.analytics.AppMetrica
+import io.appmetrica.analytics.AppMetricaConfig
 import ir.thatsmejavad.backgroundable.core.Constants.REQUEST_TIMEOUT_IN_SECONDS
 import ir.thatsmejavad.backgroundable.di.components.AppComponent
 import ir.thatsmejavad.backgroundable.di.components.DaggerAppComponent
@@ -56,12 +56,12 @@ class BackgroundableApplication : Application() {
     }
 
     private fun setupAppMetrica() {
-        val config = YandexMetricaConfig.newConfigBuilder(BuildConfig.METRICA_TOKEN)
+        val config = AppMetricaConfig.newConfigBuilder(BuildConfig.METRICA_TOKEN)
             .withLogs()
             .withAppVersion(BuildConfig.VERSION_NAME)
             .build()
-        YandexMetrica.activate(applicationContext, config)
-        YandexMetrica.enableActivityAutoTracking(this)
+        AppMetrica.activate(applicationContext, config)
+        AppMetrica.enableActivityAutoTracking(this)
     }
 
     private fun setupCAOC() {

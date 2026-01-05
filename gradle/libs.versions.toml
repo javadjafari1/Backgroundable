@@ -1,7 +1,7 @@
 [versions]
 activityCompose = "1.12.2"
 agp = "8.13.2"
-appMetrica = "5.3.0"
+appMetrica = "8.0.0"
 caoc = "2.4.0"
 chucker = "4.1.0"
 coil = "3.2.0"
@@ -41,7 +41,7 @@ turbine = "1.1.0"
 
 [libraries]
 activityCompose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
-appMetrica = { module = "com.yandex.android:mobmetricalib", version.ref = "appMetrica" }
+appMetrica = { module = "io.appmetrica.analytics:analytics", version.ref = "appMetrica" }
 caoc = { group = "cat.ereza", name = "customactivityoncrash", version.ref = "caoc" }
 chucker = { module = "com.github.chuckerteam.chucker:library", version.ref = "chucker" }
 chuckerNoOp = { module = "com.github.chuckerteam.chucker:library-no-op", version.ref = "chucker" }
