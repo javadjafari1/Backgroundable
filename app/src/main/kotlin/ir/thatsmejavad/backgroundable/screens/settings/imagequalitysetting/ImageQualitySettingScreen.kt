@@ -1,6 +1,7 @@
 package ir.thatsmejavad.backgroundable.screens.settings.imagequalitysetting
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -32,6 +33,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -115,7 +117,12 @@ private fun ImageQualitySettingScreen(
                         selected = imageQuality == quality,
                         onClick = { changeQuality(quality) }
                     ) {
-                        Text(text = stringResource(quality.toResId()))
+                        Text(
+                            modifier = Modifier.basicMarquee(),
+                            text = stringResource(quality.toResId()),
+                            overflow = TextOverflow.Ellipsis,
+                            maxLines = 1
+                        )
                     }
                 }
             }
