@@ -135,8 +135,8 @@ private fun SearchScreen(
     val refreshLoadState = medias.loadState.refresh
 
     val pagingIsLoading = medias.loadState.prepend is LoadState.Loading ||
-        medias.loadState.append is LoadState.Loading ||
-        medias.loadState.refresh is LoadState.Loading
+            medias.loadState.append is LoadState.Loading ||
+            medias.loadState.refresh is LoadState.Loading
 
     var isFocused by rememberSaveable { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
@@ -464,8 +464,7 @@ private fun SearchScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text(
-                        text = (refreshLoadState as? LoadState.Error)
-                            ?.error
+                        text = refreshLoadState.error
                             .getErrorMessage()
                             .asString()
                     )

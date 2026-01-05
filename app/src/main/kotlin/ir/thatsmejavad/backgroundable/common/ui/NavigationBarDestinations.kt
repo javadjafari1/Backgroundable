@@ -15,7 +15,7 @@ import ir.thatsmejavad.backgroundable.core.AppScreens
 enum class NavigationBarDestinations(
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
-    @StringRes val text: Int,
+    @param:StringRes val text: Int,
     val route: String,
 ) {
     HOME(

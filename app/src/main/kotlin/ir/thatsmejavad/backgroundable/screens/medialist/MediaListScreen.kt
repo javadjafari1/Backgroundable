@@ -328,8 +328,7 @@ private fun MediaListScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text(
-                        text = (refreshLoadState as? LoadState.Error)
-                            ?.error
+                        text = refreshLoadState.error
                             .getErrorMessage()
                             .asString()
                     )
