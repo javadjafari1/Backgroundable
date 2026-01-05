@@ -1,38 +1,31 @@
 package ir.thatsmejavad.backgroundable.common.ui
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.ui.graphics.vector.ImageVector
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.core.AppScreens
 
 enum class NavigationBarDestinations(
-    val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector,
+    @param:DrawableRes val selectedIconRes: Int,
+    @param:DrawableRes val unselectedIconRes: Int,
     @param:StringRes val text: Int,
     val route: String,
 ) {
     HOME(
-        selectedIcon = Icons.Filled.Home,
-        unselectedIcon = Icons.Outlined.Home,
+        selectedIconRes = R.drawable.home_filled,
+        unselectedIconRes = R.drawable.home,
         text = R.string.label_home,
         route = AppScreens.CollectionList.route,
     ),
     SEARCH(
-        selectedIcon = Icons.Filled.Search,
-        unselectedIcon = Icons.Outlined.Search,
+        selectedIconRes = R.drawable.search,
+        unselectedIconRes = R.drawable.search,
         text = R.string.label_search,
         route = AppScreens.Search.route,
     ),
     SETTING(
-        selectedIcon = Icons.Filled.Settings,
-        unselectedIcon = Icons.Outlined.Settings,
+        selectedIconRes = R.drawable.settings_filled,
+        unselectedIconRes = R.drawable.settings,
         text = R.string.label_setting,
         route = AppScreens.Settings.route,
     )

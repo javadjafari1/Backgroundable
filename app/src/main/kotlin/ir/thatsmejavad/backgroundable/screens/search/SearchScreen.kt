@@ -28,10 +28,6 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
@@ -56,8 +52,10 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
@@ -195,9 +193,9 @@ private fun SearchScreen(
                         ) {
                             Icon(
                                 imageVector = if (it) {
-                                    Icons.AutoMirrored.Filled.ArrowBack
+                                    ImageVector.vectorResource(R.drawable.arrow_back)
                                 } else {
-                                    Icons.Filled.Search
+                                    ImageVector.vectorResource(R.drawable.search)
                                 },
                                 contentDescription = if (it) "back" else "search"
                             )
@@ -229,7 +227,7 @@ private fun SearchScreen(
                     ) {
                         IconButton(onClick = { updateSearchText("") }) {
                             Icon(
-                                imageVector = Icons.Filled.Clear,
+                                imageVector = ImageVector.vectorResource(R.drawable.search),
                                 contentDescription = "clear-text"
                             )
                         }
