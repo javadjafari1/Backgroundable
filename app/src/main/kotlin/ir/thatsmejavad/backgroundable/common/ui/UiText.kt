@@ -18,7 +18,7 @@ sealed interface UiText {
     fun asString(): String {
         return when (this) {
             is DynamicString -> value
-            is StringResource -> stringResource(resId, *args)
+            is StringResource -> stringResource(id = resId, formatArgs = args)
         }
     }
 

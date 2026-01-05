@@ -71,7 +71,9 @@ fun BackgroundableTheme(
     }
 
     val isPersianSelected = remember {
-        AppCompatDelegate.getApplicationLocales().get(0)?.language == "fa"
+        AppCompatDelegate.getApplicationLocales()
+            .get(0)
+            ?.language == "fa"
     }
 
     MaterialTheme(

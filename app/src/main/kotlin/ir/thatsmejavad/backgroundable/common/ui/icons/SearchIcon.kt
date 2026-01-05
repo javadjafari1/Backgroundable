@@ -33,8 +33,8 @@ private fun SearchImagePreviewLight() {
                 .background(MaterialTheme.colorScheme.background)
         ) {
             Image(
-                getSearchImage(MaterialTheme.colorScheme.primary),
-                null
+                imageVector = getSearchImage(MaterialTheme.colorScheme.primary),
+                contentDescription = null
             )
         }
     }
@@ -53,8 +53,8 @@ private fun SearchImagePreviewDark() {
                 .background(MaterialTheme.colorScheme.background)
         ) {
             Image(
-                getSearchImage(MaterialTheme.colorScheme.primary),
-                null
+                imageVector = getSearchImage(MaterialTheme.colorScheme.primary),
+                contentDescription = null
             )
         }
     }

@@ -76,7 +76,7 @@ fun AboutUsScreen(onBackClicked: () -> Unit) {
         }
     ) { paddingValues ->
         Column(
-            Modifier
+            modifier = Modifier
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 24.dp, vertical = 24.dp),
@@ -112,7 +112,7 @@ private fun ContributorItem(
             Modifier
                 .padding(top = 60.dp)
                 .background(
-                    MaterialTheme.colorScheme.surfaceContainerHigh,
+                    color = MaterialTheme.colorScheme.surfaceContainerHigh,
                     shape = MaterialTheme.shapes.small
                 )
                 .fillMaxWidth()
@@ -185,7 +185,7 @@ private fun BackgroundableAbout() {
             Modifier
                 .padding(top = 60.dp)
                 .background(
-                    MaterialTheme.colorScheme.surfaceContainerHigh,
+                    color = MaterialTheme.colorScheme.surfaceContainerHigh,
                     shape = MaterialTheme.shapes.small
                 )
                 .fillMaxWidth()

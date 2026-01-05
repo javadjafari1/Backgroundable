@@ -16,8 +16,8 @@ class MainViewModelModule {
         settingRepository: SettingRepository,
     ): MainViewModel {
         return ViewModelProvider(
-            activity.viewModelStore,
-            MainViewModelFactory(repository = settingRepository)
+            store = activity.viewModelStore,
+            factory = MainViewModelFactory(repository = settingRepository)
         )[MainViewModel::class.java]
     }
 }

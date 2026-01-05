@@ -158,7 +158,11 @@ private fun BackgroundableApp() {
                         navController.navigate(destinations.route) {
                             launchSingleTop = true
                             restoreState = true
-                            popUpTo(navController.graph.findStartDestination().id) {
+                            popUpTo(
+                                navController.graph
+                                    .findStartDestination()
+                                    .id
+                            ) {
                                 saveState = true
                             }
                         }
@@ -233,8 +237,8 @@ internal fun AppCompatActivity.setSystemBarsColor(isDark: Boolean) {
             SystemBarStyle.dark(Color.Transparent.toArgb())
         } else {
             SystemBarStyle.light(
-                Color.Transparent.toArgb(),
-                Color.Black.copy(alpha = 0.3f).toArgb()
+                scrim = Color.Transparent.toArgb(),
+                darkScrim = Color.Black.copy(alpha = 0.3f).toArgb()
             )
         }
     )

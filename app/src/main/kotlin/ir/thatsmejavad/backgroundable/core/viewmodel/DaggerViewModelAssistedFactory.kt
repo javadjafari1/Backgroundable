@@ -24,9 +24,11 @@ class DaggerViewModelAssistedFactory @Inject constructor(
                 ?: assistedFactoryMap.asIterable()
                     .firstOrNull { modelClass.isInstance(it.key) }?.value
 
-        val create = creator?.get()?.create(handle)
-            ?: viewModels[modelClass]?.get()
-            ?: throw IllegalArgumentException("unknown model class $modelClass")
+        val create = when {
+            creator != null -> creator.get().create(handle)
+            viewModels[modelClass] != null -> viewModels.getValue(modelClass).get()
+            else -> throw IllegalArgumentException("Unknown model class $modelClass")
+        }
         return create as VM
     }
 }

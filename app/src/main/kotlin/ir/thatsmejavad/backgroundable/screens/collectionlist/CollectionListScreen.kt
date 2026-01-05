@@ -221,7 +221,7 @@ private fun CollectionListScreen(
 
             if (collections.itemCount == 0 && refreshLoadState is LoadState.Error) {
                 Column(
-                    Modifier
+                    modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = 16.dp),
                     verticalArrangement = Arrangement.Center,

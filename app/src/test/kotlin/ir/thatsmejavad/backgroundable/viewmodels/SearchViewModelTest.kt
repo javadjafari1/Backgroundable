@@ -49,7 +49,7 @@ class SearchViewModelTest : CoroutineTest {
         height = 4300,
         alt = "",
         type = MediaType.Photo,
-        liked = false,
+        isLiked = false,
         photographer = "Jai",
         resources = Resources("", "", "", "", "", "", "", ""),
         avgColor = "#000",

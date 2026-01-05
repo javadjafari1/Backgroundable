@@ -14,7 +14,10 @@ object UserPreferencesSerializer : Serializer<UserPref> {
         try {
             return UserPref.parseFrom(input)
         } catch (exception: InvalidProtocolBufferException) {
-            throw CorruptionException("Cannot read proto.", exception)
+            throw CorruptionException(
+                message = "Cannot read proto.",
+                cause = exception
+            )
         }
     }
 

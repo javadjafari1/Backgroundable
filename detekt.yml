@@ -179,7 +179,7 @@ coroutines:
   GlobalCoroutineUsage:
     active: false
   InjectDispatcher:
-    active: true
+    active: false
     dispatcherNames:
       - 'IO'
       - 'Default'
@@ -628,7 +628,7 @@ style:
     active: false
   MaxChainedCallsOnSameLine:
     active: true
-    maxChainedCalls: 1
+    maxChainedCalls: 3
   MaxLineLength:
     active: true
     maxLineLength: 120

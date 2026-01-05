@@ -13,7 +13,8 @@ data class Media(
     val height: Int,
     val alt: String,
     val type: MediaType?,
-    val liked: Boolean?,
+    @SerialName("liked")
+    val isLiked: Boolean?,
     val photographer: String,
     @SerialName("src")
     val resources: Resources,

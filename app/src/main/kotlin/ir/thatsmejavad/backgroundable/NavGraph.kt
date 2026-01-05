@@ -116,7 +116,10 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
                 navController
                     .previousBackStackEntry
                     ?.savedStateHandle
-                    ?.set("selected-item", item)
+                    ?.set(
+                        key = "selected-item",
+                        value = item
+                    )
                 navController.navigateUp()
             }
         )

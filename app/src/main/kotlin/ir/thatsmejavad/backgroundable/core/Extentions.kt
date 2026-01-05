@@ -19,7 +19,7 @@ fun Throwable?.getErrorMessage(): UiText {
                 StringResource(R.string.rate_limit_error_message)
             } else {
                 if (message != null) {
-                    UiText.DynamicString(message!!)
+                    UiText.DynamicString(requireNotNull(message))
                 } else {
                     StringResource(R.string.unexpected_error_message)
                 }

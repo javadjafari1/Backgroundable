@@ -22,7 +22,7 @@ import androidx.compose.ui.platform.LocalView
 @Composable
 internal fun Modifier.clearFocusOnKeyboardDismiss(): Modifier = composed {
     var isFocused by remember { mutableStateOf(false) }
-    var keyboardAppearedSinceLastFocused by remember { mutableStateOf(false) }
+    var hasKeyboardAppearedSinceLastFocused by remember { mutableStateOf(false) }
 
     if (isFocused) {
         val isKeyboardOpen by rememberIsKeyboardOpen()
@@ -30,8 +30,8 @@ internal fun Modifier.clearFocusOnKeyboardDismiss(): Modifier = composed {
         val focusManager = LocalFocusManager.current
         LaunchedEffect(isKeyboardOpen) {
             if (isKeyboardOpen) {
-                keyboardAppearedSinceLastFocused = true
-            } else if (keyboardAppearedSinceLastFocused) {
+                hasKeyboardAppearedSinceLastFocused = true
+            } else if (hasKeyboardAppearedSinceLastFocused) {
                 focusManager.clearFocus()
             }
         }
@@ -40,7 +40,7 @@ internal fun Modifier.clearFocusOnKeyboardDismiss(): Modifier = composed {
         if (isFocused != it.isFocused) {
             isFocused = it.isFocused
             if (isFocused) {
-                keyboardAppearedSinceLastFocused = false
+                hasKeyboardAppearedSinceLastFocused = false
             }
         }
     }

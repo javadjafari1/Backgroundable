@@ -94,7 +94,9 @@ class MediaRepositoryImpl @Inject constructor(
                 ResourceEntity(
                     mediaId = media.id,
                     size = ResourceSize.fromString(value.first),
-                    url = value.second.convertToRelativePath() ?: ""
+                    url = value.second
+                        .convertToRelativePath()
+                        .orEmpty()
                 )
             )
         }

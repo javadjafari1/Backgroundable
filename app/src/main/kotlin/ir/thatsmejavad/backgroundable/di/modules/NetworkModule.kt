@@ -90,10 +90,22 @@ class NetworkModule {
     ): OkHttpClient {
         val builder = OkHttpClient.Builder()
             .addInterceptor(authorizationInterceptor)
-            .callTimeout(REQUEST_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
-            .connectTimeout(REQUEST_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
-            .readTimeout(REQUEST_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
-            .writeTimeout(REQUEST_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
+            .callTimeout(
+                timeout = REQUEST_TIMEOUT_IN_SECONDS,
+                unit = TimeUnit.SECONDS
+            )
+            .connectTimeout(
+                timeout = REQUEST_TIMEOUT_IN_SECONDS,
+                unit = TimeUnit.SECONDS
+            )
+            .readTimeout(
+                timeout = REQUEST_TIMEOUT_IN_SECONDS,
+                unit = TimeUnit.SECONDS
+            )
+            .writeTimeout(
+                timeout = REQUEST_TIMEOUT_IN_SECONDS,
+                unit = TimeUnit.SECONDS
+            )
 
         if (BuildConfig.DEBUG) {
             builder

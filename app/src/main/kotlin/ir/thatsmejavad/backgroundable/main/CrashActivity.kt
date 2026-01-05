@@ -31,13 +31,13 @@ class CrashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val systemInDarkTheme = isSystemInDarkTheme()
+            val isSystemInDarkTheme = isSystemInDarkTheme()
             BackgroundableTheme(
                 themeColor = ThemeColor.Skobeloff,
-                darkTheme = systemInDarkTheme
+                darkTheme = isSystemInDarkTheme
             ) {
-                LaunchedEffect(systemInDarkTheme) {
-                    setSystemBarsColor(systemInDarkTheme)
+                LaunchedEffect(isSystemInDarkTheme) {
+                    setSystemBarsColor(isSystemInDarkTheme)
                 }
                 Box(
                     Modifier

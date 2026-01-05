@@ -152,7 +152,7 @@ private fun ImageQualitySettingScreen(
                     append(lowDesc)
 
                     addStyle(
-                        SpanStyle(
+                        style = SpanStyle(
                             color = MaterialTheme.colorScheme.surfaceTint,
                         ),
                         start = low.length,
@@ -173,7 +173,7 @@ private fun ImageQualitySettingScreen(
                     append(mediumDesc)
 
                     addStyle(
-                        SpanStyle(
+                        style = SpanStyle(
                             color = MaterialTheme.colorScheme.surfaceTint,
                         ),
                         start = medium.length,
@@ -194,7 +194,7 @@ private fun ImageQualitySettingScreen(
                     append(highDesc)
 
                     addStyle(
-                        SpanStyle(
+                        style = SpanStyle(
                             color = MaterialTheme.colorScheme.surfaceTint,
                         ),
                         start = high.length,
@@ -214,7 +214,7 @@ private fun ImageQualitySettingScreen(
                     append(ultraDesc)
 
                     addStyle(
-                        SpanStyle(
+                        style = SpanStyle(
                             color = MaterialTheme.colorScheme.surfaceTint,
                         ),
                         start = ultra.length,

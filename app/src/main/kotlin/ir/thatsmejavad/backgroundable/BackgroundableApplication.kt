@@ -42,8 +42,14 @@ class BackgroundableApplication : Application() {
                                     maxRequestsPerHost = 4
                                 }
                                 OkHttpClient.Builder()
-                                    .readTimeout(REQUEST_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
-                                    .connectTimeout(REQUEST_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
+                                    .readTimeout(
+                                        timeout = REQUEST_TIMEOUT_IN_SECONDS,
+                                        unit = TimeUnit.SECONDS
+                                    )
+                                    .connectTimeout(
+                                        timeout = REQUEST_TIMEOUT_IN_SECONDS,
+                                        unit = TimeUnit.SECONDS
+                                    )
                                     .dispatcher(dispatcher)
                                     .build()
                             }

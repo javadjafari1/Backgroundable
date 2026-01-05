@@ -211,7 +211,12 @@ private fun MediaDetailScreen(
         contentWindowInsets = if (isToolsVisible) {
             ScaffoldDefaults.contentWindowInsets
         } else {
-            WindowInsets(0, 0, 0, 0)
+            WindowInsets(
+                left = 0,
+                top = 0,
+                right = 0,
+                bottom = 0
+            )
         },
         topBar = {
             AnimatedVisibility(
@@ -323,7 +328,7 @@ private fun MediaDetailScreen(
                                     .height(56.dp)
                                     .weight(1f),
                                 enabled = fileUri !is Loading,
-                                onClick = { setAsWallpaper(drawable!!) },
+                                onClick = { setAsWallpaper(requireNotNull(drawable)) },
                                 shape = MaterialTheme.shapes.extraSmall,
                                 elevation = ButtonDefaults.elevatedButtonElevation(
                                     defaultElevation = 2.dp,
@@ -347,10 +352,13 @@ private fun MediaDetailScreen(
                                 modifier = Modifier.size(56.dp),
                                 shape = MaterialTheme.shapes.extraSmall,
                                 enabled = fileUri !is Loading,
-                                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+                                border = BorderStroke(
+                                    width = 1.dp,
+                                    color = MaterialTheme.colorScheme.outline
+                                ),
                                 onClick = {
                                     share(
-                                        drawable!!,
+                                        requireNotNull(drawable),
                                         mediaWithResources.media.alt,
                                         mediaWithResources.media.photographer
                                     )
@@ -370,7 +378,10 @@ private fun MediaDetailScreen(
                             OutlinedIconButton(
                                 modifier = Modifier.size(56.dp),
                                 shape = MaterialTheme.shapes.extraSmall,
-                                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+                                border = BorderStroke(
+                                    width = 1.dp,
+                                    color = MaterialTheme.colorScheme.outline
+                                ),
                                 onClick = { navigateTo(AppScreens.DownloadPicker.createRoute(mediaId)) },
                             ) {
                                 Icon(
@@ -398,7 +409,7 @@ private fun DetailDialog(
 ) {
     Dialog(onDismissRequest = onDismiss) {
         Column(
-            Modifier
+            modifier = Modifier
                 .background(
                     color = MaterialTheme.colorScheme.surfaceContainerHigh,
                     shape = MaterialTheme.shapes.small

@@ -80,7 +80,9 @@ private fun DownloadPickerScreen(
             is AsyncJob.Success -> {
                 val mediaMap by remember {
                     derivedStateOf {
-                        mediaResult.value.resources.groupBy { it.size is OrientationMode }
+                        mediaResult.value
+                            .resources
+                            .groupBy { it.size is OrientationMode }
                     }
                 }
                 LazyColumn(

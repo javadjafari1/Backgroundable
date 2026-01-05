@@ -36,12 +36,12 @@ private fun Path.customHexagon(
     val centerX = size.width / 2
     val centerY = size.height / 2
 
-    moveTo(centerX, centerY + radius)
-    lineTo((centerX - triangleHeight).toFloat(), centerY + radius / 2)
-    lineTo((centerX - triangleHeight).toFloat(), centerY - radius / 2)
-    lineTo(centerX, centerY - radius)
-    lineTo((centerX + triangleHeight).toFloat(), centerY - radius / 2)
-    lineTo((centerX + triangleHeight).toFloat(), centerY + radius / 2)
+    moveTo(x = centerX, y = centerY + radius)
+    lineTo(x = (centerX - triangleHeight).toFloat(), y = centerY + radius / 2)
+    lineTo(x = (centerX - triangleHeight).toFloat(), y = centerY - radius / 2)
+    lineTo(x = centerX, y = centerY - radius)
+    lineTo(x = (centerX + triangleHeight).toFloat(), y = centerY - radius / 2)
+    lineTo(x = (centerX + triangleHeight).toFloat(), y = centerY + radius / 2)
 
     close()
 }

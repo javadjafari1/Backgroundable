@@ -17,8 +17,8 @@ class ImageQualitySettingViewModel @Inject constructor(
     val imageQuality = settingRepository.userPreferencesFlow
         .map { it.imageQuality }
         .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(),
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
             initialValue = UserPreferences().imageQuality
         )
 

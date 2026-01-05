@@ -55,9 +55,9 @@ fun MediaCard(
         val text = buildAnnotatedString {
             append(alt)
             addStyle(
-                SpanStyle(fontWeight = FontWeight.Bold),
-                0,
-                alt.length
+                style = SpanStyle(fontWeight = FontWeight.Bold),
+                start = 0,
+                end = alt.length
             )
             append(" by ")
             append(photographer)
@@ -105,9 +105,9 @@ fun MediaCard(
         val text = buildAnnotatedString {
             append(alt)
             addStyle(
-                SpanStyle(fontWeight = FontWeight.Bold),
-                0,
-                alt.length
+                style = SpanStyle(fontWeight = FontWeight.Bold),
+                start = 0,
+                end = alt.length
             )
             append(" by ")
             append(photographer)

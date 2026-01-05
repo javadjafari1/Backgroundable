@@ -132,7 +132,7 @@ private fun SearchScreen(
 ) {
     val refreshLoadState = medias.loadState.refresh
 
-    val pagingIsLoading = medias.loadState.prepend is LoadState.Loading ||
+    val isLoading = medias.loadState.prepend is LoadState.Loading ||
             medias.loadState.append is LoadState.Loading ||
             medias.loadState.refresh is LoadState.Loading
 
@@ -141,13 +141,13 @@ private fun SearchScreen(
     val focusManager = LocalFocusManager.current
 
     val padding: Dp by animateDpAsState(
-        if (isFocused) 0.dp else 16.dp,
-        tween(400),
+        targetValue = if (isFocused) 0.dp else 16.dp,
+        animationSpec = tween(400),
         label = "padding animation"
     )
     val cornerRadius: Dp by animateDpAsState(
-        if (isFocused) 0.dp else 16.dp,
-        tween(400),
+        targetValue = if (isFocused) 0.dp else 16.dp,
+        animationSpec = tween(400),
         label = "corner radius animation"
     )
 
@@ -251,16 +251,22 @@ private fun SearchScreen(
                 label = "change Staggered to Grid anim",
                 transitionSpec = {
                     (
-                        fadeIn(animationSpec = tween(220, delayMillis = 120)) +
-                            slideIn(
-                                animationSpec = tween(220, delayMillis = 120),
-                                initialOffset = { IntOffset.Zero }
-                            ) +
-                            scaleIn(
-                                initialScale = 0.92f,
-                                animationSpec = tween(220, delayMillis = 120)
+                            fadeIn(animationSpec = tween(durationMillis = 220, delayMillis = 120)) +
+                                    slideIn(
+                                        animationSpec = tween(
+                                            durationMillis = 220,
+                                            delayMillis = 120
+                                        ),
+                                        initialOffset = { IntOffset.Zero }
+                                    ) +
+                                    scaleIn(
+                                        initialScale = 0.92f,
+                                        animationSpec = tween(
+                                            durationMillis = 220,
+                                            delayMillis = 120
+                                        )
+                                    )
                             )
-                    )
                         .togetherWith(fadeOut(animationSpec = tween(120)))
                 }
             ) { type ->
@@ -302,8 +308,8 @@ private fun SearchScreen(
                                     onMediaClicked = {
                                         navigateTo(
                                             AppScreens.MediaDetail.createRoute(
-                                                media.id,
-                                                media.alt
+                                                id = media.id,
+                                                title = media.alt
                                             )
                                         )
                                     }
@@ -381,8 +387,8 @@ private fun SearchScreen(
                                     onMediaClicked = {
                                         navigateTo(
                                             AppScreens.MediaDetail.createRoute(
-                                                media.id,
-                                                media.alt
+                                                id = media.id,
+                                                title = media.alt
                                             )
                                         )
                                     }
@@ -425,8 +431,10 @@ private fun SearchScreen(
 
             if (
                 medias.itemCount == 0 &&
-                !pagingIsLoading &&
-                !medias.loadState.append.endOfPaginationReached &&
+                !isLoading &&
+                !medias.loadState
+                    .append
+                    .endOfPaginationReached &&
                 refreshLoadState !is LoadState.Error
             ) {
                 Image(
@@ -446,7 +454,13 @@ private fun SearchScreen(
                 )
             }
 
-            if (medias.itemCount == 0 && !pagingIsLoading && medias.loadState.append.endOfPaginationReached) {
+            if (
+                medias.itemCount == 0 &&
+                !isLoading &&
+                medias.loadState
+                    .append
+                    .endOfPaginationReached
+            ) {
                 Text(
                     modifier = Modifier.align(Alignment.Center),
                     text = stringResource(R.string.label_nothing_found_with_keyword)
@@ -455,7 +469,7 @@ private fun SearchScreen(
 
             if (medias.itemCount == 0 && refreshLoadState is LoadState.Error) {
                 Column(
-                    Modifier
+                    modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = 16.dp),
                     verticalArrangement = Arrangement.Center,

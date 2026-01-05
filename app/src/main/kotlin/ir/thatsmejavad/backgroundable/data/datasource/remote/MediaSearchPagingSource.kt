@@ -16,8 +16,13 @@ class MediaSearchPagingSource @Inject constructor(
 ) : PagingSource<Int, Media>() {
     override fun getRefreshKey(state: PagingState<Int, Media>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
-            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
-                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+            state.closestPageToPosition(anchorPosition)
+                ?.prevKey
+                ?.plus(1)
+                ?: state
+                    .closestPageToPosition(anchorPosition)
+                    ?.nextKey
+                    ?.minus(1)
         }
     }
 
@@ -32,18 +37,42 @@ class MediaSearchPagingSource @Inject constructor(
             val body = response.bodyOrException()
             val total = body.total
 
-            val mediasWithRelativePathInRes = body.data.map {
+            val mediasWithRelativePathInRes = body.data.map { media ->
                 val res = Resources(
-                    landscape = it.resources.landscape.convertToRelativePath() ?: "",
-                    large = it.resources.large.convertToRelativePath() ?: "",
-                    large2x = it.resources.large2x.convertToRelativePath() ?: "",
-                    medium = it.resources.medium.convertToRelativePath() ?: "",
-                    original = it.resources.original.convertToRelativePath() ?: "",
-                    portrait = it.resources.portrait.convertToRelativePath() ?: "",
-                    small = it.resources.small.convertToRelativePath() ?: "",
-                    tiny = it.resources.tiny.convertToRelativePath() ?: ""
+                    landscape = media.resources
+                        .landscape
+                        .convertToRelativePath()
+                        .orEmpty(),
+                    large = media.resources
+                        .large
+                        .convertToRelativePath()
+                        .orEmpty(),
+                    large2x = media.resources
+                        .large2x
+                        .convertToRelativePath()
+                        .orEmpty(),
+                    medium = media.resources
+                        .medium
+                        .convertToRelativePath()
+                        .orEmpty(),
+                    original = media.resources
+                        .original
+                        .convertToRelativePath()
+                        .orEmpty(),
+                    portrait = media.resources
+                        .portrait
+                        .convertToRelativePath()
+                        .orEmpty(),
+                    small = media.resources
+                        .small
+                        .convertToRelativePath()
+                        .orEmpty(),
+                    tiny = media.resources
+                        .tiny
+                        .convertToRelativePath()
+                        .orEmpty()
                 )
-                it.copy(resources = res)
+                media.copy(resources = res)
             }
             LoadResult.Page(
                 data = mediasWithRelativePathInRes,

@@ -57,7 +57,7 @@ fun SettingsScreen(navigateTo: (String) -> Unit) {
         }
     ) {
         Column(
-            Modifier
+            modifier = Modifier
                 .padding(it)
                 .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(16.dp)

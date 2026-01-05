@@ -49,7 +49,7 @@ fun ColumnCountPicker(
                     .then(
                         if (selectedItem == it) {
                             Modifier.shadow(
-                                2.dp,
+                                elevation = 2.dp,
                                 shape = MaterialTheme.shapes.extraSmall,
                                 ambientColor = MaterialTheme.colorScheme.primary
                             )

@@ -19,7 +19,7 @@ class MappersTest {
             height = 5898,
             alt = "hi",
             type = MediaType.Photo,
-            liked = false,
+            isLiked = false,
             photographer = "habitasse",
             resources = Resources(
                 landscape = "qui",
