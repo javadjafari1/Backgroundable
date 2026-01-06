@@ -21,8 +21,8 @@ class TestCoroutineExtension : TestInstancePostProcessor, BeforeAllCallback, Aft
     private val testScope = TestScope(dispatcher)
 
     override fun postProcessTestInstance(
-        testInstance: Any?,
-        context: ExtensionContext?
+        testInstance: Any,
+        context: ExtensionContext
     ) {
         (testInstance as? CoroutineTest)?.let { coroutineTest ->
             coroutineTest.testScope = testScope
@@ -30,11 +30,11 @@ class TestCoroutineExtension : TestInstancePostProcessor, BeforeAllCallback, Aft
         }
     }
 
-    override fun beforeAll(context: ExtensionContext?) {
+    override fun beforeAll(context: ExtensionContext) {
         Dispatchers.setMain(dispatcher)
     }
 
-    override fun afterAll(context: ExtensionContext?) {
+    override fun afterAll(context: ExtensionContext) {
         Dispatchers.resetMain()
     }
 }
