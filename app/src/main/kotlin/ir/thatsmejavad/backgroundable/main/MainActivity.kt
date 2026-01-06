@@ -32,7 +32,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,6 +45,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -132,7 +135,7 @@ private fun BackgroundableApp() {
         Box {
             NavHost(
                 navController = navController,
-                startDestination = AppScreens.CollectionList.route
+                startDestination = AppScreens.CollectionList
             ) {
                 mainNavGraph(navController)
                 settingNavGraph(navController)
@@ -142,16 +145,23 @@ private fun BackgroundableApp() {
              * in scaffold we can't add animation for showing and hiding the bottomBar
              * */
             val backStackEntry by navController.currentBackStackEntryAsState()
+            val isBottomNavVisible by remember {
+                derivedStateOf {
+                    backStackEntry?.destination?.hasRoute<AppScreens.CollectionList>() == true ||
+                            backStackEntry?.destination?.hasRoute<AppScreens.Search>() == true ||
+                            backStackEntry?.destination?.hasRoute<AppScreens.Settings>() == true
+                }
+            }
             AnimatedVisibility(
                 modifier = Modifier.align(Alignment.BottomCenter),
-                visible = backStackEntry?.destination?.route in NavigationBarDestinations.entries.map { it.route },
+                visible = isBottomNavVisible,
                 enter = slideInVertically { it },
                 exit = slideOutVertically { it },
             ) {
                 BackgroundableNavigationBar(
-                    selectedItem = when (navController.currentDestination?.route) {
-                        AppScreens.Search.route -> SEARCH
-                        AppScreens.Settings.route -> SETTING
+                    selectedItem = when  {
+                        backStackEntry?.destination?.hasRoute<AppScreens.Search>()== true -> SEARCH
+                        backStackEntry?.destination?.hasRoute<AppScreens.Settings>() == true -> SETTING
                         else -> HOME
                     },
                     onItemSelected = { destinations ->

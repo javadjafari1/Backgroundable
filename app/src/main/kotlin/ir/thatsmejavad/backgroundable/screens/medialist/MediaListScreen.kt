@@ -108,7 +108,7 @@ private fun MediaListScreen(
     imageQuality: ImageQuality,
     snackbarHostState: SnackbarHostState,
     medias: LazyPagingItems<MediaWithResources>,
-    navigateTo: (String) -> Unit,
+    navigateTo: (AppScreens) -> Unit,
     onBackClicked: () -> Unit,
     changeColumnType: () -> Unit,
 ) {
@@ -215,7 +215,7 @@ private fun MediaListScreen(
                                     }.url,
                                     onMediaClicked = {
                                         navigateTo(
-                                            AppScreens.MediaDetail.createRoute(
+                                            AppScreens.MediaDetail(
                                                 id = media.media.id,
                                                 title = media.media.alt
                                             )
@@ -284,7 +284,7 @@ private fun MediaListScreen(
                                         .url,
                                     onMediaClicked = {
                                         navigateTo(
-                                            AppScreens.MediaDetail.createRoute(
+                                            AppScreens.MediaDetail(
                                                 id = media.media.id,
                                                 title = media.media.alt
                                             )

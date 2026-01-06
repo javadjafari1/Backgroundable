@@ -93,7 +93,7 @@ fun CollectionListScreen(
         collections = collections,
         onCollectionClicked = { id, title ->
             navController.navigate(
-                AppScreens.MediaList.createRoute(
+                AppScreens.MediaList(
                     id = id,
                     title = title,
                 )
@@ -101,7 +101,7 @@ fun CollectionListScreen(
         },
         openColumnCountPicker = { selectedItem ->
             navController.navigate(
-                AppScreens.ColumnCountPicker.createRoute(
+                AppScreens.ColumnCountPicker(
                     items = viewModel.columnCountPickerData,
                     selectedItem = selectedItem
                 )

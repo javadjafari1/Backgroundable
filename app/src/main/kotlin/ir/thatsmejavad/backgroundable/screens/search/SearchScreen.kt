@@ -126,7 +126,7 @@ private fun SearchScreen(
     imageQuality: ImageQuality,
     snackbarHostState: SnackbarHostState,
     medias: LazyPagingItems<Media>,
-    navigateTo: (String) -> Unit,
+    navigateTo: (AppScreens) -> Unit,
     updateSearchText: (String) -> Unit,
     onSearchClicked: () -> Unit,
 ) {
@@ -307,7 +307,7 @@ private fun SearchScreen(
                                     },
                                     onMediaClicked = {
                                         navigateTo(
-                                            AppScreens.MediaDetail.createRoute(
+                                            AppScreens.MediaDetail(
                                                 id = media.id,
                                                 title = media.alt
                                             )
@@ -386,7 +386,7 @@ private fun SearchScreen(
                                     },
                                     onMediaClicked = {
                                         navigateTo(
-                                            AppScreens.MediaDetail.createRoute(
+                                            AppScreens.MediaDetail(
                                                 id = media.id,
                                                 title = media.alt
                                             )

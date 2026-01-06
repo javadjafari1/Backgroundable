@@ -198,7 +198,7 @@ private fun MediaDetailScreen(
     fileUri: AsyncJob<Uri>,
     onRetryClick: () -> Unit,
     onBackClicked: () -> Unit,
-    navigateTo: (route: String) -> Unit,
+    navigateTo: (route: AppScreens) -> Unit,
     openLink: (String) -> Unit,
     setAsWallpaper: (Drawable) -> Unit,
     share: (Drawable, name: String, photographer: String) -> Unit
@@ -382,7 +382,7 @@ private fun MediaDetailScreen(
                                     width = 1.dp,
                                     color = MaterialTheme.colorScheme.outline
                                 ),
-                                onClick = { navigateTo(AppScreens.DownloadPicker.createRoute(mediaId)) },
+                                onClick = { navigateTo(AppScreens.DownloadPicker(mediaId)) },
                             ) {
                                 Icon(
                                     painter = painterResource(R.drawable.ic_download),

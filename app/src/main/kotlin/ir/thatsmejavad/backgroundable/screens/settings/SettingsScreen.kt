@@ -33,7 +33,7 @@ import ir.thatsmejavad.backgroundable.core.composeMail
 import ir.thatsmejavad.backgroundable.core.openUrl
 
 @Composable
-fun SettingsScreen(navigateTo: (String) -> Unit) {
+internal fun SettingsScreen(navigateTo: (AppScreens) -> Unit) {
     val context = LocalContext.current
 
     BackgroundableScaffold(
@@ -66,7 +66,7 @@ fun SettingsScreen(navigateTo: (String) -> Unit) {
                 textId = R.string.label_language,
                 imageId = R.drawable.ic_language,
                 onClick = {
-                    navigateTo(AppScreens.Language.route)
+                    navigateTo(AppScreens.Language)
                 }
             )
 
@@ -74,7 +74,7 @@ fun SettingsScreen(navigateTo: (String) -> Unit) {
                 textId = R.string.label_quality,
                 imageId = R.drawable.ic_high_quality,
                 onClick = {
-                    navigateTo(AppScreens.ImageQualitySetting.route)
+                    navigateTo(AppScreens.ImageQualitySetting)
                 }
             )
 
@@ -82,7 +82,7 @@ fun SettingsScreen(navigateTo: (String) -> Unit) {
                 textId = R.string.label_theme,
                 imageId = R.drawable.ic_theme,
                 onClick = {
-                    navigateTo(AppScreens.ThemeSetting.route)
+                    navigateTo(AppScreens.ThemeSetting)
                 }
             )
 
@@ -90,7 +90,7 @@ fun SettingsScreen(navigateTo: (String) -> Unit) {
                 textId = R.string.label_about_us,
                 imageId = R.drawable.ic_info,
                 onClick = {
-                    navigateTo(AppScreens.AboutUs.route)
+                    navigateTo(AppScreens.AboutUs)
                 }
             )
 

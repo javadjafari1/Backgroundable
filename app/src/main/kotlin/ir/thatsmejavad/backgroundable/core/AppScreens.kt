@@ -1,64 +1,50 @@
 package ir.thatsmejavad.backgroundable.core
 
-internal sealed class AppScreens(val route: String) {
-    data object CollectionList : AppScreens("collection-list")
+import kotlinx.serialization.Serializable
 
-    data object Search : AppScreens("search")
+internal sealed interface AppScreens {
+    @Serializable
+    data object CollectionList : AppScreens
 
-    data object MediaList : AppScreens("media-list?id={id}&title={title}") {
-        fun createRoute(
-            id: String,
-            title: String
-        ): String {
-            return "media-list?id=$id&title=$title"
-        }
-    }
+    @Serializable
+    data object Search : AppScreens
 
-    data object MediaDetail : AppScreens("media-detail?id={id}&title={title}") {
-        fun createRoute(
-            id: Int,
-            title: String
-        ): String {
-            return "media-detail?id=$id&title=$title"
-        }
-    }
-
-    data object ColumnCountPicker : AppScreens(
-        "column-count-picker?items={items}?selectedItem={selectedItem}"
-    ) {
-        fun createRoute(
-            items: String,
-            selectedItem: Int
-        ): String {
-            return "column-count-picker?items=$items?selectedItem=$selectedItem"
-        }
-    }
-
-    data object Settings : AppScreens(
-        "settings"
+    @Serializable
+    data class MediaList(
+        val id: String,
+        val title: String
     )
 
-    data object ThemeSetting : AppScreens(
-        "theme-settings"
-    )
+    @Serializable
+    data class MediaDetail(
+        val id: Int,
+        val title: String
+    ) : AppScreens
 
-    data object ImageQualitySetting : AppScreens(
-        "image-quality-setting"
-    )
 
-    data object DownloadPicker : AppScreens(
-        "download-picker?id:{id}"
-    ) {
-        fun createRoute(id: Int): String {
-            return "download-picker?id:$id"
-        }
-    }
+    @Serializable
+    data class ColumnCountPicker(
+        val items: String,
+        val selectedItem: Int
+    ) : AppScreens
 
-    data object AboutUs : AppScreens(
-        "about-us"
-    )
+    @Serializable
+    data object Settings : AppScreens
 
-    data object Language : AppScreens(
-        "language"
-    )
+    @Serializable
+    data object ThemeSetting : AppScreens
+
+    @Serializable
+    data object ImageQualitySetting : AppScreens
+
+    @Serializable
+    data class DownloadPicker(
+        val id: Int
+    ) : AppScreens
+
+    @Serializable
+    data object AboutUs : AppScreens
+
+    @Serializable
+    data object Language : AppScreens
 }
