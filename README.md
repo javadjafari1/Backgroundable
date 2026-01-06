@@ -71,31 +71,31 @@ Follow these steps to build the Backgroundable project:
 
 This app is built with the help of the following libraries and dependencies:
 
-- Android Gradle Plugin (Version 8.10.0).
-- [Coil](https://github.com/coil-kt/coil) (Version 3.2.0).
-- Compose (Version 1.8.1).
-- [Detekt](https://github.com/detekt/detekt) (Version 1.23.6).
-- [Dagger](https://dagger.dev/) (Version 2.56.2).
-- [Chucker](https://github.com/ChuckerTeam/chucker/) (Version 4.1.0).
-- Datastore (Version 1.1.6).
-- [Telephoto](https://github.com/saket/telephoto) (Version 0.15.1).
-- KotlinxSerialization (Version 1.8.0).
-- Kotlin (Version 2.0.20).
-- Navigation Compose (Version 2.9.0).
+- Android Gradle Plugin (Version 8.13.2).
+- [Coil](https://github.com/coil-kt/coil) (Version 3.3.0).
+- Compose (Version 1.10.0).
+- [Detekt](https://github.com/detekt/detekt) (Version 1.23.8).
+- [Dagger](https://dagger.dev/) (Version 2.57.2).
+- [Chucker](https://github.com/ChuckerTeam/chucker/) (Version 4.2.0).
+- Datastore (Version 1.2.0).
+- [Telephoto](https://github.com/saket/telephoto) (Version 0.18.0).
+- KotlinxSerialization (Version 1.9.0).
+- Kotlin (Version 2.3.0).
+- Navigation Compose (Version 2.9.6).
 - Paging3 (Version 3.3.6).
-- [Retrofit2](https://github.com/square/retrofit) (Version 2.11.0).
-- [Okhttp3](https://github.com/square/okhttp) (Version 4.12.0).
-- Room (Version 2.7.1).
-- KSP (Version 2.0.20-1.0.24).
+- [Retrofit2](https://github.com/square/retrofit) (Version 3.0.0).
+- [Okhttp3](https://github.com/square/okhttp) (Version 5.3.2).
+- Room (Version 2.8.4).
+- KSP (Version 2.3.4).
 
 Test Libraries
 
-- [Junit5](https://github.com/junit-team/junit5) (Version 5.10.1)
-- [KotestAssertion](https://github.com/kotest/kotest) (Version 5.9.1)
+- [Junit5](https://github.com/junit-team/junit5) (Version 6.0.1)
+- [KotestAssertion](https://github.com/kotest/kotest) (Version 6.0.7)
 - [Kover](https://github.com/Kotlin/kotlinx-kover) (Version 0.7.6)
 - [Jacoco](https://github.com/jacoco/jacoco) (Version 0.8.11)
-- [MockK](https://github.com/mockk/mockk) (Version 1.13.10)
-- [Turbine](https://github.com/cashapp/turbine) (Version 1.1.0)
+- [MockK](https://github.com/mockk/mockk) (Version 1.14.7)
+- [Turbine](https://github.com/cashapp/turbine) (Version 1.2.1)
 
 ## Regular Updates
 
