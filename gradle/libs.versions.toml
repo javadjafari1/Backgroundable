@@ -1,7 +1,8 @@
 [versions]
 activityCompose = "1.13.0"
-agp = "8.13.2"
-appMetrica = "8.0.0"
+agp = "9.2.1"
+appcompat = "1.7.1"
+appMetrica = "8.3.0"
 caoc = "2.4.0"
 chucker = "4.3.1"
 coil = "3.4.0"
@@ -10,7 +11,7 @@ composeFoundation = "1.11.2"
 composeMaterialNavigation = "1.11.2"
 composeRuntime = "1.11.2"
 composeUi = "1.11.2"
-coreKtx = "1.17.0"
+coreKtx = "1.19.0"
 coroutine = "1.11.0"
 dagger = "2.59.2"
 datastore = "1.2.1"
@@ -21,10 +22,10 @@ junit = "6.1.0"
 kotestAssertion = "6.1.11"
 kotlin = "2.4.0"
 kotlinxSerialization = "1.11.0"
-kover = "0.7.6"
+kover = "0.9.8"
 ksp = "2.3.9"
 ktlint = "1.2.1"
-ktlintGradle = "14.0.1"
+ktlintGradle = "14.2.0"
 lifecycleRuntime = "2.10.0"
 material3 = "1.4.0"
 mockK = "1.14.11"
@@ -41,6 +42,7 @@ turbine = "1.2.1"
 
 [libraries]
 activityCompose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 appMetrica = { module = "io.appmetrica.analytics:analytics", version.ref = "appMetrica" }
 caoc = { group = "cat.ereza", name = "customactivityoncrash", version.ref = "caoc" }
 chucker = { module = "com.github.chuckerteam.chucker:library", version.ref = "chucker" }
@@ -94,7 +96,6 @@ turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

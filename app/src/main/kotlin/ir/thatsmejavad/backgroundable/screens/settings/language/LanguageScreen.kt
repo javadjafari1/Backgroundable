@@ -25,6 +25,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
@@ -43,10 +45,11 @@ fun LanguageScreen(navController: NavController) {
 @Composable
 private fun LanguageScreen(onBackClicked: () -> Unit) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
-
-    val isPersianSelected = remember {
-        AppCompatDelegate.getApplicationLocales().get(0)?.language == "fa"
+    val configuration = LocalConfiguration.current
+    val isPersianSelected = remember(configuration) {
+        configuration.locales[0].language == "fa"
     }
+
     BackgroundableScaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {

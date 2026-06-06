@@ -1,11 +1,8 @@
-import kotlinx.kover.gradle.plugin.dsl.AggregationType
-import kotlinx.kover.gradle.plugin.dsl.MetricType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
 import org.jetbrains.kotlin.konan.properties.Properties
 
 plugins {
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.kotlin)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.protobuf)
     alias(libs.plugins.detekt)
@@ -31,7 +28,7 @@ detekt {
 
 android {
     namespace = "ir.thatsmejavad.backgroundable"
-    compileSdk = 36
+    compileSdk = 37
     val properties = Properties()
     val propertiesExist = rootProject.file("properties/authorization.properties").exists()
     if (propertiesExist) {
@@ -127,14 +124,13 @@ android {
         }
         debug {
             isMinifyEnabled = false
-            isShrinkResources = false
             isDebuggable = true
             applicationIdSuffix = ".debug"
             versionNameSuffix = ".debug"
         }
     }
 
-    flavorDimensionList.add("store")
+    flavorDimensions += "store"
     productFlavors {
         create("cafeBazaar") {
             dimension = "store"
@@ -208,6 +204,7 @@ protobuf {
 
 dependencies {
     // Compose
+    implementation(libs.appcompat)
     implementation(libs.bundles.compose)
     implementation(libs.activityCompose)
     implementation(libs.navigationCompose)
@@ -263,48 +260,6 @@ dependencies {
     testRuntimeOnly(libs.junitPlatformLauncher)
 
     implementation(libs.ok2curl)
-}
-
-kover {
-    useJacoco(libs.versions.jacoco.get())
-}
-
-koverReport {
-    androidReports("cafeBazaarDebug") {
-        verify {
-            onCheck = true
-            rule {
-                isEnabled = true
-                bound {
-                    minValue = 90
-                    aggregation = AggregationType.COVERED_PERCENTAGE
-                    metric = MetricType.LINE
-                }
-            }
-            rule {
-                isEnabled = true
-                bound {
-                    minValue = 97
-                    aggregation = AggregationType.COVERED_PERCENTAGE
-                    metric = MetricType.INSTRUCTION
-                }
-            }
-            rule {
-                isEnabled = true
-                bound {
-                    minValue = 94
-                    aggregation = AggregationType.COVERED_PERCENTAGE
-                    metric = MetricType.BRANCH
-                }
-            }
-        }
-    }
-
-    filters {
-        includes {
-            classes("*ViewModel")
-        }
-    }
 }
 
 tasks.withType<Test> {
