@@ -89,7 +89,7 @@ roomKtx = { module = "androidx.room:room-ktx", version.ref = "room" }
 roomPaging = { module = "androidx.room:room-paging", version.ref = "room" }
 roomRuntime = { module = "androidx.room:room-runtime", version.ref = "room" }
 splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen" }
-telephoto = { module = "me.saket.telephoto:zoomable-image-coil", version.ref = "telephoto" }
+telephoto = { module = "me.saket.telephoto:zoomable-image-coil3", version.ref = "telephoto" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 
 [plugins]
