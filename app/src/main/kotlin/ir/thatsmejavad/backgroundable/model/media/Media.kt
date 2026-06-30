@@ -19,7 +19,7 @@ data class Media(
     @SerialName("src")
     val resources: Resources,
     val avgColor: String,
-    val photographerId: Int,
+    val photographerId: Long,
     val photographerUrl: String,
 ) {
     fun toEntity(collectionId: String?) = MediaEntity(

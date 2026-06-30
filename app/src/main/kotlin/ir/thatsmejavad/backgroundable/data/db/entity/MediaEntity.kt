@@ -21,7 +21,7 @@ data class MediaEntity(
     @ColumnInfo(name = "avg-color", index = true)
     val avgColor: String,
     @ColumnInfo("photographer-id")
-    val photographerId: Int,
+    val photographerId: Long,
     @ColumnInfo("photographer-url")
     val photographerUrl: String,
     // we should save orderId because server data is shuffled,and we should sort the data to fix jump in screen.
