@@ -27,6 +27,10 @@ import ir.thatsmejavad.backgroundable.data.db.entity.ResourceEntity
         AutoMigration(
             from = 1,
             to = 2,
+        ),
+        AutoMigration(
+            from = 2,
+            to = 3,
         )
     ]
 )
