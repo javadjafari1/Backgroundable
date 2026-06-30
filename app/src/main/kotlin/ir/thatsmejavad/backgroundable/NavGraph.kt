@@ -33,18 +33,10 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
     }
 
     composable<AppScreens.MediaDetail> { entry ->
-
-        val mediaId = checkNotNull(entry.arguments?.getInt("id")) {
-            "mediaId should not be null"
-        }
-
-        val title = checkNotNull(entry.arguments?.getString("title")) {
-            "title should not be null"
-        }
-
+        val route = entry.toRoute<AppScreens.MediaDetail>()
         MediaDetailScreen(
-            title = title,
-            mediaId = mediaId,
+            title = route.title,
+            mediaId = route.id,
             navController = navController
         )
     }
