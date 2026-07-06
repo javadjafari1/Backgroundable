@@ -179,6 +179,7 @@ kotlin {
             "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
             "-opt-in=kotlinx.coroutines.FlowPreview",
             "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+            "-opt-in=androidx.compose.material3.ExperimentalMaterial3ExpressiveApi",
         )
     }
 }

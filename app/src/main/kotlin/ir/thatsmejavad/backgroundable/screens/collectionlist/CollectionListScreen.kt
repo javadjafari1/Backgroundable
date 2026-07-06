@@ -19,26 +19,25 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LoadingIndicator
+import androidx.compose.material3.MaterialShapes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
+import androidx.compose.material3.toShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -54,10 +53,8 @@ import androidx.paging.compose.itemKey
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.BoxWithSwipeRefresh
-import ir.thatsmejavad.backgroundable.common.ui.HexagonShape
 import ir.thatsmejavad.backgroundable.common.ui.ObserveArgument
 import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
-import ir.thatsmejavad.backgroundable.common.ui.drawCustomHexagonPath
 import ir.thatsmejavad.backgroundable.core.AppScreens
 import ir.thatsmejavad.backgroundable.core.Constants.NAVIGATION_BAR_HEIGHT
 import ir.thatsmejavad.backgroundable.core.getErrorMessage
@@ -208,7 +205,7 @@ private fun CollectionListScreen(
                     is LoadState.Loading -> {
                         item {
                             Box(Modifier.fillMaxSize()) {
-                                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                                LoadingIndicator(modifier = Modifier.align(Alignment.Center))
                             }
                         }
                     }
@@ -267,18 +264,10 @@ private fun LazyGridItemScope.CollectionCard(
                     .padding(top = 8.dp)
                     .padding(bottom = if (isVertical) 0.dp else 8.dp)
                     .padding(start = 8.dp, end = 8.dp)
-                    .drawWithContent {
-                        drawContent()
-                        drawPath(
-                            path = drawCustomHexagonPath(size),
-                            color = secondaryColor,
-                            style = Stroke(
-                                width = 10.dp.toPx(),
-                                pathEffect = PathEffect.cornerPathEffect(8f)
-                            )
-                        )
-                    }
-                    .background(color = secondaryColor, shape = HexagonShape)
+                    .background(
+                        color = secondaryColor,
+                        shape = MaterialShapes.Square.toShape()
+                    )
                     .padding(12.dp),
                 text = collection.photosCount.toString(),
                 style = MaterialTheme.typography.titleLarge,

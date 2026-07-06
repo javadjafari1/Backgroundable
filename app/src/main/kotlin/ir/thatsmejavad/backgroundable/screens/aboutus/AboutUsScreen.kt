@@ -15,19 +15,18 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialShapes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
+import androidx.compose.material3.toShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.TopCenter
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
@@ -39,8 +38,6 @@ import androidx.compose.ui.unit.dp
 import ir.thatsmejavad.backgroundable.BuildConfig
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
-import ir.thatsmejavad.backgroundable.common.ui.HexagonShape
-import ir.thatsmejavad.backgroundable.common.ui.drawCustomHexagonPath
 import ir.thatsmejavad.backgroundable.core.composeMail
 import ir.thatsmejavad.backgroundable.core.openUrl
 import ir.thatsmejavad.backgroundable.model.Contributor
@@ -222,20 +219,9 @@ private fun BackgroundableAbout() {
         Icon(
             modifier = Modifier
                 .padding(top = 10.dp)
-                .drawWithContent {
-                    drawContent()
-                    drawPath(
-                        path = drawCustomHexagonPath(size),
-                        color = primaryColor,
-                        style = Stroke(
-                            width = 5.dp.toPx(),
-                            pathEffect = PathEffect.cornerPathEffect(16f)
-                        )
-                    )
-                }
                 .background(
                     color = primaryColor,
-                    shape = HexagonShape
+                    shape = MaterialShapes.Cookie6Sided.toShape()
                 )
                 .size(100.dp)
                 .align(TopCenter),

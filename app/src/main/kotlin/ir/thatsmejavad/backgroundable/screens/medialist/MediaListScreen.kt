@@ -21,10 +21,10 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -243,7 +243,7 @@ private fun MediaListScreen(
                             is LoadState.Loading -> {
                                 item {
                                     Box(Modifier.fillMaxSize()) {
-                                        CircularProgressIndicator(
+                                        LoadingIndicator(
                                             modifier = Modifier.align(
                                                 Alignment.Center
                                             )
@@ -312,7 +312,7 @@ private fun MediaListScreen(
                             is LoadState.Loading -> {
                                 item {
                                     Box(Modifier.fillMaxSize()) {
-                                        CircularProgressIndicator(
+                                        LoadingIndicator(
                                             modifier = Modifier.align(
                                                 Alignment.Center
                                             )

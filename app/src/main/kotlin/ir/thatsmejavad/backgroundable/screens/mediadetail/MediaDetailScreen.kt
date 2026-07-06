@@ -26,11 +26,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.OutlinedIconButton
@@ -270,7 +270,7 @@ private fun MediaDetailScreen(
 
             Loading, Uninitialized -> {
                 Box(modifier = Modifier.fillMaxSize()) {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                    LoadingIndicator(modifier = Modifier.align(Alignment.Center))
                 }
             }
 
@@ -340,7 +340,7 @@ private fun MediaDetailScreen(
                                 )
                             ) {
                                 if (fileUri is Loading && savePurpose == SavePurpose.SettingWallpaper) {
-                                    CircularProgressIndicator(modifier = Modifier.size(36.dp))
+                                    LoadingIndicator(modifier = Modifier.size(36.dp))
                                 } else {
                                     Text(
                                         text = stringResource(R.string.label_set_as_wallpaper)
@@ -365,7 +365,7 @@ private fun MediaDetailScreen(
                                 },
                             ) {
                                 if (fileUri is Loading && savePurpose == SavePurpose.Share) {
-                                    CircularProgressIndicator(modifier = Modifier.size(36.dp))
+                                    LoadingIndicator(modifier = Modifier.size(36.dp))
                                 } else {
                                     Icon(
                                         painter = painterResource(R.drawable.ic_share),

@@ -12,9 +12,9 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -127,7 +127,7 @@ private fun DownloadPickerScreen(
             }
 
             is AsyncJob.Loading -> {
-                CircularProgressIndicator(modifier = Modifier.padding(16.dp))
+                LoadingIndicator(modifier = Modifier.padding(16.dp))
             }
 
             is AsyncJob.Fail -> {
