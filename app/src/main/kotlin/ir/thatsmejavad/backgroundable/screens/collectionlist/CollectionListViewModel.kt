@@ -12,8 +12,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 class CollectionListViewModel @Inject constructor(
@@ -21,9 +19,6 @@ class CollectionListViewModel @Inject constructor(
     val snackbarManager: SnackbarManager,
     private val columnCountsPreferences: ColumnCountsPreferences,
 ) : ViewModel() {
-    var columnCountPickerData: String = ""
-        private set
-
     val collection: StateFlow<PagingData<CollectionEntity>> = collectionRepository.getCollections()
         .cachedIn(viewModelScope)
         .stateIn(
@@ -38,13 +33,6 @@ class CollectionListViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(),
             initialValue = 1
         )
-
-    init {
-        viewModelScope.launch {
-            val items = listOf(1, 2, 3)
-            columnCountPickerData = Json.encodeToString(items)
-        }
-    }
 
     fun setColumnCount(count: Int) {
         viewModelScope.launch {

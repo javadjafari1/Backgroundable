@@ -5,19 +5,15 @@ import androidx.navigation.NavHostController
 import ir.thatsmejavad.backgroundable.core.AppScreens
 import ir.thatsmejavad.backgroundable.screens.aboutus.AboutUsScreen
 import ir.thatsmejavad.backgroundable.screens.collectionlist.CollectionListScreen
-import ir.thatsmejavad.backgroundable.screens.columncountpicker.ColumnCountPicker
-import ir.thatsmejavad.backgroundable.screens.downloadpicker.DownloadPickerScreen
 import ir.thatsmejavad.backgroundable.screens.mediadetail.MediaDetailScreen
 import ir.thatsmejavad.backgroundable.screens.medialist.MediaListScreen
 import ir.thatsmejavad.backgroundable.screens.search.SearchScreen
 import ir.thatsmejavad.backgroundable.screens.settings.SettingsScreen
-import androidx.compose.material.navigation.bottomSheet
 import androidx.navigation.toRoute
 import ir.thatsmejavad.backgroundable.core.animatedComposable
 import ir.thatsmejavad.backgroundable.screens.settings.imagequalitysetting.ImageQualitySettingScreen
 import ir.thatsmejavad.backgroundable.screens.settings.language.LanguageScreen
 import ir.thatsmejavad.backgroundable.screens.settings.themesetting.ThemeSettingScreen
-import kotlinx.serialization.json.Json
 
 fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
     animatedComposable<AppScreens.CollectionList> {
@@ -53,28 +49,6 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         SearchScreen(
             navController = navController
         )
-    }
-
-    bottomSheet<AppScreens.ColumnCountPicker> { entry ->
-        val items = entry.toRoute<AppScreens.ColumnCountPicker>()
-        ColumnCountPicker(
-            items = Json.decodeFromString<List<Int>>(items.items),
-            selectedItem = items.selectedItem,
-            onSelect = { item ->
-                navController
-                    .previousBackStackEntry
-                    ?.savedStateHandle
-                    ?.set(
-                        key = "selected-item",
-                        value = item
-                    )
-                navController.navigateUp()
-            }
-        )
-    }
-
-    bottomSheet<AppScreens.DownloadPicker> {
-        DownloadPickerScreen(navController = navController)
     }
 }
 

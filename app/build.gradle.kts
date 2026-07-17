@@ -244,7 +244,6 @@ dependencies {
     testImplementation(libs.pagingTest)
     implementation(libs.telephoto)
     implementation(libs.splashscreen)
-    implementation(libs.materialNavigation)
 
     testImplementation(libs.junitJupiter)
     testImplementation(libs.kotestAssertion)

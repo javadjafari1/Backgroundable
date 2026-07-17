@@ -25,15 +25,21 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
@@ -55,7 +61,6 @@ import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.BoxWithSwipeRefresh
 import ir.thatsmejavad.backgroundable.common.ui.HexagonShape
-import ir.thatsmejavad.backgroundable.common.ui.ObserveArgument
 import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
 import ir.thatsmejavad.backgroundable.common.ui.drawCustomHexagonPath
 import ir.thatsmejavad.backgroundable.core.AppScreens
@@ -64,21 +69,23 @@ import ir.thatsmejavad.backgroundable.core.getErrorMessage
 import ir.thatsmejavad.backgroundable.core.getSnackbarMessage
 import ir.thatsmejavad.backgroundable.core.viewmodel.daggerViewModel
 import ir.thatsmejavad.backgroundable.data.db.entity.CollectionEntity
+import ir.thatsmejavad.backgroundable.screens.columncountpicker.ColumnCountPicker
+import kotlinx.coroutines.launch
 
 @Composable
 fun CollectionListScreen(
     navController: NavController,
     viewModel: CollectionListViewModel = daggerViewModel()
 ) {
-    navController.ObserveArgument<Int>(key = "selected-item") {
-        viewModel.setColumnCount(it)
-    }
-
     val snackbarHostState = remember { SnackbarHostState() }
     viewModel.snackbarManager.ObserveSnackbars(snackbarHostState)
 
     val columnCounts by viewModel.columnCount.collectAsStateWithLifecycle()
     val collections = viewModel.collection.collectAsLazyPagingItems()
+
+    var showColumnCountPicker by rememberSaveable { mutableStateOf(false) }
+    val sheetState = rememberModalBottomSheetState()
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(collections.loadState.refresh) {
         val refresh = collections.loadState.refresh
@@ -99,15 +106,30 @@ fun CollectionListScreen(
                 )
             )
         },
-        openColumnCountPicker = { selectedItem ->
-            navController.navigate(
-                AppScreens.ColumnCountPicker(
-                    items = viewModel.columnCountPickerData,
-                    selectedItem = selectedItem
-                )
-            )
+        openColumnCountPicker = {
+            showColumnCountPicker = true
         }
     )
+
+    if (showColumnCountPicker) {
+        ModalBottomSheet(
+            onDismissRequest = { showColumnCountPicker = false },
+            sheetState = sheetState,
+        ) {
+            ColumnCountPicker(
+                items = listOf(1, 2, 3),
+                selectedItem = columnCounts,
+                onSelect = { item ->
+                    scope.launch { sheetState.hide() }.invokeOnCompletion {
+                        if (!sheetState.isVisible) {
+                            viewModel.setColumnCount(item)
+                            showColumnCountPicker = false
+                        }
+                    }
+                }
+            )
+        }
+    }
 }
 
 @Composable

@@ -10,12 +10,15 @@ import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import ir.thatsmejavad.backgroundable.BuildConfig
+import ir.thatsmejavad.backgroundable.core.Downloader
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
 import ir.thatsmejavad.backgroundable.core.getSnackbarMessage
 import ir.thatsmejavad.backgroundable.core.getUri
 import ir.thatsmejavad.backgroundable.core.saveIn
 import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob
 import ir.thatsmejavad.backgroundable.core.viewmodel.ViewModelAssistedFactory
+import ir.thatsmejavad.backgroundable.data.db.entity.ResourceEntity
 import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
 import ir.thatsmejavad.backgroundable.data.repository.MediaRepository
 import ir.thatsmejavad.backgroundable.data.repository.SettingRepository
@@ -33,6 +36,7 @@ class MediaDetailViewModel @AssistedInject constructor(
     val snackbarManager: SnackbarManager,
     private val mediaRepository: MediaRepository,
     settingRepository: SettingRepository,
+    private val downloader: Downloader,
     @Assisted private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     @AssistedFactory
@@ -101,6 +105,16 @@ class MediaDetailViewModel @AssistedInject constructor(
                 snackbarManager.sendError(it.getSnackbarMessage())
             }
         }
+    }
+
+    fun download(resourceEntity: ResourceEntity) {
+        val media = (_media.value as AsyncJob.Success).value
+        downloader.download(
+            url = BuildConfig.IMAGE_SERVER_URL + resourceEntity.url,
+            alt = media.media.alt,
+            photographer = media.media.photographer,
+            size = resourceEntity.size
+        )
     }
 }
 

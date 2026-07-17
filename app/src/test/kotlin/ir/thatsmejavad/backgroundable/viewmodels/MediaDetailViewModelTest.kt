@@ -11,7 +11,10 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.verify
+import ir.thatsmejavad.backgroundable.BuildConfig
 import ir.thatsmejavad.backgroundable.common.CoroutineTest
+import ir.thatsmejavad.backgroundable.core.Downloader
 import ir.thatsmejavad.backgroundable.core.SnackbarManager
 import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob
 import ir.thatsmejavad.backgroundable.core.sealeds.ImageQuality
@@ -46,6 +49,9 @@ class MediaDetailViewModelTest : CoroutineTest {
 
     @RelaxedMockK
     lateinit var settingRepository: SettingRepository
+
+    @RelaxedMockK
+    lateinit var downloader: Downloader
 
     @RelaxedMockK
     lateinit var context: Context
@@ -146,11 +152,29 @@ class MediaDetailViewModelTest : CoroutineTest {
         }
     }
 
+    @Test
+    fun `the downloader's download fun should called on viewModel's download call`() {
+        coEvery { mediaRepository.getMediaWithResources(id) } returns testMediaWithResources
+        val viewModel = createViewModel(id)
+
+        viewModel.download(testMediaWithResources.resources.first())
+
+        verify {
+            downloader.download(
+                url = BuildConfig.IMAGE_SERVER_URL + testMediaWithResources.resources.first().url,
+                alt = testMediaWithResources.media.alt,
+                photographer = testMediaWithResources.media.photographer,
+                size = testMediaWithResources.resources.first().size
+            )
+        }
+    }
+
     private fun createViewModel(id: Int?): MediaDetailViewModel {
         return MediaDetailViewModel(
             snackbarManager = snackbarManager,
             mediaRepository = mediaRepository,
             settingRepository = settingRepository,
+            downloader = downloader,
             savedStateHandle = id?.let { SavedStateHandle(mapOf("id" to id)) }
                 ?: run { SavedStateHandle() }
         )

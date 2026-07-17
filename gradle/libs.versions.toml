@@ -8,7 +8,6 @@ chucker = "4.3.1"
 coil = "3.5.0"
 composeAnimation = "1.11.4"
 composeFoundation = "1.11.4"
-composeMaterialNavigation = "1.11.4"
 composeRuntime = "1.11.4"
 composeUi = "1.11.4"
 coreKtx = "1.19.0"
@@ -70,7 +69,6 @@ kotestAssertion = { module = "io.kotest:kotest-assertions-core", version.ref = "
 kotlinxSerialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 lifecycleRuntimeCompose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntime" }
 lifecycleRuntimeKtx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntime" }
-materialNavigation = { module = "androidx.compose.material:material-navigation", version.ref = "composeMaterialNavigation" }
 mockK = { module = "io.mockk:mockk", version.ref = "mockK" }
 navigationCompose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }

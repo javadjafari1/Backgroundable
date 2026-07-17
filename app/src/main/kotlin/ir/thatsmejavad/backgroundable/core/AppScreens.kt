@@ -21,13 +21,6 @@ internal sealed interface AppScreens {
         val title: String
     ) : AppScreens
 
-
-    @Serializable
-    data class ColumnCountPicker(
-        val items: String,
-        val selectedItem: Int
-    ) : AppScreens
-
     @Serializable
     data object Settings : AppScreens
 
@@ -36,11 +29,6 @@ internal sealed interface AppScreens {
 
     @Serializable
     data object ImageQualitySetting : AppScreens
-
-    @Serializable
-    data class DownloadPicker(
-        val id: Int
-    ) : AppScreens
 
     @Serializable
     data object AboutUs : AppScreens

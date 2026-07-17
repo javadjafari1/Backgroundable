@@ -1,6 +1,5 @@
 package ir.thatsmejavad.backgroundable.screens.downloadpicker
 
-import android.widget.Toast
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -24,49 +23,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.core.getErrorMessage
 import ir.thatsmejavad.backgroundable.core.sealeds.AsyncJob
 import ir.thatsmejavad.backgroundable.core.sealeds.OrientationMode
 import ir.thatsmejavad.backgroundable.core.sealeds.ResourceSize.Companion.toResId
-import ir.thatsmejavad.backgroundable.core.viewmodel.daggerViewModel
 import ir.thatsmejavad.backgroundable.data.db.entity.ResourceEntity
 import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
 
 @Composable
 fun DownloadPickerScreen(
-    navController: NavController,
-    viewModel: DownloadPickerViewModel = daggerViewModel()
-) {
-    val mediaResult by viewModel.media.collectAsStateWithLifecycle()
-
-    val context = LocalContext.current
-
-    DownloadPickerScreen(
-        mediaResult = mediaResult,
-        downloadImage = {
-            viewModel.download(it)
-            navController.navigateUp()
-            Toast.makeText(
-                context,
-                R.string.label_download_is_about_to_begin,
-                Toast.LENGTH_LONG
-            ).show()
-        },
-        onRetryClick = { viewModel.getMedia() }
-    )
-}
-
-@Composable
-private fun DownloadPickerScreen(
     mediaResult: AsyncJob<MediaWithResources>,
+    onRetryClick: () -> Unit,
     downloadImage: (ResourceEntity) -> Unit,
-    onRetryClick: () -> Unit
 ) {
     Column(
         modifier = Modifier

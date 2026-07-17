@@ -13,15 +13,10 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material.navigation.ModalBottomSheetLayout
-import androidx.compose.material.navigation.rememberBottomSheetNavigator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -42,7 +37,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination.Companion.hasRoute
@@ -118,67 +112,53 @@ class MainActivity : AppCompatActivity() {
 
 @Composable
 private fun BackgroundableApp() {
-    val bottomSheetNavigator = rememberBottomSheetNavigator()
-    val navController = rememberNavController(bottomSheetNavigator)
-
-    ModalBottomSheetLayout(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-        bottomSheetNavigator = bottomSheetNavigator,
-        sheetShape = MaterialTheme.shapes.large.copy(
-            bottomEnd = CornerSize(0.dp),
-            bottomStart = CornerSize(0.dp)
-        ),
-        sheetBackgroundColor = MaterialTheme.colorScheme.surface,
-    ) {
-        Box {
-            NavHost(
-                navController = navController,
-                startDestination = AppScreens.CollectionList
-            ) {
-                mainNavGraph(navController)
-                settingNavGraph(navController)
+    val navController = rememberNavController()
+    Box {
+        NavHost(
+            navController = navController,
+            startDestination = AppScreens.CollectionList
+        ) {
+            mainNavGraph(navController)
+            settingNavGraph(navController)
+        }
+        /*
+         * we have to add bottom bar like this, and not in Scaffold because
+         * in scaffold we can't add animation for showing and hiding the bottomBar
+         * */
+        val backStackEntry by navController.currentBackStackEntryAsState()
+        val isBottomNavVisible by remember {
+            derivedStateOf {
+                backStackEntry?.destination?.hasRoute<AppScreens.CollectionList>() == true ||
+                        backStackEntry?.destination?.hasRoute<AppScreens.Search>() == true ||
+                        backStackEntry?.destination?.hasRoute<AppScreens.Settings>() == true
             }
-            /*
-             * we have to add bottom bar like this, and not in Scaffold because
-             * in scaffold we can't add animation for showing and hiding the bottomBar
-             * */
-            val backStackEntry by navController.currentBackStackEntryAsState()
-            val isBottomNavVisible by remember {
-                derivedStateOf {
-                    backStackEntry?.destination?.hasRoute<AppScreens.CollectionList>() == true ||
-                            backStackEntry?.destination?.hasRoute<AppScreens.Search>() == true ||
-                            backStackEntry?.destination?.hasRoute<AppScreens.Settings>() == true
-                }
-            }
-            AnimatedVisibility(
-                modifier = Modifier.align(Alignment.BottomCenter),
-                visible = isBottomNavVisible,
-                enter = slideInVertically { it },
-                exit = slideOutVertically { it },
-            ) {
-                BackgroundableNavigationBar(
-                    selectedItem = when  {
-                        backStackEntry?.destination?.hasRoute<AppScreens.Search>()== true -> SEARCH
-                        backStackEntry?.destination?.hasRoute<AppScreens.Settings>() == true -> SETTING
-                        else -> HOME
-                    },
-                    onItemSelected = { destinations ->
-                        navController.navigate(destinations.route) {
-                            launchSingleTop = true
-                            restoreState = true
-                            popUpTo(
-                                navController.graph
-                                    .findStartDestination()
-                                    .id
-                            ) {
-                                saveState = true
-                            }
+        }
+        AnimatedVisibility(
+            modifier = Modifier.align(Alignment.BottomCenter),
+            visible = isBottomNavVisible,
+            enter = slideInVertically { it },
+            exit = slideOutVertically { it },
+        ) {
+            BackgroundableNavigationBar(
+                selectedItem = when {
+                    backStackEntry?.destination?.hasRoute<AppScreens.Search>() == true -> SEARCH
+                    backStackEntry?.destination?.hasRoute<AppScreens.Settings>() == true -> SETTING
+                    else -> HOME
+                },
+                onItemSelected = { destinations ->
+                    navController.navigate(destinations.route) {
+                        launchSingleTop = true
+                        restoreState = true
+                        popUpTo(
+                            navController.graph
+                                .findStartDestination()
+                                .id
+                        ) {
+                            saveState = true
                         }
                     }
-                )
-            }
+                }
+            )
         }
     }
 }

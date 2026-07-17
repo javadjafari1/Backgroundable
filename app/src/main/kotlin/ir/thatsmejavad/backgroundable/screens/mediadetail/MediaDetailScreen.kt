@@ -33,15 +33,18 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -61,7 +64,6 @@ import ir.thatsmejavad.backgroundable.R
 import ir.thatsmejavad.backgroundable.common.ui.BackgroundableScaffold
 import ir.thatsmejavad.backgroundable.common.ui.ObserveSnackbars
 import ir.thatsmejavad.backgroundable.common.ui.ZoomableCoilImage
-import ir.thatsmejavad.backgroundable.core.AppScreens
 import ir.thatsmejavad.backgroundable.core.capitalizeFirstChar
 import ir.thatsmejavad.backgroundable.core.getErrorMessage
 import ir.thatsmejavad.backgroundable.core.openUrl
@@ -80,6 +82,8 @@ import ir.thatsmejavad.backgroundable.core.toColor
 import ir.thatsmejavad.backgroundable.core.toast
 import ir.thatsmejavad.backgroundable.core.viewmodel.daggerViewModel
 import ir.thatsmejavad.backgroundable.data.db.relation.MediaWithResources
+import ir.thatsmejavad.backgroundable.screens.downloadpicker.DownloadPickerScreen
+import kotlinx.coroutines.launch
 
 @Composable
 fun MediaDetailScreen(
@@ -96,6 +100,10 @@ fun MediaDetailScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     viewModel.snackbarManager.ObserveSnackbars(snackbarHostState)
     val context = LocalContext.current
+
+    var showDownloadPicker by rememberSaveable { mutableStateOf(false) }
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = fileUri) {
         if (fileUri is Success) {
@@ -131,16 +139,13 @@ fun MediaDetailScreen(
     MediaDetailScreen(
         title = title,
         fileUri = fileUri,
-        mediaId = mediaId,
         savePurpose = savePurpose,
         mediaResult = mediaResult,
         imageQuality = imageQuality,
         snackbarHostState = snackbarHostState,
         onBackClicked = { navController.navigateUp() },
-        navigateTo = {
-            navController.navigate(it) {
-                launchSingleTop = true
-            }
+        onDownloadClicked = {
+            showDownloadPicker = true
         },
         onRetryClick = { viewModel.getMedia(mediaId) },
         openLink = {
@@ -185,11 +190,31 @@ fun MediaDetailScreen(
             }
         }
     )
+
+    if (showDownloadPicker) {
+        ModalBottomSheet(
+            onDismissRequest = { showDownloadPicker = false },
+            sheetState = sheetState
+        ) {
+            DownloadPickerScreen(
+                mediaResult = mediaResult,
+                onRetryClick = { viewModel.getMedia(mediaId) },
+                downloadImage = { resourceEntity ->
+                    scope.launch { sheetState.hide() }.invokeOnCompletion {
+                        if (!sheetState.isVisible) {
+                            viewModel.download(resourceEntity)
+                            showDownloadPicker = false
+                        }
+                    }
+                    context.toast(R.string.label_download_is_about_to_begin)
+                }
+            )
+        }
+    }
 }
 
 @Composable
 private fun MediaDetailScreen(
-    mediaId: Int,
     title: String,
     snackbarHostState: SnackbarHostState,
     mediaResult: AsyncJob<MediaWithResources>,
@@ -198,7 +223,7 @@ private fun MediaDetailScreen(
     fileUri: AsyncJob<Uri>,
     onRetryClick: () -> Unit,
     onBackClicked: () -> Unit,
-    navigateTo: (route: AppScreens) -> Unit,
+    onDownloadClicked: () -> Unit,
     openLink: (String) -> Unit,
     setAsWallpaper: (Drawable) -> Unit,
     share: (Drawable, name: String, photographer: String) -> Unit
@@ -382,7 +407,7 @@ private fun MediaDetailScreen(
                                     width = 1.dp,
                                     color = MaterialTheme.colorScheme.outline
                                 ),
-                                onClick = { navigateTo(AppScreens.DownloadPicker(mediaId)) },
+                                onClick = onDownloadClicked,
                             ) {
                                 Icon(
                                     painter = painterResource(R.drawable.ic_download),
