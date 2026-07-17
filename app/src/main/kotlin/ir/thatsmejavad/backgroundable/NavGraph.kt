@@ -12,19 +12,19 @@ import ir.thatsmejavad.backgroundable.screens.medialist.MediaListScreen
 import ir.thatsmejavad.backgroundable.screens.search.SearchScreen
 import ir.thatsmejavad.backgroundable.screens.settings.SettingsScreen
 import androidx.compose.material.navigation.bottomSheet
-import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import ir.thatsmejavad.backgroundable.core.animatedComposable
 import ir.thatsmejavad.backgroundable.screens.settings.imagequalitysetting.ImageQualitySettingScreen
 import ir.thatsmejavad.backgroundable.screens.settings.language.LanguageScreen
 import ir.thatsmejavad.backgroundable.screens.settings.themesetting.ThemeSettingScreen
 import kotlinx.serialization.json.Json
 
 fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
-    composable<AppScreens.CollectionList> {
+    animatedComposable<AppScreens.CollectionList> {
         CollectionListScreen(navController = navController)
     }
 
-    composable<AppScreens.MediaList> { entry ->
+    animatedComposable<AppScreens.MediaList> { entry ->
         val title = entry.toRoute<AppScreens.MediaList>().title
         MediaListScreen(
             title = title,
@@ -32,7 +32,7 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         )
     }
 
-    composable<AppScreens.MediaDetail> { entry ->
+    animatedComposable<AppScreens.MediaDetail> { entry ->
 
         val mediaId = checkNotNull(entry.arguments?.getInt("id")) {
             "mediaId should not be null"
@@ -49,8 +49,7 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         )
     }
 
-    composable<AppScreens.Search>(
-    ) {
+    animatedComposable<AppScreens.Search> {
         SearchScreen(
             navController = navController
         )
@@ -80,7 +79,7 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
 }
 
 fun NavGraphBuilder.settingNavGraph(navController: NavHostController) {
-    composable<AppScreens.AboutUs> {
+    animatedComposable<AppScreens.AboutUs> {
         AboutUsScreen(
             onBackClicked = {
                 navController.navigateUp()
@@ -88,13 +87,13 @@ fun NavGraphBuilder.settingNavGraph(navController: NavHostController) {
         )
     }
 
-    composable<AppScreens.ImageQualitySetting> {
+    animatedComposable<AppScreens.ImageQualitySetting> {
         ImageQualitySettingScreen(
             navController = navController
         )
     }
 
-    composable<AppScreens.Settings> {
+    animatedComposable<AppScreens.Settings> {
         SettingsScreen(
             navigateTo = { route ->
                 navController.navigate(route)
@@ -102,12 +101,12 @@ fun NavGraphBuilder.settingNavGraph(navController: NavHostController) {
         )
     }
 
-    composable<AppScreens.ThemeSetting> {
+    animatedComposable<AppScreens.ThemeSetting> {
         ThemeSettingScreen(
             navController = navController
         )
     }
-    composable<AppScreens.Language> {
+    animatedComposable<AppScreens.Language> {
         LanguageScreen(
             navController = navController
         )
