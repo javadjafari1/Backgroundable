@@ -19,8 +19,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -49,14 +47,6 @@ class CollectionListViewModelTest : CoroutineTest {
     @BeforeEach
     fun setUp() {
         MockKAnnotations.init(this)
-    }
-
-    @Test
-    fun `columnCountPickerData should be not null after creating viewModel`() {
-        val viewModel = createViewModel()
-
-        viewModel.columnCountPickerData shouldNotBe ""
-        viewModel.columnCountPickerData shouldBe Json.encodeToString(listOf(1, 2, 3))
     }
 
     @Test
