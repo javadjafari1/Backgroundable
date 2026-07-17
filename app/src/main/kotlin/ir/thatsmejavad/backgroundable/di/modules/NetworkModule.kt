@@ -4,8 +4,6 @@ import android.content.Context
 import android.util.Log
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.moczul.ok2curl.CurlInterceptor
-import com.moczul.ok2curl.logger.Logger
 import dagger.Module
 import dagger.Provides
 import ir.thatsmejavad.backgroundable.BuildConfig
@@ -36,18 +34,6 @@ class NetworkModule {
             prettyPrint = true
             namingStrategy = JsonNamingStrategy.SnakeCase
         }
-    }
-
-    @Provides
-    @Singleton
-    fun provideOk2Curl(): CurlInterceptor {
-        return CurlInterceptor(
-            object : Logger {
-                override fun log(message: String) {
-                    Log.d("Curl", message)
-                }
-            }
-        )
     }
 
     @Provides
@@ -86,7 +72,6 @@ class NetworkModule {
         authorizationInterceptor: AuthorizationInterceptor,
         loggingInterceptor: HttpLoggingInterceptor,
         chuckerInterceptor: ChuckerInterceptor,
-        curlInterceptor: CurlInterceptor,
     ): OkHttpClient {
         val builder = OkHttpClient.Builder()
             .addInterceptor(authorizationInterceptor)
@@ -111,7 +96,11 @@ class NetworkModule {
             builder
                 .addInterceptor(loggingInterceptor)
                 .addInterceptor(chuckerInterceptor)
-                .addInterceptor(curlInterceptor)
+                .addInterceptor {
+                    val curl = it.request().toCurl(true)
+                    Log.d("Curl", curl)
+                    it.proceed(it.request())
+                }
         }
 
         return builder.build()

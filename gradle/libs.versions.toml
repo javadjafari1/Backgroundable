@@ -30,7 +30,6 @@ lifecycleRuntime = "2.11.0"
 material3 = "1.4.0"
 mockK = "1.14.11"
 navigationCompose = "2.9.8"
-ok2curl = "0.8.0"
 okhttp = "5.4.0"
 paging = "3.5.0"
 protobuf = "0.10.0"
@@ -74,7 +73,6 @@ lifecycleRuntimeKtx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", ver
 materialNavigation = { module = "androidx.compose.material:material-navigation", version.ref = "composeMaterialNavigation" }
 mockK = { module = "io.mockk:mockk", version.ref = "mockK" }
 navigationCompose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
-ok2curl = { module = "com.github.mrmike:ok2curl", version.ref = "ok2curl" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 okhttpLoggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 pagingCommonKtx = { module = "androidx.paging:paging-common-ktx", version.ref = "paging" }
